@@ -3,8 +3,5 @@
     "private": true,
     "scripts": {
         "start": "cd packages/hospitality-ui && pnpm run dev"
-    },
-    "workspaces": [
-        "packages/*"
-    ]
+    }
 }
