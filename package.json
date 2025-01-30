@@ -1,6 +1,7 @@
 {
   "name": "hospitality",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "cd packages/hospitality-ui && pnpm run dev",
     "prepare": "husky"
@@ -19,9 +20,6 @@
     "eslint-plugin-n": "^17.15.1",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-promise": "^7.2.1",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.16",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-unused-imports": "^4.1.4",
     "husky": "^9.1.7",

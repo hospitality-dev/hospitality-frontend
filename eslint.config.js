@@ -1,9 +1,6 @@
 import js from "@eslint/js";
 import globals from "globals";
-import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
-import eslintPluginReact from "eslint-plugin-react";
 import eslintPluginPromise from "eslint-plugin-promise";
 import eslintPluginImport from "eslint-plugin-import";
 import eslintPluginPrettier from "eslint-plugin-prettier";
@@ -14,30 +11,24 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginN from "eslint-plugin-n";
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
-
-export default tseslint.config({
-  globals: {
-    ...eslintConfigStandard.globals,
-  },
+export default {
   extends: [js.configs.recommended, ...tseslint.configs.recommended],
-  parser: tsParser,
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    sourceType: "module",
-    ecmaVersion: "latest",
-  },
+
   files: ["**/*.{ts,tsx}"],
   languageOptions: {
+    parser: tsParser,
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
+      sourceType: "module",
+      ecmaVersion: "latest",
+    },
     ecmaVersion: 2020,
     globals: globals.browser,
   },
   plugins: {
-    "react-hooks": reactHooks,
-    "react-refresh": reactRefresh,
     "@typescript-eslint": tsPlugin,
-    react: eslintPluginReact,
     promise: eslintPluginPromise,
     import: eslintPluginImport,
     prettier: eslintPluginPrettier,
@@ -46,10 +37,8 @@ export default tseslint.config({
     n: eslintPluginN,
   },
   rules: {
-    ...reactHooks.configs.recommended.rules,
     ...eslintConfigStandard.rules,
     ...eslintConfigPrettier.rules,
-    "react/jsx-sort-props": ["error", { reservedFirst: true }],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "unused-imports/no-unused-imports": "error",
@@ -73,8 +62,5 @@ export default tseslint.config({
     ],
     "promise/catch-or-return": "error",
     "promise/always-return": "error",
-    "react/prop-types": "off", // Not needed with TypeScript
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
   },
-});
+};
