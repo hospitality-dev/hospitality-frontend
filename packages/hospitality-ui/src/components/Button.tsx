@@ -1,8 +1,9 @@
 import { tv } from "tailwind-variants";
 
-import { isOutline, Size, Variant } from "../types/baseTypes";
+import { availableIcons, Size, Variant } from "../types/baseTypes";
+import { Icon } from "@iconify/react";
 
-type Props = { label?: string; variant?: Variant; size?: Size; isOutline?: isOutline };
+type Props = { label?: string; variant?: Variant; size?: Size; isOutline?: boolean; icon?: availableIcons };
 
 const classes = tv({
   base: "flex cursor-pointer items-center rounded-sm px-4 py-2 text-white shadow transition-all active:scale-95 active:shadow-none",
@@ -53,6 +54,11 @@ const classes = tv({
   ],
 });
 
-export function Button({ label, variant = "primary", size = "md", isOutline = false }: Props) {
-  return <button className={classes({ variant, size, isOutline })}>{label}</button>;
+export function Button({ label, variant = "primary", size = "md", isOutline = false, icon }: Props) {
+  if (!label && !icon) return null;
+  return (
+    <button className={classes({ variant, size, isOutline })}>
+      {label ? label : null} {icon ? <Icon icon={icon} /> : null}
+    </button>
+  );
 }
