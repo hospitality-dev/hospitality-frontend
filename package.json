@@ -24,7 +24,7 @@
   },
   "private": true,
   "scripts": {
-    "start": "cd packages/hospitality-ui && pnpm run dev",
+    "start": "cd apps/inventory-management && bun run dev",
     "prepare": "husky"
   },
   "type": "module",

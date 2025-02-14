@@ -12,7 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "react": ["./node_modules/@types/react"]
+      "@hospitality/*": ["./packages/*"]
     },
     "noEmit": true
   },
