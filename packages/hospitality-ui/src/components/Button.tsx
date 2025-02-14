@@ -5,19 +5,52 @@ import { isOutline, Size, Variant } from "../types/baseTypes";
 type Props = { label?: string; variant?: Variant; size?: Size; isOutline?: isOutline };
 
 const classes = tv({
-  base: "flex cursor-pointer items-center rounded-sm px-4 py-2 text-white shadow active:shadow-none",
+  base: "flex cursor-pointer items-center rounded-sm px-4 py-2 text-white shadow transition-all active:scale-95 active:shadow-none",
   variants: {
     variant: {
-      primary: "bg-gray-700 hover:bg-gray-900 active:bg-gray-900",
-      secondary: "bg-gray-300 text-gray-700 hover:bg-gray-600 hover:text-white active:bg-gray-600",
+      primary: "border-gray-900 bg-gray-700 hover:bg-gray-900 active:bg-gray-900",
+      secondary: "border-gray-600 bg-gray-300 text-gray-700 hover:bg-gray-600 hover:text-white active:bg-gray-600",
       info: "border-blue-600 bg-blue-500 hover:bg-blue-600 active:bg-blue-600",
-      success: "bg-green-500 hover:bg-green-600 active:bg-green-600",
-      warning: "bg-orange-500 hover:bg-orange-600 active:bg-orange-600",
-      error: "bg-red-600 hover:bg-red-800 active:bg-red-800",
+      success: "border-green-600 bg-green-500 hover:bg-green-600 active:bg-green-600",
+      warning: "border-orange-600 bg-orange-500 hover:bg-orange-600 active:bg-orange-600",
+      error: "border-red-800 bg-red-600 hover:bg-red-800 active:bg-red-800",
     },
     size: { xs: "h-6 text-xs", sm: "h-7 text-sm", md: "h-8", lg: "h-9 text-lg", xl: "h-10 text-xl" },
-    isOutline: { true: "border-2 border-black bg-transparent text-black", false: "" },
+    isOutline: { true: "border-2 bg-transparent font-medium text-black", false: "" },
   },
+
+  compoundVariants: [
+    {
+      variant: "primary",
+      isOutline: true,
+      class: "text-gray-900 hover:text-white active:text-white",
+    },
+    {
+      variant: "secondary",
+      isOutline: true,
+      class: "text-gray-600 hover:text-white active:text-white",
+    },
+    {
+      variant: "info",
+      isOutline: true,
+      class: "text-blue-600 hover:text-white active:text-white",
+    },
+    {
+      variant: "success",
+      isOutline: true,
+      class: "text-green-600 hover:text-white active:text-white",
+    },
+    {
+      variant: "warning",
+      isOutline: true,
+      class: "text-orange-600 hover:text-white active:text-white",
+    },
+    {
+      variant: "error",
+      isOutline: true,
+      class: "text-red-600 hover:text-white active:text-white",
+    },
+  ],
 });
 
 export function Button({ label, variant = "primary", size = "md", isOutline = false }: Props) {

@@ -26,7 +26,12 @@ const aboutRoute = createRoute({
   component: function About() {
     return (
       <div className="p-2">
-        <Button label="Log in" variant="info" />
+        <Button label="Log in" variant="info" isOutline />
+        <Button label="Log in" variant="primary" isOutline />
+        <Button label="Log in" variant="secondary" isOutline />
+        <Button label="Log in" variant="warning" isOutline />
+        <Button label="Log in" variant="error" isOutline />
+        <Button label="Log in" variant="success" isOutline />
       </div>
     );
   },
