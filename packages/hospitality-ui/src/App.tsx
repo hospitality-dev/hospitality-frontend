@@ -8,7 +8,7 @@ function App() {
       <Button label="Stagod" size="md" variant="success" />
       <Button label="Stagod" size="lg" variant="info" />
       <Button label="Stagod" size="xl" variant="error" />
-      <Button label="Stagod" size="md" variant="warning" isOutline />
+      <Button isOutline label="Stagod" size="md" variant="warning" />
     </main>
   );
 }
