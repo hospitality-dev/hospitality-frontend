@@ -1,15 +1,5 @@
 {
   "name": "hospitality",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "start": "cd packages/hospitality-ui && pnpm run dev",
-    "prepare": "husky"
-  },
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
@@ -31,5 +21,15 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
-  }
+  },
+  "private": true,
+  "scripts": {
+    "start": "cd packages/hospitality-ui && pnpm run dev",
+    "prepare": "husky"
+  },
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
 }
