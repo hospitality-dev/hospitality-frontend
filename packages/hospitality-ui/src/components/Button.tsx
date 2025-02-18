@@ -3,10 +3,17 @@ import { tv } from "tailwind-variants";
 import { availableIcons, Size, Variant } from "../types/baseTypes";
 import { Icon } from "@iconify/react";
 
-type Props = { label?: string; variant?: Variant; size?: Size; isOutline?: boolean; icon?: availableIcons };
+type Props = {
+  label?: string;
+  variant?: Variant;
+  size?: Size;
+  isOutline?: boolean;
+  icon?: availableIcons;
+  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+};
 
 const classes = tv({
-  base: "flex cursor-pointer items-center rounded-sm px-4 py-2 text-white shadow transition-all active:scale-95 active:shadow-none",
+  base: "flex cursor-pointer items-center gap-2 rounded-sm px-4 py-2 font-medium text-white shadow transition-all active:scale-95 active:shadow-none",
   variants: {
     variant: {
       primary: "border-gray-900 bg-gray-700 hover:bg-gray-900 active:bg-gray-900",
@@ -17,7 +24,7 @@ const classes = tv({
       error: "border-red-800 bg-red-600 hover:bg-red-800 active:bg-red-800",
     },
     size: { xs: "h-6 text-xs", sm: "h-7 text-sm", md: "h-8", lg: "h-9 text-lg", xl: "h-10 text-xl" },
-    isOutline: { true: "border-2 bg-transparent font-medium text-black", false: "" },
+    isOutline: { true: "border-2 bg-transparent text-black", false: "" },
   },
 
   compoundVariants: [
@@ -54,11 +61,11 @@ const classes = tv({
   ],
 });
 
-export function Button({ label, variant = "primary", size = "md", isOutline = false, icon }: Props) {
+export function Button({ label, variant = "primary", size = "md", isOutline = false, icon, onClick }: Props) {
   if (!label && !icon) return null;
   return (
-    <button className={classes({ variant, size, isOutline })}>
-      {label ? label : null} {icon ? <Icon icon={icon} /> : null}
+    <button className={classes({ variant, size, isOutline })} onClick={onClick}>
+      {label ? <span>{label}</span> : null} {icon ? <Icon icon={icon} /> : null}
     </button>
   );
 }
