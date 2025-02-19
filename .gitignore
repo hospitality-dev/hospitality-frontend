@@ -27,3 +27,4 @@ bun.lockb
 *.sw?
 
 packages/hospitality-ui/node_modules
+packages/hospitality-ui/.kanelrc.js
