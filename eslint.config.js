@@ -11,6 +11,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginN from "eslint-plugin-n";
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
+import ignoreGenerated from "eslint-plugin-ignore-generated";
 export default {
   extends: [js.configs.recommended, ...tseslint.configs.recommended],
 
@@ -35,6 +36,7 @@ export default {
     "simple-import-sort": eslintPluginSimpleImportSort,
     "unused-imports": eslintPluginUnusedImports,
     n: eslintPluginN,
+    ignoreGenerated,
   },
   rules: {
     ...eslintConfigStandard.rules,
