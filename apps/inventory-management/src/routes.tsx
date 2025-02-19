@@ -1,4 +1,4 @@
-import { Button } from "@hospitality/hospitality-ui";
+import { Button, Icons } from "@hospitality/hospitality-ui";
 import { createRootRoute, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 const rootRoute = createRootRoute({
@@ -26,12 +26,12 @@ const aboutRoute = createRoute({
   component: function About() {
     return (
       <div className="p-2">
-        <Button label="Log in" variant="info" isOutline icon="ph:plus" />
-        <Button label="Log in" variant="primary" isOutline icon="ph:folder" />
-        <Button variant="secondary" isOutline />
-        <Button label="Log in" variant="warning" isOutline />
-        <Button label="Log in" variant="error" isOutline />
-        <Button label="Log in" variant="success" isOutline />
+        <Button icon={Icons.add} isOutline label="Log in" onClick={undefined} variant="info" />
+        <Button isOutline label="Log in" onClick={undefined} variant="primary" />
+        <Button isOutline onClick={undefined} variant="secondary" />
+        <Button isOutline label="Log in" onClick={undefined} variant="warning" />
+        <Button isOutline label="Log in" onClick={undefined} variant="error" />
+        <Button isOutline label="Log in" onClick={undefined} variant="success" />
       </div>
     );
   },
