@@ -1,1 +1,4 @@
-export const Icons = ["ph:plus" as const, "ph:folder" as const];
+export const Icons = {
+  add: "ph:plus" as const,
+  folder: "ph:folder" as const,
+};

@@ -1,7 +1,8 @@
+import { Icon } from "@iconify/react";
+import { MouseEventHandler } from "react";
 import { tv } from "tailwind-variants";
 
 import { availableIcons, Size, Variant } from "../types/baseTypes";
-import { Icon } from "@iconify/react";
 
 type Props = {
   label?: string;
@@ -9,7 +10,7 @@ type Props = {
   size?: Size;
   isOutline?: boolean;
   icon?: availableIcons;
-  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  onClick: MouseEventHandler<HTMLButtonElement> | undefined;
 };
 
 const classes = tv({
