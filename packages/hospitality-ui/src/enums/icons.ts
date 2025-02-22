@@ -1,4 +1,6 @@
 export const Icons = {
   add: "ph:plus" as const,
   folder: "ph:folder" as const,
+  "arrow-down": "ph:caret-down" as const,
+  "arrow-up": "ph:caret-up" as const,
 };
