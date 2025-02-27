@@ -1,4 +1,4 @@
 import { atom } from "jotai";
 
-import { Users } from "../types/models";
-export const userAtom = atom<Users | null>(null);
+import { LoginResponse } from "../types";
+export const userAtom = atom<LoginResponse | null>(null);
