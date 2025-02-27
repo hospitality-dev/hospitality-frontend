@@ -1,6 +1,8 @@
 import { valueof } from "@hospitality/hospitality-ui/src";
+
 import { Icons } from "../enums/icons";
 
+// =========COMPONENTS=========
 export type Variant = "primary" | "secondary" | "info" | "success" | "warning" | "error";
 
 export type Size = "xs" | "sm" | "md" | "lg" | "xl";
@@ -13,3 +15,6 @@ export interface BaseEntityType {
   updated_at: string;
   deleted_at: string | null;
 }
+
+// =========RESPONSE=========
+export type Response<T> = { data: T; ok: boolean; message: string };
