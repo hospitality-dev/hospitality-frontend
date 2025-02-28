@@ -1,4 +1,5 @@
 import { UpdaterFn } from "@tanstack/react-form";
+import { ChangeEvent } from "react";
 import { tv } from "tailwind-variants";
 
 import { Size, Variant } from "../types/baseTypes";
@@ -6,7 +7,7 @@ import { Size, Variant } from "../types/baseTypes";
 type Props = {
   label?: string;
   value: string | number | undefined;
-  onChange: UpdaterFn<string | number | undefined, void> | undefined;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => UpdaterFn<string | number | undefined, void> | undefined;
   helperText?: string;
   isDisabled?: boolean;
   variant?: Variant;
@@ -70,12 +71,21 @@ const classes = tv({
   },
 });
 
-export function Input({ label, variant = "primary", size = "md", isDisabled = false, placeholder, helperText, value }: Props) {
+export function Input({
+  label,
+  variant = "primary",
+  size = "md",
+  isDisabled = false,
+  placeholder,
+  helperText,
+  value,
+  onChange,
+}: Props) {
   const { inputClasses, container, labelClasses } = classes({ variant, size, isDisabled });
   return (
     <div className={container()}>
       <label className={labelClasses()}>{label ? <span>{label}</span> : null}</label>
-      <input className={inputClasses()} disabled={isDisabled} placeholder={placeholder} value={value} />
+      <input className={inputClasses()} disabled={isDisabled} onChange={onChange} placeholder={placeholder} value={value} />
       <p>{helperText}</p>
     </div>
   );
