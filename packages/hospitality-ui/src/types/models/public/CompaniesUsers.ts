@@ -1,38 +1,37 @@
-import type { CompaniesId } from "./Companies";
-import type { UsersId } from "./Users";
-import type { RolesId } from "./Roles";
-/** Identifier type for public.companies_users */
-export type CompaniesUsersId = string & { __brand: "CompaniesUsersId" };
+import type { companiesId } from "./Companies";
+import type { usersId } from "./Users";
+import type { rolesId } from "./Roles";
+export type companiesUsersId = string;
 /** Represents the table public.companies_users */
 export default interface CompaniesUsers {
-  id: CompaniesUsersId;
+  id: companiesUsersId;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  companyId: CompaniesId;
-  userId: UsersId;
-  roleId: RolesId | null;
+  companyId: companiesId;
+  userId: usersId;
+  roleId: rolesId | null;
 }
 /** Represents the initializer for the table public.companies_users */
 export interface CompaniesUsersInitializer {
   /** Default value: gen_random_uuid() */
-  id?: CompaniesUsersId;
+  id?: companiesUsersId;
   /** Default value: CURRENT_TIMESTAMP */
   createdAt?: Date;
   /** Default value: CURRENT_TIMESTAMP */
   updatedAt?: Date;
   deletedAt?: Date | null;
-  companyId: CompaniesId;
-  userId: UsersId;
-  roleId?: RolesId | null;
+  companyId: companiesId;
+  userId: usersId;
+  roleId?: rolesId | null;
 }
 /** Represents the mutator for the table public.companies_users */
 export interface CompaniesUsersMutator {
-  id?: CompaniesUsersId;
+  id?: companiesUsersId;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;
-  companyId?: CompaniesId;
-  userId?: UsersId;
-  roleId?: RolesId | null;
+  companyId?: companiesId;
+  userId?: usersId;
+  roleId?: rolesId | null;
 }

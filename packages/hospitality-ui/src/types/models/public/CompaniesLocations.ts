@@ -1,12 +1,11 @@
-import type { CompaniesId } from "./Companies";
-import type { LocationsId } from "./Locations";
-/** Identifier type for public.companies_locations */
-export type CompaniesLocationsId = string & { __brand: "CompaniesLocationsId" };
+import type { companiesId } from "./Companies";
+import type { locationsId } from "./Locations";
+export type companiesLocationsId = string;
 /** Represents the table public.companies_locations */
 export default interface CompaniesLocations {
-  id: CompaniesLocationsId;
-  companyId: CompaniesId;
-  locationId: LocationsId;
+  id: companiesLocationsId;
+  companyId: companiesId;
+  locationId: locationsId;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
@@ -14,9 +13,9 @@ export default interface CompaniesLocations {
 /** Represents the initializer for the table public.companies_locations */
 export interface CompaniesLocationsInitializer {
   /** Default value: gen_random_uuid() */
-  id?: CompaniesLocationsId;
-  companyId: CompaniesId;
-  locationId: LocationsId;
+  id?: companiesLocationsId;
+  companyId: companiesId;
+  locationId: locationsId;
   /** Default value: CURRENT_TIMESTAMP */
   createdAt?: Date;
   /** Default value: CURRENT_TIMESTAMP */
@@ -25,9 +24,9 @@ export interface CompaniesLocationsInitializer {
 }
 /** Represents the mutator for the table public.companies_locations */
 export interface CompaniesLocationsMutator {
-  id?: CompaniesLocationsId;
-  companyId?: CompaniesId;
-  locationId?: LocationsId;
+  id?: companiesLocationsId;
+  companyId?: companiesId;
+  locationId?: locationsId;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;

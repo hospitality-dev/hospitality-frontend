@@ -1,39 +1,39 @@
 export {
-  type CompaniesUsersId,
+  type companiesUsersId,
   type default as CompaniesUsers,
   type CompaniesUsersInitializer,
   type CompaniesUsersMutator,
 } from "./public/CompaniesUsers";
-export { type ProductsId, type default as Products, type ProductsInitializer, type ProductsMutator } from "./public/Products";
-export { type UsersId, type default as Users, type UsersInitializer, type UsersMutator } from "./public/Users";
+export { type productsId, type default as Products, type ProductsInitializer, type ProductsMutator } from "./public/Products";
+export { type usersId, type default as Users, type UsersInitializer, type UsersMutator } from "./public/Users";
 export {
-  type LocationsUsersId,
+  type locationsUsersId,
   type default as LocationsUsers,
   type LocationsUsersInitializer,
   type LocationsUsersMutator,
 } from "./public/LocationsUsers";
 export {
-  type CompaniesId,
+  type companiesId,
   type default as Companies,
   type CompaniesInitializer,
   type CompaniesMutator,
 } from "./public/Companies";
 export {
-  type CompaniesLocationsId,
+  type companiesLocationsId,
   type default as CompaniesLocations,
   type CompaniesLocationsInitializer,
   type CompaniesLocationsMutator,
 } from "./public/CompaniesLocations";
 export {
-  type LocationsId,
+  type locationsId,
   type default as Locations,
   type LocationsInitializer,
   type LocationsMutator,
 } from "./public/Locations";
-export { type RolesId, type default as Roles, type RolesInitializer, type RolesMutator } from "./public/Roles";
-export { type ImagesId, type default as Images, type ImagesInitializer, type ImagesMutator } from "./public/Images";
+export { type rolesId, type default as Roles, type RolesInitializer, type RolesMutator } from "./public/Roles";
+export { type imagesId, type default as Images, type ImagesInitializer, type ImagesMutator } from "./public/Images";
 export {
-  type ProductsLocationsId,
+  type productsLocationsId,
   type default as ProductsLocations,
   type ProductsLocationsInitializer,
   type ProductsLocationsMutator,

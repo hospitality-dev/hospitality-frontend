@@ -1,52 +1,51 @@
-import type { UsersId } from "./Users";
-import type { ImagesId } from "./Images";
-/** Identifier type for public.companies */
-export type CompaniesId = string & { __brand: "CompaniesId" };
+import type { usersId } from "./Users";
+import type { imagesId } from "./Images";
+export type companiesId = string;
 /** Represents the table public.companies */
 export default interface Companies {
-  id: CompaniesId;
+  id: companiesId;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
   title: string;
-  ownerId: UsersId;
+  ownerId: usersId;
   address: string;
   phone: string;
   email: string;
   dateOfFounding: Date | null;
   cin: string | null;
-  imageId: ImagesId | null;
+  imageId: imagesId | null;
 }
 /** Represents the initializer for the table public.companies */
 export interface CompaniesInitializer {
   /** Default value: gen_random_uuid() */
-  id?: CompaniesId;
+  id?: companiesId;
   /** Default value: CURRENT_TIMESTAMP */
   createdAt?: Date;
   /** Default value: CURRENT_TIMESTAMP */
   updatedAt?: Date;
   deletedAt?: Date | null;
   title: string;
-  ownerId: UsersId;
+  ownerId: usersId;
   address: string;
   phone: string;
   email: string;
   dateOfFounding?: Date | null;
   cin?: string | null;
-  imageId?: ImagesId | null;
+  imageId?: imagesId | null;
 }
 /** Represents the mutator for the table public.companies */
 export interface CompaniesMutator {
-  id?: CompaniesId;
+  id?: companiesId;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;
   title?: string;
-  ownerId?: UsersId;
+  ownerId?: usersId;
   address?: string;
   phone?: string;
   email?: string;
   dateOfFounding?: Date | null;
   cin?: string | null;
-  imageId?: ImagesId | null;
+  imageId?: imagesId | null;
 }

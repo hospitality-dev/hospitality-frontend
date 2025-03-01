@@ -1,10 +1,9 @@
-import type { ImagesId } from "./Images";
-import type { CompaniesId } from "./Companies";
-/** Identifier type for public.users */
-export type UsersId = string & { __brand: "UsersId" };
+import type { companiesId } from "./Companies";
+import type { imagesId } from "./Images";
+export type usersId = string;
 /** Represents the table public.users */
 export default interface Users {
-  id: UsersId;
+  id: usersId;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
@@ -16,13 +15,13 @@ export default interface Users {
   dateOfBirth: Date | null;
   dateOfEmployment: Date | null;
   dateOfTermination: Date | null;
-  imageId: ImagesId | null;
-  defaultCompanyId: CompaniesId;
+  imageId: imagesId | null;
+  defaultCompanyId: companiesId | null;
 }
 /** Represents the initializer for the table public.users */
 export interface UsersInitializer {
   /** Default value: gen_random_uuid() */
-  id?: UsersId;
+  id?: usersId;
   /** Default value: CURRENT_TIMESTAMP */
   createdAt?: Date;
   /** Default value: CURRENT_TIMESTAMP */
@@ -36,12 +35,12 @@ export interface UsersInitializer {
   dateOfBirth?: Date | null;
   dateOfEmployment?: Date | null;
   dateOfTermination?: Date | null;
-  imageId?: ImagesId | null;
-  defaultCompanyId: CompaniesId;
+  imageId?: imagesId | null;
+  defaultCompanyId?: companiesId | null;
 }
 /** Represents the mutator for the table public.users */
 export interface UsersMutator {
-  id?: UsersId;
+  id?: usersId;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;
@@ -53,6 +52,6 @@ export interface UsersMutator {
   dateOfBirth?: Date | null;
   dateOfEmployment?: Date | null;
   dateOfTermination?: Date | null;
-  imageId?: ImagesId | null;
-  defaultCompanyId?: CompaniesId;
+  imageId?: imagesId | null;
+  defaultCompanyId?: companiesId | null;
 }

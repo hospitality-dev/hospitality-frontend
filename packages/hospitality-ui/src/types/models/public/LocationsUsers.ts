@@ -1,8 +1,7 @@
-/** Identifier type for public.locations_users */
-export type LocationsUsersId = string & { __brand: "LocationsUsersId" };
+export type locationsUsersId = string;
 /** Represents the table public.locations_users */
 export default interface LocationsUsers {
-  id: LocationsUsersId;
+  id: locationsUsersId;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
@@ -13,7 +12,7 @@ export default interface LocationsUsers {
 /** Represents the initializer for the table public.locations_users */
 export interface LocationsUsersInitializer {
   /** Default value: gen_random_uuid() */
-  id?: LocationsUsersId;
+  id?: locationsUsersId;
   /** Default value: CURRENT_TIMESTAMP */
   createdAt?: Date;
   /** Default value: CURRENT_TIMESTAMP */
@@ -25,7 +24,7 @@ export interface LocationsUsersInitializer {
 }
 /** Represents the mutator for the table public.locations_users */
 export interface LocationsUsersMutator {
-  id?: LocationsUsersId;
+  id?: locationsUsersId;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;
