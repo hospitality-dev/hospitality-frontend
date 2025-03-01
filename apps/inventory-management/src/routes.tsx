@@ -1,4 +1,14 @@
-import { Button, Form, QueryClient, QueryClientProvider, useForm, useLogin } from "@hospitality/hospitality-ui";
+/* eslint-disable camelcase */
+import {
+  Button,
+  Form,
+  Navbar,
+  QueryClient,
+  QueryClientProvider,
+  Sidebar,
+  useForm,
+  useLogin,
+} from "@hospitality/hospitality-ui";
 import { createRootRoute, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { z } from "zod";
@@ -7,7 +17,13 @@ const rootRoute = createRootRoute({
   component: () => (
     <>
       <QueryClientProvider client={queryClient}>
-        <Outlet />
+        <div className="flex h-screen w-screen flex-nowrap">
+          <Sidebar />
+          <div className="flex w-full flex-col">
+            <Navbar />
+            <Outlet />
+          </div>
+        </div>
       </QueryClientProvider>
       <TanStackRouterDevtools />
     </>
@@ -17,18 +33,32 @@ const rootRoute = createRootRoute({
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   loader: () => {
-    throw redirect({
-      to: "/login",
-    });
+    fetch("http://localhost:4000/api/v1/users", { credentials: "include" });
+    // throw redirect({
+    //   search: { code_challenge: "", code_challenge_method: "S256", state: "", redirect_uri: "" },
+    //   to: "/login",
+    // });
   },
   path: "/",
 });
 
-const aboutRoute = createRoute({
+const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/login",
+  validateSearch: z.object({
+    code_challenge: z.string(),
+    code_challenge_method: z.literal("S256"),
+    redirect_uri: z.string().url(),
+    state: z.string().uuid(),
+  }),
+  loaderDeps: ({ search }) => search,
+  loader: ({ deps }) => {
+    if (!deps?.code_challenge || !deps?.code_challenge_method || !deps?.redirect_uri || !deps?.state) {
+      throw redirect({ to: "/" });
+    }
+  },
   component: function About() {
-    useLogin();
+    const { login } = useLogin();
 
     const { Field, handleSubmit, state } = useForm({
       defaultValues: {
@@ -41,19 +71,8 @@ const aboutRoute = createRoute({
           password: z.string().nonempty("Password cannot be empty."),
         }),
       },
-      onSubmit: async () => {
-        const response = await fetch("http://localhost:4000/auth/login?org_id=308087902967955458");
-
-        const data = await response.json();
-
-        // Store state in localStorage if you need to verify it later
-        localStorage.setItem("auth_state", data.state);
-
-        // Redirect to Zitadel's auth page
-        window.location.href = data.auth_url;
-      },
+      onSubmit: login,
     });
-
     return (
       <div className="p-2">
         <Form handleSubmit={handleSubmit}>
@@ -78,12 +97,14 @@ const aboutRoute = createRoute({
 
           <Button isOutline label="Log in" onClick={undefined} variant="success" />
         </Form>
+        <br />
+        <Button label="Create organization" onClick={undefined} variant="info" />
       </div>
     );
   },
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, aboutRoute]);
+const routeTree = rootRoute.addChildren([indexRoute, loginRoute]);
 
 export const router = createRouter({ routeTree });
 
