@@ -1,6 +1,6 @@
 import { literal, object, string } from "zod";
 
-import { users } from "../../types";
+import { users } from "../models";
 
 export const loginParamsSchema = object({
   username: string().nonempty("Username cannot be empty."),

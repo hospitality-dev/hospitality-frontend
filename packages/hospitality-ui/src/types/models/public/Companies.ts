@@ -1,5 +1,5 @@
-import type { ImagesId } from "./Images";
 import type { UsersId } from "./Users";
+import type { ImagesId } from "./Images";
 /** Identifier type for public.companies */
 export type CompaniesId = string & { __brand: "CompaniesId" };
 /** Represents the table public.companies */
