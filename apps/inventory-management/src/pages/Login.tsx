@@ -1,25 +1,44 @@
-import { Navigate } from "@tanstack/react-router";
+import { Button, Form, loginParamsSchema, useForm, useLogin } from "@hospitality/hospitality-ui";
 
-type Props = {
-  handleLogin: () => void;
-  authenticated: boolean | null;
-};
-export function Login({ authenticated, handleLogin }: Props) {
+export function Login() {
+  const { login } = useLogin();
+
+  const { Field, handleSubmit, state } = useForm({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+    validators: {
+      onSubmit: loginParamsSchema,
+    },
+    onSubmit: login,
+  });
   return (
-    <div>
-      {authenticated === null && <div>Loading...</div>}
-      {authenticated === false && (
-        <div>
-          <button
-            onClick={() => {
-              // Perform the authorization request, including the code challenge
-              handleLogin();
-            }}>
-            Login
-          </button>
-        </div>
-      )}
-      {authenticated && <Navigate to="/" />}
+    <div className="p-2">
+      <Form handleSubmit={handleSubmit}>
+        {state.errors.toString()}
+        <Field
+          children={(field) => (
+            <input name={field.name} onChange={(e) => field.handleChange(e.target.value)} placeholder="Username" />
+          )}
+          name="username"
+        />
+        <Field
+          children={(field) => (
+            <input
+              name={field.name}
+              onChange={(e) => field.handleChange(e.target.value)}
+              placeholder="Password"
+              type="password"
+            />
+          )}
+          name="password"
+        />
+
+        <Button isOutline label="Log in" onClick={undefined} variant="success" />
+      </Form>
+      <br />
+      <Button label="Create organization" onClick={undefined} variant="info" />
     </div>
   );
 }

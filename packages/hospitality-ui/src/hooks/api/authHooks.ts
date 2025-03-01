@@ -2,16 +2,10 @@ import { useMutation } from "@tanstack/react-query";
 import { redirect, useLocation, useNavigate } from "@tanstack/react-router";
 import { useSetAtom } from "jotai";
 import ky from "ky";
-import { literal, object } from "zod";
 
 import { userAtom } from "../../atoms";
-import { LoginParams, LoginResponse, Response, users } from "../../types";
+import { LoginParams, LoginResponse, Response } from "../../types";
 
-const loginResponseSchema = object({
-  message: literal("Success."),
-  ok: literal(true),
-  data: users.pick({ id: true, firstName: true, lastName: true, username: true, phone: true, email: true }),
-});
 export function useLogin() {
   async function loginRoute() {
     const res = await ky

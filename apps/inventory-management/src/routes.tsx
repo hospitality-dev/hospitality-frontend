@@ -1,17 +1,10 @@
 /* eslint-disable camelcase */
-import {
-  Button,
-  Form,
-  Navbar,
-  QueryClient,
-  QueryClientProvider,
-  Sidebar,
-  useForm,
-  useLogin,
-} from "@hospitality/hospitality-ui";
+import { Navbar, QueryClient, QueryClientProvider, Sidebar } from "@hospitality/hospitality-ui";
 import { createRootRoute, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { z } from "zod";
+
+import { Login } from "./pages";
 const queryClient = new QueryClient({});
 const rootRoute = createRootRoute({
   component: () => (
@@ -57,51 +50,7 @@ const loginRoute = createRoute({
       throw redirect({ to: "/" });
     }
   },
-  component: function About() {
-    const { login } = useLogin();
-
-    const { Field, handleSubmit, state } = useForm({
-      defaultValues: {
-        username: "",
-        password: "",
-      },
-      validators: {
-        onSubmit: z.object({
-          username: z.string().nonempty("Username cannot be empty."),
-          password: z.string().nonempty("Password cannot be empty."),
-        }),
-      },
-      onSubmit: login,
-    });
-    return (
-      <div className="p-2">
-        <Form handleSubmit={handleSubmit}>
-          {state.errors.toString()}
-          <Field
-            children={(field) => (
-              <input name={field.name} onChange={(e) => field.handleChange(e.target.value)} placeholder="Username" />
-            )}
-            name="username"
-          />
-          <Field
-            children={(field) => (
-              <input
-                name={field.name}
-                onChange={(e) => field.handleChange(e.target.value)}
-                placeholder="Password"
-                type="password"
-              />
-            )}
-            name="password"
-          />
-
-          <Button isOutline label="Log in" onClick={undefined} variant="success" />
-        </Form>
-        <br />
-        <Button label="Create organization" onClick={undefined} variant="info" />
-      </div>
-    );
-  },
+  component: Login,
 });
 
 const routeTree = rootRoute.addChildren([indexRoute, loginRoute]);
