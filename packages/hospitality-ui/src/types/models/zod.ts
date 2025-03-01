@@ -1,38 +1,43 @@
 import { z } from "zod";
-export const idcompaniesUsers = z.string();
-export const idproducts = z.string();
-export const idusers = z.string();
-export const idcompanies = z.string();
-export const idcompaniesLocations = z.string();
-export const idlocations = z.string();
-export const idimages = z.string();
-export const idproductsLocations = z.string();
+export const companiesUsersId = z.string();
+export const productsId = z.string();
+export const usersId = z.string();
+export const locationsUsersId = z.string();
+export const companiesId = z.string();
+export const companiesLocationsId = z.string();
+export const locationsId = z.string();
+export const rolesId = z.string();
+export const imagesId = z.string();
+export const productsLocationsId = z.string();
 export const companiesUsers = z.object({
-  id: idcompaniesUsers,
+  id: companiesUsersId,
   createdAt: z.date(),
   updatedAt: z.date(),
   deletedAt: z.date().nullable(),
-  companyId: idcompanies,
-  userId: idusers,
+  companyId: companiesId,
+  userId: usersId,
+  roleId: rolesId.nullable(),
 });
 export const companiesUsersInitializer = z.object({
-  id: idcompaniesUsers.optional(),
+  id: companiesUsersId.optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
-  companyId: idcompanies,
-  userId: idusers,
+  companyId: companiesId,
+  userId: usersId,
+  roleId: rolesId.optional().nullable(),
 });
 export const companiesUsersMutator = z.object({
-  id: idcompaniesUsers.optional(),
+  id: companiesUsersId.optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
-  companyId: idcompanies.optional(),
-  userId: idusers.optional(),
+  companyId: companiesId.optional(),
+  userId: usersId.optional(),
+  roleId: rolesId.optional().nullable(),
 });
 export const products = z.object({
-  id: idproducts,
+  id: productsId,
   createdAt: z.date().nullable(),
   updatedAt: z.date().nullable(),
   deletedAt: z.date().nullable(),
@@ -41,10 +46,10 @@ export const products = z.object({
   weight: z.string().nullable(),
   volume: z.string().nullable(),
   barcode: z.string().nullable(),
-  imageId: idimages.nullable(),
+  imageId: imagesId.nullable(),
 });
 export const productsInitializer = z.object({
-  id: idproducts.optional(),
+  id: productsId.optional(),
   createdAt: z.date().optional().nullable(),
   updatedAt: z.date().optional().nullable(),
   deletedAt: z.date().optional().nullable(),
@@ -53,10 +58,10 @@ export const productsInitializer = z.object({
   weight: z.string().optional().nullable(),
   volume: z.string().optional().nullable(),
   barcode: z.string().optional().nullable(),
-  imageId: idimages.optional().nullable(),
+  imageId: imagesId.optional().nullable(),
 });
 export const productsMutator = z.object({
-  id: idproducts.optional(),
+  id: productsId.optional(),
   createdAt: z.date().optional().nullable(),
   updatedAt: z.date().optional().nullable(),
   deletedAt: z.date().optional().nullable(),
@@ -65,10 +70,10 @@ export const productsMutator = z.object({
   weight: z.string().optional().nullable(),
   volume: z.string().optional().nullable(),
   barcode: z.string().optional().nullable(),
-  imageId: idimages.optional().nullable(),
+  imageId: imagesId.optional().nullable(),
 });
 export const users = z.object({
-  id: idusers,
+  id: usersId,
   createdAt: z.date(),
   updatedAt: z.date(),
   deletedAt: z.date().nullable(),
@@ -80,10 +85,11 @@ export const users = z.object({
   dateOfBirth: z.date().nullable(),
   dateOfEmployment: z.date().nullable(),
   dateOfTermination: z.date().nullable(),
-  imageId: idimages.nullable(),
+  imageId: imagesId.nullable(),
+  defaultCompanyId: companiesId,
 });
 export const usersInitializer = z.object({
-  id: idusers.optional(),
+  id: usersId.optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
@@ -95,10 +101,11 @@ export const usersInitializer = z.object({
   dateOfBirth: z.date().optional().nullable(),
   dateOfEmployment: z.date().optional().nullable(),
   dateOfTermination: z.date().optional().nullable(),
-  imageId: idimages.optional().nullable(),
+  imageId: imagesId.optional().nullable(),
+  defaultCompanyId: companiesId,
 });
 export const usersMutator = z.object({
-  id: idusers.optional(),
+  id: usersId.optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
@@ -111,76 +118,104 @@ export const usersMutator = z.object({
   dateOfBirth: z.date().optional().nullable(),
   dateOfEmployment: z.date().optional().nullable(),
   dateOfTermination: z.date().optional().nullable(),
-  imageId: idimages.optional().nullable(),
+  imageId: imagesId.optional().nullable(),
+  defaultCompanyId: companiesId.optional(),
+});
+export const locationsUsers = z.object({
+  id: locationsUsersId,
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  deletedAt: z.date().nullable(),
+  locationId: z.string(),
+  userId: z.string(),
+  roleId: z.string(),
+});
+export const locationsUsersInitializer = z.object({
+  id: locationsUsersId.optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+  deletedAt: z.date().optional().nullable(),
+  locationId: z.string(),
+  userId: z.string(),
+  roleId: z.string(),
+});
+export const locationsUsersMutator = z.object({
+  id: locationsUsersId.optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+  deletedAt: z.date().optional().nullable(),
+  locationId: z.string().optional(),
+  userId: z.string().optional(),
+  roleId: z.string().optional(),
 });
 export const companies = z.object({
-  id: idcompanies,
+  id: companiesId,
   createdAt: z.date(),
   updatedAt: z.date(),
   deletedAt: z.date().nullable(),
   title: z.string(),
-  ownerId: idusers,
+  ownerId: usersId,
   address: z.string(),
   phone: z.string(),
   email: z.string(),
   dateOfFounding: z.date().nullable(),
   cin: z.string().nullable(),
-  imageId: idimages.nullable(),
+  imageId: imagesId.nullable(),
 });
 export const companiesInitializer = z.object({
-  id: idcompanies.optional(),
+  id: companiesId.optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
   title: z.string(),
-  ownerId: idusers,
+  ownerId: usersId,
   address: z.string(),
   phone: z.string(),
   email: z.string(),
   dateOfFounding: z.date().optional().nullable(),
   cin: z.string().optional().nullable(),
-  imageId: idimages.optional().nullable(),
+  imageId: imagesId.optional().nullable(),
 });
 export const companiesMutator = z.object({
-  id: idcompanies.optional(),
+  id: companiesId.optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
   title: z.string().optional(),
-  ownerId: idusers.optional(),
+  ownerId: usersId.optional(),
   address: z.string().optional(),
   phone: z.string().optional(),
   email: z.string().optional(),
   dateOfFounding: z.date().optional().nullable(),
   cin: z.string().optional().nullable(),
-  imageId: idimages.optional().nullable(),
+  imageId: imagesId.optional().nullable(),
 });
 export const companiesLocations = z.object({
-  id: idcompaniesLocations,
-  companyId: idcompanies,
-  locationId: idlocations,
+  id: companiesLocationsId,
+  companyId: companiesId,
+  locationId: locationsId,
   createdAt: z.date(),
   updatedAt: z.date(),
   deletedAt: z.date().nullable(),
 });
 export const companiesLocationsInitializer = z.object({
-  id: idcompaniesLocations.optional(),
-  companyId: idcompanies,
-  locationId: idlocations,
+  id: companiesLocationsId.optional(),
+  companyId: companiesId,
+  locationId: locationsId,
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
 });
 export const companiesLocationsMutator = z.object({
-  id: idcompaniesLocations.optional(),
-  companyId: idcompanies.optional(),
-  locationId: idlocations.optional(),
+  id: companiesLocationsId.optional(),
+  companyId: companiesId.optional(),
+  locationId: locationsId.optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
 });
 export const locations = z.object({
-  id: idlocations,
+  id: locationsId,
   title: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -189,7 +224,7 @@ export const locations = z.object({
   longitude: z.string().nullable(),
 });
 export const locationsInitializer = z.object({
-  id: idlocations.optional(),
+  id: locationsId.optional(),
   title: z.string(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
@@ -198,7 +233,7 @@ export const locationsInitializer = z.object({
   longitude: z.string().optional().nullable(),
 });
 export const locationsMutator = z.object({
-  id: idlocations.optional(),
+  id: locationsId.optional(),
   title: z.string().optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
@@ -206,48 +241,72 @@ export const locationsMutator = z.object({
   latitude: z.string().optional().nullable(),
   longitude: z.string().optional().nullable(),
 });
+export const roles = z.object({
+  id: rolesId,
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  deletedAt: z.date().nullable(),
+  title: z.string(),
+  isDefault: z.boolean(),
+});
+export const rolesInitializer = z.object({
+  id: rolesId.optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+  deletedAt: z.date().optional().nullable(),
+  title: z.string(),
+  isDefault: z.boolean().optional(),
+});
+export const rolesMutator = z.object({
+  id: rolesId.optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+  deletedAt: z.date().optional().nullable(),
+  title: z.string().optional(),
+  isDefault: z.boolean().optional(),
+});
 export const images = z.object({
-  id: idimages,
+  id: imagesId,
   title: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
   deletedAt: z.date().nullable(),
-  ownerId: idusers,
+  ownerId: usersId,
 });
 export const imagesInitializer = z.object({
-  id: idimages.optional(),
+  id: imagesId.optional(),
   title: z.string(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
-  ownerId: idusers,
+  ownerId: usersId,
 });
 export const imagesMutator = z.object({
-  id: idimages.optional(),
+  id: imagesId.optional(),
   title: z.string().optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
-  ownerId: idusers.optional(),
+  ownerId: usersId.optional(),
 });
 export const productsLocations = z.object({
-  id: idproductsLocations,
+  id: productsLocationsId,
   count: z.string(),
-  productId: idproducts.nullable(),
-  locationId: idlocations.nullable(),
-  companyId: idcompanies.nullable(),
+  productId: productsId.nullable(),
+  locationId: locationsId.nullable(),
+  companyId: companiesId.nullable(),
 });
 export const productsLocationsInitializer = z.object({
-  id: idproductsLocations.optional(),
+  id: productsLocationsId.optional(),
   count: z.string().optional(),
-  productId: idproducts.optional().nullable(),
-  locationId: idlocations.optional().nullable(),
-  companyId: idcompanies.optional().nullable(),
+  productId: productsId.optional().nullable(),
+  locationId: locationsId.optional().nullable(),
+  companyId: companiesId.optional().nullable(),
 });
 export const productsLocationsMutator = z.object({
-  id: idproductsLocations.optional(),
+  id: productsLocationsId.optional(),
   count: z.string().optional(),
-  productId: idproducts.optional().nullable(),
-  locationId: idlocations.optional().nullable(),
-  companyId: idcompanies.optional().nullable(),
+  productId: productsId.optional().nullable(),
+  locationId: locationsId.optional().nullable(),
+  companyId: companiesId.optional().nullable(),
 });

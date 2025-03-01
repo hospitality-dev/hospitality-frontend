@@ -1,9 +1,9 @@
-import type { idimages } from "./Images";
-/** Identifier type for products */
-export type idproducts = string & { __flavor?: "id" };
+import type { ImagesId } from "./Images";
+/** Identifier type for public.products */
+export type ProductsId = string & { __brand: "ProductsId" };
 /** Represents the table public.products */
 export default interface Products {
-  id: idproducts;
+  id: ProductsId;
   createdAt: Date | null;
   updatedAt: Date | null;
   deletedAt: Date | null;
@@ -12,12 +12,12 @@ export default interface Products {
   weight: string | null;
   volume: string | null;
   barcode: string | null;
-  imageId: idimages | null;
+  imageId: ImagesId | null;
 }
 /** Represents the initializer for the table public.products */
 export interface ProductsInitializer {
   /** Default value: gen_random_uuid() */
-  id?: idproducts;
+  id?: ProductsId;
   /** Default value: CURRENT_TIMESTAMP */
   createdAt?: Date | null;
   /** Default value: CURRENT_TIMESTAMP */
@@ -28,11 +28,11 @@ export interface ProductsInitializer {
   weight?: string | null;
   volume?: string | null;
   barcode?: string | null;
-  imageId?: idimages | null;
+  imageId?: ImagesId | null;
 }
 /** Represents the mutator for the table public.products */
 export interface ProductsMutator {
-  id?: idproducts;
+  id?: ProductsId;
   createdAt?: Date | null;
   updatedAt?: Date | null;
   deletedAt?: Date | null;
@@ -41,5 +41,5 @@ export interface ProductsMutator {
   weight?: string | null;
   volume?: string | null;
   barcode?: string | null;
-  imageId?: idimages | null;
+  imageId?: ImagesId | null;
 }
