@@ -1,18 +1,14 @@
-import { Navbar, Outlet, QueryClient, QueryClientProvider, Sidebar, TanStackRouterDevtools } from "@hospitality/hospitality-ui";
-
-const queryClient = new QueryClient({});
+import { Navbar, Outlet, Sidebar, TanStackRouterDevtools } from "@hospitality/hospitality-ui";
 
 export function AppLayout() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="flex h-screen w-screen flex-nowrap">
-        <Sidebar />
-        <div className="flex w-full flex-col">
-          <Navbar />
-          <Outlet />
-        </div>
+    <div className="flex h-screen w-screen flex-nowrap overflow-hidden bg-gray-200">
+      <Sidebar />
+      <div className="flex w-full flex-col">
+        <Navbar />
+        <Outlet />
       </div>
       <TanStackRouterDevtools />
-    </QueryClientProvider>
+    </div>
   );
 }

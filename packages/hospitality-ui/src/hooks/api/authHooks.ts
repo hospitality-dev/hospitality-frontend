@@ -62,11 +62,12 @@ export function useLogin() {
 
 export function useAuth() {
   const userId = localStorage.getItem("user_id") || "";
-  const userData = useRead<User>(
+
+  const data = useRead<User>(
     {
       id: userId,
       model: "users",
-      fields: ["id", "firstName", "lastName", "username"],
+      fields: ["id", "username", "firstName", "lastName"],
       relations: ["role"],
     },
     { enabled: !!userId }
@@ -75,10 +76,10 @@ export function useAuth() {
   const reset = useResetAtom(userAtom);
 
   useLayoutEffect(() => {
-    if (!user && !!userData.data) {
-      setUser(userData.data.data);
+    if (!user && !!data?.data) {
+      setUser(data.data);
     }
-  }, [user, userData]);
+  }, [user, data]);
 
   return { user, reset };
 }

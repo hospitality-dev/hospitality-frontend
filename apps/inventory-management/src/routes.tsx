@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { AuthContextType, getReadQueryOptions } from "@hospitality/hospitality-ui";
+import { AuthContextType, fetchFunction, getSearchParams, ResponseType, useReadProps } from "@hospitality/hospitality-ui";
 import { User } from "@hospitality/hospitality-ui/src/types/models/entities";
 import { createRootRouteWithContext, createRoute, createRouter } from "@tanstack/react-router";
 import { z } from "zod";
@@ -12,17 +12,20 @@ const rootRoute = createRootRouteWithContext<AuthContextType>()({
   beforeLoad: async () => {
     const userId = localStorage.getItem("user_id");
     if (!userId) return null;
-    const user = await queryClient.ensureQueryData(
-      getReadQueryOptions<User>(
-        {
+    const user = await queryClient.ensureQueryData<ResponseType<User>>({
+      queryKey: ["users", userId],
+      queryFn: () =>
+        fetchFunction({
+          method: "GET",
           id: userId,
           model: "users",
-          fields: ["id", "username", "firstName", "lastName"],
-          relations: ["role"],
-        },
-        { enabled: !!userId }
-      )
-    );
+          searchParams: getSearchParams<useReadProps<User>["fields"], useReadProps<User>["relations"]>(
+            ["id", "firstName", "lastName", "username"],
+            ["role"]
+          ),
+          userReset: () => {},
+        }),
+    });
     return { user };
   },
   component: AppLayout,
@@ -31,8 +34,8 @@ const rootRoute = createRootRouteWithContext<AuthContextType>()({
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  loader: (params) => {
-    console.info(params.context);
+  component: () => {
+    return "DASHBOARD";
   },
 });
 
