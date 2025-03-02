@@ -1,9 +1,3 @@
-export {
-  type companiesUsersId,
-  type default as CompaniesUsers,
-  type CompaniesUsersInitializer,
-  type CompaniesUsersMutator,
-} from "./public/CompaniesUsers";
 export { type productsId, type default as Products, type ProductsInitializer, type ProductsMutator } from "./public/Products";
 export { type usersId, type default as Users, type UsersInitializer, type UsersMutator } from "./public/Users";
 export {
@@ -13,17 +7,17 @@ export {
   type LocationsUsersMutator,
 } from "./public/LocationsUsers";
 export {
+  type locationsProductsId,
+  type default as LocationsProducts,
+  type LocationsProductsInitializer,
+  type LocationsProductsMutator,
+} from "./public/LocationsProducts";
+export {
   type companiesId,
   type default as Companies,
   type CompaniesInitializer,
   type CompaniesMutator,
 } from "./public/Companies";
-export {
-  type companiesLocationsId,
-  type default as CompaniesLocations,
-  type CompaniesLocationsInitializer,
-  type CompaniesLocationsMutator,
-} from "./public/CompaniesLocations";
 export {
   type locationsId,
   type default as Locations,
@@ -33,25 +27,14 @@ export {
 export { type rolesId, type default as Roles, type RolesInitializer, type RolesMutator } from "./public/Roles";
 export { type imagesId, type default as Images, type ImagesInitializer, type ImagesMutator } from "./public/Images";
 export {
-  type productsLocationsId,
-  type default as ProductsLocations,
-  type ProductsLocationsInitializer,
-  type ProductsLocationsMutator,
-} from "./public/ProductsLocations";
-export {
-  companiesUsersId,
   productsId,
   usersId,
   locationsUsersId,
+  locationsProductsId,
   companiesId,
-  companiesLocationsId,
   locationsId,
   rolesId,
   imagesId,
-  productsLocationsId,
-  companiesUsers,
-  companiesUsersInitializer,
-  companiesUsersMutator,
   products,
   productsInitializer,
   productsMutator,
@@ -61,12 +44,12 @@ export {
   locationsUsers,
   locationsUsersInitializer,
   locationsUsersMutator,
+  locationsProducts,
+  locationsProductsInitializer,
+  locationsProductsMutator,
   companies,
   companiesInitializer,
   companiesMutator,
-  companiesLocations,
-  companiesLocationsInitializer,
-  companiesLocationsMutator,
   locations,
   locationsInitializer,
   locationsMutator,
@@ -76,7 +59,4 @@ export {
   images,
   imagesInitializer,
   imagesMutator,
-  productsLocations,
-  productsLocationsInitializer,
-  productsLocationsMutator,
 } from "./../../schemas/models";

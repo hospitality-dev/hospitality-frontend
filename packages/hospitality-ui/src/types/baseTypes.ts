@@ -2,6 +2,8 @@ import { valueof } from "@hospitality/hospitality-ui/src";
 
 import { Icons } from "../enums/icons";
 
+// =========ENTITIES=========
+export type AvailableEntities = "users" | "companies" | "locations" | "roles" | "products";
 // =========COMPONENTS=========
 export type Variant = "primary" | "secondary" | "info" | "success" | "warning" | "error";
 
@@ -17,4 +19,4 @@ export interface BaseEntityType {
 }
 
 // =========RESPONSE=========
-export type Response<T> = { data: T; ok: boolean; message: string };
+export type ResponseType<T> = { data: T; ok: boolean; message: string };

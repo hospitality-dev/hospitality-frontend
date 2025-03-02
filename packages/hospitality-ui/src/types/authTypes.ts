@@ -6,3 +6,7 @@ export type LoginParams = {
 };
 
 export type LoginResponse = Pick<Users, "id" | "firstName" | "lastName" | "username" | "phone" | "email">;
+
+export type AuthContextType = {
+  user: LoginResponse | null;
+};

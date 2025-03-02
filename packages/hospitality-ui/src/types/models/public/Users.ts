@@ -1,4 +1,3 @@
-import type { companiesId } from "./Companies";
 import type { imagesId } from "./Images";
 export type usersId = string;
 /** Represents the table public.users */
@@ -16,7 +15,6 @@ export default interface Users {
   dateOfEmployment: Date | null;
   dateOfTermination: Date | null;
   imageId: imagesId | null;
-  defaultCompanyId: companiesId | null;
 }
 /** Represents the initializer for the table public.users */
 export interface UsersInitializer {
@@ -36,7 +34,6 @@ export interface UsersInitializer {
   dateOfEmployment?: Date | null;
   dateOfTermination?: Date | null;
   imageId?: imagesId | null;
-  defaultCompanyId?: companiesId | null;
 }
 /** Represents the mutator for the table public.users */
 export interface UsersMutator {
@@ -53,5 +50,4 @@ export interface UsersMutator {
   dateOfEmployment?: Date | null;
   dateOfTermination?: Date | null;
   imageId?: imagesId | null;
-  defaultCompanyId?: companiesId | null;
 }
