@@ -3,10 +3,11 @@ import { redirect, useLocation, useNavigate } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
 import ky from "ky";
+import { useLayoutEffect } from "react";
 
 import { userAtom } from "../../atoms";
 import { loginResponseSchema } from "../../schemas";
-import { LoginParams, LoginResponse, ResponseType, Users } from "../../types";
+import { LoginParams, LoginResponse, ResponseType } from "../../types";
 import { User } from "../../types/models/entities";
 import { useRead } from "./readHooks";
 
@@ -60,7 +61,7 @@ export function useLogin() {
 }
 
 export function useAuth() {
-  const userId = localStorage.getItem("user_id");
+  const userId = localStorage.getItem("user_id") || "";
   const userData = useRead<User>(
     {
       id: userId,
@@ -70,9 +71,14 @@ export function useAuth() {
     },
     { enabled: !!userId }
   );
-  console.info(userId, userData.data);
-  const user = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const reset = useResetAtom(userAtom);
+
+  useLayoutEffect(() => {
+    if (!user && !!userData.data) {
+      setUser(userData.data.data);
+    }
+  }, [user, userData]);
 
   return { user, reset };
 }
