@@ -1,10 +1,10 @@
-import { queryOptions, useQuery, UseQueryOptions } from "@tanstack/react-query";
-import ky from "ky";
+import { useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { useResetAtom } from "jotai/utils";
 
-import { AvailableEntities, FieldKeys, RelationKeys, ResponseType, valueof } from "../../types";
-import { getSearchParams } from "../../utils";
+import { userAtom } from "../../atoms";
+import { AvailableEntities, FieldKeys, RelationKeys, valueof } from "../../types";
+import { fetchFunction, getSearchParams } from "../../utils";
 
-const serverUrl = import.meta.env.VITE_SERVER_URL;
 export type useReadProps<F> = {
   id: string;
   model: AvailableEntities;
@@ -12,37 +12,16 @@ export type useReadProps<F> = {
   relations: (keyof RelationKeys<F>)[];
 };
 
-export function getReadQueryOptions<F extends Record<keyof F, valueof<F>>>(
+export function useRead<F extends Record<keyof F, valueof<F>>>(
   { id, model, fields, relations }: useReadProps<F>,
   options?: Pick<UseQueryOptions<F>, "enabled">
 ) {
+  const reset = useResetAtom(userAtom);
   const searchParams = getSearchParams<useReadProps<F>["fields"], useReadProps<F>["relations"]>(fields, relations);
 
-  return queryOptions({
+  return useQuery<F>({
     queryKey: [model, id],
+    queryFn: () => fetchFunction<F>({ method: "GET", model, id, searchParams, userReset: reset }),
     enabled: !!(options?.enabled ?? true),
-    queryFn: () =>
-      ky
-        .get(`${model}/${id}`, {
-          searchParams,
-          prefixUrl: `${serverUrl}/api/v1`,
-          credentials: "include",
-          hooks: {
-            afterResponse: [
-              async (_request, _options, response) => {
-                const res = await response.json<ResponseType<F>>();
-                if (res.ok) return new Response(JSON.stringify(res));
-              },
-            ],
-          },
-        })
-        .json<ResponseType<F>>(),
   });
-}
-
-export function useRead<F extends Record<keyof F, valueof<F>>>(
-  props: useReadProps<F>,
-  options?: Pick<UseQueryOptions<F>, "enabled">
-) {
-  return useQuery(getReadQueryOptions(props, options));
 }
