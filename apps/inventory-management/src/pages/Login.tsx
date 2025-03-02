@@ -37,8 +37,6 @@ export function Login() {
 
         <Button isOutline label="Log in" onClick={undefined} variant="success" />
       </Form>
-      <br />
-      <Button label="Create organization" onClick={undefined} variant="info" />
     </div>
   );
 }

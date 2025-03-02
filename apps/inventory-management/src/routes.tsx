@@ -1,26 +1,13 @@
 /* eslint-disable camelcase */
-import { Navbar, QueryClient, QueryClientProvider, Sidebar } from "@hospitality/hospitality-ui";
-import { createRootRoute, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { AuthContextType, useAuth } from "@hospitality/hospitality-ui";
+import { createRootRouteWithContext, createRoute, createRouter, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 
 import { Login } from "./pages";
-const queryClient = new QueryClient({});
-const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <div className="flex h-screen w-screen flex-nowrap">
-          <Sidebar />
-          <div className="flex w-full flex-col">
-            <Navbar />
-            <Outlet />
-          </div>
-        </div>
-      </QueryClientProvider>
-      <TanStackRouterDevtools />
-    </>
-  ),
+import { AppLayout } from "./pages/Layout";
+
+const rootRoute = createRootRouteWithContext<AuthContextType>()({
+  component: AppLayout,
 });
 
 const indexRoute = createRoute({
@@ -37,6 +24,9 @@ const indexRoute = createRoute({
 
 const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
+  beforeLoad: (params) => {
+    console.log(params);
+  },
   path: "/login",
   validateSearch: z.object({
     code_challenge: z.string(),
@@ -55,7 +45,12 @@ const loginRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([indexRoute, loginRoute]);
 
-export const router = createRouter({ routeTree });
+export const router = createRouter({
+  routeTree,
+  context: {
+    user: undefined!,
+  },
+});
 
 declare module "@tanstack/react-router" {
   interface Register {
