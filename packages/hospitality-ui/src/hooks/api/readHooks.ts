@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { queryOptions, useQuery, UseQueryOptions } from "@tanstack/react-query";
 import ky from "ky";
 
 import { AvailableEntities, FieldKeys, RelationKeys, ResponseType, valueof } from "../../types";
@@ -11,12 +11,14 @@ export type useReadProps<F> = {
   fields: Extract<keyof F, FieldKeys<F, "created_at" | "updated_at">>[];
   relations: (keyof RelationKeys<F>)[];
 };
-export function useRead<F extends Record<keyof F, valueof<F>>>(
+
+export function getReadQueryOptions<F extends Record<keyof F, valueof<F>>>(
   { id, model, fields, relations }: useReadProps<F>,
-  options?: UseQueryOptions<F>
+  options?: Pick<UseQueryOptions<F>, "enabled">
 ) {
   const searchParams = getSearchParams<useReadProps<F>["fields"], useReadProps<F>["relations"]>(fields, relations);
-  return useQuery<ResponseType<F>>({
+
+  return queryOptions({
     queryKey: [model, id],
     enabled: !!(options?.enabled ?? true),
     queryFn: () =>
@@ -29,11 +31,18 @@ export function useRead<F extends Record<keyof F, valueof<F>>>(
             afterResponse: [
               async (_request, _options, response) => {
                 const res = await response.json<ResponseType<F>>();
-                if (res.ok) return new Response(JSON.stringify(res.data));
+                if (res.ok) return new Response(JSON.stringify(res));
               },
             ],
           },
         })
         .json<ResponseType<F>>(),
   });
+}
+
+export function useRead<F extends Record<keyof F, valueof<F>>>(
+  props: useReadProps<F>,
+  options?: Pick<UseQueryOptions<F>, "enabled">
+) {
+  return useQuery(getReadQueryOptions(props, options));
 }
