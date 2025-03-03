@@ -6,9 +6,9 @@ export type locationsProductsId = string;
 export default interface LocationsProducts {
   id: locationsProductsId;
   count: BigInt;
-  product_id: productsId | null;
-  location_id: locationsId | null;
-  company_id: companiesId | null;
+  productId: productsId | null;
+  locationId: locationsId | null;
+  companyId: companiesId | null;
 }
 /** Represents the initializer for the table public.locations_products */
 export interface LocationsProductsInitializer {
@@ -16,15 +16,15 @@ export interface LocationsProductsInitializer {
   id?: locationsProductsId;
   /** Default value: 0 */
   count?: BigInt;
-  product_id?: productsId | null;
-  location_id?: locationsId | null;
-  company_id?: companiesId | null;
+  productId?: productsId | null;
+  locationId?: locationsId | null;
+  companyId?: companiesId | null;
 }
 /** Represents the mutator for the table public.locations_products */
 export interface LocationsProductsMutator {
   id?: locationsProductsId;
   count?: BigInt;
-  product_id?: productsId | null;
-  location_id?: locationsId | null;
-  company_id?: companiesId | null;
+  productId?: productsId | null;
+  locationId?: locationsId | null;
+  companyId?: companiesId | null;
 }

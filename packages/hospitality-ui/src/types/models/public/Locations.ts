@@ -3,11 +3,11 @@ export type locationsId = string;
 /** Represents the table public.locations */
 export default interface Locations {
   id: locationsId;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
   title: string;
-  company_id: companiesId;
+  companyId: companiesId;
   latitude: string | null;
   longitude: string | null;
 }
@@ -16,23 +16,23 @@ export interface LocationsInitializer {
   /** Default value: gen_random_uuid() */
   id?: locationsId;
   /** Default value: CURRENT_TIMESTAMP */
-  created_at?: Date;
+  createdAt?: Date;
   /** Default value: CURRENT_TIMESTAMP */
-  updated_at?: Date;
-  deleted_at?: Date | null;
+  updatedAt?: Date;
+  deletedAt?: Date | null;
   title: string;
-  company_id: companiesId;
+  companyId: companiesId;
   latitude?: string | null;
   longitude?: string | null;
 }
 /** Represents the mutator for the table public.locations */
 export interface LocationsMutator {
   id?: locationsId;
-  created_at?: Date;
-  updated_at?: Date;
-  deleted_at?: Date | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date | null;
   title?: string;
-  company_id?: companiesId;
+  companyId?: companiesId;
   latitude?: string | null;
   longitude?: string | null;
 }

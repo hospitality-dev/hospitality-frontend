@@ -4,10 +4,10 @@ export type imagesId = string;
 export default interface Images {
   id: imagesId;
   title: string;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date | null;
-  owner_id: usersId;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+  ownerId: usersId;
 }
 /** Represents the initializer for the table public.images */
 export interface ImagesInitializer {
@@ -15,18 +15,18 @@ export interface ImagesInitializer {
   id?: imagesId;
   title: string;
   /** Default value: CURRENT_TIMESTAMP */
-  created_at?: Date;
+  createdAt?: Date;
   /** Default value: CURRENT_TIMESTAMP */
-  updated_at?: Date;
-  deleted_at?: Date | null;
-  owner_id: usersId;
+  updatedAt?: Date;
+  deletedAt?: Date | null;
+  ownerId: usersId;
 }
 /** Represents the mutator for the table public.images */
 export interface ImagesMutator {
   id?: imagesId;
   title?: string;
-  created_at?: Date;
-  updated_at?: Date;
-  deleted_at?: Date | null;
-  owner_id?: usersId;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date | null;
+  ownerId?: usersId;
 }
