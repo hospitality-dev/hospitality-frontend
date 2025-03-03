@@ -9,7 +9,7 @@ const classes = tv({
   variants: {
     variant: {
       primary: "text-gray-900 hover:text-gray-400 active:text-gray-950",
-      secondary: "text-gray-300 hover:text-gray-200 active:text-gray-500",
+      secondary: "text-white hover:text-gray-200 active:text-gray-500",
       info: "text-blue-500 hover:text-blue-300 active:text-blue-700",
       success: "text-green-500 hover:text-green-300 active:text-green-700",
       warning: "text-orange-500 hover:text-orange-300 active:text-orange-700",
@@ -28,7 +28,16 @@ interface BasicLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorEleme
 
 function BasicLinkComponent(props: BasicLinkProps, ref: React.Ref<HTMLAnchorElement>) {
   return (
-    <a ref={ref} {...props} className={classes({ variant: props.variant || "primary", isDisabled: !!props?.isDisabled })} />
+    <a
+      ref={ref}
+      {...props}
+      className={classes({ variant: props.variant || "primary", isDisabled: !!props?.isDisabled })}
+      onClick={(e) => {
+        if (props.isDisabled) {
+          e.preventDefault();
+        }
+      }}
+    />
   );
 }
 
