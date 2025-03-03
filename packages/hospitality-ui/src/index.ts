@@ -9,6 +9,7 @@ export { QueryClient, QueryClientProvider, queryOptions } from "@tanstack/react-
 export { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 export {
   type AnyRoute,
+  createLazyRoute,
   createRootRoute,
   createRootRouteWithContext,
   createRoute,
