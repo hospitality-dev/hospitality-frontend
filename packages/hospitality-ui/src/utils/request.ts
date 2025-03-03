@@ -30,15 +30,20 @@ export async function fetchFunction<DataType>({
   searchParams: URLSearchParams;
   userReset: () => void;
 }): Promise<DataType> {
-  const result = await ky(`${model}/${id}`, {
-    method,
-    searchParams,
-    prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
-    credentials: "include",
-    hooks: {
-      afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
-    },
-  }).json<ResponseType<DataType>>();
+  try {
+    const result = await ky(`${model}/${id}`, {
+      method,
+      searchParams,
+      prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
+      credentials: "include",
+      hooks: {
+        afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
+      },
+    }).json<ResponseType<DataType>>();
 
-  return result?.data;
+    return result?.data;
+  } catch (error) {
+    console.error(error);
+    return {} as DataType;
+  }
 }

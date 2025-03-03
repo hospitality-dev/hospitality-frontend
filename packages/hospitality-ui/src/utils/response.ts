@@ -14,6 +14,7 @@ export async function formatDataResponseHook<R>(
   if (res.ok) return new Response(JSON.stringify(res));
   else {
     if (response.status === 401) {
+      // TODO: HIT LOGOUT ROUTE
       localStorage.setItem("user_id", "");
       reset();
       redirect({ to: "/" });
