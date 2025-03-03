@@ -1,4 +1,4 @@
-import { createLink, LinkOptions } from "@tanstack/react-router";
+import { Link as TanstackLink, LinkOptions } from "@tanstack/react-router";
 import * as React from "react";
 import { tv } from "tailwind-variants";
 
@@ -26,12 +26,15 @@ interface BasicLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorEleme
   variant?: Variant;
 }
 
-function BasicLinkComponent(props: BasicLinkProps, ref: React.Ref<HTMLAnchorElement>) {
+export function Link(props: BasicLinkProps) {
   return (
-    <a
-      ref={ref}
+    <TanstackLink
       {...props}
-      className={classes({ variant: props.variant || "primary", isDisabled: !!props?.isDisabled })}
+      className={classes({
+        variant: props.variant || "primary",
+        isDisabled: !!props?.isDisabled,
+        className: props?.className || "",
+      })}
       onClick={(e) => {
         if (props.isDisabled) {
           e.preventDefault();
@@ -39,11 +42,4 @@ function BasicLinkComponent(props: BasicLinkProps, ref: React.Ref<HTMLAnchorElem
       }}
     />
   );
-}
-
-const ForwardedBasicLinkComponent = React.forwardRef(BasicLinkComponent);
-const CreatedLinkComponent = createLink(ForwardedBasicLinkComponent);
-
-export function Link(props: Parameters<typeof BasicLinkComponent>[0]) {
-  return <CreatedLinkComponent {...props} />;
 }
