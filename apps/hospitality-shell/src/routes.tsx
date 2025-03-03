@@ -1,11 +1,18 @@
-import { AuthContextType, fetchFunction, getSearchParams, ResponseType, User, useReadProps } from "@hospitality/hospitality-ui";
-import { createRootRouteWithContext, createRoute, createRouter } from "@tanstack/react-router";
+import {
+  AuthContextType,
+  fetchFunction,
+  getSearchParams,
+  ResponseType,
+  Link,
+  User,
+  useReadProps,
+} from "@hospitality/hospitality-ui";
+import { createRootRouteWithContext, createRoute, createRouter, Outlet } from "@tanstack/react-router";
 import { z } from "zod";
 
 import { queryClient } from "./App";
 import { Layout } from "./components";
 import { Login } from "./pages";
-import { inventoryHome } from "../../inventory-management/src/routes";
 
 const rootRoute = createRootRouteWithContext<AuthContextType>()({
   beforeLoad: async () => {
@@ -34,17 +41,20 @@ const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   component: () => {
-    return "ROOT";
+    return (
+      <div>
+        <Link to="/inventory/dashboard">INVENTORY</Link>
+        <br />
+        ROOT
+      </div>
+    );
   },
 });
 
-const inventoryRoutes = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "inventory/$",
-});
-
-inventoryRoutes.addChildren([inventoryHome(inventoryRoutes)]);
-
+// const inventoryRoutes = createRoute({
+//   getParentRoute: () => rootRoute,
+//   path: "inventory",
+// });
 const dashboardRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/dashboard",
@@ -69,8 +79,12 @@ const loginRoute = createRoute({
 
   component: Login,
 });
+const inventoryRootRoute = createRoute({ path: "inventory", getParentRoute: () => rootRoute, component: Outlet });
+const invRoutes = createRoute({ getParentRoute: () => inventoryRootRoute, path: "dashboard" }).lazy(() =>
+  import("@hospitality/inventory-management").then((d) => d.InvetoryDashboard)
+);
 
-const routeTree = rootRoute.addChildren([indexRoute, loginRoute, dashboardRoute, inventoryRoutes]);
+const routeTree = rootRoute.addChildren([indexRoute, loginRoute, dashboardRoute, inventoryRootRoute.addChildren([invRoutes])]);
 
 export const router = createRouter({
   routeTree,
