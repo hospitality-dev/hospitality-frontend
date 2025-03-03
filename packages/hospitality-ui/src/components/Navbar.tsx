@@ -15,7 +15,7 @@ export function Navbar() {
       <nav className="h-full">
         <ul className="flex h-full items-center justify-end">
           <li>
-            {user.user?.firstName || "TEST"}
+            {user.user?.firstName}
             <a href="#" onClick={routeToLogin}>
               Login
             </a>
