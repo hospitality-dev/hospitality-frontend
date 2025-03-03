@@ -7,7 +7,18 @@ export * from "./utils";
 export { type UpdaterFn, useForm } from "@tanstack/react-form";
 export { QueryClient, QueryClientProvider, queryOptions } from "@tanstack/react-query";
 export { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-export { createRootRoute, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
+export {
+  type AnyRoute,
+  createRootRoute,
+  createRootRouteWithContext,
+  createRoute,
+  createRouter,
+  Outlet,
+  redirect,
+  RootRoute,
+  Route,
+  RouterProvider,
+} from "@tanstack/react-router";
 export { TanStackRouterDevtools } from "@tanstack/router-devtools";
 export * as ky from "ky";
 export { z } from "zod";
