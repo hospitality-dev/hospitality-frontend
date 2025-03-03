@@ -2,31 +2,31 @@ export type rolesId = string;
 /** Represents the table public.roles */
 export default interface Roles {
   id: rolesId;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date | null;
   title: string;
-  isDefault: boolean;
+  is_default: boolean;
 }
 /** Represents the initializer for the table public.roles */
 export interface RolesInitializer {
   /** Default value: gen_random_uuid() */
   id?: rolesId;
   /** Default value: CURRENT_TIMESTAMP */
-  createdAt?: Date;
+  created_at?: Date;
   /** Default value: CURRENT_TIMESTAMP */
-  updatedAt?: Date;
-  deletedAt?: Date | null;
+  updated_at?: Date;
+  deleted_at?: Date | null;
   title: string;
   /** Default value: false */
-  isDefault?: boolean;
+  is_default?: boolean;
 }
 /** Represents the mutator for the table public.roles */
 export interface RolesMutator {
   id?: rolesId;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date | null;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date | null;
   title?: string;
-  isDefault?: boolean;
+  is_default?: boolean;
 }
