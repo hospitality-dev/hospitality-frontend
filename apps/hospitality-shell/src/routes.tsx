@@ -43,7 +43,7 @@ const indexRoute = createRoute({
   component: () => {
     return (
       <div>
-        <Link to="/inventory/dashboard">INVENTORY</Link>
+        <Link to="/inventory-management/dashboard">INVENTORY</Link>
         <br />
         ROOT
       </div>
@@ -79,7 +79,7 @@ const loginRoute = createRoute({
 
   component: Login,
 });
-const inventoryRootRoute = createRoute({ path: "inventory", getParentRoute: () => rootRoute, component: Outlet });
+const inventoryRootRoute = createRoute({ path: "inventory-management", getParentRoute: () => rootRoute, component: Outlet });
 const invRoutes = createRoute({ getParentRoute: () => inventoryRootRoute, path: "dashboard" }).lazy(() =>
   import("@hospitality/inventory-management").then((d) => d.InvetoryDashboard)
 );
