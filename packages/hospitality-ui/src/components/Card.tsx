@@ -10,15 +10,15 @@ type Props = {
 };
 
 const classes = tv({
-  base: "cursor-pointer overflow-hidden rounded shadow-sm transition-shadow hover:shadow-md",
+  base: "cursor-pointer overflow-hidden rounded border-3 border-transparent bg-white shadow-sm transition-shadow hover:shadow-md",
   variants: {
     isFullWidth: {
       true: "w-full",
       false: "aspect-square w-fit min-w-32",
     },
     variant: {
-      primary: "bg-white",
-      secondary: "bg-gray-300",
+      primary: "",
+      secondary: "bg-gray-200",
       info: "border-3 border-blue-500",
       success: "border-3 border-green-500",
       warning: "border-3 border-orange-500",
