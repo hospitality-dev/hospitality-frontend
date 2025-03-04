@@ -79,12 +79,23 @@ const loginRoute = createRoute({
 
   component: Login,
 });
-const inventoryRootRoute = createRoute({ path: "inventory-management", getParentRoute: () => rootRoute, component: Outlet });
-const invRoutes = createRoute({ getParentRoute: () => inventoryRootRoute, path: "dashboard" }).lazy(() =>
-  import("@hospitality/inventory-management").then((d) => d.InvetoryDashboard)
-);
 
-const routeTree = rootRoute.addChildren([indexRoute, loginRoute, dashboardRoute, inventoryRootRoute.addChildren([invRoutes])]);
+//#region INVENTORY_ROUTES
+const inventoryRootRoute = createRoute({ path: "inventory-management", getParentRoute: () => rootRoute, component: Outlet });
+const invDashboard = createRoute({ getParentRoute: () => inventoryRootRoute, path: "dashboard" }).lazy(() =>
+  import("@hospitality/inventory-management").then((d) => d.InvetoryDashboardRoute)
+);
+const invProductSettings = createRoute({ getParentRoute: () => inventoryRootRoute, path: "products/settings" }).lazy(() =>
+  import("@hospitality/inventory-management").then((d) => d.InvetoryProductsSettingsRoute)
+);
+//#endregion INVENTORY_ROUTES
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  loginRoute,
+  dashboardRoute,
+  inventoryRootRoute.addChildren([invDashboard, invProductSettings]),
+]);
 
 export const router = createRouter({
   routeTree,
