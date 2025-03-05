@@ -21,7 +21,7 @@ const tabContainer = tv({
 const tabClasses = tv({
   slots: {
     tab: "relative top-0.5 box-content flex min-w-fit cursor-pointer justify-center border-b-2 py-1 text-lg font-medium transition-colors",
-    linkClasses: "px-4",
+    linkClasses: "px-4 active:text-gray-500",
   },
   variants: {
     isActive: {
@@ -30,7 +30,8 @@ const tabClasses = tv({
     },
     isDisabled: {
       true: {
-        tab: "cursor-not-allowed border-gray-300 hover:border-gray-300 [&>*]:text-gray-400 [&>*]:active:text-gray-400",
+        tab: "cursor-not-allowed border-gray-300 hover:border-gray-300",
+        linkClasses: "text-gray-400 active:text-gray-400",
       },
     },
   },
