@@ -6,4 +6,5 @@ export * from "./Input";
 export * from "./Link";
 export * from "./Navbar";
 export * from "./Sidebar";
+export * from "./Table";
 export * from "./Tabs";
