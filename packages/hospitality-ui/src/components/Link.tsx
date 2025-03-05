@@ -16,7 +16,7 @@ const classes = tv({
       error: "text-red-600 hover:text-red-400 active:text-red-800",
     },
     isDisabled: {
-      true: "cursor-not-allowed text-gray-200",
+      true: "cursor-not-allowed",
     },
   },
 });
