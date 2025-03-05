@@ -41,13 +41,9 @@ function Tab({
   const classes = tabClasses({ isActive, isDisabled });
   return (
     <li className={classes} onClick={() => setActive(title)}>
-      {link ? (
-        <Link isDisabled={isDisabled} onClick={() => setActive(title)} title={title} to={link}>
-          {title}
-        </Link>
-      ) : (
-        <span>{title}</span>
-      )}
+      <Link isDisabled={isDisabled} onClick={() => setActive(title)} title={title} to={link}>
+        {title}
+      </Link>
     </li>
   );
 }
