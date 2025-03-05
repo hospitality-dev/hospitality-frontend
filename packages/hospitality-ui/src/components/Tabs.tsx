@@ -19,14 +19,19 @@ const tabContainer = tv({
 });
 
 const tabClasses = tv({
-  base: "relative top-0.5 box-content flex min-w-fit cursor-pointer justify-center border-b-2 px-4 py-1 text-lg font-medium transition-colors",
+  slots: {
+    tab: "relative top-0.5 box-content flex min-w-fit cursor-pointer justify-center border-b-2 py-1 text-lg font-medium transition-colors",
+    linkClasses: "px-4",
+  },
   variants: {
     isActive: {
-      true: "border-blue-400",
-      false: "border-gray-300 hover:border-blue-300",
+      true: { tab: "border-blue-400" },
+      false: { tab: "border-gray-300 hover:border-blue-300" },
     },
     isDisabled: {
-      true: "cursor-not-allowed border-gray-300 hover:border-gray-300 [&>*]:text-gray-400 [&>*]:active:text-gray-400",
+      true: {
+        tab: "cursor-not-allowed border-gray-300 hover:border-gray-300 [&>*]:text-gray-400 [&>*]:active:text-gray-400",
+      },
     },
   },
 });
@@ -38,10 +43,10 @@ function Tab({
   isActive,
   setActive,
 }: Props["tabs"][number] & { setActive: Dispatch<SetStateAction<string>> }) {
-  const classes = tabClasses({ isActive, isDisabled });
+  const { tab, linkClasses } = tabClasses({ isActive, isDisabled });
   return (
-    <li className={classes} onClick={() => setActive(title)}>
-      <Link isDisabled={isDisabled} onClick={() => setActive(title)} title={title} to={link}>
+    <li className={tab()} onClick={() => setActive(title)}>
+      <Link className={linkClasses()} isDisabled={isDisabled} onClick={() => setActive(title)} title={title} to={link}>
         {title}
       </Link>
     </li>
