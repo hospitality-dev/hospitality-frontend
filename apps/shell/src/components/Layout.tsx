@@ -18,7 +18,7 @@ export function Layout() {
           <Outlet />
         </div>
       </div>
-      <TanStackRouterDevtools />
+      <TanStackRouterDevtools position="bottom-right" />
     </main>
   );
 }

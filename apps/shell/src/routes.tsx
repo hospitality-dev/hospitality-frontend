@@ -1,12 +1,14 @@
+/* eslint-disable camelcase */
 import {
   AuthContextType,
   fetchFunction,
   getSearchParams,
-  ResponseType,
   Link,
+  ResponseType,
   User,
   useReadProps,
 } from "@hospitality/hospitality-ui";
+import { SettingsLayout } from "@hospitality/settings";
 import { createRootRouteWithContext, createRoute, createRouter, Outlet } from "@tanstack/react-router";
 import { z } from "zod";
 
@@ -51,18 +53,6 @@ const indexRoute = createRoute({
   },
 });
 
-// const inventoryRoutes = createRoute({
-//   getParentRoute: () => rootRoute,
-//   path: "inventory",
-// });
-const dashboardRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/dashboard",
-  component: () => {
-    return "DASHBOARD";
-  },
-});
-
 const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
   beforeLoad: (params) => {
@@ -80,7 +70,7 @@ const loginRoute = createRoute({
   component: Login,
 });
 
-//#region INVENTORY_ROUTES
+// #region INVENTORY_ROUTES
 const inventoryRootRoute = createRoute({ path: "inventory-management", getParentRoute: () => rootRoute, component: Outlet });
 const invDashboard = createRoute({ getParentRoute: () => inventoryRootRoute, path: "dashboard" }).lazy(() =>
   import("@hospitality/inventory-management").then((d) => d.InvetoryDashboardRoute)
@@ -88,13 +78,20 @@ const invDashboard = createRoute({ getParentRoute: () => inventoryRootRoute, pat
 const invProductSettings = createRoute({ getParentRoute: () => inventoryRootRoute, path: "products/settings" }).lazy(() =>
   import("@hospitality/inventory-management").then((d) => d.InvetoryProductsSettingsRoute)
 );
-//#endregion INVENTORY_ROUTES
+// #endregion INVENTORY_ROUTES
+
+// #region SETTINGS_ROUTES
+const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => rootRoute, component: SettingsLayout });
+const settingsUsers = createRoute({ getParentRoute: () => settingsRootRoute, path: "users" }).lazy(() =>
+  import("@hospitality/settings").then((d) => d.SettingsUsersRoute)
+);
+// #endregion SETTINGS_ROUTES
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
-  dashboardRoute,
   inventoryRootRoute.addChildren([invDashboard, invProductSettings]),
+  settingsRootRoute.addChildren([settingsUsers]),
 ]);
 
 export const router = createRouter({
