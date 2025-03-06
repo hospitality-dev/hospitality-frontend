@@ -8,7 +8,7 @@ import { useLayoutEffect } from "react";
 import { userAtom } from "../../atoms";
 import { loginResponseSchema } from "../../schemas";
 import { LoginParams, LoginResponse, ResponseType } from "../../types";
-import { User } from "../../types/models/entities";
+import { User } from "../../types/entities";
 import { useRead } from "./readHooks";
 
 export function useLogin() {
