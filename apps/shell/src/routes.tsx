@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { AuthContextType, authFetchFunction, LoginResponse } from "@hospitality/hospitality-ui";
+import { AuthContextType, authFetchFunction, getLoginRoute, LoginResponse } from "@hospitality/hospitality-ui";
 import { SettingsLayout } from "@hospitality/settings";
 import { createRootRouteWithContext, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
 import { z } from "zod";
@@ -9,9 +9,15 @@ import { Layout } from "./components";
 import { LocationSelect, Login } from "./pages";
 
 const rootRoute = createRootRouteWithContext<AuthContextType>()({
-  beforeLoad: async () => {
+  beforeLoad: async (c) => {
     const userId = localStorage.getItem("user_id");
-    if (!userId) return null;
+    if (!userId && c.location.pathname !== "/login") {
+      getLoginRoute();
+      return;
+    }
+    if (c.location.pathname === "/login") {
+      return { auth: null };
+    }
     const auth = await queryClient.ensureQueryData<LoginResponse>({
       queryKey: ["users", userId],
       queryFn: () => authFetchFunction<LoginResponse>({ method: "GET", userReset: () => {}, route: "session" }),
