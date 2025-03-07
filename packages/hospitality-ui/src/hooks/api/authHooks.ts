@@ -33,7 +33,7 @@ export function useLogin() {
         })
         .json();
       if (res.ok === true && res.data.user.id) {
-        const validation = loginResponseSchema.safeParse(res);
+        const validation = loginResponseSchema.safeParse(res.data);
         if (validation.success) {
           localStorage.setItem("user_id", validation.data.user.id);
           setUser(validation.data);
