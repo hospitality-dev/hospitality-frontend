@@ -11,20 +11,6 @@ import { LoginParams, LoginResponse, ResponseType } from "../../types";
 import { authFetchFunction } from "../../utils";
 
 export function useLogin() {
-  async function loginRoute() {
-    const res = await ky
-      .post<{ auth_url: string; state: string }>("http://localhost:4000/auth/login", {
-        credentials: "include",
-        // body: new URLSearchParams([
-        //   ["username", value.username],
-        //   ["password", value.password],
-        // ]),
-      })
-      .json();
-
-    localStorage.setItem("state", res.state);
-    window.location.assign(res.auth_url);
-  }
   const setUser = useSetAtom(userAtom);
 
   const params = useLocation();
@@ -60,7 +46,7 @@ export function useLogin() {
       }
     },
   });
-  return { loginRoute, login };
+  return { login };
 }
 
 export function useAuth() {
