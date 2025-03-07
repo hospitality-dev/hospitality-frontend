@@ -1,3 +1,4 @@
+import type { productsCategoriesId } from "./ProductsCategories";
 import type { imagesId } from "./Images";
 export type productsId = string;
 /** Represents the table public.products */
@@ -11,6 +12,8 @@ export default interface Products {
   weight: string | null;
   volume: string | null;
   barcode: string | null;
+  categoryId: productsCategoriesId;
+  subcategoryId: productsCategoriesId | null;
   imageId: imagesId | null;
 }
 /** Represents the initializer for the table public.products */
@@ -27,6 +30,8 @@ export interface ProductsInitializer {
   weight?: string | null;
   volume?: string | null;
   barcode?: string | null;
+  categoryId: productsCategoriesId;
+  subcategoryId?: productsCategoriesId | null;
   imageId?: imagesId | null;
 }
 /** Represents the mutator for the table public.products */
@@ -40,5 +45,7 @@ export interface ProductsMutator {
   weight?: string | null;
   volume?: string | null;
   barcode?: string | null;
+  categoryId?: productsCategoriesId;
+  subcategoryId?: productsCategoriesId | null;
   imageId?: imagesId | null;
 }

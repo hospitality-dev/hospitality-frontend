@@ -13,11 +13,11 @@ export {
   type LocationsProductsMutator,
 } from "./public/LocationsProducts";
 export {
-  type companiesId,
-  type default as Companies,
-  type CompaniesInitializer,
-  type CompaniesMutator,
-} from "./public/Companies";
+  type locationsAvailableProductsId,
+  type default as LocationsAvailableProducts,
+  type LocationsAvailableProductsInitializer,
+  type LocationsAvailableProductsMutator,
+} from "./public/LocationsAvailableProducts";
 export {
   type locationsId,
   type default as Locations,
@@ -27,14 +27,21 @@ export {
 export { type rolesId, type default as Roles, type RolesInitializer, type RolesMutator } from "./public/Roles";
 export { type imagesId, type default as Images, type ImagesInitializer, type ImagesMutator } from "./public/Images";
 export {
+  type productsCategoriesId,
+  type default as ProductsCategories,
+  type ProductsCategoriesInitializer,
+  type ProductsCategoriesMutator,
+} from "./public/ProductsCategories";
+export {
   zodProductsId,
   zodUsersId,
   zodLocationsUsersId,
   zodLocationsProductsId,
-  zodCompaniesId,
+  zodLocationsAvailableProductsId,
   zodLocationsId,
   zodRolesId,
   zodImagesId,
+  zodProductsCategoriesId,
   products,
   productsInitializer,
   productsMutator,
@@ -47,9 +54,9 @@ export {
   locationsProducts,
   locationsProductsInitializer,
   locationsProductsMutator,
-  companies,
-  companiesInitializer,
-  companiesMutator,
+  locationsAvailableProducts,
+  locationsAvailableProductsInitializer,
+  locationsAvailableProductsMutator,
   locations,
   locationsInitializer,
   locationsMutator,
@@ -59,4 +66,7 @@ export {
   images,
   imagesInitializer,
   imagesMutator,
+  productsCategories,
+  productsCategoriesInitializer,
+  productsCategoriesMutator,
 } from "./../../schemas/models";
