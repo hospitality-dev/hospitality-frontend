@@ -3,10 +3,11 @@ export const zodProductsId = z.string();
 export const zodUsersId = z.string();
 export const zodLocationsUsersId = z.string();
 export const zodLocationsProductsId = z.string();
-export const zodCompaniesId = z.string();
+export const zodLocationsAvailableProductsId = z.string();
 export const zodLocationsId = z.string();
 export const zodRolesId = z.string();
 export const zodImagesId = z.string();
+export const zodProductsCategoriesId = z.string();
 export const products = z.object({
   id: zodProductsId,
   createdAt: z.date().nullable(),
@@ -17,6 +18,8 @@ export const products = z.object({
   weight: z.string().nullable(),
   volume: z.string().nullable(),
   barcode: z.string().nullable(),
+  categoryId: zodProductsCategoriesId,
+  subcategoryId: zodProductsCategoriesId.nullable(),
   imageId: zodImagesId.nullable(),
 });
 export const productsInitializer = z.object({
@@ -29,6 +32,8 @@ export const productsInitializer = z.object({
   weight: z.string().optional().nullable(),
   volume: z.string().optional().nullable(),
   barcode: z.string().optional().nullable(),
+  categoryId: zodProductsCategoriesId,
+  subcategoryId: zodProductsCategoriesId.optional().nullable(),
   imageId: zodImagesId.optional().nullable(),
 });
 export const productsMutator = z.object({
@@ -41,6 +46,8 @@ export const productsMutator = z.object({
   weight: z.string().optional().nullable(),
   volume: z.string().optional().nullable(),
   barcode: z.string().optional().nullable(),
+  categoryId: zodProductsCategoriesId.optional(),
+  subcategoryId: zodProductsCategoriesId.optional().nullable(),
   imageId: zodImagesId.optional().nullable(),
 });
 export const users = z.object({
@@ -118,66 +125,42 @@ export const locationsUsersMutator = z.object({
 });
 export const locationsProducts = z.object({
   id: zodLocationsProductsId,
-  count: z.string(),
-  productId: zodProductsId.nullable(),
-  locationId: zodLocationsId.nullable(),
-  companyId: zodCompaniesId.nullable(),
-});
-export const locationsProductsInitializer = z.object({
-  id: zodLocationsProductsId.optional(),
-  count: z.string().optional(),
-  productId: zodProductsId.optional().nullable(),
-  locationId: zodLocationsId.optional().nullable(),
-  companyId: zodCompaniesId.optional().nullable(),
-});
-export const locationsProductsMutator = z.object({
-  id: zodLocationsProductsId.optional(),
-  count: z.string().optional(),
-  productId: zodProductsId.optional().nullable(),
-  locationId: zodLocationsId.optional().nullable(),
-  companyId: zodCompaniesId.optional().nullable(),
-});
-export const companies = z.object({
-  id: zodCompaniesId,
   createdAt: z.date(),
   updatedAt: z.date(),
   deletedAt: z.date().nullable(),
-  title: z.string(),
-  ownerId: zodUsersId,
-  address: z.string(),
-  phone: z.string(),
-  email: z.string(),
-  dateOfFounding: z.date().nullable(),
-  cin: z.string().nullable(),
-  imageId: zodImagesId.nullable(),
+  availableProductId: zodLocationsAvailableProductsId.nullable(),
+  locationId: zodLocationsId,
 });
-export const companiesInitializer = z.object({
-  id: zodCompaniesId.optional(),
+export const locationsProductsInitializer = z.object({
+  id: zodLocationsProductsId.optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
-  title: z.string(),
-  ownerId: zodUsersId,
-  address: z.string(),
-  phone: z.string(),
-  email: z.string(),
-  dateOfFounding: z.date().optional().nullable(),
-  cin: z.string().optional().nullable(),
-  imageId: zodImagesId.optional().nullable(),
+  availableProductId: zodLocationsAvailableProductsId.optional().nullable(),
+  locationId: zodLocationsId,
 });
-export const companiesMutator = z.object({
-  id: zodCompaniesId.optional(),
+export const locationsProductsMutator = z.object({
+  id: zodLocationsProductsId.optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
-  title: z.string().optional(),
-  ownerId: zodUsersId.optional(),
-  address: z.string().optional(),
-  phone: z.string().optional(),
-  email: z.string().optional(),
-  dateOfFounding: z.date().optional().nullable(),
-  cin: z.string().optional().nullable(),
-  imageId: zodImagesId.optional().nullable(),
+  availableProductId: zodLocationsAvailableProductsId.optional().nullable(),
+  locationId: zodLocationsId.optional(),
+});
+export const locationsAvailableProducts = z.object({
+  id: zodLocationsAvailableProductsId,
+  productId: zodProductsId,
+  locationId: zodLocationsId,
+});
+export const locationsAvailableProductsInitializer = z.object({
+  id: zodLocationsAvailableProductsId.optional(),
+  productId: zodProductsId,
+  locationId: zodLocationsId,
+});
+export const locationsAvailableProductsMutator = z.object({
+  id: zodLocationsAvailableProductsId.optional(),
+  productId: zodProductsId.optional(),
+  locationId: zodLocationsId.optional(),
 });
 export const locations = z.object({
   id: zodLocationsId,
@@ -185,7 +168,7 @@ export const locations = z.object({
   updatedAt: z.date(),
   deletedAt: z.date().nullable(),
   title: z.string(),
-  companyId: zodCompaniesId,
+  ownerId: zodUsersId,
   latitude: z.string().nullable(),
   longitude: z.string().nullable(),
 });
@@ -195,7 +178,7 @@ export const locationsInitializer = z.object({
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
   title: z.string(),
-  companyId: zodCompaniesId,
+  ownerId: zodUsersId,
   latitude: z.string().optional().nullable(),
   longitude: z.string().optional().nullable(),
 });
@@ -205,7 +188,7 @@ export const locationsMutator = z.object({
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
   title: z.string().optional(),
-  companyId: zodCompaniesId.optional(),
+  ownerId: zodUsersId.optional(),
   latitude: z.string().optional().nullable(),
   longitude: z.string().optional().nullable(),
 });
@@ -256,4 +239,19 @@ export const imagesMutator = z.object({
   updatedAt: z.date().optional(),
   deletedAt: z.date().optional().nullable(),
   ownerId: zodUsersId.optional(),
+});
+export const productsCategories = z.object({
+  id: zodProductsCategoriesId,
+  title: z.string(),
+  parentId: zodProductsCategoriesId.nullable(),
+});
+export const productsCategoriesInitializer = z.object({
+  id: zodProductsCategoriesId.optional(),
+  title: z.string(),
+  parentId: zodProductsCategoriesId.optional().nullable(),
+});
+export const productsCategoriesMutator = z.object({
+  id: zodProductsCategoriesId.optional(),
+  title: z.string().optional(),
+  parentId: zodProductsCategoriesId.optional().nullable(),
 });
