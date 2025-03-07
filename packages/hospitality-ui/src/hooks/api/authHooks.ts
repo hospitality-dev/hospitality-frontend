@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { redirect, useLocation, useNavigate } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
@@ -8,8 +8,7 @@ import { useLayoutEffect } from "react";
 import { userAtom } from "../../atoms";
 import { loginResponseSchema } from "../../schemas";
 import { LoginParams, LoginResponse, ResponseType } from "../../types";
-import { User } from "../../types/entities";
-import { useRead } from "./readHooks";
+import { authFetchFunction } from "../../utils";
 
 export function useLogin() {
   async function loginRoute() {
@@ -47,12 +46,16 @@ export function useLogin() {
           ]),
         })
         .json();
-      if (res.ok === true && res.data.id) {
+      if (res.ok === true && res.data.user.id) {
         const validation = loginResponseSchema.safeParse(res);
         if (validation.success) {
-          localStorage.setItem("user_id", validation.data.data.id);
-          setUser(validation.data.data);
-          navigate({ to: "/" });
+          localStorage.setItem("user_id", validation.data.user.id);
+          setUser(validation.data);
+          if (!validation.data.user?.locationId) {
+            navigate({ to: "/location-select" });
+          } else {
+            navigate({ to: "/" });
+          }
         } else console.error(validation);
       }
     },
@@ -62,24 +65,24 @@ export function useLogin() {
 
 export function useAuth() {
   const userId = localStorage.getItem("user_id") || "";
-
-  const data = useRead<User>(
-    {
-      id: userId,
-      model: "users",
-      fields: ["id", "username", "firstName", "lastName"],
-      relations: ["role"],
-    },
-    { enabled: !!userId }
-  );
   const [user, setUser] = useAtom(userAtom);
   const reset = useResetAtom(userAtom);
+  const res = useQuery<LoginResponse>({
+    queryKey: ["users", userId],
+    queryFn: () => authFetchFunction<LoginResponse>({ method: "GET", userReset: reset, route: "session" }),
+    staleTime: 5 * 60 * 1000,
+  });
 
   useLayoutEffect(() => {
-    if (!user && !!data?.data) {
-      setUser(data.data);
+    if (!user && !!res?.data?.user) {
+      const validation = loginResponseSchema.safeParse(res.data);
+      if (validation.success) {
+        setUser(validation.data);
+      } else {
+        console.error(validation);
+      }
     }
-  }, [user, data]);
+  }, [user, res?.data]);
 
   return { user, reset };
 }
