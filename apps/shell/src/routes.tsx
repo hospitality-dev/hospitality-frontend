@@ -1,63 +1,46 @@
 /* eslint-disable camelcase */
-import {
-  AuthContextType,
-  fetchFunction,
-  getSearchParams,
-  Link,
-  ResponseType,
-  User,
-  useReadProps,
-} from "@hospitality/hospitality-ui";
+import { AuthContextType, authFetchFunction, LoginResponse } from "@hospitality/hospitality-ui";
 import { SettingsLayout } from "@hospitality/settings";
-import { createRootRouteWithContext, createRoute, createRouter, Outlet } from "@tanstack/react-router";
+import { createRootRouteWithContext, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 
 import { queryClient } from "./App";
 import { Layout } from "./components";
-import { Login } from "./pages";
+import { LocationSelect, Login } from "./pages";
 
 const rootRoute = createRootRouteWithContext<AuthContextType>()({
   beforeLoad: async () => {
     const userId = localStorage.getItem("user_id");
     if (!userId) return null;
-    const user = await queryClient.ensureQueryData<ResponseType<User>>({
+    const auth = await queryClient.ensureQueryData<LoginResponse>({
       queryKey: ["users", userId],
-      queryFn: () =>
-        fetchFunction({
-          method: "GET",
-          id: userId,
-          model: "users",
-          searchParams: getSearchParams<useReadProps<User>["fields"], useReadProps<User>["relations"]>(
-            ["id", "firstName", "lastName", "username"],
-            ["role"]
-          ),
-          userReset: () => {},
-        }),
+      queryFn: () => authFetchFunction<LoginResponse>({ method: "GET", userReset: () => {}, route: "session" }),
     });
-    return { user };
+    return { auth };
   },
+  component: Outlet,
+});
+const mainLayout = createRoute({
+  getParentRoute: () => rootRoute,
+  id: "layout",
   component: Layout,
 });
-
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: () => {
-    return (
-      <div>
-        <Link to="/inventory-management/dashboard">INVENTORY</Link>
-        <br />
-        ROOT
-      </div>
-    );
+  component: Layout,
+  beforeLoad: (p) => {
+    if (!p.context.auth?.user?.locationId) {
+      throw redirect({
+        to: "/location-select",
+      });
+    }
   },
 });
 
 const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
-  beforeLoad: (params) => {
-    console.info(params.context);
-  },
+
   path: "/login",
   validateSearch: z.object({
     code_challenge: z.string().optional(),
@@ -68,6 +51,12 @@ const loginRoute = createRoute({
   loaderDeps: ({ search }) => search,
 
   component: Login,
+});
+
+const locationSelectRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/location-select",
+  component: LocationSelect,
 });
 
 // #region INVENTORY_ROUTES
@@ -88,16 +77,19 @@ const settingsUsers = createRoute({ getParentRoute: () => settingsRootRoute, pat
 // #endregion SETTINGS_ROUTES
 
 const routeTree = rootRoute.addChildren([
-  indexRoute,
+  mainLayout.addChildren([
+    indexRoute,
+    inventoryRootRoute.addChildren([invDashboard, invProductSettings]),
+    settingsRootRoute.addChildren([settingsUsers]),
+  ]),
   loginRoute,
-  inventoryRootRoute.addChildren([invDashboard, invProductSettings]),
-  settingsRootRoute.addChildren([settingsUsers]),
+  locationSelectRoute,
 ]);
 
 export const router = createRouter({
   routeTree,
   context: {
-    user: null,
+    auth: null,
   },
 });
 
