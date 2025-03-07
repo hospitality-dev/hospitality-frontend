@@ -1,4 +1,5 @@
 import { getSentenceCase, Navbar, Outlet, Sidebar, TanStackRouterDevtools } from "@hospitality/hospitality-ui";
+
 import { AvailableModules } from "../enums";
 
 const sections = [

@@ -20,6 +20,7 @@ export {
   RootRoute,
   Route,
   RouterProvider,
+  useRouteContext,
 } from "@tanstack/react-router";
 export { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
 export { TanStackRouterDevtools } from "@tanstack/router-devtools";
