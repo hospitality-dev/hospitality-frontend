@@ -29,17 +29,20 @@ interface BasicLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorEleme
 export function Link(props: BasicLinkProps) {
   return (
     <TanstackLink
-      {...props}
       className={classes({
         variant: props.variant || "primary",
         isDisabled: !!props?.isDisabled,
         className: props?.className || "",
       })}
+      disabled={props.isDisabled}
       onClick={(e) => {
         if (props.isDisabled) {
           e.preventDefault();
         }
       }}
-    />
+      title={props.title}
+      to={props.to}>
+      {props.children || null}
+    </TanstackLink>
   );
 }
