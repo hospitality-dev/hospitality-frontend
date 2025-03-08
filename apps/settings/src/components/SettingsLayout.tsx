@@ -1,6 +1,10 @@
 import { Outlet, Tabs } from "@hospitality/hospitality-ui";
 
-const tabs = [{ title: "Users", link: "/settings/users" }, { title: "Locations" }, { title: "Products" }];
+const tabs = [
+  { title: "Users", link: "/settings/users" },
+  { title: "Locations", link: "/settings/locations" },
+  { title: "Products", link: "/settings/products" },
+];
 
 export function SettingsLayout() {
   return (
