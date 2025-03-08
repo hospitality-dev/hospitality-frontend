@@ -1,7 +1,8 @@
-import { Button, Card, getSentenceCase, Icon, Icons, useRouteContext } from "@hospitality/hospitality-ui";
+import { Button, Card, getSentenceCase, Icons, useRouteContext, useSessionLocation } from "@hospitality/hospitality-ui";
 
 export function LocationSelect() {
   const { auth } = useRouteContext({ from: "/location-select" });
+  const { changeLocation } = useSessionLocation();
   return (
     <div className="flex h-screen w-screen items-center justify-center overflow-hidden bg-gray-200">
       <div className="w-96">
@@ -17,8 +18,9 @@ export function LocationSelect() {
                   <li key={location.locationId} className="flex w-full">
                     <Button
                       icon={Icons["arrow-right"]}
+                      isOutline
                       label={`${location.locationTitle} (${getSentenceCase(location.role)})`}
-                      onClick={undefined}
+                      onClick={() => changeLocation(location.locationId)}
                       size="xl"
                       variant="info"
                     />
