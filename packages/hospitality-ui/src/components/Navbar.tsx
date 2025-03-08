@@ -1,13 +1,13 @@
 import { MouseEvent } from "react";
 
-import { useAuth, useLogin } from "../hooks";
+import { useAuth } from "../hooks";
+import { getLoginRoute } from "../utils";
 
 export function Navbar() {
-  const { loginRoute } = useLogin();
-  const user = useAuth();
+  const auth = useAuth();
   function routeToLogin(e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) {
     e.preventDefault();
-    loginRoute();
+    getLoginRoute();
   }
 
   return (
@@ -15,7 +15,7 @@ export function Navbar() {
       <nav className="h-full">
         <ul className="flex h-full items-center justify-end">
           <li>
-            {user.user?.firstName}
+            {auth?.user?.firstName || ""}
             <a href="#" onClick={routeToLogin}>
               Login
             </a>
