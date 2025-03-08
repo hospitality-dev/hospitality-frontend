@@ -48,7 +48,6 @@ export function useLogin() {
   });
   return { login };
 }
-
 export function useAuth() {
   const userId = localStorage.getItem("user_id") || "";
   const [user, setUser] = useAtom(userAtom);
@@ -70,5 +69,23 @@ export function useAuth() {
     }
   }, [user, res?.data]);
 
-  return { user, reset };
+  return { user: user?.user, locations: user?.locations || [], reset };
+}
+export function useSessionLocation() {
+  const setUser = useSetAtom(userAtom);
+  const navigate = useNavigate();
+  const { mutate } = useMutation({
+    mutationFn: async (locationId: string) =>
+      authFetchFunction<LoginResponse>({ method: "GET", userReset: () => {}, route: `session/location/${locationId}` }),
+    onSuccess: (data) => {
+      setUser(data);
+      navigate({ to: "/settings/users" });
+    },
+  });
+
+  function changeLocation(locationId: string) {
+    mutate(locationId);
+  }
+
+  return { changeLocation };
 }
