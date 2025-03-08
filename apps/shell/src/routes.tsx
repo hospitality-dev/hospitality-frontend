@@ -29,25 +29,8 @@ const rootRoute = createRootRouteWithContext<AuthContextType>()({
 
 const mainLayout = createRoute({
   getParentRoute: () => rootRoute,
-  id: "layout",
-  component: Layout,
-});
-
-const indexRoute = createRoute({
-  getParentRoute: () => mainLayout,
   path: "/",
   component: Layout,
-  beforeLoad: (p) => {
-    if (!!p.context.auth?.user && !p.context.auth?.user?.locationId) {
-      throw redirect({
-        to: "/location-select",
-      });
-    } else if (!!p.context.auth?.user && !!p.context.auth.user.locationId) {
-      throw redirect({
-        to: "/",
-      });
-    }
-  },
 });
 
 const loginRoute = createRoute({
@@ -81,9 +64,7 @@ const inventoryRootRoute = createRoute({ path: "inventory-management", getParent
 const invDashboard = createRoute({ getParentRoute: () => inventoryRootRoute, path: "dashboard" }).lazy(() =>
   import("@hospitality/inventory-management").then((d) => d.InvetoryDashboardRoute)
 );
-const invProductSettings = createRoute({ getParentRoute: () => inventoryRootRoute, path: "products/settings" }).lazy(() =>
-  import("@hospitality/inventory-management").then((d) => d.InvetoryProductsSettingsRoute)
-);
+
 // #endregion INVENTORY_ROUTES
 
 // #region SETTINGS_ROUTES
@@ -91,13 +72,15 @@ const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => 
 const settingsUsers = createRoute({ getParentRoute: () => settingsRootRoute, path: "users" }).lazy(() =>
   import("@hospitality/settings").then((d) => d.SettingsUsersRoute)
 );
+const settingsProducts = createRoute({ getParentRoute: () => settingsRootRoute, path: "products" }).lazy(() =>
+  import("@hospitality/settings").then((d) => d.SettingsProductsRoute)
+);
 // #endregion SETTINGS_ROUTES
 
 const routeTree = rootRoute.addChildren([
   mainLayout.addChildren([
-    indexRoute,
-    inventoryRootRoute.addChildren([invDashboard, invProductSettings]),
-    settingsRootRoute.addChildren([settingsUsers]),
+    inventoryRootRoute.addChildren([invDashboard]),
+    settingsRootRoute.addChildren([settingsUsers, settingsProducts]),
   ]),
   loginRoute,
   locationSelectRoute,
