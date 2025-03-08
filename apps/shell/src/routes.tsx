@@ -26,19 +26,25 @@ const rootRoute = createRootRouteWithContext<AuthContextType>()({
   },
   component: Outlet,
 });
+
 const mainLayout = createRoute({
   getParentRoute: () => rootRoute,
   id: "layout",
   component: Layout,
 });
+
 const indexRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => mainLayout,
   path: "/",
   component: Layout,
   beforeLoad: (p) => {
-    if (!p.context.auth?.user?.locationId) {
+    if (!!p.context.auth?.user && !p.context.auth?.user?.locationId) {
       throw redirect({
         to: "/location-select",
+      });
+    } else if (!!p.context.auth?.user && !!p.context.auth.user.locationId) {
+      throw redirect({
+        to: "/",
       });
     }
   },
@@ -61,12 +67,17 @@ const loginRoute = createRoute({
 
 const locationSelectRoute = createRoute({
   getParentRoute: () => rootRoute,
+  beforeLoad: (c) => {
+    if (c.context.auth?.user.locationId) {
+      throw redirect({ to: "/settings/users" });
+    }
+  },
   path: "/location-select",
   component: LocationSelect,
 });
 
 // #region INVENTORY_ROUTES
-const inventoryRootRoute = createRoute({ path: "inventory-management", getParentRoute: () => rootRoute, component: Outlet });
+const inventoryRootRoute = createRoute({ path: "inventory-management", getParentRoute: () => mainLayout, component: Outlet });
 const invDashboard = createRoute({ getParentRoute: () => inventoryRootRoute, path: "dashboard" }).lazy(() =>
   import("@hospitality/inventory-management").then((d) => d.InvetoryDashboardRoute)
 );
@@ -76,7 +87,7 @@ const invProductSettings = createRoute({ getParentRoute: () => inventoryRootRout
 // #endregion INVENTORY_ROUTES
 
 // #region SETTINGS_ROUTES
-const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => rootRoute, component: SettingsLayout });
+const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => mainLayout, component: SettingsLayout });
 const settingsUsers = createRoute({ getParentRoute: () => settingsRootRoute, path: "users" }).lazy(() =>
   import("@hospitality/settings").then((d) => d.SettingsUsersRoute)
 );
