@@ -1,4 +1,4 @@
-import { atom } from "jotai";
+import { atomWithReset } from "jotai/utils";
 
-import { Users } from "../types/models";
-export const userAtom = atom<Users | null>(null);
+import { LoginResponse } from "../types";
+export const userAtom = atomWithReset<LoginResponse | null>(null);

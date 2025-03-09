@@ -19,6 +19,6 @@ export default tseslint.config({
     "react/jsx-sort-props": ["error", { reservedFirst: true }],
     "react/prop-types": "off", // Not needed with TypeScript
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/exhaustive-deps": "off",
   },
 });
