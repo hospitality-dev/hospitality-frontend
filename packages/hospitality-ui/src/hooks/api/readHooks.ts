@@ -2,26 +2,25 @@ import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { useResetAtom } from "jotai/utils";
 
 import { userAtom } from "../../atoms";
-import { AvailableEntities, FieldKeys, FormattedEntity, RelationKeys, valueof } from "../../types";
+import { AvailableEntities, valueof } from "../../types";
 import { fetchFunction, getSearchParams } from "../../utils";
 
 export type useReadProps<F> = {
   id: string;
   model: AvailableEntities;
-  fields: Extract<keyof F, FieldKeys<F, "created_at" | "updated_at">>[];
-  relations: (keyof RelationKeys<F>)[];
+  fields: (keyof Omit<F, "created_at" | "updated_at">)[];
 };
 
 export function useRead<F extends Record<keyof F, valueof<F>>>(
-  { id, model, fields, relations }: useReadProps<F>,
+  { id, model, fields }: useReadProps<F>,
   options?: Pick<UseQueryOptions<F>, "enabled">
 ) {
   const reset = useResetAtom(userAtom);
-  const searchParams = getSearchParams<useReadProps<F>["fields"], useReadProps<F>["relations"]>(fields, relations);
+  const searchParams = getSearchParams<useReadProps<F>["fields"]>(fields);
 
-  return useQuery<FormattedEntity<F>>({
+  return useQuery<F>({
     queryKey: [model, id],
-    queryFn: () => fetchFunction<FormattedEntity<F>>({ method: "GET", model, id, searchParams, userReset: reset }),
+    queryFn: () => fetchFunction<F>({ method: "GET", model, id, searchParams, userReset: reset }),
     enabled: !!(options?.enabled ?? true),
   });
 }

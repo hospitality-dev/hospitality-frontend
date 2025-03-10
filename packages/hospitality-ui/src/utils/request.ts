@@ -5,14 +5,11 @@ import snakecase from "lodash.snakecase";
 import { AvailableEntities, ResponseType } from "../types";
 import { formatDataResponseHook } from "./response";
 
-export function getSearchParams<F, R>(fields: F, relations: R) {
+export function getSearchParams<F>(fields: F) {
   const searchParams = new URLSearchParams();
 
   if (Array.isArray(fields)) {
     searchParams.append("fields", fields.map((f) => (typeof f === "string" ? snakecase(f) : f)).join(","));
-  }
-  if (Array.isArray(relations) && relations.length) {
-    searchParams.append("relations", relations.map((f) => (typeof f === "string" ? snakecase(f) : f)).join(","));
   }
 
   return searchParams;
