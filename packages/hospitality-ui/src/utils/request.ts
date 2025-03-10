@@ -1,4 +1,5 @@
 import ky from "ky";
+import kebabcase from "lodash.kebabcase";
 import snakecase from "lodash.snakecase";
 
 import { AvailableEntities, ResponseType } from "../types";
@@ -31,7 +32,7 @@ export async function fetchFunction<DataType>({
   userReset: () => void;
 }): Promise<DataType> {
   try {
-    const result = await ky(`${model}${id ? "/" + id : ""}`, {
+    const result = await ky(`${kebabcase(model)}${id ? "/" + id : ""}`, {
       method,
       searchParams,
       prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
