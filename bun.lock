@@ -111,6 +111,7 @@
         "jotai": "^2.12.1",
         "ky": "^1.7.5",
         "lodash.camelcase": "^4.3.0",
+        "lodash.kebabcase": "^4.1.1",
         "lodash.snakecase": "^4.1.1",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
@@ -123,6 +124,7 @@
         "@tanstack/react-query-devtools": "^5.66.11",
         "@tanstack/router-devtools": "^1.104.3",
         "@types/lodash.camelcase": "^4.3.9",
+        "@types/lodash.kebabcase": "^4.1.9",
         "@types/lodash.snakecase": "^4.1.9",
         "@types/react": "^18.3.18",
         "@types/react-dom": "^18.3.5",
@@ -425,6 +427,8 @@
     "@types/lodash": ["@types/lodash@4.17.16", "", {}, "sha512-HX7Em5NYQAXKW+1T+FiuG27NGwzJfCX3s1GjOa7ujxZa52kjJLOr4FUxT+giF6Tgxv1e+/czV/iTtBw27WTU9g=="],
 
     "@types/lodash.camelcase": ["@types/lodash.camelcase@4.3.9", "", { "dependencies": { "@types/lodash": "*" } }, "sha512-ys9/hGBfsKxzmFI8hckII40V0ASQ83UM2pxfQRghHAwekhH4/jWtjz/3/9YDy7ZpUd/H0k2STSqmPR28dnj7Zg=="],
+
+    "@types/lodash.kebabcase": ["@types/lodash.kebabcase@4.1.9", "", { "dependencies": { "@types/lodash": "*" } }, "sha512-kPrrmcVOhSsjAVRovN0lRfrbuidfg0wYsrQa5IYuoQO1fpHHGSme66oyiYA/5eQPVl8Z95OA3HG0+d2SvYC85w=="],
 
     "@types/lodash.snakecase": ["@types/lodash.snakecase@4.1.9", "", { "dependencies": { "@types/lodash": "*" } }, "sha512-emBZJUiNlo+QPXr1junMKXwzHJK9zbFvTVdyAoorFcm1YRsbzkZCYPTVMM9AW+dlnA6utG7vpfvOs8alxv/TMw=="],
 
@@ -889,6 +893,8 @@
     "lodash": ["lodash@4.17.21", "", {}, "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="],
 
     "lodash.camelcase": ["lodash.camelcase@4.3.0", "", {}, "sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA=="],
+
+    "lodash.kebabcase": ["lodash.kebabcase@4.1.1", "", {}, "sha512-N8XRTIMMqqDgSy4VLKPnJ/+hpGZN+PHQiJnSenYqPaVV/NCqEogTnAdZLQiGKhxX+JCs8waWq2t1XHWKOmlY8g=="],
 
     "lodash.merge": ["lodash.merge@4.6.2", "", {}, "sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ=="],
 
