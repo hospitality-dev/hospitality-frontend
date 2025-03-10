@@ -1,10 +1,11 @@
 import { AnyRoute } from "@tanstack/react-router";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { tv } from "tailwind-variants";
 
 import { Link } from "./Link";
 
 type TabType = {
+  id: string;
   title: string;
   link?: AnyRoute["to"];
   isDisabled?: boolean;
@@ -12,6 +13,8 @@ type TabType = {
 };
 type Props = {
   tabs: TabType[];
+  active: string;
+  setActive: Dispatch<SetStateAction<string>>;
 };
 
 const tabContainer = tv({
@@ -38,6 +41,7 @@ const tabClasses = tv({
 });
 
 function Tab({
+  id,
   title,
   link,
   isDisabled,
@@ -46,7 +50,7 @@ function Tab({
 }: Props["tabs"][number] & { setActive: Dispatch<SetStateAction<string>> }) {
   const { tab, linkClasses } = tabClasses({ isActive, isDisabled });
   return (
-    <li className={tab()} onClick={() => setActive(title)}>
+    <li className={tab()} onClick={() => setActive(id)}>
       <Link className={linkClasses()} isDisabled={isDisabled} onClick={() => setActive(title)} title={title} to={link}>
         {title}
       </Link>
@@ -54,14 +58,14 @@ function Tab({
   );
 }
 
-export function Tabs({ tabs }: Props) {
-  const [active, setActive] = useState(tabs?.[0]?.title);
+export function Tabs({ tabs, active, setActive }: Props) {
   return (
     <ul className={tabContainer()}>
       {tabs.map((tab) => (
         <Tab
-          key={tab.title}
-          isActive={active === tab.title}
+          key={tab.id}
+          id={tab.id}
+          isActive={active === tab.id}
           isDisabled={tab?.isDisabled}
           link={tab?.link}
           setActive={setActive}
