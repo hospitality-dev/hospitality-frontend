@@ -20,8 +20,8 @@ const tabContainer = tv({
 
 const tabClasses = tv({
   slots: {
-    tab: "relative top-0.5 box-content flex min-w-fit cursor-pointer justify-center border-b-2 py-1 text-lg font-medium transition-colors",
-    linkClasses: "px-4 active:text-gray-500",
+    tab: "pointer-events-none relative top-0.5 flex min-w-fit cursor-pointer justify-center border-b-2 py-1 text-lg font-medium transition-colors",
+    linkClasses: "pointer-events-auto px-4 active:text-gray-500",
   },
   variants: {
     isActive: {
