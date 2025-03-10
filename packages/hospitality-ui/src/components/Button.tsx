@@ -66,7 +66,7 @@ export function Button({ label, variant = "primary", size = "md", isOutline = fa
   if (!label && !icon) return null;
   return (
     <button className={classes({ variant, size, isOutline })} onClick={onClick}>
-      {label ? <span>{label}</span> : null} {icon ? <Icon icon={icon} /> : null}
+      {label ? <div className="max-w-5/6 truncate">{label}</div> : null} {icon ? <Icon icon={icon} /> : null}
     </button>
   );
 }
