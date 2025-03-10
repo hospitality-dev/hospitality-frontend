@@ -25,7 +25,7 @@ export async function fetchFunction<DataType>({
   method?: "GET" | "POST" | "PATCH" | "DELETE";
   model: AvailableEntities;
   id?: string;
-  searchParams: URLSearchParams;
+  searchParams?: URLSearchParams;
   userReset: () => void;
 }): Promise<DataType> {
   try {
