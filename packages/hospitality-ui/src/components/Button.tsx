@@ -15,7 +15,7 @@ type Props = {
 };
 
 const classes = tv({
-  base: "flex w-full cursor-pointer items-center justify-between gap-2 rounded-sm px-4 py-2 font-medium text-white shadow transition-all active:scale-95 active:shadow-none",
+  base: "flex w-full cursor-pointer items-center justify-center gap-2 rounded-sm px-4 py-2 font-medium text-white shadow transition-all active:scale-95 active:shadow-none",
   variants: {
     variant: {
       primary: "border-gray-900 bg-gray-700 hover:bg-gray-900 active:bg-gray-900",
