@@ -15,7 +15,7 @@ export function Layout() {
       <Sidebar sections={sections} />
       <div className="flex w-full flex-col">
         <Navbar />
-        <div className="p-4">
+        <div className="overflow-auto p-4">
           <Outlet />
         </div>
       </div>
