@@ -3,7 +3,7 @@ import { valueof } from "@hospitality/hospitality-ui/src";
 import { Icons } from "../enums/icons";
 
 // =========ENTITIES=========
-export type AvailableEntities = "users" | "companies" | "locations" | "roles" | "products";
+export type AvailableEntities = "users" | "companies" | "locations" | "roles" | "products" | "products_categories";
 // =========COMPONENTS=========
 export type Variant = "primary" | "secondary" | "info" | "success" | "warning" | "error";
 
