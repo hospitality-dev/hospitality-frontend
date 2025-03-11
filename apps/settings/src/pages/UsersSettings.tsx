@@ -1,6 +1,6 @@
-import { createColumnHelper, FormattedEntity, Table, useList, User } from "@hospitality/hospitality-ui";
+import { createColumnHelper, Roles, Table, useList, User } from "@hospitality/hospitality-ui";
 
-type EntityType = Pick<FormattedEntity<User>, "id" | "firstName" | "lastName" | "role">;
+type EntityType = Pick<User, "id" | "firstName" | "lastName"> & { role: Pick<Roles, "id" | "title"> };
 const columnHelper = createColumnHelper<EntityType>();
 
 const columns = [
@@ -20,7 +20,7 @@ const columns = [
   }),
 ];
 export function UsersSettings() {
-  const { data = [] } = useList<User>({ model: "users", fields: ["id", "firstName", "lastName"], relations: ["role"] });
+  const { data = [] } = useList<EntityType>({ model: "users", fields: ["id", "firstName", "lastName"] });
   return (
     <div>
       <Table<EntityType> columns={columns} data={data} />

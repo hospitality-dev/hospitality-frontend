@@ -1,21 +1,73 @@
-import { Card, Icon, Icons, useScreenSize } from "@hospitality/hospitality-ui";
+import {
+  Button,
+  createColumnHelper,
+  Icons,
+  ProductsCategories,
+  Table,
+  useDrawer,
+  useList,
+  useLoaderData,
+} from "@hospitality/hospitality-ui";
+
+const columnHelper = createColumnHelper<Pick<ProductsCategories, "id" | "title">>();
+
+const columns = [
+  columnHelper.accessor("title", { header: "", cell: (info) => info.getValue() }),
+
+  columnHelper.display({
+    id: "isActive",
+    header: "",
+    cell: () => (
+      <div className="flex justify-end">
+        <div className="w-24">
+          <Button label="Active" onClick={undefined} variant="success" />
+        </div>
+      </div>
+    ),
+    minSize: 50,
+    size: 50,
+    maxSize: 50,
+  }),
+];
 
 export function ProductSettings() {
-  const { isLg } = useScreenSize();
+  const { categories: placeholderData, fields } = useLoaderData({ from: "/settings/products" });
+  const { data: categories } = useList<ProductsCategories>({
+    model: "products_categories",
+    placeholderData,
+    fields,
+  });
+  const products: Pick<ProductsCategories, "id" | "title">[] = [
+    { id: "1", title: "Chicken" },
+    { id: "2", title: "Heineken" },
+    { id: "3", title: "Trout" },
+    { id: "4", title: "Frozen trout" },
+  ];
+  const { openDrawer: openProductCategoriesDrawer } = useDrawer("Create product category", "products_categories");
   return (
-    <div className="flex flex-wrap justify-center gap-8 lg:justify-start">
-      <Card isFullWidth={!isLg}>
-        <div className="flex h-full flex-col items-center justify-center gap-y-2">
-          <Icon className="-rotate-45 pt-2" color="#FBB117" fontSize={64} icon={Icons.beer} />
-          <p className="text-lg font-semibold">Heineken</p>
-        </div>
-      </Card>
-      <Card isFullWidth={!isLg} variant="info">
-        <div className="flex h-full flex-col items-center justify-center gap-y-2">
-          <Icon color="#ff5623" fontSize={64} icon={Icons.chicken} />
-          <p className="text-lg font-semibold">Chicken</p>
-        </div>
-      </Card>
+    <div className="flex flex-col gap-y-2">
+      <div className="ml-auto w-fit">
+        <Button icon={Icons.add} label="Create category" onClick={openProductCategoriesDrawer} variant="info" />
+      </div>
+      <ul className="flex flex-col gap-y-2">
+        {categories?.map((category) => (
+          <li key={category.id} className="flex flex-col">
+            <Table
+              action={{
+                icon: Icons.add,
+                onClick: () => {},
+                label: "",
+                variant: "info",
+              }}
+              columns={columns}
+              data={products}
+              isCollapsible
+              isInitialOpen={false}
+              title={category.title}
+            />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

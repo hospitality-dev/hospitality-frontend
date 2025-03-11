@@ -8,6 +8,9 @@ export default interface Locations {
   deletedAt: Date | null;
   title: string;
   ownerId: usersId;
+  address: string | null;
+  phone: string | null;
+  email: string | null;
   latitude: string | null;
   longitude: string | null;
 }
@@ -22,6 +25,9 @@ export interface LocationsInitializer {
   deletedAt?: Date | null;
   title: string;
   ownerId: usersId;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
   latitude?: string | null;
   longitude?: string | null;
 }
@@ -33,6 +39,9 @@ export interface LocationsMutator {
   deletedAt?: Date | null;
   title?: string;
   ownerId?: usersId;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
   latitude?: string | null;
   longitude?: string | null;
 }

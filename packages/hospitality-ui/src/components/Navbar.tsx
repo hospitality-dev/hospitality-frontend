@@ -11,7 +11,7 @@ export function Navbar() {
   }
 
   return (
-    <div className="h-16 w-full bg-gray-100 px-4 shadow">
+    <div className="h-16 min-h-16 w-full bg-gray-100 px-4 shadow">
       <nav className="h-full">
         <ul className="flex h-full items-center justify-end">
           <li>

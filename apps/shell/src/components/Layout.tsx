@@ -1,4 +1,4 @@
-import { getSentenceCase, Navbar, Outlet, Sidebar, TanStackRouterDevtools } from "@hospitality/hospitality-ui";
+import { Drawer, getSentenceCase, Navbar, Outlet, Sidebar, TanStackRouterDevtools } from "@hospitality/hospitality-ui";
 
 import { AvailableModules } from "../enums";
 
@@ -11,11 +11,12 @@ const sections = [
 
 export function Layout() {
   return (
-    <main className="flex h-screen w-screen flex-nowrap overflow-hidden bg-gray-200">
+    <main className="relative flex h-screen w-screen flex-nowrap overflow-hidden bg-gray-200">
+      <Drawer />
       <Sidebar sections={sections} />
       <div className="flex w-full flex-col">
         <Navbar />
-        <div className="p-4">
+        <div className="overflow-auto p-4">
           <Outlet />
         </div>
       </div>

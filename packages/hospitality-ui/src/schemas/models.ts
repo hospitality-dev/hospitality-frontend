@@ -63,6 +63,7 @@ export const users = z.object({
   dateOfBirth: z.date().nullable(),
   dateOfEmployment: z.date().nullable(),
   dateOfTermination: z.date().nullable(),
+  isVerified: z.boolean(),
   imageId: zodImagesId.nullable(),
 });
 export const usersInitializer = z.object({
@@ -78,6 +79,7 @@ export const usersInitializer = z.object({
   dateOfBirth: z.date().optional().nullable(),
   dateOfEmployment: z.date().optional().nullable(),
   dateOfTermination: z.date().optional().nullable(),
+  isVerified: z.boolean().optional(),
   imageId: zodImagesId.optional().nullable(),
 });
 export const usersMutator = z.object({
@@ -94,6 +96,7 @@ export const usersMutator = z.object({
   dateOfBirth: z.date().optional().nullable(),
   dateOfEmployment: z.date().optional().nullable(),
   dateOfTermination: z.date().optional().nullable(),
+  isVerified: z.boolean().optional(),
   imageId: zodImagesId.optional().nullable(),
 });
 export const locationsUsers = z.object({
@@ -169,6 +172,9 @@ export const locations = z.object({
   deletedAt: z.date().nullable(),
   title: z.string(),
   ownerId: zodUsersId,
+  address: z.string().nullable(),
+  phone: z.string().nullable(),
+  email: z.string().nullable(),
   latitude: z.string().nullable(),
   longitude: z.string().nullable(),
 });
@@ -179,6 +185,9 @@ export const locationsInitializer = z.object({
   deletedAt: z.date().optional().nullable(),
   title: z.string(),
   ownerId: zodUsersId,
+  address: z.string().optional().nullable(),
+  phone: z.string().optional().nullable(),
+  email: z.string().optional().nullable(),
   latitude: z.string().optional().nullable(),
   longitude: z.string().optional().nullable(),
 });
@@ -189,6 +198,9 @@ export const locationsMutator = z.object({
   deletedAt: z.date().optional().nullable(),
   title: z.string().optional(),
   ownerId: zodUsersId.optional(),
+  address: z.string().optional().nullable(),
+  phone: z.string().optional().nullable(),
+  email: z.string().optional().nullable(),
   latitude: z.string().optional().nullable(),
   longitude: z.string().optional().nullable(),
 });
@@ -242,16 +254,31 @@ export const imagesMutator = z.object({
 });
 export const productsCategories = z.object({
   id: zodProductsCategoriesId,
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  deletedAt: z.date().nullable(),
   title: z.string(),
   parentId: zodProductsCategoriesId.nullable(),
+  locationId: zodLocationsId.nullable(),
+  isDefault: z.boolean(),
 });
 export const productsCategoriesInitializer = z.object({
   id: zodProductsCategoriesId.optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+  deletedAt: z.date().optional().nullable(),
   title: z.string(),
   parentId: zodProductsCategoriesId.optional().nullable(),
+  locationId: zodLocationsId.optional().nullable(),
+  isDefault: z.boolean(),
 });
 export const productsCategoriesMutator = z.object({
   id: zodProductsCategoriesId.optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+  deletedAt: z.date().optional().nullable(),
   title: z.string().optional(),
   parentId: zodProductsCategoriesId.optional().nullable(),
+  locationId: zodLocationsId.optional().nullable(),
+  isDefault: z.boolean().optional(),
 });
