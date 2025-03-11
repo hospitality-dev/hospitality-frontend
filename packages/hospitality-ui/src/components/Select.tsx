@@ -18,7 +18,14 @@ type Props = {
 };
 
 const classes = tv({
-  base: "relative flex h-fit cursor-pointer items-center rounded-md border-2",
+  slots: {
+    base: "flex h-fit w-20 flex-1 cursor-pointer appearance-none items-center rounded-md border-2 px-1 outline-0",
+    container: "flex h-fit w-full flex-col",
+    labelClasses: "font-small text-gray-900",
+    icon: "absolute right-1",
+    selectBox: "relative flex w-fit items-center",
+  },
+
   variants: {
     variant: {
       primary: "border-gray-900",
@@ -28,22 +35,37 @@ const classes = tv({
       warning: "border-orange-600",
       error: "border-red-800",
     },
-    // size: { xs: "h-4 text-xs", sm: "h-5 text-sm", md: "h-6", lg: "h-7 text-lg", xl: "h-8 text-xl" },
+    size: {
+      xs: { labelClasses: "text-xs", base: "h-6" },
+      sm: { labelClasses: "text-sm", base: "h-7" },
+      md: { base: "h-8" },
+      lg: { labelClasses: "text-lg", base: "h-9" },
+      xl: { labelClasses: "text-xl", base: "h-10" },
+    },
     isDisabled: { true: "cursor-not-allowed" },
   },
 });
 
-export function Select({ label, variant = "info", size = "md", isMultiple = false, isDisabled = false, onChange }: Props) {
+export function Select({
+  label,
+  variant = "info",
+  size = "md",
+  isMultiple = false,
+  isDisabled = false,
+  onChange,
+  value,
+}: Props) {
+  const { base, container, labelClasses, icon, selectBox } = classes({ variant, size, isDisabled });
   return (
-    <div className="flex flex-col">
-      {label ? <label>{label}</label> : null}
-      <div className={classes({ variant, size, isDisabled, isMultiple })}>
-        <select className="flex-1 appearance-none p-2 outline-0" disabled={isDisabled} onChange={onChange}>
+    <div className={container()}>
+      <p className={labelClasses()}>{label ? <label>{label}</label> : null}</p>
+      <div className={selectBox()}>
+        <select className={base()} disabled={isDisabled} isMultiple={isMultiple} onChange={onChange} value={value}>
           <option value="aaa">aaa</option>
           <option value="bbb">bbb</option>
           <option value="ccc">ccc</option>
         </select>
-        <span className="absolute right-1">
+        <span className={icon()}>
           <Icon icon={Icons["arrow-down"]} />
         </span>
       </div>
