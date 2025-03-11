@@ -1,4 +1,3 @@
-import { UpdaterFn } from "@tanstack/react-form";
 import { ChangeEvent } from "react";
 import { tv } from "tailwind-variants";
 
@@ -7,7 +6,7 @@ import { Size, Variant } from "../types/baseTypes";
 type Props = {
   label?: string;
   value: string | number | undefined;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => UpdaterFn<string | number | undefined, void> | undefined;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   helperText?: string;
   isDisabled?: boolean;
   variant?: Variant;
@@ -33,17 +32,18 @@ type Props = {
 
 const classes = tv({
   slots: {
-    inputClasses: "cursor-pointer rounded-lg border-2 px-2 py-4 text-gray-900",
-    container: "flex h-fit w-full flex-col",
+    container: "group flex h-fit w-full flex-col",
+    inputClasses: "cursor-pointer rounded-md border-2 px-2 py-4 text-gray-900",
     labelClasses: "font-small text-gray-900",
+    helperTextClasses: "text-sm",
   },
   variants: {
     variant: {
       primary: {
-        inputClasses: "border-gray-900 focus:outline-gray-600",
+        inputClasses: "border-gray-500 focus:outline-gray-600",
       },
       secondary: {
-        inputClasses: "border-gray-600 focus:outline-gray-400",
+        inputClasses: "border-gray-400 focus:outline-gray-500",
       },
       info: {
         inputClasses: "border-blue-600 focus:outline-blue-400",
@@ -52,12 +52,14 @@ const classes = tv({
         inputClasses: "border-green-600 focus:outline-green-400",
       },
       warning: {
-        inputClasses: "border-orange-600 focus:outline-orange-400",
-        labelClasses: "text-orange-600",
+        inputClasses: "border-orange-600 group-has-[input:focus]:outline-orange-400",
+        labelClasses: "text-orange-600 group-has-[input:focus]:text-orange-400",
+        helperTextClasses: "text-orange-600 group-has-[input:focus]:text-orange-400 focus:outline-orange-400",
       },
       error: {
-        inputClasses: "border-red-800 focus:outline-red-500",
-        labelClasses: "text-red-800",
+        inputClasses: "border-red-800 group-has-[input:focus]:outline-red-500",
+        labelClasses: "text-red-800 group-has-[input:focus]:text-red-500",
+        helperTextClasses: "text-red-800 group-has-[input:focus]:text-red-500",
       },
     },
     size: {
@@ -81,12 +83,12 @@ export function Input({
   value,
   onChange,
 }: Props) {
-  const { inputClasses, container, labelClasses } = classes({ variant, size, isDisabled });
+  const { inputClasses, container, labelClasses, helperTextClasses } = classes({ variant, size, isDisabled });
   return (
     <div className={container()}>
       <label className={labelClasses()}>{label ? <span>{label}</span> : null}</label>
       <input className={inputClasses()} disabled={isDisabled} onChange={onChange} placeholder={placeholder} value={value} />
-      <p>{helperText}</p>
+      <p className={helperTextClasses()}>{helperText}</p>
     </div>
   );
 }
