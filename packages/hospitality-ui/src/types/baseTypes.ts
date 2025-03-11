@@ -9,6 +9,8 @@ export type Variant = "primary" | "secondary" | "info" | "success" | "warning" |
 
 export type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
+export type DrawerTypes = { type: "products_categories"; data?: { id?: string } };
+
 export type availableIcons = valueof<typeof Icons>;
 
 // =========RESPONSE=========
