@@ -7,6 +7,7 @@ import { tv } from "tailwind-variants";
 
 import { drawerAtom } from "../atoms";
 import { useClickOutside } from "../hooks";
+import { ProductsCategories } from "../sections/drawerContent/ProductsCategories";
 
 const DrawerClasses = tv({
   slots: {
@@ -37,9 +38,9 @@ export function Drawer() {
   const [renderContent, setRenderContent] = useState(false);
   const ref = useClickOutside(() => setDrawer((prev) => ({ ...prev, isOpen: false })));
   const location = useLocation();
-
   const { refs, context } = useFloating({
     placement: "right",
+    transform: true,
     open: drawer.isOpen,
     onOpenChange: (isOpen) => setDrawer((prev) => ({ ...prev, isOpen })),
     whileElementsMounted: autoUpdate,
@@ -52,6 +53,7 @@ export function Drawer() {
       width: "10rem",
     },
     common: ({ side }) => ({
+      position: "absolute",
       transformOrigin: {
         top: 0,
         bottom: 0,
@@ -70,17 +72,26 @@ export function Drawer() {
   }, [location.pathname]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setRenderContent(drawer.isOpen);
-    }, 200);
+    if (drawer.isOpen) {
+      const timeout = setTimeout(() => {
+        setRenderContent(drawer.isOpen);
+      }, 250);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    } else {
+      setRenderContent(false);
+      return () => {};
+    }
   }, [drawer.isOpen]);
 
   if (isMounted)
     return (
-      <div className="pointer-events-none absolute top-0 left-0 z-10 h-screen w-screen bg-[#62657080] transition-all">
+      <div className="absolute top-0 left-0 z-50 h-screen w-screen bg-[#62657080] transition-all">
         <div ref={merged} className={base()} style={styles}>
           <h3 className={title()}>
-            <span className="truncate">TITLE</span>
+            <span className="truncate font-semibold">{drawer.title}</span>
             <div className="flex items-center gap-x-2">
               {/* <div className="w-min">
               <Button
@@ -93,7 +104,9 @@ export function Drawer() {
               </div> */}
             </div>
           </h3>
-          {renderContent ? <div>CONTENT</div> : null}
+          {renderContent ? (
+            <div className="h-[92.5%]">{drawer.type === "products_categories" ? <ProductsCategories /> : null}</div>
+          ) : null}
         </div>
       </div>
     );
