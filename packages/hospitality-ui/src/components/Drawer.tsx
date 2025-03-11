@@ -62,7 +62,7 @@ export function Drawer() {
   });
 
   const merged = useMergeRefs([ref, refs.setFloating]);
-  const { base, title } = DrawerClasses({ size: "md", isExpanded: false });
+  const { base, title } = DrawerClasses({ size: "xl", isExpanded: false });
 
   // Close drawer if the location changes
   useEffect(() => {
