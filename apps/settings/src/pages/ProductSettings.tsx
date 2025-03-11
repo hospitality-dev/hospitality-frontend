@@ -5,6 +5,7 @@ import {
   ProductsCategories,
   Table,
   useDrawer,
+  useList,
   useLoaderData,
 } from "@hospitality/hospitality-ui";
 
@@ -30,27 +31,31 @@ const columns = [
 ];
 
 export function ProductSettings() {
-  const categories = useLoaderData({ from: "/settings/products" });
+  const { categories: placeholderData, fields } = useLoaderData({ from: "/settings/products" });
+  const { data: categories } = useList<ProductsCategories>({
+    model: "products_categories",
+    placeholderData,
+    fields,
+  });
   const products: Pick<ProductsCategories, "id" | "title">[] = [
     { id: "1", title: "Chicken" },
     { id: "2", title: "Heineken" },
     { id: "3", title: "Trout" },
     { id: "4", title: "Frozen trout" },
   ];
-  const { openDrawer } = useDrawer();
+  const { openDrawer: openProductCategoriesDrawer } = useDrawer("Create product category", "products_categories");
   return (
     <div className="flex flex-col gap-y-2">
       <div className="ml-auto w-fit">
-        <Button icon={Icons.add} label="Create category" onClick={undefined} variant="info" />
+        <Button icon={Icons.add} label="Create category" onClick={openProductCategoriesDrawer} variant="info" />
       </div>
       <ul className="flex flex-col gap-y-2">
         {categories?.map((category) => (
-          <li className="flex flex-col">
+          <li key={category.id} className="flex flex-col">
             <Table
-              key={category.id}
               action={{
                 icon: Icons.add,
-                onClick: openDrawer,
+                onClick: () => {},
                 label: "",
                 variant: "info",
               }}
