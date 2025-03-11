@@ -1,5 +1,12 @@
 /* eslint-disable camelcase */
-import { AuthContextType, authFetchFunction, getLoginRoute, LoginResponse } from "@hospitality/hospitality-ui";
+import {
+  AuthContextType,
+  authFetchFunction,
+  fetchFunction,
+  getLoginRoute,
+  LoginResponse,
+  ProductsCategories,
+} from "@hospitality/hospitality-ui";
 import { SettingsLayout } from "@hospitality/settings";
 import { createRootRouteWithContext, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
 import { z } from "zod";
@@ -18,11 +25,12 @@ const rootRoute = createRootRouteWithContext<AuthContextType>()({
     if (c.location.pathname === "/login") {
       return { auth: null };
     }
-    const auth = await queryClient.ensureQueryData<LoginResponse>({
-      queryKey: ["users", userId],
-      queryFn: () => authFetchFunction<LoginResponse>({ method: "GET", userReset: () => {}, route: "session" }),
-    });
-    return { auth };
+    return {
+      auth: await queryClient.ensureQueryData<LoginResponse>({
+        queryKey: ["users", userId],
+        queryFn: () => authFetchFunction<LoginResponse>({ method: "GET", userReset: () => {}, route: "session" }),
+      }),
+    };
   },
   component: Outlet,
 });
@@ -51,7 +59,7 @@ const loginRoute = createRoute({
 const locationSelectRoute = createRoute({
   getParentRoute: () => rootRoute,
   beforeLoad: (c) => {
-    if (c.context.auth?.user.locationId) {
+    if (c.context.auth?.user?.locationId) {
       throw redirect({ to: "/settings/users" });
     }
   },
@@ -72,9 +80,22 @@ const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => 
 const settingsUsers = createRoute({ getParentRoute: () => settingsRootRoute, path: "users" }).lazy(() =>
   import("@hospitality/settings").then((d) => d.SettingsUsersRoute)
 );
-const settingsProducts = createRoute({ getParentRoute: () => settingsRootRoute, path: "products" }).lazy(() =>
-  import("@hospitality/settings").then((d) => d.SettingsProductsRoute)
-);
+const settingsProducts = createRoute({
+  getParentRoute: () => settingsRootRoute,
+  path: "products",
+  loader: async () =>
+    queryClient.ensureQueryData<ProductsCategories[]>({
+      queryKey: ["products_categories", "list"],
+      queryFn: () =>
+        fetchFunction<ProductsCategories[]>({
+          method: "GET",
+          userReset: () => {},
+          searchParams: new URLSearchParams([["fields", "id,title"]]),
+          model: "products_categories",
+        }),
+      staleTime: 5 * 60 * 1000,
+    }),
+}).lazy(() => import("@hospitality/settings").then((d) => d.SettingsProductsRoute));
 // #endregion SETTINGS_ROUTES
 
 const routeTree = rootRoute.addChildren([
