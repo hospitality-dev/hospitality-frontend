@@ -9,26 +9,11 @@ type Props = {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   helperText?: string;
   isDisabled?: boolean;
+  isAutofocused?: boolean;
   variant?: Variant;
   size?: Size;
   placeholder?: string;
 };
-
-// const classes = tv({
-//   base: "cursor-pointer rounded-lg border-2 p-2 font-medium text-black shadow",
-//   variants: {
-//     variant: {
-//       primary: "border-gray-900 focus:outline-gray-600",
-//       secondary: "border-gray-600 focus:outline-gray-400",
-//       info: "border-blue-600 focus:outline-blue-400",
-//       success: "border-green-600 focus:outline-green-400",
-//       warning: "border-orange-600 focus:outline-orange-400",
-//       error: "border-red-800 focus:outline-red-500",
-//     },
-//     size: { xs: "h-6 w-32 text-xs", sm: "h-7 w-36 text-sm", md: "h-8 w-38", lg: "h-9 w-42 text-lg", xl: "h-10 w-48 text-xl" },
-//     isDisabled: { true: "cursor-not-allowed", false: "" },
-//   },
-// });
 
 const classes = tv({
   slots: {
@@ -57,9 +42,9 @@ const classes = tv({
         helperTextClasses: "text-orange-600 group-has-[input:focus]:text-orange-400",
       },
       error: {
-        inputClasses: "border-red-800 group-has-[input:focus]:border-red-500",
-        labelClasses: "text-red-800 group-has-[input:focus]:text-red-500",
-        helperTextClasses: "text-red-800 group-has-[input:focus]:text-red-500",
+        inputClasses: "border-red-600 group-has-[input:focus]:border-red-400",
+        labelClasses: "text-red-600",
+        helperTextClasses: "text-red-600",
       },
     },
     size: {
@@ -78,6 +63,7 @@ export function Input({
   variant = "primary",
   size = "md",
   isDisabled = false,
+  isAutofocused,
   placeholder,
   helperText,
   value,
@@ -87,7 +73,14 @@ export function Input({
   return (
     <div className={container()}>
       <label className={labelClasses()}>{label ? <span>{label}</span> : null}</label>
-      <input className={inputClasses()} disabled={isDisabled} onChange={onChange} placeholder={placeholder} value={value} />
+      <input
+        autoFocus={isAutofocused}
+        className={inputClasses()}
+        disabled={isDisabled}
+        onChange={onChange}
+        placeholder={placeholder}
+        value={value}
+      />
       <p className={helperTextClasses()}>{helperText}</p>
     </div>
   );
