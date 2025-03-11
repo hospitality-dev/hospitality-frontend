@@ -1,5 +1,12 @@
-import { Button, createColumnHelper, Icons, ProductsCategories, Table, useLoaderData } from "@hospitality/hospitality-ui";
-import { Suspense } from "react";
+import {
+  Button,
+  createColumnHelper,
+  Icons,
+  ProductsCategories,
+  Table,
+  useDrawer,
+  useLoaderData,
+} from "@hospitality/hospitality-ui";
 
 const columnHelper = createColumnHelper<Pick<ProductsCategories, "id" | "title">>();
 
@@ -30,18 +37,22 @@ export function ProductSettings() {
     { id: "3", title: "Trout" },
     { id: "4", title: "Frozen trout" },
   ];
+  const { openDrawer } = useDrawer();
   return (
-    <Suspense fallback="Falling back to you">
+    <div className="flex flex-col gap-y-2">
+      <div className="ml-auto w-fit">
+        <Button icon={Icons.add} label="Create category" onClick={undefined} variant="info" />
+      </div>
       <ul className="flex flex-col gap-y-2">
         {categories?.map((category) => (
           <li className="flex flex-col">
             <Table
               key={category.id}
               action={{
-                label: "Create",
                 icon: Icons.add,
-                onClick: () => {},
-                variant: "success",
+                onClick: openDrawer,
+                label: "",
+                variant: "info",
               }}
               columns={columns}
               data={products}
@@ -52,6 +63,6 @@ export function ProductSettings() {
           </li>
         ))}
       </ul>
-    </Suspense>
+    </div>
   );
 }
