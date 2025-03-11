@@ -1,4 +1,4 @@
-import { autoUpdate, useFloating, useTransitionStyles } from "@floating-ui/react";
+import { autoUpdate, useFloating, useMergeRefs, useTransitionStyles } from "@floating-ui/react";
 import { useLocation } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
@@ -6,12 +6,13 @@ import { useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { drawerAtom } from "../atoms";
+import { useClickOutside } from "../hooks";
 
 const DrawerClasses = tv({
   slots: {
-    base: "absolute top-0 right-0 z-[60] h-full max-h-full border-l border-zinc-700 bg-gray-200 px-4 pb-4 transition-all duration-500 ease-in-out",
+    base: "pointer-events-auto absolute top-0 right-0 z-[60] h-full max-h-full border-l border-gray-400 bg-gray-100 px-4 pb-4 shadow-md transition-all duration-500 ease-in-out",
     title:
-      "font-merriweather mb-4 flex h-16 max-h-[4rem] flex-nowrap items-center justify-between border-b border-zinc-700 text-center text-2xl text-white",
+      "font-merriweather mb-4 flex h-16 max-h-[4rem] flex-nowrap items-center justify-between border-b border-gray-400 text-center text-2xl text-gray-900",
   },
   variants: {
     size: {
@@ -34,7 +35,7 @@ export function Drawer() {
   const resetDrawer = useResetAtom(drawerAtom);
   //   const [isExpanded, setIsExpanded] = useState(false);
   const [renderContent, setRenderContent] = useState(false);
-
+  const ref = useClickOutside(() => setDrawer((prev) => ({ ...prev, isOpen: false })));
   const location = useLocation();
 
   const { refs, context } = useFloating({
@@ -60,6 +61,7 @@ export function Drawer() {
     }),
   });
 
+  const merged = useMergeRefs([ref, refs.setFloating]);
   const { base, title } = DrawerClasses({ size: "md", isExpanded: false });
 
   // Close drawer if the location changes
@@ -76,7 +78,7 @@ export function Drawer() {
   if (isMounted)
     return (
       <div className="pointer-events-none absolute top-0 left-0 z-10 h-screen w-screen bg-[#62657080] transition-all">
-        <div ref={refs.setFloating} className={base()} style={styles}>
+        <div ref={merged} className={base()} style={styles}>
           <h3 className={title()}>
             <span className="truncate">TITLE</span>
             <div className="flex items-center gap-x-2">
