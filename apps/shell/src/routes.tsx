@@ -83,18 +83,23 @@ const settingsUsers = createRoute({ getParentRoute: () => settingsRootRoute, pat
 const settingsProducts = createRoute({
   getParentRoute: () => settingsRootRoute,
   path: "products",
-  loader: async () =>
-    queryClient.ensureQueryData<ProductsCategories[]>({
-      queryKey: ["products_categories", "list"],
-      queryFn: () =>
-        fetchFunction<ProductsCategories[]>({
-          method: "GET",
-          userReset: () => {},
-          searchParams: new URLSearchParams([["fields", "id,title"]]),
-          model: "products_categories",
-        }),
-      staleTime: 5 * 60 * 1000,
-    }),
+  loader: async () => {
+    const fields: (keyof ProductsCategories)[] = ["id", "title", "locationId", "parentId", "isDefault"];
+    return {
+      categories: await queryClient.ensureQueryData<ProductsCategories[]>({
+        queryKey: ["products_categories", "list"],
+        queryFn: () =>
+          fetchFunction<ProductsCategories[]>({
+            method: "GET",
+            userReset: () => {},
+            searchParams: new URLSearchParams([["fields", fields.join(",")]]),
+            model: "products_categories",
+          }),
+        staleTime: 5 * 60 * 1000,
+      }),
+      fields,
+    };
+  },
 }).lazy(() => import("@hospitality/settings").then((d) => d.SettingsProductsRoute));
 // #endregion SETTINGS_ROUTES
 
