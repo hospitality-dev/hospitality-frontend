@@ -7,12 +7,13 @@ import { fetchFunction, getSearchParams } from "../../utils";
 
 export type useListProps<F> = {
   model: AvailableEntities;
+  placeholderData?: F[];
   fields: (keyof Omit<F, "created_at" | "updated_at">)[];
 };
 
 export function useList<F extends Record<keyof F, valueof<F>>>(
-  { model, fields }: useListProps<F>,
-  options?: Pick<UseQueryOptions<F>, "enabled">
+  { model, fields, placeholderData = [] }: useListProps<F>,
+  options?: Pick<UseQueryOptions<F>, "enabled" | "placeholderData">
 ) {
   const reset = useResetAtom(userAtom);
   const searchParams = getSearchParams<useListProps<F>["fields"]>(fields);
@@ -20,6 +21,7 @@ export function useList<F extends Record<keyof F, valueof<F>>>(
   return useQuery<F[]>({
     queryKey: [model, "list"],
     queryFn: () => fetchFunction<F[]>({ method: "GET", model, searchParams, userReset: reset }),
+    placeholderData,
     enabled: !!(options?.enabled ?? true),
   });
 }
