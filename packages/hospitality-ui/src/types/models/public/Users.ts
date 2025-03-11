@@ -14,6 +14,7 @@ export default interface Users {
   dateOfBirth: Date | null;
   dateOfEmployment: Date | null;
   dateOfTermination: Date | null;
+  isVerified: boolean;
   imageId: imagesId | null;
 }
 /** Represents the initializer for the table public.users */
@@ -33,6 +34,8 @@ export interface UsersInitializer {
   dateOfBirth?: Date | null;
   dateOfEmployment?: Date | null;
   dateOfTermination?: Date | null;
+  /** Default value: false */
+  isVerified?: boolean;
   imageId?: imagesId | null;
 }
 /** Represents the mutator for the table public.users */
@@ -49,5 +52,6 @@ export interface UsersMutator {
   dateOfBirth?: Date | null;
   dateOfEmployment?: Date | null;
   dateOfTermination?: Date | null;
+  isVerified?: boolean;
   imageId?: imagesId | null;
 }
