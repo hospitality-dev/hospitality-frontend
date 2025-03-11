@@ -9,6 +9,7 @@ type Props = {
   variant?: Variant;
   size?: Size;
   isOutline?: boolean;
+  isDisabled?: boolean;
   icon?: availableIcons;
   hasNoBorder?: boolean;
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
@@ -27,6 +28,9 @@ const classes = tv({
     },
     size: { xs: "h-6 text-xs", sm: "h-7 text-sm", md: "h-8", lg: "h-9 text-lg", xl: "h-10 text-xl" },
     isOutline: { true: "border-2 bg-transparent text-black", false: "" },
+    isDisabled: {
+      true: "cursor-not-allowed bg-gray-400 text-gray-300 shadow-none transition-none hover:bg-gray-400 active:scale-100 active:bg-gray-400",
+    },
     hasNoBorder: { true: "border-0 shadow-none hover:bg-transparent active:bg-transparent", false: "" },
   },
 
@@ -106,10 +110,19 @@ const classes = tv({
   ],
 });
 
-export function Button({ label, variant = "primary", size = "md", isOutline = false, hasNoBorder, icon, onClick }: Props) {
+export function Button({
+  label,
+  variant = "primary",
+  size = "md",
+  isOutline = false,
+  isDisabled,
+  hasNoBorder,
+  icon,
+  onClick,
+}: Props) {
   if (!label && !icon) return null;
   return (
-    <button className={classes({ variant, size, isOutline, hasNoBorder })} onClick={onClick}>
+    <button className={classes({ variant, size, isOutline, hasNoBorder, isDisabled })} disabled={isDisabled} onClick={onClick}>
       {label ? <div className="max-w-5/6 truncate">{label}</div> : null} {icon ? <Icon icon={icon} /> : null}
     </button>
   );
