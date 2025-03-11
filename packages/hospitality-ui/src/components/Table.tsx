@@ -4,7 +4,7 @@ import { useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
-import { Variant } from "../types";
+import { availableIcons, Variant } from "../types";
 import { Button } from "./Button";
 import { Title } from "./Title";
 
@@ -15,6 +15,12 @@ type Props<T> = {
   titleVariant?: Variant;
   isCollapsible?: boolean;
   isInitialOpen?: boolean;
+  action?: {
+    onClick: () => void;
+    label: string;
+    icon?: availableIcons;
+    variant?: Variant;
+  };
 };
 
 const classes = tv({
@@ -45,7 +51,15 @@ const classes = tv({
   },
 });
 
-export function Table<T>({ columns, data, title, titleVariant, isInitialOpen = true, isCollapsible = false }: Props<T>) {
+export function Table<T>({
+  columns,
+  data,
+  title,
+  titleVariant,
+  isInitialOpen = true,
+  isCollapsible = false,
+  action,
+}: Props<T>) {
   const table = useReactTable({
     columns,
     data,
@@ -59,17 +73,33 @@ export function Table<T>({ columns, data, title, titleVariant, isInitialOpen = t
       {title ? (
         <div className="flex cursor-pointer flex-row flex-nowrap justify-between" onClick={() => setIsOpen(!isOpen)}>
           <Title label={title} size="lg" variant={titleVariant} />
-          {isCollapsible ? (
-            <div>
+          <div className="flex">
+            {action ? (
               <Button
                 hasNoBorder
-                icon={isOpen ? Icons["arrow-up"] : Icons["arrow-down"]}
+                icon={action.icon}
                 isOutline
-                label=""
-                onClick={() => setIsOpen(!isOpen)}
+                label={action.label}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  action.onClick();
+                }}
+                variant={action.variant}
               />
-            </div>
-          ) : null}
+            ) : null}
+            {isCollapsible ? (
+              <div>
+                <Button
+                  hasNoBorder
+                  icon={isOpen ? Icons["arrow-up"] : Icons["arrow-down"]}
+                  isOutline
+                  label=""
+                  onClick={() => setIsOpen(!isOpen)}
+                />
+              </div>
+            ) : null}
+          </div>
         </div>
       ) : null}
       <div
