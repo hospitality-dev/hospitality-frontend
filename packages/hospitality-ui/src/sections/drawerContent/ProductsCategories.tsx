@@ -3,8 +3,10 @@
 // };
 
 import { useForm } from "@tanstack/react-form";
+import { useResetAtom } from "jotai/utils";
 import { string } from "zod";
 
+import { drawerAtom } from "../../atoms";
 import { Button, Form, Input } from "../../components";
 import { useAuth, useCreate } from "../../hooks";
 import { ProductsCategoriesInitializer, productsCategoriesInitializer } from "../../types";
@@ -12,6 +14,7 @@ import { getSentenceCase } from "../../utils";
 
 export function ProductsCategories() {
   const auth = useAuth();
+  const resetDrawer = useResetAtom(drawerAtom);
   const { mutate: create } = useCreate<ProductsCategoriesInitializer>("products_categories");
   const form = useForm({
     defaultValues: {
@@ -19,7 +22,10 @@ export function ProductsCategories() {
       isDefault: false,
       locationId: auth.user?.locationId,
     },
-    onSubmit: create,
+    onSubmit: (payload) =>
+      create(payload, {
+        onSuccess: resetDrawer,
+      }),
     validators: {
       onChange: productsCategoriesInitializer.extend({ title: string().nonempty("Title must be at least 1 character.") }),
       onSubmit: productsCategoriesInitializer.extend({ title: string().nonempty("Title must be at least 1 character.") }),
