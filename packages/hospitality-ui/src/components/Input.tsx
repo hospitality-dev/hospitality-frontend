@@ -18,17 +18,17 @@ type Props = {
 const classes = tv({
   slots: {
     container: "group flex h-fit w-full flex-col outline-0",
-    inputClasses: "cursor-pointer rounded-md border-2 px-2 py-4 text-gray-900 outline-0",
+    inputClasses: "cursor-pointer rounded-md border px-2 py-4 text-gray-900 outline-0",
     labelClasses: "font-small text-gray-900",
     helperTextClasses: "text-sm",
   },
   variants: {
     variant: {
       primary: {
-        inputClasses: "border-gray-500 focus:border-gray-600",
+        inputClasses: "border-gray-500 focus:border-blue-400",
       },
       secondary: {
-        inputClasses: "border-gray-400 focus:border-gray-500",
+        inputClasses: "border-gray-400 focus:border-blue-400",
       },
       info: {
         inputClasses: "border-blue-600 focus:border-blue-400",
