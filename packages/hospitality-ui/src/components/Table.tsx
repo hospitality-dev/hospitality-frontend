@@ -4,7 +4,7 @@ import { useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
-import { availableIcons, Variant } from "../types";
+import { availableIcons, Size, Variant } from "../types";
 import { Button } from "./Button";
 import { Title } from "./Title";
 
@@ -20,6 +20,7 @@ type Props<T> = {
     label: string;
     icon?: availableIcons;
     variant?: Variant;
+    size?: Size;
   };
 };
 
@@ -85,6 +86,7 @@ export function Table<T>({
                   e.stopPropagation();
                   action.onClick();
                 }}
+                size={action.size}
                 variant={action.variant}
               />
             ) : null}
