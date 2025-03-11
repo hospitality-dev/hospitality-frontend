@@ -33,6 +33,12 @@ export async function fetchFunction<DataType>({
   try {
     const result = await ky(`${kebabcase(model)}${id ? "/" + id : ""}`, {
       method,
+      headers:
+        method !== "GET" && method !== "DELETE"
+          ? {
+              "Content-Type": "application/json",
+            }
+          : undefined,
       searchParams,
       prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
       credentials: "include",
@@ -41,7 +47,6 @@ export async function fetchFunction<DataType>({
         afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
       },
     }).json<ResponseType<DataType>>();
-
     return result?.data;
   } catch (error) {
     console.error(error);
