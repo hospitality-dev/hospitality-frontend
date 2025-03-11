@@ -31,7 +31,7 @@ const classes = tv({
     thead: "border-b border-gray-300 text-left text-gray-500",
     th: "p-2 text-sm font-light uppercase",
     tbody: "divide-y divide-gray-300",
-    tr: "hover:bg-blue-100",
+    tr: "has-[td]:hover:bg-blue-100",
     td: "p-2",
   },
   variants: {
