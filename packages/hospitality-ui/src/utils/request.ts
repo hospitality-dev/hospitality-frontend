@@ -19,12 +19,14 @@ export async function fetchFunction<DataType>({
   method = "GET",
   model,
   id,
+  payload,
   searchParams,
   userReset,
 }: {
   method?: "GET" | "POST" | "PATCH" | "DELETE";
   model: AvailableEntities;
   id?: string;
+  payload?: string;
   searchParams?: URLSearchParams;
   userReset: () => void;
 }): Promise<DataType> {
@@ -34,6 +36,7 @@ export async function fetchFunction<DataType>({
       searchParams,
       prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
       credentials: "include",
+      body: payload,
       hooks: {
         afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
       },
