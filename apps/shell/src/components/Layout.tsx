@@ -1,11 +1,11 @@
 import { Drawer, getSentenceCase, Navbar, Outlet, Sidebar, TanStackRouterDevtools } from "@hospitality/hospitality-ui";
 
-import { AvailableModules } from "../enums";
+import { Modules } from "../enums";
 
 const sections = [
   {
     title: "MODULES",
-    links: AvailableModules.map((module) => ({ title: getSentenceCase(module), to: `${module}/dashboard` })),
+    links: Modules.map((module) => ({ title: getSentenceCase(module), to: `${module}/dashboard` })),
   },
 ];
 

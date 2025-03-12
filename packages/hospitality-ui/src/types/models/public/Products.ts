@@ -1,6 +1,6 @@
+import type { imagesId } from "./Images";
 import type { locationsId } from "./Locations";
 import type { productsCategoriesId } from "./ProductsCategories";
-import type { imagesId } from "./Images";
 export type productsId = string;
 /** Represents the table public.products */
 export default interface Products {
@@ -9,7 +9,7 @@ export default interface Products {
   updatedAt: Date | null;
   deletedAt: Date | null;
   title: string;
-  locationId: locationsId;
+  companyId: locationsId;
   description: string | null;
   weight: string | null;
   volume: string | null;
@@ -28,7 +28,7 @@ export interface ProductsInitializer {
   updatedAt?: Date | null;
   deletedAt?: Date | null;
   title: string;
-  locationId: locationsId;
+  companyId: locationsId;
   description?: string | null;
   weight?: string | null;
   volume?: string | null;
@@ -44,7 +44,7 @@ export interface ProductsMutator {
   updatedAt?: Date | null;
   deletedAt?: Date | null;
   title?: string;
-  locationId?: locationsId;
+  companyId?: locationsId;
   description?: string | null;
   weight?: string | null;
   volume?: string | null;

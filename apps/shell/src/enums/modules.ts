@@ -1,4 +1,4 @@
-export const AvailableModules = [
+export const Modules = [
   "booking" as const,
   "employee-management" as const,
   "inventory-management" as const,
