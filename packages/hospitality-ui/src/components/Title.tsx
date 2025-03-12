@@ -7,8 +7,8 @@ type Props = { label: string; icon?: availableIcons; variant?: Variant; size?: S
 
 const classes = tv({
   slots: {
-    title: "font-medium",
-    border: "block h-0.5 rounded-l-2xl bg-gradient-to-r to-transparent",
+    title: "flex-1 font-medium",
+    border: "block h-[3px] rounded-l-2xl bg-gradient-to-r to-transparent",
   },
   variants: {
     variant: {
@@ -51,7 +51,7 @@ const classes = tv({
   },
 });
 
-export function Title({ label, variant = "primary", size = "md", hasBorder, icon }: Props) {
+export function Title({ label, variant = "info", size = "md", hasBorder, icon }: Props) {
   const { title, border } = classes({ variant, size });
   return (
     <h3 className={title()}>
