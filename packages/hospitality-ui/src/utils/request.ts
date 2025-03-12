@@ -30,28 +30,25 @@ export async function fetchFunction<DataType>({
   searchParams?: URLSearchParams;
   userReset: () => void;
 }): Promise<DataType> {
-  try {
-    const result = await ky(`${kebabcase(model)}${id ? "/" + id : ""}`, {
-      method,
-      headers:
-        method !== "GET" && method !== "DELETE"
-          ? {
-              "Content-Type": "application/json",
-            }
-          : undefined,
-      searchParams,
-      prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
-      credentials: "include",
-      body: payload,
-      hooks: {
-        afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
-      },
-    }).json<ResponseType<DataType>>();
-    return result?.data;
-  } catch (error) {
-    console.error(error);
-    return {} as DataType;
-  }
+  const result = await ky(`${kebabcase(model)}${id ? "/" + id : ""}`, {
+    method,
+    throwHttpErrors: true,
+    headers:
+      method !== "GET" && method !== "DELETE"
+        ? {
+            "Content-Type": "application/json",
+          }
+        : undefined,
+    searchParams,
+    prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
+    credentials: "include",
+    body: payload,
+    hooks: {
+      afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
+    },
+  }).json<ResponseType<DataType>>();
+
+  return result?.data;
 }
 
 export async function authFetchFunction<DataType>({
