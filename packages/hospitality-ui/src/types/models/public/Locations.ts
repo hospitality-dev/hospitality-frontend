@@ -1,4 +1,5 @@
 import type { usersId } from "./Users";
+import type { companiesId } from "./Companies";
 export type locationsId = string;
 /** Represents the table public.locations */
 export default interface Locations {
@@ -13,6 +14,7 @@ export default interface Locations {
   email: string | null;
   latitude: string | null;
   longitude: string | null;
+  companyId: companiesId | null;
 }
 /** Represents the initializer for the table public.locations */
 export interface LocationsInitializer {
@@ -30,6 +32,7 @@ export interface LocationsInitializer {
   email?: string | null;
   latitude?: string | null;
   longitude?: string | null;
+  companyId?: companiesId | null;
 }
 /** Represents the mutator for the table public.locations */
 export interface LocationsMutator {
@@ -44,4 +47,5 @@ export interface LocationsMutator {
   email?: string | null;
   latitude?: string | null;
   longitude?: string | null;
+  companyId?: companiesId | null;
 }

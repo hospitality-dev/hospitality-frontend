@@ -13,6 +13,12 @@ export {
   type LocationsProductsMutator,
 } from "./public/LocationsProducts";
 export {
+  type companiesId,
+  type default as Companies,
+  type CompaniesInitializer,
+  type CompaniesMutator,
+} from "./public/Companies";
+export {
   type locationsAvailableProductsId,
   type default as LocationsAvailableProducts,
   type LocationsAvailableProductsInitializer,
@@ -37,6 +43,7 @@ export {
   zodUsersId,
   zodLocationsUsersId,
   zodLocationsProductsId,
+  zodCompaniesId,
   zodLocationsAvailableProductsId,
   zodLocationsId,
   zodRolesId,
@@ -54,6 +61,9 @@ export {
   locationsProducts,
   locationsProductsInitializer,
   locationsProductsMutator,
+  companies,
+  companiesInitializer,
+  companiesMutator,
   locationsAvailableProducts,
   locationsAvailableProductsInitializer,
   locationsAvailableProductsMutator,
