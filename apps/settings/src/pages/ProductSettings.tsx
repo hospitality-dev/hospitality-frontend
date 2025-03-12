@@ -51,7 +51,7 @@ export function ProductSettings() {
       </div>
       <ul className="flex flex-col gap-y-2">
         {categories?.map((category) => (
-          <li key={category.id} className="flex flex-col">
+          <li key={category.id} className={`flex flex-col ${category.isDefault ? "rounded border border-gray-300" : ""}`}>
             <Table
               action={{
                 icon: Icons.add,
@@ -64,6 +64,7 @@ export function ProductSettings() {
               isCollapsible
               isInitialOpen={false}
               title={category.title}
+              titleVariant="info"
             />
           </li>
         ))}
