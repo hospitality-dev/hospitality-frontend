@@ -36,11 +36,11 @@ const classes = tv({
     td: "p-2",
   },
   variants: {
-    hasTitle: {
-      true: {
-        tableClasses: "border-t border-t-gray-950",
-      },
-    },
+    // hasTitle: {
+    //   true: {
+    //     tableClasses: "border-t border-t-gray-950",
+    //   },
+    // },
     isOpen: {
       true: {
         tableContainer: "overflow-hidden",
@@ -73,7 +73,7 @@ export function Table<T>({
     <div className={container()}>
       {title ? (
         <div className="flex cursor-pointer flex-row flex-nowrap justify-between" onClick={() => setIsOpen(!isOpen)}>
-          <Title label={title} size="lg" variant={titleVariant} />
+          <Title hasBorder={isOpen} label={title} size="lg" variant={titleVariant} />
           <div className="flex">
             {action ? (
               <Button
