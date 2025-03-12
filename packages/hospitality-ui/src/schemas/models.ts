@@ -290,7 +290,7 @@ export const productsCategories = z.object({
   deletedAt: z.date().nullable(),
   title: z.string(),
   parentId: zodProductsCategoriesId.nullable(),
-  locationId: zodLocationsId.nullable(),
+  companyId: zodCompaniesId.nullable(),
   isDefault: z.boolean(),
 });
 export const productsCategoriesInitializer = z.object({
@@ -300,7 +300,7 @@ export const productsCategoriesInitializer = z.object({
   deletedAt: z.date().optional().nullable(),
   title: z.string(),
   parentId: zodProductsCategoriesId.optional().nullable(),
-  locationId: zodLocationsId.optional().nullable(),
+  companyId: zodCompaniesId.optional().nullable(),
   isDefault: z.boolean(),
 });
 export const productsCategoriesMutator = z.object({
@@ -310,6 +310,6 @@ export const productsCategoriesMutator = z.object({
   deletedAt: z.date().optional().nullable(),
   title: z.string().optional(),
   parentId: zodProductsCategoriesId.optional().nullable(),
-  locationId: zodLocationsId.optional().nullable(),
+  companyId: zodCompaniesId.optional().nullable(),
   isDefault: z.boolean().optional(),
 });
