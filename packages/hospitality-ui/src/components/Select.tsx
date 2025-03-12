@@ -1,10 +1,9 @@
 import { Icon } from "@iconify/react";
-import { UpdaterFn } from "@tanstack/react-form";
 import { ChangeEvent } from "react";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
-import { availableIcons, Size, Variant } from "../types/baseTypes";
+import { availableIcons, OptionType, Size, Variant } from "../types/baseTypes";
 
 type Props = {
   label?: string;
@@ -14,16 +13,17 @@ type Props = {
   variant?: Variant;
   size?: Size;
   icon?: availableIcons;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => UpdaterFn<string | string[], void> | undefined;
+  options: OptionType[];
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const classes = tv({
   slots: {
-    base: "flex h-fit w-20 flex-1 cursor-pointer appearance-none items-center rounded-md border-2 px-1 outline-0",
     container: "flex h-fit w-full flex-col",
     labelClasses: "font-small text-gray-900",
+    selectBox: "relative flex w-full items-center",
+    base: "flex h-fit w-full flex-1 cursor-pointer appearance-none items-center rounded-md border-2 px-1 outline-0",
     icon: "absolute right-1",
-    selectBox: "relative flex w-fit items-center",
   },
 
   variants: {
@@ -53,6 +53,7 @@ export function Select({
   isMultiple = false,
   isDisabled = false,
   onChange,
+  options,
   value,
 }: Props) {
   const { base, container, labelClasses, icon, selectBox } = classes({ variant, size, isDisabled });
@@ -60,10 +61,12 @@ export function Select({
     <div className={container()}>
       <p className={labelClasses()}>{label ? <label>{label}</label> : null}</p>
       <div className={selectBox()}>
-        <select className={base()} disabled={isDisabled} isMultiple={isMultiple} onChange={onChange} value={value}>
-          <option value="aaa">aaa</option>
-          <option value="bbb">bbb</option>
-          <option value="ccc">ccc</option>
+        <select className={base()} disabled={isDisabled} multiple={isMultiple} onChange={onChange} value={value}>
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
         </select>
         <span className={icon()}>
           <Icon icon={Icons["arrow-down"]} />
