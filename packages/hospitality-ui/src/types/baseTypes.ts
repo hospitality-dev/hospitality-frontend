@@ -9,6 +9,8 @@ export type Variant = "primary" | "secondary" | "info" | "success" | "warning" |
 
 export type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
+export type OptionType = { label: string; value: string };
+
 export type DrawerTypes =
   | { type: "products_categories"; data?: { id?: string } }
   | { type: "products"; data: { id: string } | { categoryId: string } };
