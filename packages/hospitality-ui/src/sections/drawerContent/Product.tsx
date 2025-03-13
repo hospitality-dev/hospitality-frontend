@@ -1,22 +1,19 @@
-// type Props = {
-//   data?: { id?: string };
-// };
-
 import { useForm } from "@tanstack/react-form";
 import { useResetAtom } from "jotai/utils";
 import { string } from "zod";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
 import { Button, Form, Input, Select } from "../../components";
-import { useAuth, useCreate, useList } from "../../hooks";
+import { Icons } from "../../enums";
+import { useAuth, useBarcodeScanner, useCreate, useList } from "../../hooks";
 import { ProductsCategories, ProductsInitializer, productsInitializer } from "../../types";
 import { getSentenceCase } from "../../utils";
 
 export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }>, "data">) {
   const auth = useAuth();
   const resetDrawer = useResetAtom(drawerAtom);
+  const { setOnResult, closeBarcodeScanner } = useBarcodeScanner();
   const { mutate: create } = useCreate<ProductsInitializer>("products");
-
   const { data: categories } = useList<ProductsCategories>({
     model: "products_categories",
     fields: ["id", "title"],
@@ -73,8 +70,19 @@ export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }
             children={(field) => (
               <div className="col-span-2">
                 <Input
+                  action={{
+                    onClick: (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setOnResult((result) => {
+                        const barcode = result.getText();
+                        field.handleChange(barcode);
+                        closeBarcodeScanner();
+                      });
+                    },
+                    icon: Icons.barcode,
+                  }}
                   helperText={field.state.meta.errors.join("\n ")}
-                  isAutofocused
                   label={getSentenceCase(field.name)}
                   onChange={(e) => field.handleChange(e.target.value)}
                   type={"number"}
