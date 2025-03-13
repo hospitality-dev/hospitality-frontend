@@ -27,7 +27,7 @@
   "private": true,
   "scripts": {
     "start": "cd apps/shell && bun run dev",
-    "generate-types": "cd packages/hospitality-ui && bunx kanel",
+    "generate-types": "cd packages/hospitality-ui && bunx kanel && bunx eslint ./packages/hospitality-ui/src/types/** --fix",
     "prepare": "husky"
   },
   "type": "module",
