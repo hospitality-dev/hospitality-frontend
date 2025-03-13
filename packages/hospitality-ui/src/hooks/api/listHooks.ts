@@ -13,14 +13,14 @@ export type useListProps<F> = {
 
 export function useList<F extends Record<keyof F, valueof<F>>>(
   { model, fields, placeholderData = [] }: useListProps<F>,
-  options?: Pick<UseQueryOptions<F>, "enabled" | "placeholderData">
+  options?: Pick<UseQueryOptions<F>, "enabled" | "placeholderData"> & { urlSuffix?: string }
 ) {
   const reset = useResetAtom(userAtom);
   const searchParams = getSearchParams<useListProps<F>["fields"]>(fields);
 
   return useQuery<F[]>({
-    queryKey: [model, "list"],
-    queryFn: () => fetchFunction<F[]>({ method: "GET", model, searchParams, userReset: reset }),
+    queryKey: [model, "list", options?.urlSuffix || ""],
+    queryFn: () => fetchFunction<F[]>({ method: "GET", model, searchParams, userReset: reset, urlSuffix: options?.urlSuffix }),
     placeholderData,
     enabled: !!(options?.enabled ?? true),
   });
