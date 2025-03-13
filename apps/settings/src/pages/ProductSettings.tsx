@@ -46,12 +46,12 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
           label: "",
           variant: "info",
         }}
-        onExpand={() => setIsOpen(!isOpen)}
         columns={columns}
         data={query?.data || []}
-        isLoading={query.isRefetching}
         isCollapsible
         isInitialOpen={isOpen}
+        isLoading={query.isRefetching}
+        onExpand={() => setIsOpen(!isOpen)}
         title={title}
         titleVariant="primary"
       />
@@ -62,7 +62,6 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
 export function ProductSettings() {
   const { categories: placeholderData, fields } = useLoaderData({ from: "/settings/products" });
 
-  console.log(fields);
   const { data: categories } = useList<ProductsCategories>({
     model: "products_categories",
     placeholderData,
@@ -77,7 +76,7 @@ export function ProductSettings() {
       </div>
       <ul className="flex flex-col gap-y-2">
         {categories?.map((category) => (
-          <ProductSettingsCategory key={category.id} title={category.title} isDefault={category.isDefault} id={category.id} />
+          <ProductSettingsCategory key={category.id} id={category.id} isDefault={category.isDefault} title={category.title} />
         ))}
       </ul>
     </div>
