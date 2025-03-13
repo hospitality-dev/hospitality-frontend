@@ -1,9 +1,10 @@
-import { Navbar, Outlet, Sidebar, TanStackRouterDevtools } from "@hospitality/hospitality-ui";
+import { BarcodeScanner, Navbar, Outlet, Sidebar, TanStackRouterDevtools } from "@hospitality/hospitality-ui";
 
 export function AppLayout() {
   return (
     <div className="flex h-screen w-screen flex-nowrap overflow-hidden bg-gray-200">
-      <Sidebar />
+      <Sidebar sections={[]} />
+      <BarcodeScanner />
       <div className="flex w-full flex-col">
         <Navbar />
         <Outlet />
