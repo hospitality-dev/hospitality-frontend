@@ -34,7 +34,7 @@ const classes = tv({
     thead: "border-b border-gray-300 text-left text-gray-500",
     th: "p-2 text-sm font-light uppercase",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300 py-2",
-    tr: "flex h-10 w-full items-center rounded has-[td]:hover:bg-gray-200",
+    tr: "flex w-full items-center rounded py-1 has-[td]:hover:bg-gray-200",
     td: "h-10 flex-1 p-2",
   },
   variants: {
@@ -49,7 +49,7 @@ const classes = tv({
     isLoading: {
       true: {
         tbody: "",
-        tr: "animate-pulse rounded bg-gradient-to-r from-gray-200 via-gray-100 to-gray-50",
+        tr: "min-h-10 animate-pulse rounded bg-gradient-to-r from-gray-200 via-gray-100 to-gray-50 py-1",
       },
     },
   },
