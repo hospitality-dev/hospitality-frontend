@@ -33,9 +33,9 @@ const classes = tv({
     tableClasses: "min-w-full overflow-auto",
     thead: "border-b border-gray-300 text-left text-gray-500",
     th: "p-2 text-sm font-light uppercase",
-    tbody: "divide-y divide-gray-300",
-    tr: "has-[td]:hover:bg-blue-100",
-    td: "p-2",
+    tbody: "flex flex-col divide-y divide-gray-300 py-2",
+    tr: "flex h-10 w-full items-center rounded has-[td]:hover:bg-gray-200",
+    td: "h-10 flex-1 p-2",
   },
   variants: {
     // hasTitle: {
@@ -51,9 +51,36 @@ const classes = tv({
         tableContainer: "h-0 overflow-hidden",
       },
     },
+    isLoading: {
+      true: {
+        tbody: "flex flex-col gap-y-0.5",
+        tr: "animate-pulse rounded bg-gradient-to-r from-gray-400 via-gray-300 to-gray-200",
+      },
+    },
   },
 });
 
+function TableSkeleton({ tr, td }: { tr: string; td: string }) {
+  return (
+    <>
+      <tr className={tr}>
+        <td className={td} />
+      </tr>
+      <tr className={tr}>
+        <td className={td} />
+      </tr>
+      <tr className={tr}>
+        <td className={td} />
+      </tr>
+      <tr className={tr}>
+        <td className={td} />
+      </tr>
+      <tr className={tr}>
+        <td className={td} />
+      </tr>
+    </>
+  );
+}
 export function Table<T>({
   columns,
   data,
@@ -72,11 +99,17 @@ export function Table<T>({
   });
   const [isOpen, setIsOpen] = useState(isInitialOpen);
   const headers = table.getFlatHeaders().filter((h) => !!h.column.columnDef.header);
-  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({ isOpen });
+  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({ isOpen, isLoading });
+
   return (
     <div className={container()}>
       {title ? (
-        <div className="flex cursor-pointer flex-row flex-nowrap justify-between" onClick={() => setIsOpen(!isOpen)}>
+        <div
+          className="flex cursor-pointer flex-row flex-nowrap justify-between"
+          onClick={() => {
+            if (onExpand && !isOpen) onExpand();
+            setIsOpen(!isOpen);
+          }}>
           <Title hasBorder={isOpen} label={title} size="lg" variant={titleVariant} />
           <div className="flex">
             {action ? (
@@ -102,7 +135,6 @@ export function Table<T>({
                   isOutline
                   label=""
                   onClick={() => {
-                    if (onExpand) onExpand();
                     setIsOpen(!isOpen);
                   }}
                 />
@@ -113,7 +145,7 @@ export function Table<T>({
       ) : null}
       <div
         className={tableContainer()}
-        style={{ height: (isCollapsible && isOpen) || !isCollapsible ? "calc-size(auto, round(up, size, 50px))" : 0 }}>
+        style={{ height: (isCollapsible && isOpen) || !isCollapsible ? "calc-size(auto, round(up, size, 0px))" : 0 }}>
         <table className={tableClasses()}>
           <thead className={thead()}>
             {headers.length ? (
@@ -127,15 +159,19 @@ export function Table<T>({
             ) : null}
           </thead>
           <tbody className={tbody()}>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className={tr()}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className={td()}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
+            {isLoading ? (
+              <TableSkeleton tr={tr()} td={td()} />
+            ) : (
+              table.getRowModel().rows.map((row) => (
+                <tr key={row.id} className={tr()}>
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className={td()}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
