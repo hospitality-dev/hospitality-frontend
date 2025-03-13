@@ -107,7 +107,7 @@ export function Drawer() {
           {renderContent ? (
             <div className="h-[92.5%]">
               {drawer.type === "products_categories" ? <ProductsCategories /> : null}
-              {drawer.type === "products" ? <Product /> : null}
+              {drawer.type === "products" && drawer.data ? <Product data={drawer.data} /> : null}
             </div>
           ) : null}
         </div>
