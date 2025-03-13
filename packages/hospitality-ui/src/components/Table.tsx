@@ -15,6 +15,8 @@ type Props<T> = {
   titleVariant?: Variant;
   isCollapsible?: boolean;
   isInitialOpen?: boolean;
+  isLoading?: boolean;
+  onExpand?: () => void;
   action?: {
     onClick: () => void;
     label: string;
@@ -60,6 +62,8 @@ export function Table<T>({
   isInitialOpen = true,
   isCollapsible = false,
   action,
+  onExpand,
+  isLoading,
 }: Props<T>) {
   const table = useReactTable({
     columns,
@@ -68,7 +72,7 @@ export function Table<T>({
   });
   const [isOpen, setIsOpen] = useState(isInitialOpen);
   const headers = table.getFlatHeaders().filter((h) => !!h.column.columnDef.header);
-  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({ hasTitle: !!title, isOpen });
+  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({ isOpen });
   return (
     <div className={container()}>
       {title ? (
@@ -97,7 +101,10 @@ export function Table<T>({
                   icon={isOpen ? Icons["arrow-up"] : Icons["arrow-down"]}
                   isOutline
                   label=""
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={() => {
+                    if (onExpand) onExpand();
+                    setIsOpen(!isOpen);
+                  }}
                 />
               </div>
             ) : null}
