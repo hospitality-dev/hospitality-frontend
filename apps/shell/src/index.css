@@ -1,3 +1,11 @@
 @import "tailwindcss";
-@source "../../../apps/**/*.{ts,tsx}"; /* Any app */
-@source "../../../packages/**/*.{ts,tsx}"; /* Any components in ui package*/
+@source "../../../apps/**/*.{ts,tsx,css}"; /* Any app */
+@source "../../../packages/**/*.{ts,tsx,css}"; /* Any components in ui package*/
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
