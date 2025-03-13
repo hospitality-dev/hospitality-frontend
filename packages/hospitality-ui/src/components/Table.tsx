@@ -96,7 +96,7 @@ export function Table<T>({
           <div className="absolute top-0 left-0 w-full">
             <Title hasBorder={isOpen} label={title} size="lg" variant={titleVariant} />
           </div>
-          <div className="flex flex-1 justify-end">
+          <div className="relative z-10 flex flex-1 justify-end">
             {action ? (
               <div>
                 <Button
