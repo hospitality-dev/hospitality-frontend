@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { tv } from "tailwind-variants";
 
-import { Size, Variant } from "../types/baseTypes";
+import { availableIcons, Size, Variant } from "../types/baseTypes";
 
 type Props = {
   label?: string;
@@ -14,6 +14,11 @@ type Props = {
   size?: Size;
   placeholder?: string;
   type?: HTMLInputElement["type"];
+  action?: {
+    onClick: () => void;
+    icon: availableIcons;
+    tooltip?: string;
+  };
 };
 
 const classes = tv({
