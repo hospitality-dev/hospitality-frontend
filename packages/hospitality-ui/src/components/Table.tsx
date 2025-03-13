@@ -54,7 +54,7 @@ const classes = tv({
     isLoading: {
       true: {
         tbody: "flex flex-col gap-y-0.5",
-        tr: "animate-pulse rounded bg-gradient-to-r from-gray-400 via-gray-300 to-gray-200",
+        tr: "animate-pulse rounded bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100",
       },
     },
   },
