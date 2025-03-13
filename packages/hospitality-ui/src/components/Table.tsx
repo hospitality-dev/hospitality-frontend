@@ -33,16 +33,11 @@ const classes = tv({
     tableClasses: "min-w-full overflow-auto",
     thead: "border-b border-gray-300 text-left text-gray-500",
     th: "p-2 text-sm font-light uppercase",
-    tbody: "flex flex-col divide-y divide-gray-300 py-2",
+    tbody: "flex min-h-10 flex-col divide-y divide-gray-300 py-2",
     tr: "flex h-10 w-full items-center rounded has-[td]:hover:bg-gray-200",
     td: "h-10 flex-1 p-2",
   },
   variants: {
-    // hasTitle: {
-    //   true: {
-    //     tableClasses: "border-t border-t-gray-950",
-    //   },
-    // },
     isOpen: {
       true: {
         tableContainer: "overflow-hidden",
@@ -53,8 +48,8 @@ const classes = tv({
     },
     isLoading: {
       true: {
-        tbody: "flex flex-col gap-y-0.5",
-        tr: "animate-pulse rounded bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100",
+        tbody: "",
+        tr: "animate-pulse rounded bg-gradient-to-r from-gray-200 via-gray-100 to-gray-50",
       },
     },
   },
@@ -63,18 +58,6 @@ const classes = tv({
 function TableSkeleton({ tr, td }: { tr: string; td: string }) {
   return (
     <>
-      <tr className={tr}>
-        <td className={td} />
-      </tr>
-      <tr className={tr}>
-        <td className={td} />
-      </tr>
-      <tr className={tr}>
-        <td className={td} />
-      </tr>
-      <tr className={tr}>
-        <td className={td} />
-      </tr>
       <tr className={tr}>
         <td className={td} />
       </tr>
@@ -159,6 +142,11 @@ export function Table<T>({
             ) : null}
           </thead>
           <tbody className={tbody()}>
+            {!isLoading && !data.length ? (
+              <tr className={tr()}>
+                <td>ALERT HERE</td>
+              </tr>
+            ) : null}
             {isLoading ? (
               <TableSkeleton tr={tr()} td={td()} />
             ) : (
