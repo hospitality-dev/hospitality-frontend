@@ -6,30 +6,15 @@ import { availableIcons, Size, Variant } from "../types";
 type Props = { label: string; icon?: availableIcons; variant?: Variant; size?: Size; hasBorder?: boolean };
 
 const classes = tv({
-  slots: {
-    title: "flex-1 border-transparent font-medium",
-    border: "block h-[3px] rounded-l-2xl bg-gradient-to-r to-transparent",
-  },
+  base: "flex-1 py-0.5 font-medium select-none",
   variants: {
     variant: {
-      primary: {
-        border: "border-gray-400",
-      },
-      secondary: {
-        border: "border-gray-200",
-      },
-      info: {
-        border: "border-blue-300",
-      },
-      success: {
-        border: "border-green-300",
-      },
-      warning: {
-        border: "border-orange-300",
-      },
-      error: {
-        border: "border-red-300",
-      },
+      primary: "border-gray-300",
+      secondary: "border-gray-200",
+      info: "border-blue-300",
+      success: "border-green-300",
+      warning: "border-orange-300",
+      error: "border-red-300",
     },
     size: {
       xs: {
@@ -49,22 +34,18 @@ const classes = tv({
       },
     },
     hasBorder: {
-      true: {
-        title: "border-b",
-      },
+      true: "border-b",
     },
   },
 });
 
 export function Title({ label, variant = "info", size = "md", hasBorder, icon }: Props) {
-  const { title, border } = classes({ variant, size, hasBorder });
   return (
-    <h3 className={title()}>
+    <h3 className={classes({ variant, size, hasBorder })}>
       <span className="flex items-center">
         {icon ? <Icon className="-rotate-45" color="#cccbbb" fontSize={28} icon={icon} /> : null}
         <span>{label}</span>
       </span>
-      {hasBorder ? <span className={border()} /> : null}
     </h3>
   );
 }
