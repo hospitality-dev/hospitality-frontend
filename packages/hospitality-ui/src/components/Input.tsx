@@ -13,12 +13,13 @@ type Props = {
   variant?: Variant;
   size?: Size;
   placeholder?: string;
+  type?: HTMLInputElement["type"];
 };
 
 const classes = tv({
   slots: {
     container: "group flex h-fit w-full flex-col outline-0",
-    inputClasses: "cursor-pointer rounded-md border px-2 py-4 text-gray-900 outline-0",
+    inputClasses: "cursor-pointer rounded-md border-2 px-2 py-4 text-gray-900 outline-0",
     labelClasses: "font-small text-gray-900",
     helperTextClasses: "text-sm",
   },
@@ -68,6 +69,7 @@ export function Input({
   helperText,
   value,
   onChange,
+  type = "text",
 }: Props) {
   const { inputClasses, container, labelClasses, helperTextClasses } = classes({ variant, size, isDisabled });
   return (
@@ -79,6 +81,7 @@ export function Input({
         disabled={isDisabled}
         onChange={onChange}
         placeholder={placeholder}
+        type={type}
         value={value}
       />
       <p className={helperTextClasses()}>{helperText}</p>
