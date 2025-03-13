@@ -11,10 +11,6 @@ export type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
 export type OptionType = { label: string; value: string };
 
-export type DrawerTypes =
-  | { type: "products_categories"; data?: { id?: string } }
-  | { type: "products"; data: { id: string } | { categoryId: string } };
-
 export type availableIcons = valueof<typeof Icons>;
 
 // =========RESPONSE=========
