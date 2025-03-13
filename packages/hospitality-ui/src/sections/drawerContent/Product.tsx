@@ -6,13 +6,13 @@ import { useForm } from "@tanstack/react-form";
 import { useResetAtom } from "jotai/utils";
 import { string } from "zod";
 
-import { drawerAtom } from "../../atoms";
+import { drawerAtom, DrawerTypes } from "../../atoms";
 import { Button, Form, Input, Select } from "../../components";
 import { useAuth, useCreate, useList } from "../../hooks";
 import { ProductsCategories, ProductsInitializer, productsInitializer } from "../../types";
 import { getSentenceCase } from "../../utils";
 
-export function Product() {
+export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }>, "data">) {
   const auth = useAuth();
   const resetDrawer = useResetAtom(drawerAtom);
   const { mutate: create } = useCreate<ProductsInitializer>("products");
@@ -27,7 +27,7 @@ export function Product() {
       title: "",
       companyId: auth.user?.companyId || "",
       barcode: null,
-      categoryId: "",
+      categoryId: data.categoryId,
     },
     onSubmit: (payload) =>
       create(payload, {

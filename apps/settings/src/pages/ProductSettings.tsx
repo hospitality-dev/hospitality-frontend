@@ -2,12 +2,14 @@ import {
   Button,
   createColumnHelper,
   Icons,
+  Products,
   ProductsCategories,
   Table,
   useDrawer,
   useList,
   useLoaderData,
 } from "@hospitality/hospitality-ui";
+import { useState } from "react";
 
 const columnHelper = createColumnHelper<Pick<ProductsCategories, "id" | "title">>();
 
@@ -18,7 +20,7 @@ const columns = [
     id: "isActive",
     header: "",
     cell: () => (
-      <div className="flex justify-end">
+      <div className="flex h-full items-center justify-end">
         <div className="w-24">
           <Button label="Active" onClick={undefined} variant="success" />
         </div>
@@ -30,43 +32,52 @@ const columns = [
   }),
 ];
 
+function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategories, "id" | "title" | "isDefault">) {
+  const { openDrawer: openProductDrawer } = useDrawer<"products">("Create product", "products");
+  const [isOpen, setIsOpen] = useState(false);
+  const query = useList<Products>({ model: "products", fields: ["id", "title"] }, { enabled: isOpen, urlSuffix: id });
+
+  return (
+    <li className={`flex flex-col ${isDefault ? "rounded-md border border-gray-300" : ""}`}>
+      <Table
+        action={{
+          icon: Icons.add,
+          onClick: () => openProductDrawer({ categoryId: id }),
+          label: "",
+          variant: "info",
+        }}
+        onExpand={() => setIsOpen(!isOpen)}
+        columns={columns}
+        data={query?.data || []}
+        isLoading={query.isRefetching}
+        isCollapsible
+        isInitialOpen={isOpen}
+        title={title}
+        titleVariant="primary"
+      />
+    </li>
+  );
+}
+
 export function ProductSettings() {
   const { categories: placeholderData, fields } = useLoaderData({ from: "/settings/products" });
+
+  console.log(fields);
   const { data: categories } = useList<ProductsCategories>({
     model: "products_categories",
     placeholderData,
     fields,
   });
-  const products: Pick<ProductsCategories, "id" | "title">[] = [
-    { id: "1", title: "Chicken" },
-    { id: "2", title: "Heineken" },
-    { id: "3", title: "Trout" },
-    { id: "4", title: "Frozen trout" },
-  ];
+
   const { openDrawer: openProductCategoriesDrawer } = useDrawer("Create product category", "products_categories");
   return (
     <div className="flex flex-col gap-y-2">
       <div className="ml-auto w-fit">
-        <Button icon={Icons.add} label="Create category" onClick={openProductCategoriesDrawer} variant="info" />
+        <Button icon={Icons.add} label="Create category" onClick={() => openProductCategoriesDrawer()} variant="info" />
       </div>
       <ul className="flex flex-col gap-y-2">
         {categories?.map((category) => (
-          <li key={category.id} className={`flex flex-col ${category.isDefault ? "rounded border border-gray-300" : ""}`}>
-            <Table
-              action={{
-                icon: Icons.add,
-                onClick: () => {},
-                label: "",
-                variant: "info",
-              }}
-              columns={columns}
-              data={products}
-              isCollapsible
-              isInitialOpen={false}
-              title={category.title}
-              titleVariant="info"
-            />
-          </li>
+          <ProductSettingsCategory key={category.id} title={category.title} isDefault={category.isDefault} id={category.id} />
         ))}
       </ul>
     </div>
