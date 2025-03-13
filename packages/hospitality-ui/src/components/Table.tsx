@@ -96,7 +96,7 @@ export function Table<T>({
           <div className="absolute top-0 left-0 w-full">
             <Title hasBorder={isOpen} label={title} size="lg" variant={titleVariant} />
           </div>
-          <div className="relative z-10 flex flex-1 justify-end">
+          <div className="relative z-10 flex flex-1 justify-end gap-x-4">
             {action ? (
               <div>
                 <Button
@@ -151,7 +151,7 @@ export function Table<T>({
                 <td>ALERT HERE</td>
               </tr>
             ) : null}
-            {isLoading && isOpen ? <TableSkeleton tr={tr()} td={td()} /> : null}
+            {isLoading && isOpen ? <TableSkeleton td={td()} tr={tr()} /> : null}
             {!isLoading && isOpen && data.length
               ? table.getRowModel().rows.map((row) => (
                   <tr key={row.id} className={tr()}>
