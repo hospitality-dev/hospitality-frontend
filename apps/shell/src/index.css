@@ -9,3 +9,19 @@
     margin: 0;
   }
 }
+
+@theme {
+  --color-primary: var(--color-gray-600);
+  --color-secondary: var(--color-gray-400);
+  --color-info: var(--color-blue-500);
+  --color-success: var(--color-green-500);
+  --color-warning: var(--color-orange-500);
+  --color-error: var(--color-red-600);
+
+  --color-primary-highlight: var(--color-gray-600);
+  --color-secondary-highlight: var(--color-gray-300);
+  --color-info-highlight: var(--color-blue-400);
+  --color-success-highlight: var(--color-green-400);
+  --color-warning-highlight: var(--color-orange-400);
+  --color-error-highlight: var(--color-red-500);
+}
