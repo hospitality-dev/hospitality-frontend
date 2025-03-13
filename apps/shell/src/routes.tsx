@@ -4,6 +4,7 @@ import {
   authFetchFunction,
   fetchFunction,
   getLoginRoute,
+  getSearchParams,
   LoginResponse,
   ProductsCategories,
 } from "@hospitality/hospitality-ui";
@@ -84,7 +85,7 @@ const settingsProducts = createRoute({
   getParentRoute: () => settingsRootRoute,
   path: "products",
   loader: async () => {
-    const fields: (keyof ProductsCategories)[] = ["id", "title", "locationId", "parentId", "isDefault"];
+    const fields: (keyof ProductsCategories)[] = ["id", "title", "companyId", "parentId", "isDefault"];
     return {
       categories: await queryClient.ensureQueryData<ProductsCategories[]>({
         queryKey: ["products_categories", "list"],
@@ -92,7 +93,7 @@ const settingsProducts = createRoute({
           fetchFunction<ProductsCategories[]>({
             method: "GET",
             userReset: () => {},
-            searchParams: new URLSearchParams([["fields", fields.join(",")]]),
+            searchParams: getSearchParams<typeof fields>(fields),
             model: "products_categories",
           }),
         staleTime: 5 * 60 * 1000,
