@@ -4,12 +4,12 @@ import { useResetAtom } from "jotai/utils";
 import { drawerAtom } from "../../atoms";
 import { DrawerTypes } from "../../types";
 
-export function useDrawer(title: string, type: DrawerTypes["type"]) {
+export function useDrawer<T extends DrawerTypes["type"]>(title: string, type: T) {
   const [drawer, setDrawer] = useAtom(drawerAtom);
   const closeDrawer = useResetAtom(drawerAtom);
 
-  function openDrawer() {
-    setDrawer((prev) => ({ ...prev, title, isOpen: true, type }));
+  function openDrawer(data?: DrawerTypes["data"] | null) {
+    setDrawer((prev) => ({ ...prev, title, isOpen: true, type, data }));
   }
 
   return { drawer, openDrawer, closeDrawer };
