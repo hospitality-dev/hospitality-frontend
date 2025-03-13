@@ -7,28 +7,28 @@ type Props = { label: string; icon?: availableIcons; variant?: Variant; size?: S
 
 const classes = tv({
   slots: {
-    title: "flex-1 font-medium",
+    title: "flex-1 border-transparent font-medium",
     border: "block h-[3px] rounded-l-2xl bg-gradient-to-r to-transparent",
   },
   variants: {
     variant: {
       primary: {
-        border: "from-gray-400",
+        border: "border-gray-400",
       },
       secondary: {
-        border: "from-gray-200",
+        border: "border-gray-200",
       },
       info: {
-        border: "from-blue-300",
+        border: "border-blue-300",
       },
       success: {
-        border: "from-green-300",
+        border: "border-green-300",
       },
       warning: {
-        border: "from-orange-300",
+        border: "border-orange-300",
       },
       error: {
-        border: "from-red-300",
+        border: "border-red-300",
       },
     },
     size: {
@@ -48,11 +48,16 @@ const classes = tv({
         title: "text-xl",
       },
     },
+    hasBorder: {
+      true: {
+        title: "border-b",
+      },
+    },
   },
 });
 
 export function Title({ label, variant = "info", size = "md", hasBorder, icon }: Props) {
-  const { title, border } = classes({ variant, size });
+  const { title, border } = classes({ variant, size, hasBorder });
   return (
     <h3 className={title()}>
       <span className="flex items-center">

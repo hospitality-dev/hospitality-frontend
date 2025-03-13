@@ -88,27 +88,31 @@ export function Table<T>({
     <div className={container()}>
       {title ? (
         <div
-          className="flex cursor-pointer flex-row flex-nowrap justify-between"
+          className="relative flex cursor-pointer flex-row flex-nowrap justify-between"
           onClick={() => {
             if (onExpand && !isOpen) onExpand();
             setIsOpen(!isOpen);
           }}>
-          <Title hasBorder={isOpen} label={title} size="lg" variant={titleVariant} />
-          <div className="flex">
+          <div className="absolute top-0 left-0 w-full">
+            <Title hasBorder={isOpen} label={title} size="lg" variant={titleVariant} />
+          </div>
+          <div className="flex flex-1 justify-end">
             {action ? (
-              <Button
-                hasNoBorder
-                icon={action.icon}
-                isOutline
-                label={action.label}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  action.onClick();
-                }}
-                size={action.size}
-                variant={action.variant}
-              />
+              <div>
+                <Button
+                  hasNoBorder
+                  icon={action.icon}
+                  isOutline
+                  label={action.label}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    action.onClick();
+                  }}
+                  size={action.size}
+                  variant={action.variant}
+                />
+              </div>
             ) : null}
             {isCollapsible ? (
               <div>
@@ -128,7 +132,7 @@ export function Table<T>({
       ) : null}
       <div
         className={tableContainer()}
-        style={{ height: (isCollapsible && isOpen) || !isCollapsible ? "calc-size(auto, round(up, size, 0px))" : 0 }}>
+        style={{ height: (isCollapsible && isOpen) || !isCollapsible ? "calc-size(auto, size)" : 0 }}>
         <table className={tableClasses()}>
           <thead className={thead()}>
             {headers.length ? (
@@ -147,19 +151,18 @@ export function Table<T>({
                 <td>ALERT HERE</td>
               </tr>
             ) : null}
-            {isLoading ? (
-              <TableSkeleton tr={tr()} td={td()} />
-            ) : (
-              table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className={tr()}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className={td()}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            )}
+            {isLoading && isOpen ? <TableSkeleton tr={tr()} td={td()} /> : null}
+            {!isLoading && isOpen && data.length
+              ? table.getRowModel().rows.map((row) => (
+                  <tr key={row.id} className={tr()}>
+                    {row.getVisibleCells().map((cell) => (
+                      <td key={cell.id} className={td()}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              : null}
           </tbody>
         </table>
       </div>
