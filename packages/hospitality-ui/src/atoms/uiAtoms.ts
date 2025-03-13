@@ -1,3 +1,4 @@
+import { Result } from "@zxing/library";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
@@ -16,6 +17,15 @@ type DrawerState = {
 
   title: string;
 } & DrawerTypes;
-export const sidebarStateAtom = atom<SidebarState>({ isSidebarOpen: false, isModulesOpen: true });
 
+type BarcodeScannerState = {
+  isOpen: boolean;
+  onResult: (result: Result) => void;
+};
+
+// ======================
+export const sidebarStateAtom = atom<SidebarState>({ isSidebarOpen: false, isModulesOpen: true });
+// ======================
 export const drawerAtom = atomWithReset<DrawerState>({ isOpen: false, type: null, title: "", data: null });
+// ======================
+export const barcodeScannerAtom = atomWithReset<BarcodeScannerState>({ isOpen: false, onResult: () => {} });

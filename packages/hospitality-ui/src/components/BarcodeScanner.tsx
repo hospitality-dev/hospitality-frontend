@@ -1,11 +1,14 @@
 import { BrowserMultiFormatReader } from "@zxing/library";
+import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 
+import { barcodeScannerAtom } from "../atoms";
 import { Select } from "./Select";
 
 export function BarcodeScanner() {
   const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>([]);
   const [videoDevice, setVideoDevice] = useState<string>();
+  const { onResult } = useAtomValue(barcodeScannerAtom);
 
   useEffect(() => {
     const reader = new BrowserMultiFormatReader();
@@ -19,6 +22,7 @@ export function BarcodeScanner() {
     if (videoDevice) {
       reader.decodeFromVideoDevice(videoDevice, "barcode_scanner", (result) => {
         if (result) {
+          onResult(result);
           fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(result.getText()) });
         }
       });
