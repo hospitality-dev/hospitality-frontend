@@ -22,7 +22,7 @@ const classes = tv({
     container: "flex h-fit w-full flex-col",
     labelClasses: "font-small text-gray-900",
     selectBox: "relative flex w-full items-center",
-    base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center rounded-md border-2 px-1 outline-0",
+    base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center rounded-md border-2 px-1 shadow-sm outline-0",
     icon: "absolute right-1",
   },
 
