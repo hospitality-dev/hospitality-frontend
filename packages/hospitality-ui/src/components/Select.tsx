@@ -22,14 +22,14 @@ const classes = tv({
     container: "flex h-fit w-full flex-col",
     labelClasses: "font-small text-gray-900",
     selectBox: "relative flex w-full items-center",
-    base: "flex h-fit w-full flex-1 cursor-pointer appearance-none items-center rounded-md border-2 px-1 outline-0",
+    base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center rounded-md border-2 px-1 outline-0",
     icon: "absolute right-1",
   },
 
   variants: {
     variant: {
-      primary: "border-gray-900",
-      secondary: "border-gray-600",
+      primary: "border-gray-600",
+      secondary: "border-gray-400",
       info: "border-blue-600",
       success: "border-green-600",
       warning: "border-orange-600",
@@ -38,7 +38,7 @@ const classes = tv({
     size: {
       xs: { labelClasses: "text-xs", base: "h-6" },
       sm: { labelClasses: "text-sm", base: "h-7" },
-      md: { base: "h-8" },
+      md: { base: "h-8 min-h-8" },
       lg: { labelClasses: "text-lg", base: "h-9" },
       xl: { labelClasses: "text-xl", base: "h-10" },
     },

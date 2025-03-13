@@ -26,7 +26,7 @@ const classes = tv({
   variants: {
     variant: {
       primary: {
-        inputClasses: "border-gray-500 focus:border-blue-400",
+        inputClasses: "border-gray-600 focus:border-blue-400",
       },
       secondary: {
         inputClasses: "border-gray-400 focus:border-blue-400",
