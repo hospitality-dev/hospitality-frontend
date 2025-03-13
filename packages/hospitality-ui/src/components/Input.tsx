@@ -1,7 +1,8 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, MouseEvent as ReactMouseEvent } from "react";
 import { tv } from "tailwind-variants";
 
 import { availableIcons, Size, Variant } from "../types/baseTypes";
+import { Button } from "./Button";
 
 type Props = {
   label?: string;
@@ -15,7 +16,7 @@ type Props = {
   placeholder?: string;
   type?: HTMLInputElement["type"];
   action?: {
-    onClick: () => void;
+    onClick: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void;
     icon: availableIcons;
     tooltip?: string;
   };
@@ -24,31 +25,33 @@ type Props = {
 const classes = tv({
   slots: {
     container: "group flex h-fit w-full flex-col outline-0",
-    inputClasses: "cursor-pointer rounded-md border-2 px-2 py-4 text-gray-900 outline-0",
+    inputContainer:
+      "flex w-full cursor-pointer flex-nowrap items-center justify-between rounded-md border-2 px-2 text-gray-900 shadow-sm outline-0",
+    inputClasses: "flex-1 pr-2 focus-within:outline-0 focus:outline-0",
     labelClasses: "font-small text-gray-900",
     helperTextClasses: "text-sm",
   },
   variants: {
     variant: {
       primary: {
-        inputClasses: "border-gray-600 focus:border-blue-400",
+        inputContainer: "border-gray-400 focus-within:border-blue-400",
       },
       secondary: {
-        inputClasses: "border-gray-400 focus:border-blue-400",
+        inputContainer: "border-gray-400 focus-within:border-blue-400",
       },
       info: {
-        inputClasses: "border-blue-600 focus:border-blue-400",
+        inputContainer: "border-blue-600 focus-within:border-blue-400",
       },
       success: {
-        inputClasses: "border-green-600 focus:border-green-400",
+        inputContainer: "border-green-600 focus-within:border-green-400",
       },
       warning: {
-        inputClasses: "border-orange-600 group-has-[input:focus]:border-orange-400",
+        inputContainer: "border-orange-600 group-has-[input:focus]:border-orange-400",
         labelClasses: "text-orange-600 group-has-[input:focus]:text-orange-400",
         helperTextClasses: "text-orange-600 group-has-[input:focus]:text-orange-400",
       },
       error: {
-        inputClasses: "border-red-600 group-has-[input:focus]:border-red-400",
+        inputContainer: "border-red-600 group-has-[input:focus]:border-red-400",
         labelClasses: "text-red-600",
         helperTextClasses: "text-red-600",
       },
@@ -75,21 +78,33 @@ export function Input({
   value,
   onChange,
   type = "text",
+  action,
 }: Props) {
-  const { inputClasses, container, labelClasses, helperTextClasses } = classes({ variant, size, isDisabled });
+  const { inputClasses, inputContainer, container, labelClasses, helperTextClasses } = classes({
+    variant,
+    size,
+    isDisabled,
+  });
   return (
     <div className={container()}>
       <label className={labelClasses()}>{label ? <span>{label}</span> : null}</label>
-      <input
-        autoFocus={isAutofocused}
-        className={inputClasses()}
-        disabled={isDisabled}
-        onChange={onChange}
-        placeholder={placeholder}
-        type={type}
-        value={value}
-      />
-      <p className={helperTextClasses()}>{helperText}</p>
+      <div className={inputContainer()}>
+        <input
+          autoFocus={isAutofocused}
+          className={inputClasses()}
+          disabled={isDisabled}
+          onChange={onChange}
+          placeholder={placeholder}
+          type={type}
+          value={value}
+        />
+        {action ? (
+          <span className="top-0.5 right-2 w-fit">
+            <Button hasNoBorder icon={action.icon} isOutline onClick={action.onClick} size="md" />
+          </span>
+        ) : null}
+      </div>
+      {helperText ? <p className={helperTextClasses()}>{helperText}</p> : null}
     </div>
   );
 }
