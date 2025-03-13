@@ -21,16 +21,18 @@ export async function fetchFunction<DataType>({
   id,
   payload,
   searchParams,
+  urlSuffix,
   userReset,
 }: {
   method?: "GET" | "POST" | "PATCH" | "DELETE";
   model: AvailableEntities;
   id?: string;
   payload?: string;
+  urlSuffix?: string;
   searchParams?: URLSearchParams;
   userReset: () => void;
 }): Promise<DataType> {
-  const result = await ky(`${kebabcase(model)}${id ? "/" + id : ""}`, {
+  const result = await ky(`${kebabcase(model)}${id ? "/" + id : ""}${urlSuffix ? `/${urlSuffix}` : ""}`, {
     method,
     throwHttpErrors: true,
     headers:
