@@ -12,60 +12,57 @@ import eslintPluginN from "eslint-plugin-n";
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import ignoreGenerated from "eslint-plugin-ignore-generated";
-export default [
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
-  {
-    files: ["**/*.{ts,tsx}"],
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-        sourceType: "module",
-        ecmaVersion: "latest",
+export default {
+  extends: [js.configs.recommended, ...tseslint.configs.recommended],
+  files: ["**/*.{ts,tsx}"],
+  languageOptions: {
+    parser: tsParser,
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
       },
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      sourceType: "module",
+      ecmaVersion: "latest",
     },
-    plugins: {
-      "@typescript-eslint": tsPlugin,
-      promise: eslintPluginPromise,
-      import: eslintPluginImport,
-      prettier: eslintPluginPrettier,
-      "simple-import-sort": eslintPluginSimpleImportSort,
-      "unused-imports": eslintPluginUnusedImports,
-      n: eslintPluginN,
-      ignoreGenerated,
-    },
-    rules: {
-      ...eslintConfigStandard.rules,
-      ...eslintConfigPrettier.rules,
-      "func-style": ["error", "declaration", { allowArrowFunctions: false }],
-      "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error",
-      // "unused-imports/no-unused-imports": "error",
-      "unused-imports/no-unused-vars": [
-        "error",
-        {
-          vars: "all",
-          varsIgnorePattern: "^_",
-          args: "after-used",
-          argsIgnorePattern: "^_",
-        },
-      ],
-      "import/no-cycle": "error",
-      "no-console": ["error", { allow: ["info", "error"] }],
-      camelcase: ["error", { properties: "always" }],
-      "prettier/prettier": [
-        "error",
-        {
-          endOfLine: "auto",
-        },
-      ],
-      "promise/catch-or-return": "error",
-      "promise/always-return": "error",
-    },
+    ecmaVersion: 2020,
+    globals: globals.browser,
   },
-];
+  plugins: {
+    "@typescript-eslint": tsPlugin,
+    promise: eslintPluginPromise,
+    import: eslintPluginImport,
+    prettier: eslintPluginPrettier,
+    "simple-import-sort": eslintPluginSimpleImportSort,
+    "unused-imports": eslintPluginUnusedImports,
+    n: eslintPluginN,
+    ignoreGenerated,
+  },
+  rules: {
+    ...eslintConfigStandard.rules,
+    ...eslintConfigPrettier.rules,
+    "func-style": ["error", "declaration", { allowArrowFunctions: false }],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    // "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "error",
+      {
+        vars: "all",
+        varsIgnorePattern: "^_",
+        args: "after-used",
+        argsIgnorePattern: "^_",
+      },
+    ],
+    "import/no-cycle": "error",
+    "no-console": ["error", { allow: ["info", "error"] }],
+    camelcase: ["error", { properties: "always" }],
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
+    "promise/catch-or-return": "error",
+    "promise/always-return": "error",
+  },
+};
