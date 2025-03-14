@@ -3,6 +3,9 @@
 @source "../../../packages/**/*.{ts,tsx,css}"; /* Any components in ui package*/
 
 @layer base {
+  body {
+    overflow: hidden;
+  }
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
