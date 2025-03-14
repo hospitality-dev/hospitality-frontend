@@ -32,7 +32,7 @@ const classes = tv({
     tableContainer: "transition-[height]",
     tableClasses: "min-w-full overflow-auto",
     thead: "border-b border-gray-300 text-left text-gray-500",
-    th: "p-2 text-sm font-light uppercase",
+    th: "flex-1 p-2 text-sm font-light uppercase",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300 py-2",
     tr: "flex w-full items-center rounded py-1 has-[td]:hover:bg-gray-200",
     td: "h-10 flex-1 p-2",
