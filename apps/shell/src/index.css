@@ -11,6 +11,9 @@
 }
 
 @theme {
+  --color-layout: var(--color-gray-200);
+  --color-layout-dark: var(--color-gray-950);
+
   --color-primary: var(--color-gray-600);
   --color-secondary: var(--color-gray-500);
   --color-info: var(--color-blue-500);
