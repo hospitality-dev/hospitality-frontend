@@ -30,7 +30,7 @@ import { Icons } from "../enums";
 import { availableIcons, IconThickness, PositionType, Variant } from "../types";
 import { Icon } from "./Icon";
 
-type DropdownItemType = {
+export type DropdownItemType = {
   id: string;
   allowedPlacements?: PositionType;
   title?: string;
@@ -57,15 +57,14 @@ type DropdownType = {
 const DropdownClasses = tv({
   slots: {
     base: "font-lato z-30 max-w-fit min-w-fit outline-none",
-    floatingBase:
-      "font-lato absolute top-0 left-0 z-[9999] max-h-[40rem] overflow-y-auto rounded border border-zinc-600 shadow",
+    floatingBase: "font-lato absolute top-0 left-0 z-[9999] overflow-y-auto rounded-md border border-slate-400 shadow-md",
   },
 });
 const DropdownItemClasses = tv({
-  base: "group m-0 flex h-10 min-h-[2.5rem] w-full cursor-pointer flex-nowrap items-center border-b border-zinc-600 bg-zinc-700 text-left text-white outline-0 group-hover:bg-zinc-500 last:border-0 hover:bg-zinc-500",
+  base: "group m-0 flex h-8 w-full cursor-pointer flex-nowrap items-center border-b border-gray-400 text-left text-white outline-0 transition-colors group-hover:bg-gray-200 last:border-0 hover:bg-gray-200 active:bg-gray-400 active:text-white",
   variants: {
     variant: {
-      primary: "bg-primary",
+      primary: "bg-white text-gray-900",
       secondary: "bg-secondary",
       info: "bg-info",
       success: "bg-success",
@@ -202,7 +201,7 @@ function DropdownComponent({ allowedPlacements = [], children, items, isReferenc
       setIsOpen(true);
     }
   }, [event]);
-  if (items?.length === 0) return null;
+  if (items?.length === 0) return children;
   const dropdownItemClasses = DropdownItemClasses({ isRoot: true, hasSubitems: !!items?.length });
 
   return (
