@@ -1,5 +1,6 @@
 import { BrowserMultiFormatReader } from "@zxing/library";
 import { useAtomValue } from "jotai";
+import { useResetAtom } from "jotai/utils";
 import { useEffect, useState } from "react";
 
 import { barcodeScannerAtom } from "../atoms";
@@ -9,6 +10,13 @@ export function BarcodeScanner() {
   const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>([]);
   const [videoDevice, setVideoDevice] = useState<string>();
   const { onResult } = useAtomValue(barcodeScannerAtom);
+  const closeBarcodeScanner = useResetAtom(barcodeScannerAtom);
+
+  function close(e: globalThis.KeyboardEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.key === "Escape") closeBarcodeScanner();
+  }
 
   useEffect(() => {
     const reader = new BrowserMultiFormatReader();
@@ -27,10 +35,15 @@ export function BarcodeScanner() {
         }
       });
     }
+    document.addEventListener("keydown", close);
+
+    return () => {
+      document.removeEventListener("keydown", close);
+    };
   }, [videoDevice]);
 
   return (
-    <div className="absolute top-0 left-0 z-50 flex h-screen w-screen flex-col bg-gray-200 p-4">
+    <div className="bg-layout absolute top-0 left-0 z-50 flex h-screen w-screen flex-col p-4">
       <div className="relative flex h-full flex-col">
         <Select
           onChange={({ target }) => setVideoDevice(target.value)}
