@@ -34,26 +34,26 @@ const classes = tv({
   variants: {
     variant: {
       primary: {
-        inputContainer: "border-gray-400 focus-within:border-blue-400",
+        inputContainer: "border-primary focus-within:border-info-highlight",
       },
       secondary: {
-        inputContainer: "border-gray-400 focus-within:border-blue-400",
+        inputContainer: "border-secondary focus-within:border-info-highlight",
       },
       info: {
-        inputContainer: "border-blue-600 focus-within:border-blue-400",
+        inputContainer: "border-info-border focus-within:border-info-highlight",
       },
       success: {
-        inputContainer: "border-green-600 focus-within:border-green-400",
+        inputContainer: "border-success focus-within:border-success-highlight",
       },
       warning: {
-        inputContainer: "border-orange-600 group-has-[input:focus]:border-orange-400",
-        labelClasses: "text-orange-600 group-has-[input:focus]:text-orange-400",
-        helperTextClasses: "text-orange-600 group-has-[input:focus]:text-orange-400",
+        inputContainer: "border-warning group-has-[input:focus]:border-warning-highlight",
+        labelClasses: "group-has-[input:focus]:text-warning-highlight text-warning",
+        helperTextClasses: "text-warning",
       },
       error: {
-        inputContainer: "border-red-600 group-has-[input:focus]:border-red-400",
-        labelClasses: "text-red-600",
-        helperTextClasses: "text-red-600",
+        inputContainer: "border-error group-has-[input:focus]:error-highlight",
+        labelClasses: "text-error",
+        helperTextClasses: "text-error",
       },
     },
     size: {

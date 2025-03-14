@@ -28,12 +28,12 @@ const classes = tv({
 
   variants: {
     variant: {
-      primary: "border-gray-600",
-      secondary: "border-gray-400",
-      info: "border-blue-600",
-      success: "border-green-600",
-      warning: "border-orange-600",
-      error: "border-red-800",
+      primary: "border-primary",
+      secondary: "border-secondary",
+      info: "border-info",
+      success: "border-success",
+      warning: "border-warning",
+      error: "border-error",
     },
     size: {
       xs: { labelClasses: "text-xs", base: "h-6" },
