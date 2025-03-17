@@ -3,6 +3,7 @@ import { MouseEventHandler } from "react";
 import { tv } from "tailwind-variants";
 
 import { availableIcons, Size, Variant } from "../types/baseTypes";
+import { Dropdown, DropdownItemType } from "./Dropdown";
 
 type Props = {
   label?: string;
@@ -13,6 +14,7 @@ type Props = {
   icon?: availableIcons;
   hasNoBorder?: boolean;
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+  items?: DropdownItemType[];
 };
 
 const classes = tv({
@@ -32,7 +34,7 @@ const classes = tv({
     size: { xs: "h-6 text-xs", sm: "h-7 text-sm", md: "h-8", lg: "h-9 text-lg", xl: "h-10 text-xl" },
     isOutline: { true: "border-2 bg-transparent text-black", false: "" },
     isDisabled: {
-      true: "cursor-not-allowed bg-gray-400 text-gray-300 shadow-none transition-none hover:bg-gray-400 active:scale-100 active:bg-gray-400",
+      true: "bg-disabled cursor-not-allowed text-gray-200 shadow-none transition-none",
     },
     hasNoBorder: { true: "border-0 shadow-none hover:bg-transparent active:bg-transparent", false: "" },
     hasIconOnly: {
@@ -124,12 +126,15 @@ export function Button({
   hasNoBorder,
   icon,
   onClick,
+  items,
 }: Props) {
   if (!label && !icon) return null;
   const { base, labelClasses } = classes({ variant, size, isOutline, hasNoBorder, isDisabled, hasIconOnly: !label && !!icon });
   return (
-    <button className={base()} disabled={isDisabled} onClick={onClick}>
-      {label ? <div className={labelClasses()}>{label}</div> : null} {icon ? <Icon fontSize={22} icon={icon} /> : null}
-    </button>
+    <Dropdown isDisabled={!items?.length} items={items || []}>
+      <button className={base()} disabled={isDisabled} onClick={onClick}>
+        {label ? <div className={labelClasses()}>{label}</div> : null} {icon ? <Icon fontSize={22} icon={icon} /> : null}
+      </button>
+    </Dropdown>
   );
 }
