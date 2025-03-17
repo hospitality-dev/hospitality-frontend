@@ -9,7 +9,6 @@ import {
   offset,
   safePolygon,
   shift,
-  size,
   useClick,
   useDismiss,
   useFloating,
@@ -49,7 +48,6 @@ type DropdownType = {
   allowedPlacements?: PositionType;
   children?: ReactNode | null;
   items: DropdownItemType[];
-  isReferenceMaxSize?: boolean;
   isDisabled?: boolean;
   event?: MouseEvent<HTMLDivElement, MouseEvent> | null;
 };
@@ -57,11 +55,11 @@ type DropdownType = {
 const DropdownClasses = tv({
   slots: {
     base: "font-lato z-30 max-w-fit min-w-fit outline-none",
-    floatingBase: "font-lato absolute top-0 left-0 z-[9999] overflow-y-auto rounded-md border border-slate-400 shadow-md",
+    floatingBase: "font-lato absolute top-0 left-0 z-[9999] overflow-y-auto rounded-md border border-gray-300 shadow-md",
   },
 });
 const DropdownItemClasses = tv({
-  base: "group m-0 flex h-8 w-full cursor-pointer flex-nowrap items-center border-b border-gray-400 text-left text-white outline-0 transition-colors group-hover:bg-gray-200 last:border-0 hover:bg-gray-200 active:bg-gray-400 active:text-white",
+  base: "group m-0 flex w-full cursor-pointer flex-nowrap items-center truncate border-b border-gray-300 px-1 py-1.5 text-left text-white outline-0 transition-colors group-hover:bg-gray-200 last:border-0 hover:bg-gray-200 active:bg-gray-400 active:text-white",
   variants: {
     variant: {
       primary: "bg-white text-gray-900",
@@ -94,7 +92,7 @@ const DropdownItemClasses = tv({
   },
 });
 
-function DropdownComponent({ allowedPlacements = [], children, items, isReferenceMaxSize, event, isDisabled }: DropdownType) {
+function DropdownComponent({ allowedPlacements = [], children, items, event, isDisabled }: DropdownType) {
   const { base, floatingBase } = DropdownClasses();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -111,23 +109,7 @@ function DropdownComponent({ allowedPlacements = [], children, items, isReferenc
     nodeId,
     open: isOpen,
     onOpenChange: setIsOpen,
-    placement: isNested ? "right-start" : "bottom-start",
-    middleware: [
-      offset({ mainAxis: isNested ? 8 : 4, alignmentAxis: 0 }),
-      autoPlacement({ allowedPlacements }),
-      shift(),
-
-      size({
-        apply({ rects, elements }) {
-          Object.assign(elements?.floating?.style, {
-            minWidth: "fit-content",
-            width: `${rects.reference.width}px`,
-            maxWidth: isReferenceMaxSize ? `${rects.reference.width}px` : "",
-          });
-        },
-        padding: 10,
-      }),
-    ],
+    middleware: [offset({ mainAxis: isNested ? 8 : 4, alignmentAxis: 0 }), autoPlacement({ allowedPlacements }), shift()],
     whileElementsMounted: autoUpdate,
   });
 
@@ -326,12 +308,12 @@ function DropdownItem({
       <div className="ml-auto flex gap-x-2 pr-2">
         {icon ? (
           <div>
-            <Icon color={iconColor || "#ffffff"} fontSize={20} icon={icon} thickness={iconThickness || "regular"} />
+            <Icon color={iconColor} fontSize={20} icon={icon} thickness={iconThickness || "regular"} />
           </div>
         ) : null}
         {subItems?.length ? (
           <div>
-            <Icon color={"#ffffff"} fontSize={20} icon={Icons["arrow-right"]} thickness={iconThickness || "regular"} />
+            <Icon color={"#000000"} fontSize={20} icon={Icons["arrow-right"]} thickness={iconThickness || "regular"} />
           </div>
         ) : null}
       </div>
