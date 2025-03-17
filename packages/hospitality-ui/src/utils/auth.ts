@@ -2,7 +2,7 @@ import ky from "ky";
 
 export async function getLoginRoute() {
   const res = await ky
-    .post<{ auth_url: string; state: string }>("http://localhost:4000/auth/login", {
+    .post<{ auth_url: string; state: string }>(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
       credentials: "include",
     })
     .json();
