@@ -24,15 +24,21 @@ export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }
       title: "",
       companyId: auth.user?.companyId || "",
       barcode: null,
-      categoryId: data.categoryId,
+      categoryId: data.categoryId || "",
     },
     onSubmit: (payload) =>
       create(payload, {
         onSuccess: resetDrawer,
       }),
     validators: {
-      onChange: productsInitializer.extend({ title: string().nonempty("Title must be at least 1 character.") }),
-      onSubmit: productsInitializer.extend({ title: string().nonempty("Title must be at least 1 character.") }),
+      onChange: productsInitializer.extend({
+        title: string().nonempty("Title must be at least 1 character."),
+        categoryId: string().uuid().nonempty("Must have a category selected."),
+      }),
+      onSubmit: productsInitializer.extend({
+        title: string().nonempty("Title must be at least 1 character."),
+        categoryId: string().uuid().nonempty("Must have a category selected."),
+      }),
     },
   });
   return (
