@@ -5,6 +5,7 @@ import {
   Products,
   ProductsCategories,
   Table,
+  useBarcodeScanner,
   useDrawer,
   useList,
   useLoaderData,
@@ -67,12 +68,32 @@ export function ProductSettings() {
     placeholderData,
     fields,
   });
-
+  const { setOnResult } = useBarcodeScanner();
   const { openDrawer: openProductCategoriesDrawer } = useDrawer("Create product category", "products_categories");
+  const { openDrawer: openProductDrawer } = useDrawer("Create product", "products");
   return (
     <div className="flex flex-col gap-y-2">
       <div className="ml-auto w-fit">
-        <Button icon={Icons.add} label="Create category" onClick={() => openProductCategoriesDrawer()} variant="info" />
+        <Button
+          icon={Icons.add}
+          items={[
+            { id: "1", title: "Add product category", icon: Icons.add, onClick: openProductCategoriesDrawer },
+            {
+              id: "2",
+              title: "Scan barcode",
+              icon: Icons.barcode,
+              onClick: () => {
+                setOnResult((result) => {
+                  fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(result) });
+                  openProductDrawer({ barcode: result.getText() });
+                });
+              },
+            },
+          ]}
+          label="Create"
+          onClick={undefined}
+          variant="info"
+        />
       </div>
       <ul className="flex flex-col gap-y-2">
         {categories?.map((category) => (
