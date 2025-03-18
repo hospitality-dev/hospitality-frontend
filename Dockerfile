@@ -3,7 +3,7 @@ WORKDIR /app
 
 # Install dependencies and build
 COPY bun.lock package.json ./
-RUN bun install --frozen-lockfile
+RUN bun install
 COPY . .
 RUN bun run build
 
