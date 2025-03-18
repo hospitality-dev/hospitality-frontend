@@ -20,17 +20,28 @@ export function BarcodeScanner() {
 
   useEffect(() => {
     const reader = new BrowserMultiFormatReader();
-
-    reader
-      .listVideoInputDevices()
-      .then((devices) => {
+    async function init() {
+      const devices = await reader.listVideoInputDevices();
+      if (devices.length) {
         setVideoDevices(devices);
-        setVideoDevice(devices[0]?.deviceId);
-        return true;
-      })
-      .catch((err) => console.error(err));
+        setVideoDevice(devices[0].deviceId);
+      }
+    }
+    init();
+  }, []);
 
+  useEffect(() => {
     if (videoDevice) {
+      const reader = new BrowserMultiFormatReader();
+
+      reader
+        .listVideoInputDevices()
+        .then((devices) => {
+          setVideoDevices(devices);
+          setVideoDevice(devices[0]?.deviceId);
+          return true;
+        })
+        .catch((err) => console.error(err));
       reader.decodeFromVideoDevice(videoDevice, "barcode_scanner", (result) => {
         if (result) {
           onResult(result);
