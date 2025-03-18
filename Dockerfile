@@ -9,7 +9,7 @@ RUN bun run build
 
 # Serve with a lightweight web server
 FROM oven/bun:latest AS runner
-COPY --from=builder /app/dist /app/dist
+COPY --from=builder /app/shell/dist /app/dist
 
 # Expose port 5173
 EXPOSE 5173
