@@ -4,5 +4,4 @@ nixPkgs = ["bun"]
 [phases.build]
 cmds = ["bun install", "bun run build"]
 
-[start]
-cmd = "bun x serve apps/shell/dist --single --port 5173"
+
