@@ -34,22 +34,6 @@ export function BarcodeScanner() {
     if (videoDevice) {
       const reader = new BrowserMultiFormatReader();
 
-      reader
-        .listVideoInputDevices()
-        .then((devices) => {
-          setVideoDevices(devices);
-          fetch("https://thearkive.requestcatcher.com/test", {
-            method: "POST",
-            body: JSON.stringify(devices.map((d) => d.label)),
-          });
-          setVideoDevice(devices[0]?.deviceId);
-          return true;
-        })
-        .catch((err) => {
-          console.error(err);
-
-          fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(err) });
-        });
       reader.decodeFromVideoDevice(videoDevice, "barcode_scanner", (result) => {
         if (result) {
           onResult(result);
