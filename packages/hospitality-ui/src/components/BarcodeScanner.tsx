@@ -19,6 +19,16 @@ export function BarcodeScanner() {
   }
 
   useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        console.info("Camera access granted", stream);
+        return true;
+      })
+      .catch((error) => {
+        console.error("Camera access denied", error);
+      });
+
     const reader = new BrowserMultiFormatReader();
 
     async function init() {
@@ -26,6 +36,10 @@ export function BarcodeScanner() {
     }
 
     init();
+  }, []);
+
+  useEffect(() => {
+    const reader = new BrowserMultiFormatReader();
 
     if (videoDevice) {
       reader.decodeFromVideoDevice(videoDevice, "barcode_scanner", (result) => {
