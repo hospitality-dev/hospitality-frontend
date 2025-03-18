@@ -19,27 +19,16 @@ export function BarcodeScanner() {
   }
 
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        console.info("Camera access granted", stream);
+    const reader = new BrowserMultiFormatReader();
+
+    reader
+      .listVideoInputDevices()
+      .then((devices) => {
+        setVideoDevices(devices);
+        setVideoDevice(devices[0]?.deviceId);
         return true;
       })
-      .catch((error) => {
-        console.error("Camera access denied", error);
-      });
-
-    const reader = new BrowserMultiFormatReader();
-
-    async function init() {
-      setVideoDevices(await reader.listVideoInputDevices());
-    }
-
-    init();
-  }, []);
-
-  useEffect(() => {
-    const reader = new BrowserMultiFormatReader();
+      .catch((err) => console.error(err));
 
     if (videoDevice) {
       reader.decodeFromVideoDevice(videoDevice, "barcode_scanner", (result) => {
