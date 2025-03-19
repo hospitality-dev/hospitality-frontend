@@ -1,10 +1,16 @@
 import { BarcodeFormat, BrowserMultiFormatReader, DecodeHintType } from "@zxing/library";
-import { useEffect, useRef, useState } from "react";
+import { useAtomValue } from "jotai";
+import { useEffect, useRef } from "react";
+
+import { barcodeScannerAtom } from "../atoms";
+import { Icons } from "../enums";
+import { useBarcodeScanner } from "../hooks";
+import { Button } from "./Button";
 
 export function BarcodeScanner() {
   const videoRef = useRef(null);
-  const [barcode] = useState(null);
-
+  const { closeBarcodeScanner } = useBarcodeScanner();
+  const { onResult } = useAtomValue(barcodeScannerAtom);
   useEffect(() => {
     const hints = new Map();
     const formats = [BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.EAN_8];
@@ -45,8 +51,10 @@ export function BarcodeScanner() {
           // Start the video stream with the best camera
           codeReader.decodeFromVideoDevice(selectedDeviceId, videoRef.current, (result, error) => {
             if (result) {
-              fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(result.getText()) });
+              onResult(result);
+              closeBarcodeScanner();
             }
+
             if (error && isScanning) {
               console.error(error);
             }
@@ -67,14 +75,21 @@ export function BarcodeScanner() {
   }, []);
 
   return (
-    <div>
-      <video ref={videoRef} height="auto" width="100%" />
-      {barcode && (
-        <div>
-          <h2>Scanned Barcode:</h2>
-          <p>{barcode}</p>
+    <div className="bg-layout absolute top-0 left-0 z-[51] flex h-screen w-screen flex-col p-4">
+      <div className="relative flex h-full flex-col">
+        <div className="absolute top-0 right-0 z-[21]">
+          <Button
+            icon={Icons.add}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              closeBarcodeScanner();
+            }}
+          />
         </div>
-      )}
+        <div className="absolute top-1/2 z-10 h-0.5 w-full bg-red-500" />
+        <video ref={videoRef} height="auto" width="100%" />
+      </div>
     </div>
   );
 }
