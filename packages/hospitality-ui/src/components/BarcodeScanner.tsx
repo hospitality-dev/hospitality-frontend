@@ -27,8 +27,7 @@ export function BarcodeScanner() {
       const vd = d.filter((device) => device.kind === "videoinput");
       if (vd.length) {
         setVideoDevices(vd);
-
-        setVideoDevice(vd[0].deviceId);
+        setVideoDevice(vd?.[3]?.deviceId || vd?.[0]?.deviceId);
       }
     }
     init();
