@@ -20,10 +20,12 @@ export function BarcodeScanner() {
 
   useEffect(() => {
     async function init() {
+      const reader = new BrowserMultiFormatReader();
+      const d = await reader.listVideoInputDevices();
+
       await navigator.mediaDevices.getUserMedia({ video: true }).catch((err) => {
         console.error(err);
       });
-      const d = await navigator.mediaDevices.enumerateDevices();
       const vd = d.filter((device) => device.kind === "videoinput");
       if (vd.length) {
         setVideoDevices(vd);
