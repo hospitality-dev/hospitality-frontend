@@ -45,14 +45,11 @@ export function BarcodeScanner() {
               fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(result.getText()) });
             }
             if (error && isScanning) {
-              fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(error) });
-
               console.error(error);
             }
           });
         }
       } catch (err) {
-        fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(err) });
         console.error("Error starting barcode scanner:", err);
       }
     }
