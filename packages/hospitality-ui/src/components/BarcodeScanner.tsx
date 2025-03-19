@@ -71,7 +71,7 @@ export function BarcodeScanner() {
           value={videoDevice || ""}
         />
         <div className="absolute top-1/2 z-10 h-0.5 w-full bg-red-500" />
-        <video height="200" id="video" width="300"></video>
+        <video height="200" id="barcode_scanner" width="300" />
       </div>
       {/* <Scanner
         classNames={{
