@@ -5,12 +5,13 @@ import { string } from "zod";
 import { drawerAtom, DrawerTypes } from "../../atoms";
 import { Button, Form, Input, Select } from "../../components";
 import { Icons } from "../../enums";
-import { useAuth, useBarcodeScanner, useCreate, useList } from "../../hooks";
+import { useAuth, useBarcodeScanner, useCreate, useList, useScreenSize } from "../../hooks";
 import { ProductsCategories, ProductsInitializer, productsInitializer } from "../../types";
 import { getSentenceCase } from "../../utils";
 
 export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }>, "data">) {
   const auth = useAuth();
+  const { isMd, isLg } = useScreenSize();
   const resetDrawer = useResetAtom(drawerAtom);
   const { setOnResult, closeBarcodeScanner } = useBarcodeScanner();
   const { mutate: create } = useCreate<ProductsInitializer>("products");
@@ -76,18 +77,22 @@ export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }
             children={(field) => (
               <div className="col-span-2">
                 <Input
-                  action={{
-                    onClick: (e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setOnResult((result) => {
-                        const barcode = result.getText();
-                        field.handleChange(barcode);
-                        closeBarcodeScanner();
-                      });
-                    },
-                    icon: Icons.barcode,
-                  }}
+                  action={
+                    isMd && !isLg
+                      ? {
+                          onClick: (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setOnResult((result) => {
+                              const barcode = result.getText();
+                              field.handleChange(barcode);
+                              closeBarcodeScanner();
+                            });
+                          },
+                          icon: Icons.barcode,
+                        }
+                      : undefined
+                  }
                   helperText={field.state.meta.errors.join("\n ")}
                   label={getSentenceCase(field.name)}
                   onChange={(e) => field.handleChange(e.target.value)}
