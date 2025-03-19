@@ -19,16 +19,16 @@ export function BarcodeScanner() {
   }
 
   useEffect(() => {
-    const reader = new BrowserMultiFormatReader();
     async function init() {
-      const devices = await reader.listVideoInputDevices();
-      if (devices.length) {
-        setVideoDevices(devices);
+      const d = await navigator.mediaDevices.enumerateDevices();
+      const vd = d.filter((device) => device.kind === "videoinput");
+      if (vd.length) {
+        setVideoDevices(vd);
         fetch("https://thearkive.requestcatcher.com/test", {
           method: "POST",
-          body: JSON.stringify(devices.map((d) => d.label)),
+          body: JSON.stringify(vd.map((d) => d.label)),
         });
-        setVideoDevice(devices[0].deviceId);
+        setVideoDevice(vd[0].deviceId);
       }
     }
     init();
