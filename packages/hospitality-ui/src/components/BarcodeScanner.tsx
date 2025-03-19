@@ -39,10 +39,12 @@ export function BarcodeScanner() {
     const reader = new BrowserMultiFormatReader();
     fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(videoDevice) });
     if (videoDevice) {
-      reader.decodeFromVideoDevice(videoDevice, "barcode_scanner", (result) => {
+      reader.decodeFromVideoDevice(videoDevice, "barcode_scanner", (result, err) => {
         if (result) {
           onResult(result);
           fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(result.getText()) });
+        } else if (err) {
+          fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(err) });
         }
         return true;
       });
