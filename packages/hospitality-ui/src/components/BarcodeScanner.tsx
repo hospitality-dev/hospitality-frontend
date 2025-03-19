@@ -19,30 +19,6 @@ export function BarcodeScanner() {
   }
 
   useEffect(() => {
-    navigator.mediaDevices
-      .enumerateDevices()
-      .then((devices) => {
-        const vidDevices = devices.filter((device) => device.kind === "videoinput");
-        setVideoDevices(vidDevices);
-
-        if (vidDevices.length > 1) {
-          const selectedDeviceId = vidDevices[1].deviceId; // Use second camera (e.g., back camera on mobile)
-
-          navigator.mediaDevices
-            .getUserMedia({ video: { deviceId: { exact: selectedDeviceId } } })
-            .then((stream) => {
-              const video = document.createElement("video");
-              document.body.appendChild(video);
-              video.srcObject = stream;
-              video.play();
-              return true;
-            })
-            .catch((error) => console.error("Camera access denied", error));
-        }
-        return true;
-      })
-      .catch((err) => console.error(err));
-
     const reader = new BrowserMultiFormatReader();
     async function init() {
       const devices = await reader.listVideoInputDevices();
