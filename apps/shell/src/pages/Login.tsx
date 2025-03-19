@@ -1,4 +1,4 @@
-import { BarcodeScanner, Button, Form, loginParamsSchema, useForm, useLogin } from "@hospitality/hospitality-ui";
+import { Button, Form, loginParamsSchema, useForm, useLogin } from "@hospitality/hospitality-ui";
 
 export function Login() {
   const { login } = useLogin();
@@ -15,7 +15,6 @@ export function Login() {
   });
   return (
     <div className="p-2">
-      <BarcodeScanner />
       <Form handleSubmit={handleSubmit}>
         {state.errors.toString()}
         <Field
