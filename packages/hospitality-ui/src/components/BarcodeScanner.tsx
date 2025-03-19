@@ -79,7 +79,7 @@ export function BarcodeScanner() {
       <div className="relative flex h-full flex-col">
         <div className="absolute top-0 right-0 z-[21]">
           <Button
-            icon={Icons.add}
+            icon={Icons.close}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -88,7 +88,7 @@ export function BarcodeScanner() {
           />
         </div>
         <div className="absolute top-1/2 z-10 h-0.5 w-full bg-red-500" />
-        <video ref={videoRef} height="auto" width="100%" />
+        <video ref={videoRef} className="aspect-auto w-full" />
       </div>
     </div>
   );
