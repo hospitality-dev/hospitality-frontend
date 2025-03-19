@@ -6,5 +6,6 @@ export const Icons = {
   barcode: "ph:barcode" as const,
   beer: "ph:beer-bottle-light" as const,
   chicken: "healthicons:animal-chicken-outline" as const,
+  close: "ph:x" as const,
   folder: "ph:folder" as const,
 };
