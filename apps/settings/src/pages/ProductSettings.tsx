@@ -34,7 +34,7 @@ const columns = [
 ];
 
 function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategories, "id" | "title" | "isDefault">) {
-  const { openDrawer: openProductDrawer } = useDrawer<"products">("Create product", "products");
+  const { openDrawer: openProductDrawer } = useDrawer<"products">("Create product", "products", false);
   const [isOpen, setIsOpen] = useState(false);
   const query = useList<Products>({ model: "products", fields: ["id", "title"] }, { enabled: isOpen, urlSuffix: id });
 

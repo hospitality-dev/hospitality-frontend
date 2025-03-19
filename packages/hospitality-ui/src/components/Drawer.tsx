@@ -36,7 +36,11 @@ export function Drawer() {
   const resetDrawer = useResetAtom(drawerAtom);
   //   const [isExpanded, setIsExpanded] = useState(false);
   const [renderContent, setRenderContent] = useState(false);
-  const ref = useClickOutside(() => setDrawer((prev) => ({ ...prev, isOpen: false })));
+  const ref = useClickOutside(() => {
+    if (drawer.closeOnOutsideClick !== false) {
+      setDrawer((prev) => ({ ...prev, isOpen: false }));
+    }
+  });
   const location = useLocation();
   const { refs, context } = useFloating({
     placement: "right",

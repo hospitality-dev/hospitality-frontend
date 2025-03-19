@@ -5,7 +5,7 @@ import { drawerAtom, DrawerTypes } from "../../atoms";
 
 type DrawerData<T extends DrawerTypes["type"]> = Extract<DrawerTypes, { type: T }>["data"];
 
-export function useDrawer<T extends DrawerTypes["type"]>(title: string, type: T) {
+export function useDrawer<T extends DrawerTypes["type"]>(title: string, type: T, closeOnOutsideClick?: boolean) {
   const [drawer, setDrawer] = useAtom(drawerAtom);
   const closeDrawer = useResetAtom(drawerAtom);
 
@@ -18,6 +18,7 @@ export function useDrawer<T extends DrawerTypes["type"]>(title: string, type: T)
       title,
       type,
       data,
+      closeOnOutsideClick,
       isOpen: true,
     }));
   }

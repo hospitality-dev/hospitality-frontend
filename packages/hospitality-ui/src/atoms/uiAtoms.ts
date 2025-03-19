@@ -14,7 +14,7 @@ export type DrawerTypes =
 
 type DrawerState = {
   isOpen: boolean;
-
+  closeOnOutsideClick?: boolean;
   title: string;
 } & DrawerTypes;
 
