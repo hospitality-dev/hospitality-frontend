@@ -37,13 +37,15 @@ export function BarcodeScanner() {
   useEffect(() => {
     const reader = new BrowserMultiFormatReader();
     if (videoDevice) {
-      reader.decodeFromVideoDevice(videoDevice, "barcode_scanner", (result) => {
-        if (result) {
-          onResult(result);
-          fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(result.getText()) });
-        }
-        return true;
-      });
+      reader
+        .decodeFromVideoDevice(videoDevice, "barcode_scanner", (result) => {
+          if (result) {
+            onResult(result);
+            fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(result.getText()) });
+          }
+          return true;
+        })
+        .catch((err) => fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(err) }));
     }
     document.addEventListener("keydown", close);
 
