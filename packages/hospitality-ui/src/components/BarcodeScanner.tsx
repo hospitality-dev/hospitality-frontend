@@ -25,10 +25,7 @@ export function BarcodeScanner() {
       const vd = d.filter((device) => device.kind === "videoinput");
       if (vd.length) {
         setVideoDevices(vd);
-        fetch("https://thearkive.requestcatcher.com/test", {
-          method: "POST",
-          body: JSON.stringify(vd.map((d) => d.label)),
-        });
+
         setVideoDevice(vd[0].deviceId);
       }
     }
@@ -39,16 +36,13 @@ export function BarcodeScanner() {
     if (videoDevice) {
       const reader = new BrowserMultiFormatReader();
 
-      reader
-        .decodeFromVideo("barcode_scanner", undefined)
-        .then((result) => {
-          if (result) {
-            onResult(result);
-            fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(result.getText()) });
-          }
-          return true;
-        })
-        .catch((err) => console.error(err));
+      reader.decodeFromVideoDevice(videoDevice, "barcode_scanner", (result) => {
+        if (result) {
+          onResult(result);
+          fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(result.getText()) });
+        }
+        return true;
+      });
     }
     document.addEventListener("keydown", close);
 
