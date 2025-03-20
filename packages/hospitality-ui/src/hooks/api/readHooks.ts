@@ -16,7 +16,7 @@ export function useRead<F extends Record<keyof F, valueof<F>>>(
   options?: Pick<UseQueryOptions<F>, "enabled">
 ) {
   const reset = useResetAtom(userAtom);
-  const searchParams = getSearchParams<useReadProps<F>["fields"]>(fields);
+  const searchParams = getSearchParams<useReadProps<F>["fields"], F>(fields);
 
   return useQuery<F>({
     queryKey: [model, id],
