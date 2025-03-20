@@ -6,15 +6,15 @@ import { availableIcons, Size, Variant } from "../types";
 type Props = { label: string; icon?: availableIcons; variant?: Variant; size?: Size; hasBorder?: boolean };
 
 const classes = tv({
-  base: "flex-1 py-0.5 font-medium select-none",
+  base: "flex-1 font-medium select-none",
   variants: {
     variant: {
-      primary: "border-gray-300",
-      secondary: "border-gray-200",
-      info: "border-blue-300",
-      success: "border-green-300",
-      warning: "border-orange-300",
-      error: "border-red-300",
+      primary: "border-primary-highlight",
+      secondary: "border-secondary-highlight",
+      info: "border-info-highlight",
+      success: "border-success-highlight",
+      warning: "border-warning-highlight",
+      error: "border-error-highlight",
     },
     size: {
       xs: "text-xs",
