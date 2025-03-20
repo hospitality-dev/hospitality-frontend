@@ -5,6 +5,7 @@ import {
   fetchFunction,
   getLoginRoute,
   getSearchParams,
+  LocationsAvailableProducts,
   LoginResponse,
   ProductsCategories,
 } from "@hospitality/hospitality-ui";
@@ -85,20 +86,33 @@ const settingsProducts = createRoute({
   getParentRoute: () => settingsRootRoute,
   path: "products",
   loader: async () => {
-    const fields: (keyof ProductsCategories)[] = ["id", "title", "companyId", "parentId", "isDefault"];
+    const productCategoryFields: (keyof ProductsCategories)[] = ["id", "title", "companyId", "parentId", "isDefault"];
+    const locationsAvailableProductsFields: (keyof LocationsAvailableProducts)[] = ["productId"];
     return {
+      locationsAvailableProducts: await queryClient.ensureQueryData<{ [key: string]: boolean }>({
+        queryKey: ["locations_available_products"],
+        queryFn: () =>
+          fetchFunction<{ [key: string]: boolean }>({
+            method: "GET",
+            searchParams: getSearchParams<typeof locationsAvailableProductsFields, null>(locationsAvailableProductsFields),
+            userReset: () => {},
+            model: "locations_available_products",
+          }),
+        staleTime: Infinity,
+      }),
       categories: await queryClient.ensureQueryData<ProductsCategories[]>({
         queryKey: ["products_categories", "list"],
         queryFn: () =>
           fetchFunction<ProductsCategories[]>({
             method: "GET",
             userReset: () => {},
-            searchParams: getSearchParams<typeof fields>(fields),
+            searchParams: getSearchParams<typeof productCategoryFields, ProductsCategories>(productCategoryFields),
             model: "products_categories",
           }),
         staleTime: 5 * 60 * 1000,
       }),
-      fields,
+      productCategoryFields,
+      locationsAvailableProductsFields,
     };
   },
 }).lazy(() => import("@hospitality/settings").then((d) => d.SettingsProductsRoute));
