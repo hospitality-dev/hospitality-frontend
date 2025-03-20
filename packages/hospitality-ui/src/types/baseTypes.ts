@@ -3,7 +3,15 @@ import { valueof } from "@hospitality/hospitality-ui/src";
 import { Icons } from "../enums/icons";
 
 // =========ENTITIES=========
-export type AvailableEntities = "users" | "companies" | "locations" | "roles" | "products" | "products_categories";
+export type AvailableEntities =
+  | "users"
+  | "companies"
+  | "locations"
+  | "roles"
+  | "products"
+  | "products_categories"
+  | "locations_available_products"
+  | "locations_products";
 // =========COMPONENTS=========
 export type Variant = "primary" | "secondary" | "info" | "success" | "warning" | "error";
 
@@ -38,5 +46,17 @@ export interface IconType {
   thickness?: IconThickness;
 }
 
+// =========REQUEST=========
+type RequestFilterOperators = "eq" | "neq" | "gt" | "gte" | "is" | "is not";
+type RequestFilterType<T> = {
+  field: keyof T;
+  operator: RequestFilterOperators;
+  value: string | number | RequestFilterType<T>;
+};
+type RequestFilterBase<T> = {
+  and?: (RequestFilterType<T> | RequestFilterBase<T>[])[];
+  or?: (RequestFilterType<T> | RequestFilterBase<T>[])[];
+};
+export type RequestFilters<T> = RequestFilterBase<T>;
 // =========RESPONSE=========
 export type ResponseType<T> = { data: T; ok: boolean; message: string };
