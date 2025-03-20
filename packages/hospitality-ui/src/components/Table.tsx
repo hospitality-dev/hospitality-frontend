@@ -35,7 +35,7 @@ const classes = tv({
     th: "flex-1 p-2 text-sm font-light uppercase",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300 py-2",
     tr: "flex w-full items-center rounded py-1 has-[td]:hover:bg-gray-200",
-    td: "h-10 flex-1 p-2",
+    td: "flex h-10 flex-1 items-center px-2",
   },
   variants: {
     isOpen: {
@@ -65,7 +65,7 @@ function TableSkeleton({ tr, td }: { tr: string; td: string }) {
   );
 }
 export function Table<T>({
-  columns,
+  columns = [],
   data,
   title,
   titleVariant,
@@ -81,7 +81,7 @@ export function Table<T>({
     getCoreRowModel: getCoreRowModel(),
   });
   const [isOpen, setIsOpen] = useState(isInitialOpen);
-  const headers = table.getFlatHeaders().filter((h) => !!h.column.columnDef.header);
+  const headers = table.getFlatHeaders();
   const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({ isOpen, isLoading });
 
   return (
@@ -138,7 +138,7 @@ export function Table<T>({
             {headers.length ? (
               <tr className={tr()}>
                 {headers.map((header) => (
-                  <th key={header.id} className={th()}>
+                  <th key={header.id} className={th()} style={{ maxWidth: header.column.columnDef.maxSize }}>
                     {flexRender(header.column.columnDef.header, header.getContext())}
                   </th>
                 ))}
@@ -156,7 +156,7 @@ export function Table<T>({
               ? table.getRowModel().rows.map((row) => (
                   <tr key={row.id} className={tr()}>
                     {row.getVisibleCells().map((cell) => (
-                      <td key={cell.id} className={td()}>
+                      <td key={cell.id} className={td()} style={{ maxWidth: cell.column.columnDef.maxSize }}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
                     ))}
