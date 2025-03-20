@@ -27,7 +27,14 @@ export function useList<F extends Record<keyof F, valueof<F>>>(
 
   return useQuery<F[]>({
     queryKey: [model, "list", fields, filters, options?.urlSuffix || ""].filter(Boolean),
-    queryFn: () => fetchFunction<F[]>({ method: "GET", model, searchParams, userReset: reset, urlSuffix: options?.urlSuffix }),
+    queryFn: () =>
+      fetchFunction<F[]>({
+        method: "GET",
+        model,
+        searchParams,
+        userReset: reset,
+        urlSuffix: `list${options?.urlSuffix ? `/${options?.urlSuffix}` : ""}`,
+      }),
     placeholderData,
     enabled: !!(options?.enabled ?? true),
   });

@@ -14,7 +14,7 @@ import { Modules } from "../enums";
 const sections = [
   {
     title: "MODULES",
-    links: Modules.map((module) => ({ title: getSentenceCase(module), to: `/${module}/dashboard` })),
+    links: Modules.map((module) => ({ title: getSentenceCase(module), to: `/${module}` })),
   },
 ];
 

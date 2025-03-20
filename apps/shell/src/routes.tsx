@@ -2,13 +2,13 @@
 import {
   AuthContextType,
   authFetchFunction,
-  fetchFunction,
   getLoginRoute,
-  getSearchParams,
-  LocationsAvailableProducts,
+  locationsAvailableProductsFields,
   LocationsAvailableProductsQuery,
   LocationsAvailableProductsSettings,
   LoginResponse,
+  ProductCategoriesQuery,
+  productCategoryFields,
   ProductsCategories,
 } from "@hospitality/hospitality-ui";
 import { SettingsLayout } from "@hospitality/settings";
@@ -73,9 +73,17 @@ const locationSelectRoute = createRoute({
 
 // #region INVENTORY_ROUTES
 const inventoryRootRoute = createRoute({ path: "inventory-management", getParentRoute: () => mainLayout, component: Outlet });
-const invDashboard = createRoute({ getParentRoute: () => inventoryRootRoute, path: "dashboard" }).lazy(() =>
-  import("@hospitality/inventory-management").then((d) => d.InvetoryDashboardRoute)
-);
+const invDashboard = createRoute({
+  getParentRoute: () => inventoryRootRoute,
+  path: "/",
+
+  loader: async () => {
+    return {
+      categories: await queryClient.ensureQueryData<ProductsCategories[]>(ProductCategoriesQuery),
+      locationsAvailableProductsFields,
+    };
+  },
+}).lazy(() => import("@hospitality/inventory-management").then((d) => d.InvetoryDashboardRoute));
 
 // #endregion INVENTORY_ROUTES
 
@@ -88,23 +96,10 @@ const settingsProducts = createRoute({
   getParentRoute: () => settingsRootRoute,
   path: "products",
   loader: async () => {
-    const productCategoryFields: (keyof ProductsCategories)[] = ["id", "title", "companyId", "parentId", "isDefault"];
-    const locationsAvailableProductsFields: (keyof LocationsAvailableProducts)[] = ["productId"];
-
     return {
       locationsAvailableProducts:
         await queryClient.ensureQueryData<LocationsAvailableProductsSettings>(LocationsAvailableProductsQuery),
-      categories: await queryClient.ensureQueryData<ProductsCategories[]>({
-        queryKey: ["products_categories", "list"],
-        queryFn: () =>
-          fetchFunction<ProductsCategories[]>({
-            method: "GET",
-            userReset: () => {},
-            searchParams: getSearchParams<typeof productCategoryFields, ProductsCategories>(productCategoryFields),
-            model: "products_categories",
-          }),
-        staleTime: 5 * 60 * 1000,
-      }),
+      categories: await queryClient.ensureQueryData<ProductsCategories[]>(ProductCategoriesQuery),
       productCategoryFields,
       locationsAvailableProductsFields,
     };
