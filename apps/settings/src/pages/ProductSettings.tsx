@@ -2,41 +2,77 @@ import {
   Button,
   createColumnHelper,
   Icons,
+  LocationsAvailableProductsInitializer,
+  LocationsAvailableProductsQuery,
   Products,
   ProductsCategories,
   Table,
+  useAuth,
   useBarcodeScanner,
+  useCreate,
+  useDelete,
   useDrawer,
   useList,
   useLoaderData,
+  UseMutateFunction,
+  useQuery,
 } from "@hospitality/hospitality-ui";
 import { useState } from "react";
 
 const columnHelper = createColumnHelper<Pick<ProductsCategories, "id" | "title">>();
 
-const columns = [
-  columnHelper.accessor("title", { header: "", cell: (info) => info.getValue() }),
+function columns({
+  create,
+  deleteMutation,
+  locationId,
+  locationsAvailableProducts,
+}: {
+  create: UseMutateFunction<unknown, Error, { value: LocationsAvailableProductsInitializer }, unknown>;
+  deleteMutation: UseMutateFunction<unknown, Error, string, unknown>;
+  locationId: string | null | undefined;
+  locationsAvailableProducts: Record<string, string>;
+}) {
+  return [
+    columnHelper.accessor("title", { header: "", cell: (info) => info.getValue() }),
 
-  columnHelper.display({
-    id: "isActive",
-    header: "",
-    cell: () => (
-      <div className="flex h-full items-center justify-end">
-        <div className="w-24">
-          <Button label="Active" onClick={undefined} variant="success" />
+    columnHelper.display({
+      id: "isActive",
+      header: "",
+      cell: ({ row }) => (
+        <div className="flex h-full items-center justify-end">
+          <div className="w-28">
+            <Button
+              label={locationsAvailableProducts?.[row.original.id] ? "Active" : "Inactive"}
+              onClick={() => {
+                if (locationId && !locationsAvailableProducts?.[row.original.id])
+                  create({ value: { productId: row.original.id, locationId } });
+                else if (locationId && locationsAvailableProducts?.[row.original.id])
+                  deleteMutation(locationsAvailableProducts?.[row.original.id]);
+              }}
+              variant={locationsAvailableProducts?.[row.original.id] ? "success" : "secondary"}
+            />
+          </div>
         </div>
-      </div>
-    ),
-    minSize: 50,
-    size: 50,
-    maxSize: 50,
-  }),
-];
+      ),
+      minSize: 50,
+      size: 50,
+      maxSize: 50,
+    }),
+  ];
+}
 
 function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategories, "id" | "title" | "isDefault">) {
-  const { openDrawer: openProductDrawer } = useDrawer<"products">("Create product", "products", false);
+  const { openDrawer: openProductDrawer } = useDrawer<"products">("Create product", "products");
+  const auth = useAuth();
+  const { data } = useQuery(LocationsAvailableProductsQuery);
+
   const [isOpen, setIsOpen] = useState(false);
-  const query = useList<Products>({ model: "products", fields: ["id", "title"] }, { enabled: isOpen, urlSuffix: id });
+  const query = useList<Products>(
+    { model: "products", fields: ["id", "title"], filters: { and: [{ field: "categoryId", value: id, operator: "eq" }] } },
+    { enabled: isOpen }
+  );
+  const { mutate: create } = useCreate<LocationsAvailableProductsInitializer>("locations_available_products");
+  const { mutate: deleteMutation } = useDelete("locations_available_products");
 
   return (
     <li className={`flex flex-col ${isDefault ? "rounded-md border border-gray-300" : ""}`}>
@@ -47,7 +83,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
           label: "",
           variant: "info",
         }}
-        columns={columns}
+        columns={columns({ create, locationId: auth.user?.locationId, locationsAvailableProducts: data || {}, deleteMutation })}
         data={query?.data || []}
         isCollapsible
         isInitialOpen={isOpen}
@@ -61,12 +97,12 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
 }
 
 export function ProductSettings() {
-  const { categories: placeholderData, fields } = useLoaderData({ from: "/settings/products" });
+  const { categories: placeholderData, productCategoryFields } = useLoaderData({ from: "/settings/products" });
 
   const { data: categories } = useList<ProductsCategories>({
     model: "products_categories",
     placeholderData,
-    fields,
+    fields: productCategoryFields,
   });
   const { setOnResult } = useBarcodeScanner();
   const { openDrawer: openProductCategoriesDrawer } = useDrawer("Create product category", "products_categories");
@@ -84,7 +120,6 @@ export function ProductSettings() {
               icon: Icons.barcode,
               onClick: () => {
                 setOnResult((result) => {
-                  fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(result) });
                   openProductDrawer({ barcode: result.getText() });
                 });
               },
