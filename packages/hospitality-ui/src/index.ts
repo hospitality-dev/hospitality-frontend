@@ -6,7 +6,7 @@ export * from "./types";
 export * from "./utils";
 export { Icon } from "@iconify/react";
 export { type UpdaterFn, useForm } from "@tanstack/react-form";
-export { QueryClient, QueryClientProvider, queryOptions, type UseMutateFunction } from "@tanstack/react-query";
+export { QueryClient, QueryClientProvider, queryOptions, type UseMutateFunction, useQuery } from "@tanstack/react-query";
 export { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 export {
   type AnyRoute,
