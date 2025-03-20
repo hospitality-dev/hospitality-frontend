@@ -17,21 +17,11 @@ const classes = tv({
       error: "border-red-300",
     },
     size: {
-      xs: {
-        title: "text-xs",
-      },
-      sm: {
-        title: "text-sm",
-      },
-      md: {
-        title: "text-base",
-      },
-      lg: {
-        title: "text-lg",
-      },
-      xl: {
-        title: "text-xl",
-      },
+      xs: "text-xs",
+      sm: "text-sm",
+      md: "text-base",
+      lg: "text-lg",
+      xl: "text-xl",
     },
     hasBorder: {
       true: "border-b",
