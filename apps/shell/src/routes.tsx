@@ -73,17 +73,10 @@ const locationSelectRoute = createRoute({
 
 // #region INVENTORY_ROUTES
 const inventoryRootRoute = createRoute({ path: "inventory-management", getParentRoute: () => mainLayout, component: Outlet });
-const invDashboard = createRoute({
+const productInventoryRoute = createRoute({
   getParentRoute: () => inventoryRootRoute,
   path: "/",
-
-  loader: async () => {
-    return {
-      categories: await queryClient.ensureQueryData<ProductsCategories[]>(ProductCategoriesQuery),
-      locationsAvailableProductsFields,
-    };
-  },
-}).lazy(() => import("@hospitality/inventory-management").then((d) => d.InvetoryDashboardRoute));
+}).lazy(() => import("@hospitality/inventory-management").then((d) => d.ProductInventoryRoute));
 
 // #endregion INVENTORY_ROUTES
 
@@ -109,7 +102,7 @@ const settingsProducts = createRoute({
 
 const routeTree = rootRoute.addChildren([
   mainLayout.addChildren([
-    inventoryRootRoute.addChildren([invDashboard]),
+    inventoryRootRoute.addChildren([productInventoryRoute]),
     settingsRootRoute.addChildren([settingsUsers, settingsProducts]),
   ]),
   loginRoute,
@@ -118,6 +111,7 @@ const routeTree = rootRoute.addChildren([
 
 export const router = createRouter({
   routeTree,
+
   context: {
     auth: null,
   },
