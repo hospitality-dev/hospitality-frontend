@@ -54,9 +54,7 @@ function columns({
           </div>
         </div>
       ),
-      minSize: 50,
-      size: 50,
-      maxSize: 50,
+      maxSize: 125,
     }),
   ];
 }
@@ -71,8 +69,10 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
     { model: "products", fields: ["id", "title"], filters: { and: [{ field: "categoryId", value: id, operator: "eq" }] } },
     { enabled: isOpen }
   );
-  const { mutate: create } = useCreate<LocationsAvailableProductsInitializer>("locations_available_products");
-  const { mutate: deleteMutation } = useDelete("locations_available_products");
+  const { mutate: create } = useCreate<LocationsAvailableProductsInitializer>("locations_available_products", {
+    invalidateModels: ["products"],
+  });
+  const { mutate: deleteMutation } = useDelete("locations_available_products", { invalidateModels: ["products"] });
 
   return (
     <li className={`flex flex-col ${isDefault ? "rounded-md border border-gray-300" : ""}`}>

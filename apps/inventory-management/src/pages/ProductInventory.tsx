@@ -46,9 +46,10 @@ function columns() {
 }
 
 export function ProductInventory() {
+  const { openDrawer } = useDrawer("Add products", "inventory_products");
+
   const { data } = useQuery(ProductCategoriesQuery);
   const [active, setActive] = useState(data?.[0]?.id || "");
-  const { openDrawer } = useDrawer("Add products", "inventory_products");
   const { data: products, isLoading } = useList<ProductsWithCount>(
     { model: "products", fields: ["id", "title"] },
     { enabled: !!active, urlSuffix: `category/${active}/active` }
