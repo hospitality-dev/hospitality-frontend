@@ -55,7 +55,16 @@ export function ProductInventory() {
     <div className="flex flex-col gap-y-2">
       <Tabs active={active} setActive={setActive} tabs={(data || []).map((cat) => ({ id: cat.id, title: cat.title }))} />
       <div className="self-end">
-        <Button icon={Icons.add} label={`Add new`} onClick={undefined} variant="info" />
+        <Button
+          icon={Icons.add}
+          items={[
+            { id: "1", title: "Manual input", icon: Icons.input },
+            { id: "2", title: "Barcode input", icon: Icons.barcode },
+          ]}
+          label={`Add new`}
+          onClick={undefined}
+          variant="info"
+        />
       </div>
       <Table columns={columns()} data={products || []} isLoading={isLoading} />
     </div>
