@@ -16,6 +16,7 @@ type Props<T> = {
   isCollapsible?: boolean;
   isInitialOpen?: boolean;
   isLoading?: boolean;
+  hasNoHeader?: boolean;
   onExpand?: () => void;
   action?: {
     onClick: () => void;
@@ -28,13 +29,13 @@ type Props<T> = {
 
 const classes = tv({
   slots: {
-    container: "overflow-x-auto rounded-md border border-gray-300 bg-gray-100 px-4 py-2",
+    container: "overflow-x-auto rounded-md border border-gray-300 bg-gray-100 px-2",
     tableContainer: "transition-[height]",
     tableClasses: "min-w-full overflow-auto",
     thead: "border-b border-gray-300 text-left text-gray-500",
     th: "flex-1 p-2 text-sm font-light uppercase",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300 py-2",
-    tr: "flex w-full items-center rounded py-1 has-[td]:hover:bg-gray-200",
+    tr: "flex w-full items-center rounded has-[td]:hover:bg-gray-200",
     td: "flex h-10 flex-1 items-center px-2",
   },
   variants: {
@@ -44,6 +45,11 @@ const classes = tv({
       },
       false: {
         tableContainer: "h-0 overflow-hidden",
+      },
+    },
+    isCollapsible: {
+      true: {
+        container: "py-2",
       },
     },
     isLoading: {
@@ -74,6 +80,7 @@ export function Table<T>({
   action,
   onExpand,
   isLoading,
+  hasNoHeader,
 }: Props<T>) {
   const table = useReactTable({
     columns,
@@ -82,7 +89,7 @@ export function Table<T>({
   });
   const [isOpen, setIsOpen] = useState(isInitialOpen);
   const headers = table.getFlatHeaders();
-  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({ isOpen, isLoading });
+  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({ isOpen, isLoading, isCollapsible });
 
   return (
     <div className={container()}>
@@ -134,17 +141,19 @@ export function Table<T>({
         className={tableContainer()}
         style={{ height: (isCollapsible && isOpen) || !isCollapsible ? "calc-size(auto, size)" : 0 }}>
         <table className={tableClasses()}>
-          <thead className={thead()}>
-            {headers.length ? (
-              <tr className={tr()}>
-                {headers.map((header) => (
-                  <th key={header.id} className={th()} style={{ maxWidth: header.column.columnDef.maxSize }}>
-                    {flexRender(header.column.columnDef.header, header.getContext())}
-                  </th>
-                ))}
-              </tr>
-            ) : null}
-          </thead>
+          {hasNoHeader ? (
+            <thead className={thead()}>
+              {headers.length ? (
+                <tr className={tr()}>
+                  {headers.map((header) => (
+                    <th key={header.id} className={th()} style={{ maxWidth: header.column.columnDef.maxSize }}>
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                    </th>
+                  ))}
+                </tr>
+              ) : null}
+            </thead>
+          ) : null}
           <tbody className={tbody()}>
             {!isLoading && !data.length ? (
               <tr className={tr()}>
