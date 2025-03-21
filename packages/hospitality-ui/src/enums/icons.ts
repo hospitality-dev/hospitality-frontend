@@ -8,4 +8,5 @@ export const Icons = {
   chicken: "healthicons:animal-chicken-outline" as const,
   close: "ph:x" as const,
   folder: "ph:folder" as const,
+  input: "streamline:input-box" as const,
 };
