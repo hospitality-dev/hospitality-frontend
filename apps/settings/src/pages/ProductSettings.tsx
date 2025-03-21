@@ -60,19 +60,26 @@ function columns({
 }
 
 function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategories, "id" | "title" | "isDefault">) {
-  const { openDrawer: openProductDrawer } = useDrawer<"products">("Create product", "products");
   const auth = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const { openDrawer: openProductDrawer } = useDrawer<"products">("Create product", "products");
+
+  // #region queries
   const { data } = useQuery(LocationsAvailableProductsQuery);
 
-  const [isOpen, setIsOpen] = useState(false);
   const query = useList<Products>(
     { model: "products", fields: ["id", "title"], filters: { and: [{ field: "categoryId", value: id, operator: "eq" }] } },
     { enabled: isOpen }
   );
+
+  // #endregion queries
+
+  // #region mutations
   const { mutate: create } = useCreate<LocationsAvailableProductsInitializer>("locations_available_products", {
     invalidateModels: ["products"],
   });
   const { mutate: deleteMutation } = useDelete("locations_available_products", { invalidateModels: ["products"] });
+  // #endregion mutations
 
   return (
     <li className={`flex flex-col ${isDefault ? "rounded-md border border-gray-300" : ""}`}>
