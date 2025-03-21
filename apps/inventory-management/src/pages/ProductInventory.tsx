@@ -64,7 +64,7 @@ export function ProductInventory() {
             { id: "1", title: "Manual input", icon: Icons.input, onClick: () => openDrawer({ categoryId: active }) },
             { id: "2", title: "Barcode input", icon: Icons.barcode },
           ]}
-          label={`Add new`}
+          label="Add"
           onClick={undefined}
           variant="info"
         />
