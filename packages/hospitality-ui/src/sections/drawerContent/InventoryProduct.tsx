@@ -3,7 +3,7 @@ import { useResetAtom } from "jotai/utils";
 import { number, string } from "zod";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
-import { Form, Input, Select } from "../../components";
+import { Button, Form, Input, Select } from "../../components";
 import { useAddInventoryProducts, useList } from "../../hooks";
 import { locationsProductsInitializer, Products } from "../../types";
 import { formatForOptions } from "../../utils";
@@ -44,17 +44,23 @@ export function InventoryProduct({ data }: Props) {
         <div className="grid h-full grid-cols-2 content-start items-start gap-2">
           <form.Field
             children={(field) => (
-              <Select
-                isDisabled={isLoading}
-                label="Product"
-                onChange={(e) => field.handleChange(e.target.value)}
-                options={formatForOptions(products)}
-                value={field.state.value}
-                variant={field.state.meta.errors.length ? "error" : "primary"}
-              />
+              <div>
+                <Select
+                  isDisabled={isLoading}
+                  label="Product"
+                  onChange={(e) => {
+                    field.handleChange(e.target.value);
+                  }}
+                  options={formatForOptions(products)}
+                  value={field.state.value}
+                  variant={field.state.meta.errors.length ? "error" : "primary"}
+                />
+                {field.state.meta.errors.toString()}
+              </div>
             )}
             name="productId"
           />
+
           <form.Field
             children={(field) => (
               <Input
@@ -66,6 +72,14 @@ export function InventoryProduct({ data }: Props) {
               />
             )}
             name="amount"
+          />
+        </div>
+        <div className="relative bottom-8">
+          <form.Subscribe<[boolean, boolean]>
+            children={(p) => {
+              return <Button isDisabled={!p[0]} label="Create" onClick={undefined} variant="success" />;
+            }}
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
           />
         </div>
       </Form>

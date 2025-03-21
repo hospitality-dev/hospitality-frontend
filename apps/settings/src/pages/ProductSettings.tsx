@@ -87,7 +87,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
         data={query?.data || []}
         isCollapsible
         isInitialOpen={isOpen}
-        isLoading={query.isRefetching}
+        isLoading={query.isPending}
         onExpand={() => setIsOpen(!isOpen)}
         title={title}
         titleVariant="primary"

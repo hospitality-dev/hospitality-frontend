@@ -50,7 +50,7 @@ export function ProductInventory() {
 
   const { data } = useQuery(ProductCategoriesQuery);
   const [active, setActive] = useState(data?.[0]?.id || "");
-  const { data: products, isLoading } = useList<ProductsWithCount>(
+  const { data: products, isPending } = useList<ProductsWithCount>(
     { model: "products", fields: ["id", "title"] },
     { enabled: !!active, urlSuffix: `category/${active}/active` }
   );
@@ -69,7 +69,7 @@ export function ProductInventory() {
           variant="info"
         />
       </div>
-      <Table columns={columns()} data={products || []} isLoading={isLoading} />
+      <Table columns={columns()} data={products || []} isLoading={isPending} />
     </div>
   );
 }
