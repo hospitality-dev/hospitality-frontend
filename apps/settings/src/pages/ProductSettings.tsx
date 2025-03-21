@@ -92,6 +92,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
         }}
         columns={columns({ create, locationId: auth.user?.locationId, locationsAvailableProducts: data || {}, deleteMutation })}
         data={query?.data || []}
+        hasNoHeader
         isCollapsible
         isInitialOpen={isOpen}
         isLoading={query.isPending}
