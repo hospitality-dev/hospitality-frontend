@@ -8,6 +8,7 @@ import { tv } from "tailwind-variants";
 import { drawerAtom } from "../atoms";
 import { useClickOutside } from "../hooks";
 import { Product, ProductsCategories } from "../sections/drawerContent";
+import { InventoryProduct } from "../sections/drawerContent/InventoryProduct";
 
 const DrawerClasses = tv({
   slots: {
@@ -112,6 +113,7 @@ export function Drawer() {
             <div className="h-[92.5%]">
               {drawer.type === "products_categories" ? <ProductsCategories /> : null}
               {drawer.type === "products" && drawer.data ? <Product data={drawer.data} /> : null}
+              {drawer.type === "inventory_products" && drawer.data ? <InventoryProduct data={drawer.data} /> : null}
             </div>
           ) : null}
         </div>

@@ -19,3 +19,18 @@ export function useCreate<F>(model: AvailableEntities) {
     },
   });
 }
+
+export function useAddInventoryProducts() {
+  const userReset = useResetAtom(userAtom);
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: { value: { productId: string; amount: number } }) => {
+      return fetchFunction({ method: "POST", payload: JSON.stringify(payload.value), model: "locations_products", userReset });
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["locations_products"] });
+    },
+  });
+}

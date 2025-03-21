@@ -10,7 +10,8 @@ type SidebarState = {
 export type DrawerTypes =
   | { type: null; data: null }
   | { type: "products_categories"; data?: { id?: string } }
-  | { type: "products"; data: { id?: string; categoryId?: string; barcode?: string } };
+  | { type: "products"; data: { id?: string; categoryId?: string; barcode?: string } }
+  | { type: "inventory_products"; data: { categoryId: string } };
 
 type DrawerState = {
   isOpen: boolean;
