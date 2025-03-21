@@ -141,7 +141,7 @@ export function Table<T>({
         className={tableContainer()}
         style={{ height: (isCollapsible && isOpen) || !isCollapsible ? "calc-size(auto, size)" : 0 }}>
         <table className={tableClasses()}>
-          {hasNoHeader ? (
+          {hasNoHeader ? null : (
             <thead className={thead()}>
               {headers.length ? (
                 <tr className={tr()}>
@@ -153,7 +153,7 @@ export function Table<T>({
                 </tr>
               ) : null}
             </thead>
-          ) : null}
+          )}
           <tbody className={tbody()}>
             {!isLoading && !data.length ? (
               <tr className={tr()}>
