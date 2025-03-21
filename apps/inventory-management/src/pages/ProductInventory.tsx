@@ -6,6 +6,7 @@ import {
   ProductsWithCount,
   Table,
   Tabs,
+  useDrawer,
   useList,
   useQuery,
 } from "@hospitality/hospitality-ui";
@@ -47,6 +48,7 @@ function columns() {
 export function ProductInventory() {
   const { data } = useQuery(ProductCategoriesQuery);
   const [active, setActive] = useState(data?.[0]?.id || "");
+  const { openDrawer } = useDrawer("Add products", "inventory_products");
   const { data: products, isLoading } = useList<ProductsWithCount>(
     { model: "products", fields: ["id", "title"] },
     { enabled: !!active, urlSuffix: `category/${active}/active` }
@@ -58,7 +60,7 @@ export function ProductInventory() {
         <Button
           icon={Icons.add}
           items={[
-            { id: "1", title: "Manual input", icon: Icons.input },
+            { id: "1", title: "Manual input", icon: Icons.input, onClick: () => openDrawer({ categoryId: active }) },
             { id: "2", title: "Barcode input", icon: Icons.barcode },
           ]}
           label={`Add new`}
