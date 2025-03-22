@@ -68,8 +68,8 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
   const { data } = useQuery(LocationsAvailableProductsQuery);
 
   const query = useList<Products>(
-    { model: "products", fields: ["id", "title"], filters: { and: [{ field: "categoryId", value: id, operator: "eq" }] } },
-    { enabled: isOpen }
+    { model: "products", fields: ["id", "title"] },
+    { enabled: isOpen, urlSuffix: `category/${id}` }
   );
 
   // #endregion queries
