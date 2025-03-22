@@ -22,7 +22,7 @@ const classes = tv({
     container: "flex h-fit w-full flex-col",
     labelClasses: "font-small text-gray-900",
     selectBox: "relative flex w-full items-center",
-    base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center rounded-md border-2 px-1 shadow-sm outline-0",
+    base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center rounded-md border px-1 shadow-sm outline-0",
     icon: "absolute right-1",
   },
 
@@ -62,6 +62,9 @@ export function Select({
       <p className={labelClasses()}>{label ? <label>{label}</label> : null}</p>
       <div className={selectBox()}>
         <select className={base()} disabled={isDisabled} multiple={isMultiple} onChange={onChange} value={value}>
+          <option className="text-gray-300" defaultValue="true" value="">
+            Select one
+          </option>
           {options.map((opt) => (
             <option key={opt.value} value={opt.value}>
               {opt.label}

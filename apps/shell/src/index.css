@@ -17,15 +17,15 @@
   --color-layout: var(--color-gray-200);
   --color-layout-dark: var(--color-gray-950);
 
-  --color-primary: var(--color-gray-600);
-  --color-secondary: var(--color-gray-500);
+  --color-primary: var(--color-gray-500);
+  --color-secondary: var(--color-gray-400);
   --color-info: var(--color-blue-500);
   --color-success: var(--color-green-600);
   --color-warning: var(--color-orange-500);
   --color-error: var(--color-red-600);
 
   --color-primary-highlight: var(--color-gray-500);
-  --color-secondary-highlight: var(--color-gray-400);
+  --color-secondary-highlight: var(--color-gray-300);
   --color-info-highlight: var(--color-blue-400);
   --color-success-highlight: var(--color-green-500);
   --color-warning-highlight: var(--color-orange-400);

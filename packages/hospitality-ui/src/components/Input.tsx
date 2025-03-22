@@ -26,7 +26,7 @@ const classes = tv({
   slots: {
     container: "group flex h-fit w-full flex-col outline-0",
     inputContainer:
-      "flex w-full cursor-pointer flex-nowrap items-center justify-between rounded-md border-2 px-2 text-gray-900 shadow-sm outline-0",
+      "flex w-full cursor-pointer flex-nowrap items-center justify-between rounded-md border px-2 text-gray-900 shadow-sm outline-0",
     inputClasses: "flex-1 pr-2 focus-within:outline-0 focus:outline-0",
     labelClasses: "font-small text-gray-900",
     helperTextClasses: "text-sm",
