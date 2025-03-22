@@ -33,7 +33,6 @@ export function InventoryProduct({ data }: Props) {
         onSuccess: resetDrawer,
       }),
     validators: {
-      onChange: formValidator,
       onSubmit: formValidator,
     },
   });
@@ -41,7 +40,7 @@ export function InventoryProduct({ data }: Props) {
   return (
     <>
       <Form handleSubmit={form.handleSubmit}>
-        <div className="grid h-full grid-cols-2 content-start items-start gap-2">
+        <div className="grid h-full grid-cols-1 content-start items-start gap-2">
           <form.Field
             children={(field) => (
               <div>
@@ -55,7 +54,6 @@ export function InventoryProduct({ data }: Props) {
                   value={field.state.value}
                   variant={field.state.meta.errors.length ? "error" : "primary"}
                 />
-                {field.state.meta.errors.toString()}
               </div>
             )}
             name="productId"
