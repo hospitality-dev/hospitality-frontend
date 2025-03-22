@@ -21,7 +21,7 @@ const classes = tv({
   slots: {
     container: "flex h-fit w-full flex-col",
     labelClasses: "font-small text-gray-900",
-    selectBox: "relative flex w-full items-center",
+    selectBox: "relative flex w-full items-center bg-white",
     base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center rounded-md border px-1 shadow-sm outline-0",
     icon: "absolute right-1",
   },
