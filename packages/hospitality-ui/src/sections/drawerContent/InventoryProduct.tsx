@@ -19,7 +19,7 @@ const formValidator = locationsProductsInitializer.extend({
 export function InventoryProduct({ data }: Props) {
   const { mutate: addProducts } = useAddInventoryProducts();
   const resetDrawer = useResetAtom(drawerAtom);
-  const { data: product } = useRead<Products>(
+  const { data: product, isLoading: isLoadingProduct } = useRead<Products>(
     { id: `barcode/${data.barcode}`, model: "products", fields: ["id"] },
     { enabled: !!data.barcode }
   );
@@ -50,7 +50,7 @@ export function InventoryProduct({ data }: Props) {
             children={(field) => (
               <div>
                 <Select
-                  isDisabled={isLoading}
+                  isDisabled={isLoading || isLoadingProduct}
                   label="Product"
                   onChange={(e) => {
                     field.handleChange(e.target.value);
@@ -67,7 +67,7 @@ export function InventoryProduct({ data }: Props) {
           <form.Field
             children={(field) => (
               <Input
-                isDisabled={isLoading}
+                isDisabled={isLoading || isLoadingProduct}
                 label="Amount"
                 onChange={(e) => field.handleChange(Number(e.target.value))}
                 value={field.state.value}
@@ -80,7 +80,14 @@ export function InventoryProduct({ data }: Props) {
         <div className="relative bottom-8">
           <form.Subscribe<[boolean, boolean]>
             children={(p) => {
-              return <Button isDisabled={!p[0]} label="Create" onClick={undefined} variant="success" />;
+              return (
+                <Button
+                  isDisabled={!p[0] || isLoading || isLoadingProduct}
+                  label="Create"
+                  onClick={undefined}
+                  variant="success"
+                />
+              );
             }}
             selector={(state) => [state.canSubmit, state.isSubmitting]}
           />
