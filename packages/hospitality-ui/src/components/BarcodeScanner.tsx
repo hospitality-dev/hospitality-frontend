@@ -76,7 +76,7 @@ export function BarcodeScanner() {
 
   return (
     <div className="bg-layout absolute top-0 left-0 z-[51] flex h-screen w-screen flex-col p-4">
-      <div className="relative flex h-full flex-col">
+      <div className="relative flex h-full flex-col items-center">
         <div className="absolute top-0 right-0 z-[21]">
           <Button
             icon={Icons.close}
@@ -88,7 +88,7 @@ export function BarcodeScanner() {
           />
         </div>
         <div className="absolute top-1/2 z-10 h-0.5 w-full bg-red-500" />
-        <video ref={videoRef} className="aspect-auto w-full" />
+        <video ref={videoRef} className="aspect-square w-full" />
       </div>
     </div>
   );
