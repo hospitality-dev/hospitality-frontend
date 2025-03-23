@@ -13,14 +13,15 @@ export type useReadProps<F> = {
 
 export function useRead<F extends Record<keyof F, valueof<F>>>(
   { id, model, fields }: useReadProps<F>,
-  options?: Pick<UseQueryOptions<F>, "enabled">
+  options?: Pick<UseQueryOptions<F>, "enabled"> & { urlSuffix?: string }
 ) {
   const reset = useResetAtom(userAtom);
   const searchParams = getSearchParams<useReadProps<F>["fields"], F>(fields);
 
   return useQuery<F>({
     queryKey: [model, id],
-    queryFn: () => fetchFunction<F>({ method: "GET", model, id, searchParams, userReset: reset }),
+    queryFn: () =>
+      fetchFunction<F>({ method: "GET", model, id, searchParams, userReset: reset, urlSuffix: options?.urlSuffix || "" }),
     enabled: !!(options?.enabled ?? true),
   });
 }
