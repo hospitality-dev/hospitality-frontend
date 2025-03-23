@@ -19,6 +19,7 @@ const formValidator = locationsProductsInitializer.extend({
 export function InventoryProduct({ data }: Props) {
   const { mutate: addProducts } = useAddInventoryProducts();
   const resetDrawer = useResetAtom(drawerAtom);
+
   const { data: product, isLoading: isLoadingProduct } = useRead<Products>(
     { id: `barcode/${data.barcode}`, model: "products", fields: ["id"] },
     { enabled: !!data.barcode }
@@ -41,6 +42,9 @@ export function InventoryProduct({ data }: Props) {
       onSubmit: formValidator,
     },
   });
+
+  // TODO: Add skeleton component
+  if (isLoading || isLoadingProduct) return null;
 
   return (
     <>
