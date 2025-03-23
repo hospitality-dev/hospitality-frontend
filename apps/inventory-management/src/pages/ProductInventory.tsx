@@ -18,7 +18,10 @@ const columnHelper = createColumnHelper<Pick<ProductsWithCount, "id" | "title" |
 function columns() {
   return [
     columnHelper.accessor("count", { header: "Amount", cell: (info) => info.getValue(), maxSize: 100 }),
-    columnHelper.accessor("title", { header: "Title", cell: (info) => info.getValue() }),
+    columnHelper.accessor("title", {
+      header: "Title",
+      cell: (info) => <span className="font-semibold">{info.getValue()}</span>,
+    }),
 
     columnHelper.display({
       id: "isActive",
