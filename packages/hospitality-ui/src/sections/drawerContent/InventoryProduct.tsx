@@ -4,7 +4,7 @@ import { number, string } from "zod";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
 import { Button, Form, Input, Select } from "../../components";
-import { useAddInventoryProducts, useList, useRead } from "../../hooks";
+import { useAddInventoryProducts, useList, useRead, useScreenSize } from "../../hooks";
 import { locationsProductsInitializer, Products } from "../../types";
 import { formatForOptions } from "../../utils";
 
@@ -17,9 +17,8 @@ const formValidator = locationsProductsInitializer.extend({
 });
 
 export function InventoryProduct({ data }: Props) {
-  const { mutate: addProducts } = useAddInventoryProducts();
   const resetDrawer = useResetAtom(drawerAtom);
-
+  const { isLg } = useScreenSize();
   const { data: product, isLoading: isLoadingProduct } = useRead<Products>(
     { id: `barcode/${data.barcode}`, model: "products", fields: ["id"] },
     { enabled: !!data.barcode }
@@ -28,6 +27,8 @@ export function InventoryProduct({ data }: Props) {
     { model: "products", fields: ["id", "title"] },
     { enabled: (!!data.barcode && !!product) || !data.barcode, urlSuffix: `category/${data.categoryId}/active` }
   );
+
+  const { mutate: addProducts } = useAddInventoryProducts();
 
   const form = useForm({
     defaultValues: {
@@ -42,10 +43,6 @@ export function InventoryProduct({ data }: Props) {
       onSubmit: formValidator,
     },
   });
-
-  // TODO: Add skeleton component
-  if (isLoading || isLoadingProduct) return null;
-
   return (
     <>
       <Form handleSubmit={form.handleSubmit}>
@@ -81,7 +78,7 @@ export function InventoryProduct({ data }: Props) {
             name="amount"
           />
         </div>
-        <div className="relative bottom-8">
+        <div className={`relative ${isLg ? "bottom-8" : "bottom-24"}`}>
           <form.Subscribe<[boolean, boolean]>
             children={(p) => {
               return (
