@@ -77,7 +77,7 @@ export function BarcodeScanner() {
   return (
     <div className="bg-layout absolute top-0 left-0 z-[51] flex h-screen w-screen flex-col p-4">
       <div className="relative flex h-full flex-col items-center">
-        <div className="absolute top-0 right-0 z-[21]">
+        <div className="absolute top-0 right-0 z-[21] w-8">
           <Button
             icon={Icons.close}
             onClick={(e) => {
