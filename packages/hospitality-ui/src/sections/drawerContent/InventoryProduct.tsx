@@ -4,7 +4,7 @@ import { number, string } from "zod";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
 import { Button, Form, Input, Select } from "../../components";
-import { useAddInventoryProducts, useList } from "../../hooks";
+import { useAddInventoryProducts, useList, useRead } from "../../hooks";
 import { locationsProductsInitializer, Products } from "../../types";
 import { formatForOptions } from "../../utils";
 
@@ -19,13 +19,18 @@ const formValidator = locationsProductsInitializer.extend({
 export function InventoryProduct({ data }: Props) {
   const { mutate: addProducts } = useAddInventoryProducts();
   const resetDrawer = useResetAtom(drawerAtom);
+  const { data: product } = useRead<Products>(
+    { id: `barcode/${data.barcode}`, model: "products", fields: ["id"] },
+    { enabled: !!data.barcode }
+  );
   const { data: products, isLoading } = useList<Products>(
     { model: "products", fields: ["id", "title"] },
-    { urlSuffix: `category/${data.categoryId}/active` }
+    { enabled: (!!data.barcode && !!product) || !data.barcode, urlSuffix: `category/${data.categoryId}/active` }
   );
+
   const form = useForm({
     defaultValues: {
-      productId: "",
+      productId: product?.id || "",
       amount: 0,
     },
     onSubmit: (payload) =>

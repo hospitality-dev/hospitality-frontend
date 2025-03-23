@@ -6,6 +6,7 @@ import {
   ProductsWithCount,
   Table,
   Tabs,
+  useBarcodeScanner,
   useDrawer,
   useList,
   useQuery,
@@ -47,6 +48,7 @@ function columns() {
 
 export function ProductInventory() {
   const { openDrawer } = useDrawer("Add products", "inventory_products");
+  const { setOnResult } = useBarcodeScanner();
 
   const { data } = useQuery(ProductCategoriesQuery);
   const [active, setActive] = useState(data?.[0]?.id || "");
@@ -62,7 +64,14 @@ export function ProductInventory() {
           icon={Icons.add}
           items={[
             { id: "1", title: "Manual input", icon: Icons.input, onClick: () => openDrawer({ categoryId: active }) },
-            { id: "2", title: "Barcode input", icon: Icons.barcode },
+            {
+              id: "2",
+              title: "Barcode input",
+              icon: Icons.barcode,
+              onClick: () => {
+                setOnResult((result) => openDrawer({ categoryId: active, barcode: result.getText() }));
+              },
+            },
           ]}
           label="Add"
           onClick={undefined}
