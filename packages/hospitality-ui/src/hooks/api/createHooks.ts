@@ -36,6 +36,7 @@ export function useAddInventoryProducts() {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["locations_products"] });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
     },
   });
 }
