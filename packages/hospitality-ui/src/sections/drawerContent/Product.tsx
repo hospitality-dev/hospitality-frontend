@@ -11,7 +11,7 @@ import { getSentenceCase } from "../../utils";
 
 export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }>, "data">) {
   const auth = useAuth();
-  const { isMd, isLg } = useScreenSize();
+  const { isLg } = useScreenSize();
   const resetDrawer = useResetAtom(drawerAtom);
   const { setOnResult, closeBarcodeScanner } = useBarcodeScanner();
   const { mutate: create } = useCreate<ProductsInitializer>("products");
@@ -78,7 +78,7 @@ export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }
               <div className="col-span-2">
                 <Input
                   action={
-                    isMd && !isLg
+                    !isLg
                       ? {
                           onClick: (e) => {
                             e.preventDefault();
