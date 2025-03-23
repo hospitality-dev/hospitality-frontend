@@ -105,7 +105,7 @@ export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }
             name="barcode"
           />
         </div>
-        <div className="relative bottom-10">
+        <div className={`relative ${isLg ? "bottom-8" : "bottom-24"}`}>
           <form.Subscribe<[boolean, boolean]>
             children={(p) => {
               return <Button isDisabled={!p[0]} label="Create" onClick={undefined} variant="success" />;
