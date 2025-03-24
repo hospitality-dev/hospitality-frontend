@@ -73,6 +73,8 @@ export function BarcodeScanner() {
     startScanning();
 
     return () => {
+      setIsLoading(false);
+
       codeReader.reset();
     };
   }, []);
