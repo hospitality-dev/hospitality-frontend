@@ -52,9 +52,9 @@ export function BarcodeScanner() {
         }
         const camera = localStorage.getItem("defaultCamera");
         if (camera) {
-          const selectedDeviceId = camera;
+          setIsLoading(false);
           // Start the video stream with the best camera
-          codeReader.decodeFromVideoDevice(selectedDeviceId, videoRef.current, (result, error) => {
+          codeReader.decodeFromVideoDevice(camera, videoRef.current, (result, error) => {
             if (result) {
               onResult(result);
               closeBarcodeScanner();
