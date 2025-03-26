@@ -23,7 +23,7 @@
 # log files in the dist folder
 [phases.log_dist]
     dependsOn = ['fmt'] # make sure this phase runs after the 'fmt' phase
-    cmds = ['ls -la arkive-v4-editor/dist'] # list files in the 'dist' folder
+    cmds = ['ls -la apps/shell/dist'] # list files in the 'dist' folder
 
 # copy caddy and build artifacts to a new image and start the caddy web server
 [start]
