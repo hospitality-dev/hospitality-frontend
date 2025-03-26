@@ -1,6 +1,6 @@
 {
   "name": "hospitality",
-  "main": "apps/shell/dist",
+  "main": "apps/shell/dist/index.html",
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
