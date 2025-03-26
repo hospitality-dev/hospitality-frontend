@@ -95,7 +95,7 @@ export function BarcodeScanner() {
         {isLoading ? null : (
           <>
             <div className="absolute top-1/2 z-10 h-0.5 w-full bg-red-500" />
-            <video ref={videoRef} className="aspect-square w-full" />
+            <video ref={videoRef} className="h-full w-full" />
           </>
         )}
       </div>
