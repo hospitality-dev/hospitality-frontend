@@ -13,6 +13,7 @@ type Props = {
   isDisabled?: boolean;
   icon?: availableIcons;
   hasNoBorder?: boolean;
+  className?: string;
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
   items?: DropdownItemType[];
 };
@@ -126,13 +127,21 @@ export function Button({
   hasNoBorder,
   icon,
   onClick,
+  className,
   items,
 }: Props) {
   if (!label && !icon) return null;
-  const { base, labelClasses } = classes({ variant, size, isOutline, hasNoBorder, isDisabled, hasIconOnly: !label && !!icon });
+  const { base, labelClasses } = classes({
+    variant,
+    size,
+    isOutline,
+    hasNoBorder,
+    isDisabled,
+    hasIconOnly: !label && !!icon,
+  });
   return (
     <Dropdown isDisabled={!items?.length} items={items || []}>
-      <button className={base()} disabled={isDisabled} onClick={onClick}>
+      <button className={base({ className })} disabled={isDisabled} onClick={onClick}>
         {label ? <div className={labelClasses()}>{label}</div> : null} {icon ? <Icon fontSize={22} icon={icon} /> : null}
       </button>
     </Dropdown>
