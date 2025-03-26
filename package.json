@@ -26,7 +26,7 @@
   },
   "private": true,
   "scripts": {
-    "start": "cd apps/shell && bun run dev",
+    "start:dev": "cd apps/shell && bun run dev",
     "build": "cd apps/shell && bun run build",
     "generate-types": "cd packages/hospitality-ui && bunx kanel",
     "prepare": "husky"
