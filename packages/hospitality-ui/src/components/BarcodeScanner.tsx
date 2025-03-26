@@ -6,6 +6,7 @@ import { barcodeScannerAtom } from "../atoms";
 import { Icons } from "../enums";
 import { useBarcodeScanner } from "../hooks";
 import { Button } from "./Button";
+import { Spinner } from "./Spinner";
 
 const formats = [BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.EAN_8];
 const hints = new Map();
@@ -64,9 +65,14 @@ export function BarcodeScanner() {
               console.error(error);
             }
           });
+        } else {
+          closeBarcodeScanner();
+          // TODO: Add error notification for camera not being found
         }
       } catch (err) {
         console.error("Error starting barcode scanner:", err);
+        closeBarcodeScanner();
+        // TODO: Add error notification for camera not being found
       }
     }
 
@@ -92,7 +98,11 @@ export function BarcodeScanner() {
             }}
           />
         </div>
-        {isLoading ? null : (
+        {isLoading ? (
+          <div className="self-center">
+            <Spinner />
+          </div>
+        ) : (
           <>
             <div className="absolute top-1/2 z-10 h-0.5 w-full bg-red-500" />
             <video ref={videoRef} className="h-full w-full" />
