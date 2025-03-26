@@ -1,7 +1,6 @@
 import {
   BarcodeScanner,
   Drawer,
-  getSentenceCase,
   Navbar,
   Outlet,
   Sidebar,
@@ -14,7 +13,7 @@ import { Modules } from "../enums";
 const sections = [
   {
     title: "MODULES",
-    links: Modules.map((module) => ({ title: getSentenceCase(module.id), to: `/${module.id}`, icon: module.icon })),
+    links: Modules.map((module) => ({ title: module.title, to: `/${module.id}`, icon: module.icon })),
   },
 ];
 

@@ -72,10 +72,22 @@ const locationSelectRoute = createRoute({
 });
 
 // #region INVENTORY_ROUTES
-const inventoryRootRoute = createRoute({ path: "inventory-management", getParentRoute: () => mainLayout, component: Outlet });
+const inventoryCategoryRoute = createRoute({
+  path: "inventory-management",
+  getParentRoute: () => mainLayout,
+  loader: async (ctx) => {
+    const categories = await queryClient.ensureQueryData<ProductsCategories[]>(ProductCategoriesQuery);
+    const firstCategoryId = categories.at(0)?.id;
+    if (!("categoryId" in ctx.params) && firstCategoryId) {
+      throw redirect({ to: `/inventory-management/$categoryId`, params: { categoryId: firstCategoryId } });
+    }
+  },
+
+  component: Outlet,
+});
 const productInventoryRoute = createRoute({
-  getParentRoute: () => inventoryRootRoute,
-  path: "/",
+  getParentRoute: () => inventoryCategoryRoute,
+  path: "/$categoryId",
 }).lazy(() => import("@hospitality/inventory-management").then((d) => d.ProductInventoryRoute));
 
 // #endregion INVENTORY_ROUTES
@@ -102,7 +114,7 @@ const settingsProducts = createRoute({
 
 const routeTree = rootRoute.addChildren([
   mainLayout.addChildren([
-    inventoryRootRoute.addChildren([productInventoryRoute]),
+    inventoryCategoryRoute.addChildren([productInventoryRoute]),
     settingsRootRoute.addChildren([settingsUsers, settingsProducts]),
   ]),
   loginRoute,

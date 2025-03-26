@@ -11,7 +11,7 @@ export const Modules: { id: string; title: string; icon: availableIcons }[] = [
     title: "Employee management" as const,
     icon: Icons.employee,
   },
-  { id: "inventory-management/alcoholic drinks" as const, title: "Inventory management", icon: Icons.inventory },
+  { id: "inventory-management" as const, title: "Inventory management", icon: Icons.inventory },
   {
     id: "suppliers" as const,
     title: "Suppliers",
