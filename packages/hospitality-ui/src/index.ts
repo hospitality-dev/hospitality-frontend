@@ -22,6 +22,7 @@ export {
   RouterProvider,
   useLoaderData,
   useLocation,
+  useParams,
   useRouteContext,
 } from "@tanstack/react-router";
 export { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
