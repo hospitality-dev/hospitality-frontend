@@ -6,4 +6,9 @@ export default defineConfig({
   build: {
     minify: true,
   },
+  optimizeDeps: {
+    esbuildOptions: {
+      jsx: "automatic",
+    },
+  },
 });
