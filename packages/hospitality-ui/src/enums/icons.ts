@@ -12,6 +12,7 @@ export const Icons = {
   folder: "ph:folder" as const,
   input: "streamline:input-box" as const,
   inventory: "system-uicons:boxes" as const,
+  loading: "ph:circle-notch" as const,
   settings: "ph:gear" as const,
   supplier: "ph:truck" as const,
 };
