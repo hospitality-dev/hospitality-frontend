@@ -13,7 +13,7 @@ hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
 
 export function BarcodeScanner() {
   const defaultCamera = localStorage.getItem("defaultCamera");
-  const [isLoading, setIsLoading] = useState(!!defaultCamera);
+  const [isLoading, setIsLoading] = useState(!defaultCamera);
   const videoRef = useRef(null);
   const { closeBarcodeScanner } = useBarcodeScanner();
   const { onResult } = useAtomValue(barcodeScannerAtom);
