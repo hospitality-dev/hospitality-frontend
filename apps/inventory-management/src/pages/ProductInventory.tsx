@@ -9,9 +9,9 @@ import {
   useBarcodeScanner,
   useDrawer,
   useList,
+  useParams,
   useQuery,
 } from "@hospitality/hospitality-ui";
-import { useState } from "react";
 
 const columnHelper = createColumnHelper<Pick<ProductsWithCount, "id" | "title" | "count">>();
 
@@ -53,15 +53,20 @@ export function ProductInventory() {
   const { openDrawer } = useDrawer("Add products", "inventory_products");
   const { setOnResult } = useBarcodeScanner();
 
+  const { categoryId: active } = useParams({ from: "/inventory-management/$categoryId" });
+
   const { data } = useQuery(ProductCategoriesQuery);
-  const [active, setActive] = useState(data?.[0]?.id || "");
   const { data: products, isPending } = useList<ProductsWithCount>(
     { model: "products", fields: ["id", "title"] },
     { enabled: !!active, urlSuffix: `category/${active}/active` }
   );
   return (
     <div className="flex flex-col gap-y-2">
-      <Tabs active={active} setActive={setActive} tabs={(data || []).map((cat) => ({ id: cat.id, title: cat.title }))} />
+      <Tabs
+        active={active}
+        isNavControlled
+        tabs={(data || []).map((cat) => ({ id: cat.id, title: cat.title, link: `/inventory-management/${cat.id}` }))}
+      />
       <div className="self-end">
         <Button
           icon={Icons.add}
