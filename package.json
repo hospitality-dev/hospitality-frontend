@@ -27,7 +27,7 @@
   },
   "private": true,
   "scripts": {
-    "start:dev": "cd apps/shell && vite",
+    "start:dev": "cd apps/shell && vite --config ../../vite.config.ts",
     "build": "cd apps/shell && bun run build --config ../../vite.config.ts",
     "generate-types": "cd packages/hospitality-ui && bunx kanel",
     "prepare": "husky"
