@@ -36,5 +36,9 @@
   "workspaces": [
     "packages/*",
     "apps/*"
-  ]
+  ],
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.17",
+    "@vitejs/plugin-react": "^4.3.4"
+  }
 }
