@@ -13,7 +13,7 @@
     "@hospitality/hospitality-ui": "workspace:*",
     "@hospitality/inventory-management": "workspace:*",
     "@hospitality/settings": "workspace:*",
-    "@tailwindcss/vite": "^4.0.6",
+    "@tailwindcss/vite": "^4.0.17",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.17"
