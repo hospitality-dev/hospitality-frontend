@@ -1,4 +1,25 @@
 {
-  "files": [],
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+  "compilerOptions": {
+    "target": "ESNext",
+    "types": ["vite/client"],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "jsx": "react-jsx",
+    "incremental": false
+  },
+  "include": ["packages/**/src", "apps/**/src"],
+  "exclude": ["*/**/node_modules"]
 }
