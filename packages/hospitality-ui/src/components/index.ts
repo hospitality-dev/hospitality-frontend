@@ -11,6 +11,7 @@ export * from "./Link";
 export * from "./Navbar";
 export * from "./Select";
 export * from "./Sidebar";
+export * from "./Spinner";
 export * from "./Table";
 export * from "./Tabs";
 export * from "./Title";
