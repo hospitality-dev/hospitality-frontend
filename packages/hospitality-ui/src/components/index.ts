@@ -9,6 +9,7 @@ export * from "./Icon";
 export * from "./Input";
 export * from "./Link";
 export * from "./Navbar";
+export * from "./Numpad";
 export * from "./Select";
 export * from "./Sidebar";
 export * from "./Spinner";
