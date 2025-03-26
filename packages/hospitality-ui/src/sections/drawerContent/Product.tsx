@@ -3,7 +3,7 @@ import { useResetAtom } from "jotai/utils";
 import { string } from "zod";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
-import { Button, Form, Input, Select } from "../../components";
+import { Button, Form, Input, Numpad, Select } from "../../components";
 import { Icons } from "../../enums";
 import { useAuth, useBarcodeScanner, useCreate, useList, useScreenSize } from "../../hooks";
 import { ProductsCategories, ProductsInitializer, productsInitializer } from "../../types";
@@ -75,7 +75,7 @@ export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }
 
           <form.Field
             children={(field) => (
-              <div className="col-span-2">
+              <div className="col-span-2 flex flex-col gap-y-4">
                 <Input
                   action={
                     !isLg
@@ -100,6 +100,16 @@ export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }
                   value={field.state.value || ""}
                   variant={field.state.meta.errors.length ? "error" : "primary"}
                 />
+                {!isLg ? (
+                  <Numpad
+                    onClick={(button) => {
+                      if (button === "clear" || (button === "delete" && !field.state.value?.length)) field.handleChange("");
+                      else if (button === "delete" && field.state.value?.length)
+                        field.handleChange(field.state.value.slice(0, field.state.value.length - 1));
+                      else field.handleChange(`${field.state.value}${button}`);
+                    }}
+                  />
+                ) : null}
               </div>
             )}
             name="barcode"
