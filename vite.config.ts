@@ -6,8 +6,10 @@ export default defineConfig({
   base: "/",
   build: {
     minify: true,
+
     rollupOptions: {
       output: {
+        minifyInternalExports: true,
         manualChunks(id) {
           console.log(id);
           if (id.includes("@zxing")) return "@zxing";
