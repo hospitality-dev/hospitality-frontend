@@ -58,6 +58,12 @@ const classes = tv({
         tr: "min-h-10 animate-pulse rounded bg-gradient-to-r from-gray-200 via-gray-100 to-gray-50 py-1",
       },
     },
+    isCentered: {
+      true: {
+        th: "flex w-full justify-center",
+        td: "flex w-full justify-center",
+      },
+    },
   },
 });
 
@@ -146,7 +152,10 @@ export function Table<T>({
               {headers.length ? (
                 <tr className={tr()}>
                   {headers.map((header) => (
-                    <th key={header.id} className={th()} style={{ maxWidth: header.column.columnDef.maxSize }}>
+                    <th
+                      key={header.id}
+                      className={th({ isCentered: header.column.columnDef.meta?.isCentered })}
+                      style={{ maxWidth: header.column.columnDef.maxSize }}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
                     </th>
                   ))}
@@ -165,7 +174,10 @@ export function Table<T>({
               ? table.getRowModel().rows.map((row) => (
                   <tr key={row.id} className={tr()}>
                     {row.getVisibleCells().map((cell) => (
-                      <td key={cell.id} className={td()} style={{ maxWidth: cell.column.columnDef.maxSize }}>
+                      <td
+                        key={cell.id}
+                        className={td({ isCentered: cell.column.columnDef.meta?.isCentered })}
+                        style={{ maxWidth: cell.column.columnDef.maxSize }}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
                     ))}
