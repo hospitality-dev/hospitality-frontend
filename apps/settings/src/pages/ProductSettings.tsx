@@ -62,7 +62,7 @@ function columns({
 function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategories, "id" | "title" | "isDefault">) {
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const { openDrawer: openProductDrawer } = useDrawer<"products">("Create product", "products");
+  const { openDrawer: openProductDrawer } = useDrawer<"add_products">("Create product", "add_products");
 
   // #region queries
   const { data } = useQuery(LocationsAvailableProductsQuery);
@@ -114,7 +114,7 @@ export function ProductSettings() {
   });
   const { setOnResult } = useBarcodeScanner();
   const { openDrawer: openProductCategoriesDrawer } = useDrawer("Create product category", "products_categories");
-  const { openDrawer: openProductDrawer } = useDrawer("Create product", "products");
+  const { openDrawer: openProductDrawer } = useDrawer("Create product", "add_products");
   return (
     <div className="flex flex-col gap-y-2">
       <div className="ml-auto w-fit">
