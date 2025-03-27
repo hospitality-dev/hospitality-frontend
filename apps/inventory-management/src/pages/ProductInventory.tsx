@@ -33,7 +33,7 @@ function columns() {
             hasNoBorder
             icon={Icons.menu}
             isOutline
-            items={[{ id: "remove_by_barcode", title: "Remove by barcode", icon: Icons["barcode-remove"] }]}
+            items={[{ id: "remove_amount", title: "Remove amount", icon: Icons["barcode-remove"] }]}
             onClick={() => {}}
             size="xl"
             variant="primary"
@@ -70,19 +70,21 @@ export function ProductInventory() {
       />
       <div className="self-end">
         <Button
-          icon={Icons.add}
+          allowedPlacements={["bottom-end"]}
+          icon={Icons.manage}
           items={[
-            { id: "1", title: "Manual input", icon: Icons.input, onClick: () => openDrawer({ categoryId: active }) },
+            { id: "1", title: "Add (Manual input)", icon: Icons.input, onClick: () => openDrawer({ categoryId: active }) },
             {
               id: "2",
-              title: "Barcode input",
+              title: "Add (Barcode)",
               icon: Icons.barcode,
               onClick: () => {
                 setOnResult((result) => openDrawer({ categoryId: active, barcode: result.getText() }));
               },
             },
+            { id: "remove_by_barcode", title: "Remove (Barcode)", icon: Icons["barcode-remove"] },
           ]}
-          label="Add"
+          label="Manage"
           onClick={undefined}
           variant="info"
         />
