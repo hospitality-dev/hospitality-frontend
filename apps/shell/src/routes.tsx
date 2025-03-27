@@ -37,6 +37,8 @@ const rootRoute = createRootRouteWithContext<AuthContextType>()({
     };
   },
   component: Outlet,
+  errorComponent: () => "ERROR",
+  onError: (err) => fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(err) }),
 });
 
 const mainLayout = createRoute({
