@@ -41,6 +41,7 @@ export function useRemoveProducts(options?: { invalidateModels?: AvailableEntiti
     },
 
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["locations_products"] });
 
       if (options?.invalidateModels?.length) {
