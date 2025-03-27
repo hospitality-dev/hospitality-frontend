@@ -11,7 +11,6 @@ import {
   productCategoryFields,
   ProductsCategories,
 } from "@hospitality/hospitality-ui";
-import { SettingsLayout } from "@hospitality/settings";
 import { createRootRouteWithContext, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 
@@ -95,7 +94,9 @@ const productInventoryRoute = createRoute({
 // #endregion INVENTORY_ROUTES
 
 // #region SETTINGS_ROUTES
-const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => mainLayout, component: SettingsLayout });
+const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => mainLayout }).lazy(() =>
+  import("@hospitality/settings").then((d) => d.SettingsLayoutRoute)
+);
 const settingsUsers = createRoute({ getParentRoute: () => settingsRootRoute, path: "users" }).lazy(() =>
   import("@hospitality/settings").then((d) => d.SettingsUsersRoute)
 );

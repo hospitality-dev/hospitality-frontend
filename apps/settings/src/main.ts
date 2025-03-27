@@ -1,8 +1,11 @@
 import { createLazyRoute } from "@hospitality/hospitality-ui";
 
+import { SettingsLayout } from "./components";
 import { UsersSettings } from "./pages";
 import { ProductSettings } from "./pages/ProductSettings";
-export { SettingsLayout } from "./components";
+export const SettingsLayoutRoute = createLazyRoute("/settings")({
+  component: SettingsLayout,
+});
 export const SettingsUsersRoute = createLazyRoute("/settings/users")({
   component: UsersSettings,
 });
