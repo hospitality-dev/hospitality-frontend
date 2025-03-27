@@ -13,9 +13,9 @@ export type DrawerTypes = (
   | { type: "create_products"; data: { id?: string; categoryId?: string; barcode?: string } }
   | {
       type: "manage_product_inventory";
-      data: { id?: string; barcode?: string; categoryId: string } & (
-        | { type: "add_products" }
-        | { type: "remove_products"; maxAmount: number }
+      data: { id?: string; barcode?: string } & (
+        | { type: "add_products"; categoryId: string }
+        | { type: "remove_products"; categoryId: string; maxAmount: number }
       );
     }
 ) & { title: string };

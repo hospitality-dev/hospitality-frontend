@@ -39,8 +39,8 @@ function ActionButton({ data }: { data: Entity }) {
             onClick: () =>
               openManageInventoryDrawer("Remove products", {
                 type: "remove_products",
-                id: data.id,
                 categoryId: data.categoryId,
+                id: data.id,
                 maxAmount: data.count,
               }),
             title: "Remove amount",
