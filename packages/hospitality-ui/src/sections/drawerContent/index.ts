@@ -1,2 +1,2 @@
-export * from "./ProductDrawer";
+export * from "./ProductDrawers";
 export * from "./ProductsCategories";

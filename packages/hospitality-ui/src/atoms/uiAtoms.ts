@@ -7,12 +7,18 @@ type SidebarState = {
   isModulesOpen: boolean;
 };
 
-export type DrawerTypes =
+export type DrawerTypes = (
   | { type: null; data: null }
   | { type: "products_categories"; data?: { id?: string } }
-  | { type: "add_products"; data: { id?: string; categoryId?: string; barcode?: string } }
-  | { type: "inventory_products"; data: { categoryId: string; barcode?: string } }
-  | { type: "remove_products"; data: { id?: string; maxAmount: number; barcode?: string } };
+  | { type: "create_products"; data: { id?: string; categoryId?: string; barcode?: string } }
+  | {
+      type: "manage_product_inventory";
+      data: { id?: string; barcode?: string; categoryId: string } & (
+        | { type: "add_products" }
+        | { type: "remove_products"; maxAmount: number }
+      );
+    }
+) & { title: string };
 
 type DrawerState = {
   isOpen: boolean;

@@ -3,13 +3,23 @@ import { useResetAtom } from "jotai/utils";
 import { number, object, string } from "zod";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
-import { Button, Form, Input, Numpad, Select } from "../../components";
+import { Button, Form, Input, Numpad, Select, Spinner } from "../../components";
 import { Icons } from "../../enums";
-import { useAuth, useBarcodeScanner, useCreate, useList, useRemoveProducts, useScreenSize } from "../../hooks";
-import { ProductsCategories, ProductsInitializer, productsInitializer } from "../../types";
-import { getSentenceCase } from "../../utils";
+import {
+  useAddInventoryProducts,
+  useAuth,
+  useBarcodeScanner,
+  useCreate,
+  useList,
+  useRead,
+  useRemoveProducts,
+  useScreenSize,
+} from "../../hooks";
+import { Products, ProductsCategories, ProductsInitializer, productsInitializer } from "../../types";
+import { formatForOptions, getSentenceCase } from "../../utils";
 
-export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "add_products" }>, "data">) {
+// * For creating a product definition
+export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "create_products" }>, "data">) {
   const auth = useAuth();
   const { isLg } = useScreenSize();
   const resetDrawer = useResetAtom(drawerAtom);
@@ -128,76 +138,84 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "add_p
   );
 }
 
-export function RemoveProduct({ data }: Pick<Extract<DrawerTypes, { type: "remove_products" }>, "data">) {
-  const { isLg } = useScreenSize();
+// * For adding a product from a location's inventory
+export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { type: "manage_product_inventory" }>, "data">) {
   const resetDrawer = useResetAtom(drawerAtom);
-  const { mutate: deleteProducts } = useRemoveProducts("locations_products", { invalidateModels: ["products"] });
+  const { isLg } = useScreenSize();
+  const { data: product, isLoading: isLoadingProduct } = useRead<Products>(
+    { id: `${data.barcode ? "barcode/" : ""}${data.barcode || data.id}`, model: "products", fields: ["id", "title"] },
+    { enabled: !!(data.barcode || data.id) }
+  );
+  const { data: products, isLoading } = useList<Products>(
+    { model: "products", fields: ["id", "title"] },
+    { enabled: !data.barcode && !data.id, urlSuffix: `category/${data.categoryId}/active` }
+  );
+
+  const { mutate: addProducts } = useAddInventoryProducts();
+  const { mutate: removeProducts } = useRemoveProducts();
 
   const form = useForm({
     defaultValues: {
-      id: data?.id,
+      id: data.id || "",
+      barcode: data.barcode,
       amount: 0,
-      barcode: data?.barcode,
+      categoryId: data.categoryId,
     },
     onSubmit: (payload) =>
-      deleteProducts(payload, {
-        onSuccess: resetDrawer,
-      }),
+      data.type === "add_products"
+        ? addProducts(payload, {
+            onSuccess: resetDrawer,
+          })
+        : removeProducts(payload, {
+            onSuccess: resetDrawer,
+          }),
     validators: {
-      onChange: object({
-        amount: number().min(1).max(data.maxAmount, "Cannot remove more items than are available."),
-        barcode: string().optional(),
-        id: string().uuid().optional(),
-      }),
       onSubmit: object({
-        amount: number().min(1).max(data.maxAmount, "Cannot remove more items than are available."),
+        amount: number()
+          .min(1)
+          .max(data.type === "add_products" ? 100 : data.maxAmount, "Cannot remove more items than are available."),
         barcode: string().optional(),
         id: string().uuid().optional(),
+        categoryId: data.type === "add_products" ? string().uuid() : string().uuid().optional(),
       }),
     },
   });
+  if (isLoadingProduct) return <Spinner />;
   return (
     <>
       <Form handleSubmit={form.handleSubmit}>
-        <div className="grid h-full grid-cols-2 content-start items-start gap-2">
-          {data.barcode && !data?.id ? (
-            <form.Field
-              children={(field) => (
-                <Input
-                  isDisabled
-                  label="Barcode"
-                  onChange={(e) => field.handleChange(e.target.value as string)}
-                  value={field.state.value}
-                  variant={field.state.meta.errors.length ? "error" : "primary"}
-                />
-              )}
-              name="barcode"
-            />
-          ) : null}
+        <div className="grid h-full grid-cols-1 content-start items-start gap-2">
+          <form.Field
+            children={(field) => (
+              <div>
+                {data.id || data.barcode ? (
+                  <Input isDisabled label="Product" onChange={() => {}} value={product?.title} variant="secondary" />
+                ) : (
+                  <Select
+                    isDisabled={isLoading || isLoadingProduct}
+                    label="Product"
+                    onChange={(e) => {
+                      field.handleChange(e.target.value);
+                    }}
+                    options={formatForOptions(products)}
+                    value={field.state.value as string}
+                    variant={field.state.meta.errors.length ? "error" : "primary"}
+                  />
+                )}
+              </div>
+            )}
+            name="id"
+          />
 
           <form.Field
             children={(field) => (
-              <div className="col-span-2 flex flex-col gap-y-4">
-                <Input
-                  helperText={field.state.meta.errors.join("\n ")}
-                  isAutofocused
-                  label={getSentenceCase(field.name)}
-                  onChange={(e) => field.handleChange(e.target.valueAsNumber)}
-                  type="number"
-                  value={field.state.value}
-                  variant={field.state.meta.errors.length ? "error" : "primary"}
-                />
-                {!isLg ? (
-                  <Numpad
-                    onClick={(button) => {
-                      if (button === "clear" || (button === "delete" && !field.state.value)) field.handleChange(0);
-                      else if (button === "delete" && field.state.value)
-                        field.handleChange(Number(field.state.value.toString().slice(0, field.state.value - 1)));
-                      else field.handleChange(Number(`${field.state.value}${button}`));
-                    }}
-                  />
-                ) : null}
-              </div>
+              <Input
+                isDisabled={isLoading || isLoadingProduct}
+                label="Amount"
+                onChange={(e) => field.handleChange(Number(e.target.value))}
+                value={field.state.value}
+                variant={field.state.meta.errors.length ? "error" : "primary"}
+              />
             )}
             name="amount"
           />
@@ -205,7 +223,14 @@ export function RemoveProduct({ data }: Pick<Extract<DrawerTypes, { type: "remov
         <div className={`relative ${isLg ? "bottom-8" : "bottom-24"}`}>
           <form.Subscribe<[boolean, boolean]>
             children={(p) => {
-              return <Button isDisabled={!p[0]} label="Remove" onClick={undefined} variant="success" />;
+              return (
+                <Button
+                  isDisabled={!p[0] || isLoading || isLoadingProduct}
+                  label="Create"
+                  onClick={undefined}
+                  variant="success"
+                />
+              );
             }}
             selector={(state) => [state.canSubmit, state.isSubmitting]}
           />
