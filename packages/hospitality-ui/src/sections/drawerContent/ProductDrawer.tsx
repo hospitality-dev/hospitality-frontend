@@ -131,10 +131,11 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "add_p
 export function RemoveProduct({ data }: Pick<Extract<DrawerTypes, { type: "remove_products" }>, "data">) {
   const { isLg } = useScreenSize();
   const resetDrawer = useResetAtom(drawerAtom);
-  const { mutate: deleteProducts } = useRemoveProducts("locations_products");
+  const { mutate: deleteProducts } = useRemoveProducts("locations_products", { invalidateModels: ["products"] });
 
   const form = useForm({
     defaultValues: {
+      id: data?.id,
       amount: 0,
       barcode: data?.barcode,
     },
@@ -146,10 +147,12 @@ export function RemoveProduct({ data }: Pick<Extract<DrawerTypes, { type: "remov
       onChange: object({
         amount: number().min(1).max(data.maxAmount, "Cannot remove more items than are available."),
         barcode: string().optional(),
+        id: string().uuid().optional(),
       }),
       onSubmit: object({
         amount: number().min(1).max(data.maxAmount, "Cannot remove more items than are available."),
         barcode: string().optional(),
+        id: string().uuid().optional(),
       }),
     },
   });
@@ -202,7 +205,7 @@ export function RemoveProduct({ data }: Pick<Extract<DrawerTypes, { type: "remov
         <div className={`relative ${isLg ? "bottom-8" : "bottom-24"}`}>
           <form.Subscribe<[boolean, boolean]>
             children={(p) => {
-              return <Button isDisabled={!p[0]} label="Create" onClick={undefined} variant="success" />;
+              return <Button isDisabled={!p[0]} label="Remove" onClick={undefined} variant="success" />;
             }}
             selector={(state) => [state.canSubmit, state.isSubmitting]}
           />
