@@ -41,27 +41,25 @@ function ActionButton({ data }: { data: Entity }) {
   );
 }
 
-function columns() {
-  return [
-    columnHelper.accessor("count", { header: "Amount", cell: (info) => info.getValue(), maxSize: 100 }),
-    columnHelper.accessor("title", {
-      header: "Title",
-      cell: (info) => <span className="font-semibold">{info.getValue()}</span>,
-    }),
+const columns = [
+  columnHelper.accessor("count", { header: "Amount", cell: (info) => info.getValue(), maxSize: 100 }),
+  columnHelper.accessor("title", {
+    header: "Title",
+    cell: (info) => <span className="font-semibold">{info.getValue()}</span>,
+  }),
 
-    columnHelper.display({
-      id: "actions",
-      header: "Actions",
-      cell: ({ row }) => <ActionButton data={row?.original} />,
-      meta: {
-        isCentered: true,
-      },
-      minSize: 100,
-      size: 100,
-      maxSize: 100,
-    }),
-  ];
-}
+  columnHelper.display({
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => <ActionButton data={row?.original} />,
+    meta: {
+      isCentered: true,
+    },
+    minSize: 100,
+    size: 100,
+    maxSize: 100,
+  }),
+];
 
 export function ProductInventory() {
   const { openDrawer } = useDrawer("Add products", "inventory_products");
@@ -102,7 +100,7 @@ export function ProductInventory() {
           variant="info"
         />
       </div>
-      <Table columns={columns()} data={products || []} isLoading={isPending} />
+      <Table columns={columns} data={products || []} isLoading={isPending} />
     </div>
   );
 }
