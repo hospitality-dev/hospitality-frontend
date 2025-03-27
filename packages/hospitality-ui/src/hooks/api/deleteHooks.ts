@@ -25,3 +25,29 @@ export function useDelete(model: AvailableEntities, options?: { invalidateModels
     },
   });
 }
+
+export function useRemoveProducts(model: "locations_products", options?: { invalidateModels?: AvailableEntities[] }) {
+  const userReset = useResetAtom(userAtom);
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ value }: { value: { amount: number; id?: string; barcode?: string } }) => {
+      return fetchFunction({
+        method: "DELETE",
+        model,
+        urlSuffix: `${value?.id ? value.id : ""}${value?.barcode ? `barcode/${value.barcode}` : ""}/amount/${value.amount}`,
+        userReset,
+      });
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [model] });
+
+      if (options?.invalidateModels?.length) {
+        for (let index = 0; index < options.invalidateModels.length; index++) {
+          queryClient.invalidateQueries({ queryKey: [options.invalidateModels[index]] });
+        }
+      }
+    },
+  });
+}
