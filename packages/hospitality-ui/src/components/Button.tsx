@@ -1,3 +1,4 @@
+import { Placement } from "@floating-ui/react";
 import { Icon } from "@iconify/react";
 import { MouseEventHandler } from "react";
 import { tv } from "tailwind-variants";
@@ -16,6 +17,7 @@ type Props = {
   className?: string;
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
   items?: DropdownItemType[];
+  allowedPlacements?: Placement[];
 };
 
 const classes = tv({
@@ -139,6 +141,7 @@ export function Button({
   onClick,
   className,
   items,
+  allowedPlacements,
 }: Props) {
   if (!label && !icon) return null;
   const { base, labelClasses, iconClasses } = classes({
@@ -150,7 +153,7 @@ export function Button({
     hasIconOnly: !label && !!icon,
   });
   return (
-    <Dropdown isDisabled={!items?.length} items={items || []}>
+    <Dropdown allowedPlacements={allowedPlacements} isDisabled={!items?.length} items={items || []}>
       <button className={base({ className })} disabled={isDisabled} onClick={onClick}>
         {label ? <div className={labelClasses()}>{label}</div> : null}{" "}
         {icon ? <Icon className={iconClasses()} icon={icon} /> : null}
