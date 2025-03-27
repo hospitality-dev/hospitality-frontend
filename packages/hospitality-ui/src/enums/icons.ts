@@ -14,6 +14,7 @@ export const Icons = {
   input: "streamline:input-box" as const,
   inventory: "system-uicons:boxes" as const,
   loading: "ph:circle-notch" as const,
+  manage: "fluent:clipboard-text-edit-24-regular" as const,
   menu: "ph:dots-three-circle-thin" as const,
   settings: "ph:gear" as const,
   supplier: "ph:truck" as const,
