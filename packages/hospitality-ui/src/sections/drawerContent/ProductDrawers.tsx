@@ -1,5 +1,6 @@
 import { useForm } from "@tanstack/react-form";
 import { useResetAtom } from "jotai/utils";
+import { useEffect } from "react";
 import { number, object, string } from "zod";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
@@ -180,6 +181,13 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
             }),
     },
   });
+
+  useEffect(() => {
+    if (product) {
+      form.setFieldValue("id", product.id);
+    }
+  }, [product]);
+
   if (isLoadingProduct) return <Spinner />;
   return (
     <>
