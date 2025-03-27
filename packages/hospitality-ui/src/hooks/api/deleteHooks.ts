@@ -26,7 +26,7 @@ export function useDelete(model: AvailableEntities, options?: { invalidateModels
   });
 }
 
-export function useRemoveProducts(model: "locations_products", options?: { invalidateModels?: AvailableEntities[] }) {
+export function useRemoveProducts(options?: { invalidateModels?: AvailableEntities[] }) {
   const userReset = useResetAtom(userAtom);
   const queryClient = useQueryClient();
 
@@ -34,14 +34,14 @@ export function useRemoveProducts(model: "locations_products", options?: { inval
     mutationFn: ({ value }: { value: { amount: number; id?: string; barcode?: string } }) => {
       return fetchFunction({
         method: "DELETE",
-        model,
+        model: "locations_products",
         urlSuffix: `${value?.id ? value.id : ""}${value?.barcode ? `barcode/${value.barcode}` : ""}/amount/${value.amount}`,
         userReset,
       });
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [model] });
+      queryClient.invalidateQueries({ queryKey: ["locations_products"] });
 
       if (options?.invalidateModels?.length) {
         for (let index = 0; index < options.invalidateModels.length; index++) {
