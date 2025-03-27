@@ -1,15 +1,15 @@
 import { useForm } from "@tanstack/react-form";
 import { useResetAtom } from "jotai/utils";
-import { string } from "zod";
+import { number, object, string } from "zod";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
 import { Button, Form, Input, Numpad, Select } from "../../components";
 import { Icons } from "../../enums";
-import { useAuth, useBarcodeScanner, useCreate, useList, useScreenSize } from "../../hooks";
+import { useAuth, useBarcodeScanner, useCreate, useList, useRemoveProducts, useScreenSize } from "../../hooks";
 import { ProductsCategories, ProductsInitializer, productsInitializer } from "../../types";
 import { getSentenceCase } from "../../utils";
 
-export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }>, "data">) {
+export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "add_products" }>, "data">) {
   const auth = useAuth();
   const { isLg } = useScreenSize();
   const resetDrawer = useResetAtom(drawerAtom);
@@ -113,6 +113,90 @@ export function Product({ data }: Pick<Extract<DrawerTypes, { type: "products" }
               </div>
             )}
             name="barcode"
+          />
+        </div>
+        <div className={`relative ${isLg ? "bottom-8" : "bottom-24"}`}>
+          <form.Subscribe<[boolean, boolean]>
+            children={(p) => {
+              return <Button isDisabled={!p[0]} label="Create" onClick={undefined} variant="success" />;
+            }}
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+          />
+        </div>
+      </Form>
+    </>
+  );
+}
+
+export function RemoveProduct({ data }: Pick<Extract<DrawerTypes, { type: "remove_products" }>, "data">) {
+  const { isLg } = useScreenSize();
+  const resetDrawer = useResetAtom(drawerAtom);
+  const { mutate: deleteProducts } = useRemoveProducts("locations_products");
+
+  const form = useForm({
+    defaultValues: {
+      amount: 0,
+      barcode: data?.barcode,
+    },
+    onSubmit: (payload) =>
+      deleteProducts(payload, {
+        onSuccess: resetDrawer,
+      }),
+    validators: {
+      onChange: object({
+        amount: number().min(1).max(data.maxAmount, "Cannot remove more items than are available."),
+        barcode: string().optional(),
+      }),
+      onSubmit: object({
+        amount: number().min(1).max(data.maxAmount, "Cannot remove more items than are available."),
+        barcode: string().optional(),
+      }),
+    },
+  });
+  return (
+    <>
+      <Form handleSubmit={form.handleSubmit}>
+        <div className="grid h-full grid-cols-2 content-start items-start gap-2">
+          {data.barcode && !data?.id ? (
+            <form.Field
+              children={(field) => (
+                <Input
+                  isDisabled
+                  label="Barcode"
+                  onChange={(e) => field.handleChange(e.target.value as string)}
+                  value={field.state.value}
+                  variant={field.state.meta.errors.length ? "error" : "primary"}
+                />
+              )}
+              name="barcode"
+            />
+          ) : null}
+
+          <form.Field
+            children={(field) => (
+              <div className="col-span-2 flex flex-col gap-y-4">
+                <Input
+                  helperText={field.state.meta.errors.join("\n ")}
+                  isAutofocused
+                  label={getSentenceCase(field.name)}
+                  onChange={(e) => field.handleChange(e.target.valueAsNumber)}
+                  type="number"
+                  value={field.state.value}
+                  variant={field.state.meta.errors.length ? "error" : "primary"}
+                />
+                {!isLg ? (
+                  <Numpad
+                    onClick={(button) => {
+                      if (button === "clear" || (button === "delete" && !field.state.value)) field.handleChange(0);
+                      else if (button === "delete" && field.state.value)
+                        field.handleChange(Number(field.state.value.toString().slice(0, field.state.value - 1)));
+                      else field.handleChange(Number(`${field.state.value}${button}`));
+                    }}
+                  />
+                ) : null}
+              </div>
+            )}
+            name="amount"
           />
         </div>
         <div className={`relative ${isLg ? "bottom-8" : "bottom-24"}`}>
