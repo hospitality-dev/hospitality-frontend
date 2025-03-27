@@ -7,7 +7,7 @@ import { tv } from "tailwind-variants";
 
 import { drawerAtom } from "../atoms";
 import { useClickOutside } from "../hooks";
-import { Product, ProductsCategories } from "../sections/drawerContent";
+import { CreateProduct, ProductsCategories, RemoveProduct } from "../sections/drawerContent";
 import { InventoryProduct } from "../sections/drawerContent/InventoryProduct";
 
 const DrawerClasses = tv({
@@ -112,7 +112,8 @@ export function Drawer() {
           {renderContent ? (
             <div className="h-[92.5%]">
               {drawer.type === "products_categories" ? <ProductsCategories /> : null}
-              {drawer.type === "products" && drawer.data ? <Product data={drawer.data} /> : null}
+              {drawer.type === "add_products" && drawer.data ? <CreateProduct data={drawer.data} /> : null}
+              {drawer.type === "remove_products" && drawer.data ? <RemoveProduct data={drawer.data} /> : null}
               {drawer.type === "inventory_products" && drawer.data ? <InventoryProduct data={drawer.data} /> : null}
             </div>
           ) : null}

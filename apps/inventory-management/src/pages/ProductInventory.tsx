@@ -13,7 +13,33 @@ import {
   useQuery,
 } from "@hospitality/hospitality-ui";
 
-const columnHelper = createColumnHelper<Pick<ProductsWithCount, "id" | "title" | "count">>();
+type Entity = Pick<ProductsWithCount, "id" | "title" | "count">;
+const columnHelper = createColumnHelper<Entity>();
+
+function ActionButton({ data }: { data: Entity }) {
+  const { openDrawer } = useDrawer("Remove from inventory", "remove_products");
+  return (
+    <div className="w-8">
+      <Button
+        allowedPlacements={["left", "left-start", "left-end"]}
+        hasNoBorder
+        icon={Icons.menu}
+        isOutline
+        items={[
+          {
+            id: "remove_amount",
+            onClick: () => openDrawer({ id: data.id, maxAmount: data.count }),
+            title: "Remove amount",
+            icon: Icons["remove-item"],
+          },
+        ]}
+        onClick={undefined}
+        size="xl"
+        variant="primary"
+      />
+    </div>
+  );
+}
 
 function columns() {
   return [
@@ -26,20 +52,7 @@ function columns() {
     columnHelper.display({
       id: "actions",
       header: "Actions",
-      cell: () => (
-        <div className="w-8">
-          <Button
-            allowedPlacements={["left", "left-start", "left-end"]}
-            hasNoBorder
-            icon={Icons.menu}
-            isOutline
-            items={[{ id: "remove_amount", title: "Remove amount", icon: Icons["barcode-remove"] }]}
-            onClick={() => {}}
-            size="xl"
-            variant="primary"
-          />
-        </div>
-      ),
+      cell: ({ row }) => <ActionButton data={row?.original} />,
       meta: {
         isCentered: true,
       },
