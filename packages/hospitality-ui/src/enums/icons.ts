@@ -4,6 +4,7 @@ export const Icons = {
   "arrow-right": "ph:caret-right" as const,
   "arrow-up": "ph:caret-up" as const,
   barcode: "ph:barcode" as const,
+  "barcode-remove": "iconoir:scan-barcode" as const,
   booking: "hugeicons:restaurant-01" as const,
   beer: "ph:beer-bottle-light" as const,
   chicken: "healthicons:animal-chicken-outline" as const,
