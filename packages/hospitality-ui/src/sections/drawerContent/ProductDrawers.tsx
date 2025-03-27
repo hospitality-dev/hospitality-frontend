@@ -202,6 +202,7 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
                     variant={field.state.meta.errors.length ? "error" : "primary"}
                   />
                 )}
+                {field.state.meta.errors.toString()}
               </div>
             )}
             name="id"
