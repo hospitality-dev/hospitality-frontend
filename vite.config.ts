@@ -6,7 +6,24 @@ export default defineConfig({
   base: "/",
   build: {
     minify: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          console.log(id);
+          if (id.includes("@zxing")) return "@zxing";
+          if (id.includes("lodash")) return "lodash";
+          if (id.includes("@floating-ui")) return "@floating-ui";
+          if (id.includes("hospitality-ui/src/hooks")) return "@hospitality-ui/hooks";
+          if (id.includes("hospitality-ui/src/components")) return "@hospitality-ui/components";
+          if (id.includes("hospitality-ui/src/sections")) return "@hospitality-ui/sections";
+          if (id.includes("@tanstack/react-form")) return "@tanstack/react-form";
+          if (id.includes("@tanstack/react-query")) return "@tanstack/react-query";
+          if (id.includes("@tanstack/react-table")) return "@tanstack/react-table";
+        },
+      },
+    },
   },
+
   optimizeDeps: {
     esbuildOptions: {
       jsx: "automatic",
