@@ -24,27 +24,28 @@ function columns() {
     }),
 
     columnHelper.display({
-      id: "isActive",
-      header: "",
+      id: "actions",
+      header: "Actions",
       cell: () => (
-        <div className="flex h-full items-center justify-end">
-          <div className="w-28">
-            {/* <Button
-              label={locationsAvailableProducts?.[row.original.id] ? "Active" : "Inactive"}
-              onClick={() => {
-                if (locationId && !locationsAvailableProducts?.[row.original.id])
-                  create({ value: { productId: row.original.id, locationId } });
-                else if (locationId && locationsAvailableProducts?.[row.original.id])
-                  deleteMutation(locationsAvailableProducts?.[row.original.id]);
-              }}
-              variant={locationsAvailableProducts?.[row.original.id] ? "success" : "secondary"}
-            /> */}
-          </div>
+        <div className="w-8">
+          <Button
+            allowedPlacements={["left", "left-start", "left-end"]}
+            hasNoBorder
+            icon={Icons.menu}
+            isOutline
+            items={[{ id: "remove_by_barcode", title: "Remove by barcode", icon: Icons["barcode-remove"] }]}
+            onClick={() => {}}
+            size="xl"
+            variant="primary"
+          />
         </div>
       ),
-      minSize: 50,
-      size: 50,
-      maxSize: 50,
+      meta: {
+        isCentered: true,
+      },
+      minSize: 100,
+      size: 100,
+      maxSize: 100,
     }),
   ];
 }
