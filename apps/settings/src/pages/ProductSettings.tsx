@@ -62,7 +62,7 @@ function columns({
 function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategories, "id" | "title" | "isDefault">) {
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const { openDrawer: openProductDrawer } = useDrawer<"add_products">("Create product", "add_products");
+  const { openDrawer: openProductDrawer } = useDrawer("create_products");
 
   // #region queries
   const { data } = useQuery(LocationsAvailableProductsQuery);
@@ -86,7 +86,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
       <Table
         action={{
           icon: Icons.add,
-          onClick: () => openProductDrawer({ categoryId: id }),
+          onClick: () => openProductDrawer("Create product", { categoryId: id }),
           label: "",
           variant: "info",
         }}
@@ -113,22 +113,27 @@ export function ProductSettings() {
     fields: productCategoryFields,
   });
   const { setOnResult } = useBarcodeScanner();
-  const { openDrawer: openProductCategoriesDrawer } = useDrawer("Create product category", "products_categories");
-  const { openDrawer: openProductDrawer } = useDrawer("Create product", "add_products");
+  const { openDrawer: openProductCategoriesDrawer } = useDrawer("products_categories");
+  const { openDrawer: openProductDrawer } = useDrawer("create_products");
   return (
     <div className="flex flex-col gap-y-2">
       <div className="ml-auto w-fit">
         <Button
           icon={Icons.add}
           items={[
-            { id: "1", title: "Add product category", icon: Icons.add, onClick: openProductCategoriesDrawer },
+            {
+              id: "1",
+              title: "Create product category",
+              icon: Icons.add,
+              onClick: () => openProductCategoriesDrawer("Create product category"),
+            },
             {
               id: "2",
               title: "Scan barcode",
               icon: Icons.barcode,
               onClick: () => {
                 setOnResult((result) => {
-                  openProductDrawer({ barcode: result.getText() });
+                  openProductDrawer("Create product", { barcode: result.getText() });
                 });
               },
             },

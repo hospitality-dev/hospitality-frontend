@@ -13,11 +13,12 @@ import {
   useQuery,
 } from "@hospitality/hospitality-ui";
 
-type Entity = Pick<ProductsWithCount, "id" | "title" | "count">;
+type Entity = Pick<ProductsWithCount, "id" | "title" | "categoryId" | "count">;
 const columnHelper = createColumnHelper<Entity>();
 
 function ActionButton({ data }: { data: Entity }) {
-  const { openDrawer } = useDrawer("Remove from inventory", "remove_products");
+  const { openDrawer: openManageInventoryDrawer } = useDrawer("manage_product_inventory");
+
   return (
     <div className="w-8">
       <Button
@@ -27,8 +28,21 @@ function ActionButton({ data }: { data: Entity }) {
         isOutline
         items={[
           {
+            id: "add_amount",
+            onClick: () =>
+              openManageInventoryDrawer("Add products", { type: "add_products", id: data.id, categoryId: data.categoryId }),
+            title: "Add amount",
+            icon: Icons["add-item"],
+          },
+          {
             id: "remove_amount",
-            onClick: () => openDrawer({ id: data.id, maxAmount: data.count }),
+            onClick: () =>
+              openManageInventoryDrawer("Remove products", {
+                type: "remove_products",
+                id: data.id,
+                categoryId: data.categoryId,
+                maxAmount: data.count,
+              }),
             title: "Remove amount",
             icon: Icons["remove-item"],
           },
@@ -62,14 +76,14 @@ const columns = [
 ];
 
 export function ProductInventory() {
-  const { openDrawer } = useDrawer("Add products", "inventory_products");
+  const { openDrawer } = useDrawer("manage_product_inventory");
   const { setOnResult } = useBarcodeScanner();
 
   const { categoryId: active } = useParams({ from: "/inventory-management/$categoryId" });
 
   const { data } = useQuery(ProductCategoriesQuery);
   const { data: products, isPending } = useList<ProductsWithCount>(
-    { model: "products", fields: ["id", "title"] },
+    { model: "products", fields: ["id", "title", "categoryId"] },
     { enabled: !!active, urlSuffix: `category/${active}/active` }
   );
   return (
@@ -84,13 +98,24 @@ export function ProductInventory() {
           allowedPlacements={["bottom-end"]}
           icon={Icons.manage}
           items={[
-            { id: "1", title: "Add (Manual input)", icon: Icons.input, onClick: () => openDrawer({ categoryId: active }) },
+            {
+              id: "1",
+              title: "Add amount",
+              icon: Icons["add-item"],
+              onClick: () => openDrawer("Add products", { type: "add_products", categoryId: active }),
+            },
             {
               id: "2",
               title: "Add (Barcode)",
               icon: Icons.barcode,
               onClick: () => {
-                setOnResult((result) => openDrawer({ categoryId: active, barcode: result.getText() }));
+                setOnResult((result) =>
+                  openDrawer("Add products", {
+                    type: "add_products",
+                    categoryId: active,
+                    barcode: result.getText(),
+                  })
+                );
               },
             },
             { id: "remove_by_barcode", title: "Remove (Barcode)", icon: Icons["barcode-remove"] },
