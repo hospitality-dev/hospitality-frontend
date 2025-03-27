@@ -20,5 +20,6 @@ export default tseslint.config({
     "react/prop-types": "off", // Not needed with TypeScript
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-curly-brace-presence": ["error", { props: "never" }],
   },
 });
