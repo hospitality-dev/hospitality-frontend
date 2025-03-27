@@ -31,11 +31,12 @@ export function useRemoveProducts(options?: { invalidateModels?: AvailableEntiti
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ value }: { value: { amount: number; id?: string; barcode?: string } }) => {
+    mutationFn: ({ value }: { value: { amount: number; id: string } }) => {
       return fetchFunction({
         method: "DELETE",
         model: "locations_products",
-        urlSuffix: `${value?.id ? value.id : ""}${value?.barcode ? `barcode/${value.barcode}` : ""}/amount/${value.amount}`,
+        id: value?.id,
+        urlSuffix: `amount/${value.amount}`,
         userReset,
       });
     },

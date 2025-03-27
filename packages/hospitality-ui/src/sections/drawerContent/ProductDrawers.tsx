@@ -157,9 +157,7 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
   const form = useForm({
     defaultValues: {
       id: data.id || "",
-      barcode: data.barcode,
       amount: 0,
-      categoryId: data.categoryId,
     },
     onSubmit: (payload) =>
       data.type === "add_products"
@@ -170,14 +168,16 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
             onSuccess: resetDrawer,
           }),
     validators: {
-      onSubmit: object({
-        amount: number()
-          .min(1)
-          .max(data.type === "add_products" ? 100 : data.maxAmount, "Cannot remove more items than are available."),
-        barcode: string().optional(),
-        id: string().uuid().optional(),
-        categoryId: data.type === "add_products" ? string().uuid() : string().uuid().optional(),
-      }),
+      onSubmit:
+        data.type === "add_products"
+          ? object({
+              amount: number().min(1).max(100, "Cannot add more than 100 items."),
+              id: string().uuid(),
+            })
+          : object({
+              id: string().uuid(),
+              amount: number().min(1).max(data.maxAmount, "Cannot remove more than available items."),
+            }),
     },
   });
   if (isLoadingProduct) return <Spinner />;
