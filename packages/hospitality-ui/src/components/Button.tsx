@@ -22,6 +22,7 @@ const classes = tv({
   slots: {
     base: "flex w-full cursor-pointer items-center justify-center gap-2 rounded-sm px-4 py-2 font-medium text-white shadow transition-all select-none active:scale-95 active:shadow-none",
     labelClasses: "max-w-5/6 truncate",
+    iconClasses: "text-lg",
   },
   variants: {
     variant: {
@@ -32,7 +33,16 @@ const classes = tv({
       warning: "border-warning bg-warning hover:bg-warning-highlight active:bg-orange-600",
       error: "border-error bg-error hover:bg-error-highlight active:bg-red-800",
     },
-    size: { xs: "h-6 text-xs", sm: "h-7 text-sm", md: "h-8", lg: "h-9 text-lg", xl: "h-10 text-xl" },
+    size: {
+      xs: {
+        base: "h-6 max-h-6 text-xs",
+        iconClasses: "text-base",
+      },
+      sm: { base: "h-7 max-h-7 text-sm", iconClasses: "text-lg" },
+      md: { base: "h-8 max-h-8", iconClasses: "text-xl" },
+      lg: { base: "h-9 max-h-9 text-lg", iconClasses: "text-2xl" },
+      xl: { base: "h-10 max-h-10 text-xl", iconClasses: "text-3xl" },
+    },
     isOutline: { true: "border-2 bg-transparent text-black", false: "" },
     isDisabled: {
       true: "bg-disabled cursor-not-allowed text-gray-200 shadow-none transition-none",
@@ -131,7 +141,7 @@ export function Button({
   items,
 }: Props) {
   if (!label && !icon) return null;
-  const { base, labelClasses } = classes({
+  const { base, labelClasses, iconClasses } = classes({
     variant,
     size,
     isOutline,
@@ -142,7 +152,8 @@ export function Button({
   return (
     <Dropdown isDisabled={!items?.length} items={items || []}>
       <button className={base({ className })} disabled={isDisabled} onClick={onClick}>
-        {label ? <div className={labelClasses()}>{label}</div> : null} {icon ? <Icon fontSize={22} icon={icon} /> : null}
+        {label ? <div className={labelClasses()}>{label}</div> : null}{" "}
+        {icon ? <Icon className={iconClasses()} icon={icon} /> : null}
       </button>
     </Dropdown>
   );
