@@ -1,12 +1,4 @@
-import {
-  BarcodeScanner,
-  Drawer,
-  Navbar,
-  Outlet,
-  Sidebar,
-  TanStackRouterDevtools,
-  useBarcodeScanner,
-} from "@hospitality/hospitality-ui";
+import { BarcodeScanner, Drawer, Navbar, Outlet, Sidebar, useBarcodeScanner, useScreenSize } from "@hospitality/hospitality-ui";
 
 import { Modules } from "../enums";
 
@@ -19,18 +11,19 @@ const sections = [
 
 export function Layout() {
   const { scannerState } = useBarcodeScanner();
+  const { isLg } = useScreenSize();
   return (
     <main className="bg-layout relative flex h-screen w-screen flex-nowrap overflow-hidden">
       <Drawer />
       {scannerState.isOpen ? <BarcodeScanner /> : null}
-      <Sidebar sections={sections} />
+      {isLg ? <Sidebar sections={sections} /> : null}
       <div className="flex w-full flex-col">
         <Navbar />
         <div className="overflow-auto p-4">
           <Outlet />
         </div>
+        {isLg ? null : <Sidebar sections={sections} />}
       </div>
-      <TanStackRouterDevtools position="bottom-right" />
     </main>
   );
 }

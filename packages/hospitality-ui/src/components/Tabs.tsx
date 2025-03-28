@@ -20,7 +20,7 @@ type Props = {
 };
 
 const tabContainer = tv({
-  base: "relative box-content flex w-full flex-row flex-nowrap items-center border-b-2 border-gray-300",
+  base: "relative box-content flex w-full max-w-full flex-row flex-nowrap items-center overflow-x-auto overflow-y-hidden border-b-2 border-gray-300",
 });
 
 const tabClasses = tv({

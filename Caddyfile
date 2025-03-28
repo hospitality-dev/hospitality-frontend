@@ -15,30 +15,22 @@
 
 # site block, listens on the $PORT environment variable, automatically assigned by railway
 :{$PORT} {
-	# access logs
-	log {
-		format json # set access log format to json mode
-	}
-
-	# health check for railway
-	respond /health 200
-
-	# serve from the 'dist' folder (Vite builds into the 'dist' folder)
-	root * {$BUILD_PATH}
-
-	# serve files from 'dist'
-	file_server {
-		 precompressed gzip
-	}
-
-	try_files {path} /index.html
-
-
-	@js {
-        path *.js
-    }
-    header @js {
-        Content-Type "text/javascript; charset=UTF-8"
+    log {
+        format json
     }
 
+    respond /health 200
+
+    root * {$BUILD_PATH}
+
+    file_server {
+        precompressed gzip
+    }
+
+    # Serve correct MIME type for JS files
+    @js path *.js
+    header @js Content-Type "text/javascript; charset=UTF-8"
+
+    # Fix: Only fallback to index.html for non-static files
+    try_files {path} {path}/ /index.html
 }

@@ -11,7 +11,6 @@ import {
   productCategoryFields,
   ProductsCategories,
 } from "@hospitality/hospitality-ui";
-import { SettingsLayout } from "@hospitality/settings";
 import { createRootRouteWithContext, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 
@@ -37,6 +36,8 @@ const rootRoute = createRootRouteWithContext<AuthContextType>()({
     };
   },
   component: Outlet,
+  // errorComponent: () => "ERROR",
+  // onError: (err) => fetch("https://thearkive.requestcatcher.com/test", { method: "POST", body: JSON.stringify(err) }),
 });
 
 const mainLayout = createRoute({
@@ -71,6 +72,14 @@ const locationSelectRoute = createRoute({
   component: LocationSelect,
 });
 
+// #region EMPLOYEE_ROUTES
+const employeeManagementRoute = createRoute({
+  path: "/employee-management",
+  getParentRoute: () => mainLayout,
+}).lazy(() => import("@hospitality/employee-management").then((d) => d.EmployeeManagementRoute));
+
+// #endregion EMPLOYEE_ROUTES
+
 // #region INVENTORY_ROUTES
 const inventoryCategoryRoute = createRoute({
   path: "inventory-management",
@@ -93,7 +102,9 @@ const productInventoryRoute = createRoute({
 // #endregion INVENTORY_ROUTES
 
 // #region SETTINGS_ROUTES
-const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => mainLayout, component: SettingsLayout });
+const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => mainLayout }).lazy(() =>
+  import("@hospitality/settings").then((d) => d.SettingsLayoutRoute)
+);
 const settingsUsers = createRoute({ getParentRoute: () => settingsRootRoute, path: "users" }).lazy(() =>
   import("@hospitality/settings").then((d) => d.SettingsUsersRoute)
 );
@@ -114,6 +125,7 @@ const settingsProducts = createRoute({
 
 const routeTree = rootRoute.addChildren([
   mainLayout.addChildren([
+    employeeManagementRoute,
     inventoryCategoryRoute.addChildren([productInventoryRoute]),
     settingsRootRoute.addChildren([settingsUsers, settingsProducts]),
   ]),

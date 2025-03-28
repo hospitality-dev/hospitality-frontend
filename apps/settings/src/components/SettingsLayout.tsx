@@ -1,7 +1,7 @@
 import { Outlet, Tabs, useLocation } from "@hospitality/hospitality-ui";
 
 const tabs = [
-  { id: "users", title: "Users", link: "/settings/users" },
+  // { id: "users", title: "Users", link: "/settings/users" },
   { id: "locations", title: "Locations", link: "/settings/locations" },
   { id: "products", title: "Products", link: "/settings/products" },
 ];

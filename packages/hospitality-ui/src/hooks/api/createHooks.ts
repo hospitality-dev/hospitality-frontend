@@ -30,7 +30,7 @@ export function useAddInventoryProducts() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: { value: { productId: string; amount: number } }) => {
+    mutationFn: (payload: { value: { id?: string; barcode?: string; amount: number } }) => {
       return fetchFunction({ method: "POST", payload: JSON.stringify(payload.value), model: "locations_products", userReset });
     },
 

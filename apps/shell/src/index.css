@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@source "../../../apps/**/src/*.{ts,tsx,css}"; /* Any app */
+@source "../../../apps/**/src/**/*.{ts,tsx,css}"; /* Any app */
 @source "../../../packages/**/src/**/*.{ts,tsx,css}"; /* Any components in ui package*/
 
 @layer base {

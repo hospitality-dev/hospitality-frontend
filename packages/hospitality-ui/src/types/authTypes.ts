@@ -1,3 +1,6 @@
+import { z } from "zod";
+
+import { userPermissionsSchema } from "../schemas";
 import { Locations, Roles, Users } from "./models";
 
 export type LoginParams = {
@@ -5,12 +8,14 @@ export type LoginParams = {
   password: string;
 };
 
+export type UserPermissions = z.infer<typeof userPermissionsSchema>;
 export type LoginResponse = {
   user: Pick<Users, "id" | "firstName" | "lastName" | "username" | "phone" | "email"> & {
     locationId: string | null;
     locationTitle: string | null;
     roleId: string | null;
     role: string | null;
+    permissions: UserPermissions;
     companyId: string | null;
   };
   locations: {
