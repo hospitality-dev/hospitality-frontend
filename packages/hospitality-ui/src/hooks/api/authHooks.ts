@@ -21,7 +21,7 @@ export function useLogin() {
         return redirect({ to: "/" });
       }
       const res = await ky
-        .get<ResponseType<LoginResponse>>("http://localhost:4000/auth/callback", {
+        .get<ResponseType<LoginResponse>>(`${import.meta.env.VITE_SERVER_URL}/auth/callback`, {
           credentials: "include",
           retry: { limit: 0 },
           searchParams: new URLSearchParams([

@@ -1,3 +1,3 @@
-import { AvailableModules } from "../enums";
+import { Modules } from "../enums";
 
-export type AvailableModules = (typeof AvailableModules)[number];
+export type AvailableModules = (typeof Modules)[number];

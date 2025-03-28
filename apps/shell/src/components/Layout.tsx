@@ -1,18 +1,28 @@
-import { Drawer, getSentenceCase, Navbar, Outlet, Sidebar, TanStackRouterDevtools } from "@hospitality/hospitality-ui";
+import {
+  BarcodeScanner,
+  Drawer,
+  Navbar,
+  Outlet,
+  Sidebar,
+  TanStackRouterDevtools,
+  useBarcodeScanner,
+} from "@hospitality/hospitality-ui";
 
-import { AvailableModules } from "../enums";
+import { Modules } from "../enums";
 
 const sections = [
   {
     title: "MODULES",
-    links: AvailableModules.map((module) => ({ title: getSentenceCase(module), to: `${module}/dashboard` })),
+    links: Modules.map((module) => ({ title: module.title, to: `/${module.id}`, icon: module.icon })),
   },
 ];
 
 export function Layout() {
+  const { scannerState } = useBarcodeScanner();
   return (
-    <main className="relative flex h-screen w-screen flex-nowrap overflow-hidden bg-gray-200">
+    <main className="bg-layout relative flex h-screen w-screen flex-nowrap overflow-hidden">
       <Drawer />
+      {scannerState.isOpen ? <BarcodeScanner /> : null}
       <Sidebar sections={sections} />
       <div className="flex w-full flex-col">
         <Navbar />

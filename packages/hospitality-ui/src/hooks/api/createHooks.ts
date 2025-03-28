@@ -5,7 +5,7 @@ import { userAtom } from "../../atoms";
 import { AvailableEntities } from "../../types";
 import { fetchFunction } from "../../utils";
 
-export function useCreate<F>(model: AvailableEntities) {
+export function useCreate<F>(model: AvailableEntities, options?: { invalidateModels?: AvailableEntities[] }) {
   const userReset = useResetAtom(userAtom);
   const queryClient = useQueryClient();
 
@@ -16,6 +16,27 @@ export function useCreate<F>(model: AvailableEntities) {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [model] });
+      if (options?.invalidateModels?.length) {
+        for (let index = 0; index < options.invalidateModels.length; index++) {
+          queryClient.invalidateQueries({ predicate: (q) => q.queryKey?.[0] === options?.invalidateModels?.[index] });
+        }
+      }
+    },
+  });
+}
+
+export function useAddInventoryProducts() {
+  const userReset = useResetAtom(userAtom);
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: { value: { productId: string; amount: number } }) => {
+      return fetchFunction({ method: "POST", payload: JSON.stringify(payload.value), model: "locations_products", userReset });
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["locations_products"] });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
     },
   });
 }

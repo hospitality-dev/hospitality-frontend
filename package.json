@@ -1,5 +1,6 @@
 {
   "name": "hospitality",
+  "main": "apps/shell/dist/index.html",
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
@@ -26,7 +27,8 @@
   },
   "private": true,
   "scripts": {
-    "start": "cd apps/shell && bun run dev",
+    "start:dev": "cd apps/shell && vite --config ../../vite.config.ts",
+    "build": "cd apps/shell && bun run build --config ../../vite.config.ts",
     "generate-types": "cd packages/hospitality-ui && bunx kanel",
     "prepare": "husky"
   },
@@ -34,5 +36,9 @@
   "workspaces": [
     "packages/*",
     "apps/*"
-  ]
+  ],
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.17",
+    "@vitejs/plugin-react": "^4.3.4"
+  }
 }

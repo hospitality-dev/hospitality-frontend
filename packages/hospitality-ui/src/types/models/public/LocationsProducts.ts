@@ -1,5 +1,5 @@
-import type { locationsAvailableProductsId } from "./LocationsAvailableProducts";
 import type { locationsId } from "./Locations";
+import type { locationsAvailableProductsId } from "./LocationsAvailableProducts";
 export type locationsProductsId = string;
 /** Represents the table public.locations_products */
 export default interface LocationsProducts {

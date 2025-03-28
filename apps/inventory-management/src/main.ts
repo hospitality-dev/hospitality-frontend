@@ -1,7 +1,7 @@
 import { createLazyRoute } from "@hospitality/hospitality-ui";
 
-import { Dashboard } from "./pages";
+import { ProductInventory } from "./pages";
 
-export const InvetoryDashboardRoute = createLazyRoute("/inventory-management/dashboard")({
-  component: Dashboard,
+export const ProductInventoryRoute = createLazyRoute("/inventory-management/$categoryId")({
+  component: ProductInventory,
 });

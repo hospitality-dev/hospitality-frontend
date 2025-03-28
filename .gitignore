@@ -28,3 +28,4 @@ bun.lockb
 
 packages/hospitality-ui/node_modules
 packages/hospitality-ui/.kanelrc.cjs
+*.tsbuildinfo

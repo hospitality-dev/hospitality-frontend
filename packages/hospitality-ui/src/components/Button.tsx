@@ -3,6 +3,7 @@ import { MouseEventHandler } from "react";
 import { tv } from "tailwind-variants";
 
 import { availableIcons, Size, Variant } from "../types/baseTypes";
+import { Dropdown, DropdownItemType } from "./Dropdown";
 
 type Props = {
   label?: string;
@@ -12,28 +13,35 @@ type Props = {
   isDisabled?: boolean;
   icon?: availableIcons;
   hasNoBorder?: boolean;
+  className?: string;
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+  items?: DropdownItemType[];
 };
 
 const classes = tv({
-  base: "flex w-full cursor-pointer items-center justify-center gap-2 rounded-sm px-4 py-2 font-medium text-white shadow transition-all select-none active:scale-95 active:shadow-none",
+  slots: {
+    base: "flex w-full cursor-pointer items-center justify-center gap-2 rounded-sm px-4 py-2 font-medium text-white shadow transition-all select-none active:scale-95 active:shadow-none",
+    labelClasses: "max-w-5/6 truncate",
+  },
   variants: {
     variant: {
-      primary: "border-gray-900 bg-gray-700 hover:bg-gray-900 active:bg-gray-900",
-      secondary: "border-gray-600 bg-gray-300 text-gray-700 hover:bg-gray-600 hover:text-white active:bg-gray-600",
-      info: "border-blue-600 bg-blue-500 hover:bg-blue-600 active:bg-blue-600",
-      success: "border-green-600 bg-green-500 hover:bg-green-600 active:bg-green-600",
-      warning: "border-orange-600 bg-orange-500 hover:bg-orange-600 active:bg-orange-600",
-      error: "border-red-800 bg-red-600 hover:bg-red-800 active:bg-red-800",
+      primary: "bg-primary hover:bg-primary-highlight active:bg-gray-900",
+      secondary: "bg-secondary hover:bg-secondary-highlight text-white active:bg-gray-600",
+      info: "bg-info hover:bg-info-highlight active:bg-blue-600",
+      success: "bg-success hover:bg-success-highlight active:bg-green-600",
+      warning: "border-warning bg-warning hover:bg-warning-highlight active:bg-orange-600",
+      error: "border-error bg-error hover:bg-error-highlight active:bg-red-800",
     },
     size: { xs: "h-6 text-xs", sm: "h-7 text-sm", md: "h-8", lg: "h-9 text-lg", xl: "h-10 text-xl" },
     isOutline: { true: "border-2 bg-transparent text-black", false: "" },
     isDisabled: {
-      true: "cursor-not-allowed bg-gray-400 text-gray-300 shadow-none transition-none hover:bg-gray-400 active:scale-100 active:bg-gray-400",
+      true: "bg-disabled cursor-not-allowed text-gray-200 shadow-none transition-none",
     },
     hasNoBorder: { true: "border-0 shadow-none hover:bg-transparent active:bg-transparent", false: "" },
+    hasIconOnly: {
+      true: "px-0",
+    },
   },
-
   compoundVariants: [
     {
       variant: "primary",
@@ -119,11 +127,23 @@ export function Button({
   hasNoBorder,
   icon,
   onClick,
+  className,
+  items,
 }: Props) {
   if (!label && !icon) return null;
+  const { base, labelClasses } = classes({
+    variant,
+    size,
+    isOutline,
+    hasNoBorder,
+    isDisabled,
+    hasIconOnly: !label && !!icon,
+  });
   return (
-    <button className={classes({ variant, size, isOutline, hasNoBorder, isDisabled })} disabled={isDisabled} onClick={onClick}>
-      {label ? <div className="max-w-5/6 truncate">{label}</div> : null} {icon ? <Icon icon={icon} /> : null}
-    </button>
+    <Dropdown isDisabled={!items?.length} items={items || []}>
+      <button className={base({ className })} disabled={isDisabled} onClick={onClick}>
+        {label ? <div className={labelClasses()}>{label}</div> : null} {icon ? <Icon fontSize={22} icon={icon} /> : null}
+      </button>
+    </Dropdown>
   );
 }

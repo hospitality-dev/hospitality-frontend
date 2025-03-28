@@ -8,13 +8,15 @@ type TabType = {
   id: string;
   title: string;
   link?: AnyRoute["to"];
+  isNavControlled?: boolean;
   isDisabled?: boolean;
   isActive?: boolean;
 };
 type Props = {
   tabs: TabType[];
   active: string;
-  setActive: Dispatch<SetStateAction<string>>;
+  isNavControlled?: boolean;
+  setActive?: Dispatch<SetStateAction<string>>;
 };
 
 const tabContainer = tv({
@@ -46,19 +48,31 @@ function Tab({
   link,
   isDisabled,
   isActive,
+  isNavControlled,
   setActive,
-}: Props["tabs"][number] & { setActive: Dispatch<SetStateAction<string>> }) {
+}: Props["tabs"][number] & { setActive: Props["setActive"] }) {
   const { tab, linkClasses } = tabClasses({ isActive, isDisabled });
   return (
-    <li className={tab()} onClick={() => setActive(id)}>
-      <Link className={linkClasses()} isDisabled={isDisabled} onClick={() => setActive(title)} title={title} to={link}>
+    <li
+      className={tab()}
+      onClick={() => {
+        if (!isNavControlled && setActive) setActive(id);
+      }}>
+      <Link
+        className={linkClasses()}
+        isDisabled={isDisabled}
+        onClick={() => {
+          if (!isNavControlled && setActive) setActive(id);
+        }}
+        title={title}
+        to={link}>
         {title}
       </Link>
     </li>
   );
 }
 
-export function Tabs({ tabs, active, setActive }: Props) {
+export function Tabs({ tabs, active, setActive, isNavControlled }: Props) {
   return (
     <ul className={tabContainer()}>
       {tabs.map((tab) => (
@@ -67,6 +81,7 @@ export function Tabs({ tabs, active, setActive }: Props) {
           id={tab.id}
           isActive={active === tab.id}
           isDisabled={tab?.isDisabled}
+          isNavControlled={isNavControlled}
           link={tab?.link}
           setActive={setActive}
           title={tab.title}

@@ -1,24 +1,30 @@
-import { Icon } from "@iconify/react/dist/iconify.js";
 import { AnyRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 
 import { sidebarStateAtom } from "../atoms";
 import { Icons } from "../enums";
+import { availableIcons } from "../types";
+import { Icon } from "./Icon";
 import { Link } from "./Link";
 
 type SidebarSectionType = {
   title: string;
-  links: { title: string; to: AnyRoute["to"] }[];
+  links: {
+    icon: availableIcons;
+    title: string;
+    to: AnyRoute["to"];
+  }[];
 };
 type Props = { sections: SidebarSectionType[] };
 
-function SidebarLink({ title, to }: SidebarSectionType["links"][number]) {
+function SidebarLink({ icon, title, to }: SidebarSectionType["links"][number]) {
   return (
     <Link
-      className="h-fit w-full px-4 py-2 font-semibold duration-0 select-none hover:bg-white hover:text-gray-900"
+      className="flex h-fit w-full items-center gap-x-2 px-4 py-2 font-semibold duration-0 select-none hover:bg-white hover:text-gray-900"
       to={to}
       variant="secondary">
-      {title}
+      <Icon fontSize={20} icon={icon} />
+      <span>{title}</span>
     </Link>
   );
 }
@@ -36,7 +42,7 @@ function SidebarSection({ title, links }: SidebarSectionType) {
       <div
         className={`flex flex-col gap-y-1 ${sidebarState.isModulesOpen ? "h-auto" : "h-0"} overflow-hidden transition-[height]`}>
         {links.map((link) => (
-          <SidebarLink key={link.to} title={link.title} to={link.to} />
+          <SidebarLink key={link.to} icon={link.icon} title={link.title} to={link.to} />
         ))}
       </div>
     </li>
@@ -45,7 +51,7 @@ function SidebarSection({ title, links }: SidebarSectionType) {
 
 export function Sidebar({ sections = [] }: Props) {
   return (
-    <div className="w-64 bg-blue-950 text-white">
+    <div className="w-72 bg-blue-950 text-white">
       <ul className="flex h-full flex-col">
         <li className="flex h-16 flex-nowrap items-center gap-x-4 px-4">
           <div className="flex h-10 w-10 items-center justify-center rounded-full border-blue-300 bg-blue-500 text-sm">
@@ -59,7 +65,7 @@ export function Sidebar({ sections = [] }: Props) {
           ))}
         </ul>
         <li className="mt-auto mb-4 flex w-full">
-          <SidebarLink title="Settings" to="/settings/users" />
+          <SidebarLink icon={Icons.settings} title="Settings" to="/settings/users" />
         </li>
       </ul>
     </div>

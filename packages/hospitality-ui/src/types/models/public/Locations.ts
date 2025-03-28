@@ -1,3 +1,4 @@
+import type { companiesId } from "./Companies";
 import type { usersId } from "./Users";
 export type locationsId = string;
 /** Represents the table public.locations */
@@ -8,6 +9,7 @@ export default interface Locations {
   deletedAt: Date | null;
   title: string;
   ownerId: usersId;
+  companyId: companiesId;
   address: string | null;
   phone: string | null;
   email: string | null;
@@ -25,6 +27,7 @@ export interface LocationsInitializer {
   deletedAt?: Date | null;
   title: string;
   ownerId: usersId;
+  companyId: companiesId;
   address?: string | null;
   phone?: string | null;
   email?: string | null;
@@ -39,6 +42,7 @@ export interface LocationsMutator {
   deletedAt?: Date | null;
   title?: string;
   ownerId?: usersId;
+  companyId?: companiesId;
   address?: string | null;
   phone?: string | null;
   email?: string | null;

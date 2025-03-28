@@ -14,7 +14,6 @@ import tsPlugin from "@typescript-eslint/eslint-plugin";
 import ignoreGenerated from "eslint-plugin-ignore-generated";
 export default {
   extends: [js.configs.recommended, ...tseslint.configs.recommended],
-
   files: ["**/*.{ts,tsx}"],
   languageOptions: {
     parser: tsParser,

@@ -20,7 +20,7 @@ export function ProductsCategories() {
     defaultValues: {
       title: "",
       isDefault: false,
-      locationId: auth.user?.locationId,
+      companyId: auth.user?.companyId,
     },
     onSubmit: (payload) =>
       create(payload, {

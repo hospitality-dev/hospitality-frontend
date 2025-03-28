@@ -15,6 +15,9 @@ type Props<T> = {
   titleVariant?: Variant;
   isCollapsible?: boolean;
   isInitialOpen?: boolean;
+  isLoading?: boolean;
+  hasNoHeader?: boolean;
+  onExpand?: () => void;
   action?: {
     onClick: () => void;
     label: string;
@@ -26,21 +29,16 @@ type Props<T> = {
 
 const classes = tv({
   slots: {
-    container: "overflow-x-auto rounded-md border border-gray-300 bg-gray-100 px-4 py-2",
+    container: "overflow-x-auto rounded-md border border-gray-300 bg-gray-100 px-2",
     tableContainer: "transition-[height]",
     tableClasses: "min-w-full overflow-auto",
     thead: "border-b border-gray-300 text-left text-gray-500",
-    th: "p-2 text-sm font-light uppercase",
-    tbody: "divide-y divide-gray-300",
-    tr: "has-[td]:hover:bg-blue-100",
-    td: "p-2",
+    th: "flex-1 p-2 text-sm font-light uppercase",
+    tbody: "flex min-h-10 flex-col divide-y divide-gray-300 py-2",
+    tr: "flex w-full items-center rounded has-[td]:hover:bg-gray-200",
+    td: "flex h-10 flex-1 items-center px-2",
   },
   variants: {
-    hasTitle: {
-      true: {
-        tableClasses: "border-t border-t-gray-950",
-      },
-    },
     isOpen: {
       true: {
         tableContainer: "overflow-hidden",
@@ -49,17 +47,40 @@ const classes = tv({
         tableContainer: "h-0 overflow-hidden",
       },
     },
+    isCollapsible: {
+      true: {
+        container: "py-2",
+      },
+    },
+    isLoading: {
+      true: {
+        tbody: "",
+        tr: "min-h-10 animate-pulse rounded bg-gradient-to-r from-gray-200 via-gray-100 to-gray-50 py-1",
+      },
+    },
   },
 });
 
+function TableSkeleton({ tr, td }: { tr: string; td: string }) {
+  return (
+    <>
+      <tr className={tr}>
+        <td className={td} />
+      </tr>
+    </>
+  );
+}
 export function Table<T>({
-  columns,
+  columns = [],
   data,
   title,
   titleVariant,
   isInitialOpen = true,
   isCollapsible = false,
   action,
+  onExpand,
+  isLoading,
+  hasNoHeader,
 }: Props<T>) {
   const table = useReactTable({
     columns,
@@ -67,28 +88,38 @@ export function Table<T>({
     getCoreRowModel: getCoreRowModel(),
   });
   const [isOpen, setIsOpen] = useState(isInitialOpen);
-  const headers = table.getFlatHeaders().filter((h) => !!h.column.columnDef.header);
-  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({ hasTitle: !!title, isOpen });
+  const headers = table.getFlatHeaders();
+  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({ isOpen, isLoading, isCollapsible });
+
   return (
     <div className={container()}>
       {title ? (
-        <div className="flex cursor-pointer flex-row flex-nowrap justify-between" onClick={() => setIsOpen(!isOpen)}>
-          <Title label={title} size="lg" variant={titleVariant} />
-          <div className="flex">
+        <div
+          className="relative flex cursor-pointer flex-row flex-nowrap justify-between"
+          onClick={() => {
+            if (onExpand && !isOpen) onExpand();
+            setIsOpen(!isOpen);
+          }}>
+          <div className="absolute top-0 left-0 w-full">
+            <Title hasBorder={isOpen} label={title} size="lg" variant={titleVariant} />
+          </div>
+          <div className="relative z-0 flex flex-1 justify-end gap-x-4">
             {action ? (
-              <Button
-                hasNoBorder
-                icon={action.icon}
-                isOutline
-                label={action.label}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  action.onClick();
-                }}
-                size={action.size}
-                variant={action.variant}
-              />
+              <div>
+                <Button
+                  hasNoBorder
+                  icon={action.icon}
+                  isOutline
+                  label={action.label}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    action.onClick();
+                  }}
+                  size={action.size}
+                  variant={action.variant}
+                />
+              </div>
             ) : null}
             {isCollapsible ? (
               <div>
@@ -97,7 +128,9 @@ export function Table<T>({
                   icon={isOpen ? Icons["arrow-up"] : Icons["arrow-down"]}
                   isOutline
                   label=""
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
                 />
               </div>
             ) : null}
@@ -106,29 +139,39 @@ export function Table<T>({
       ) : null}
       <div
         className={tableContainer()}
-        style={{ height: (isCollapsible && isOpen) || !isCollapsible ? "calc-size(auto, round(up, size, 50px))" : 0 }}>
+        style={{ height: (isCollapsible && isOpen) || !isCollapsible ? "calc-size(auto, size)" : 0 }}>
         <table className={tableClasses()}>
-          <thead className={thead()}>
-            {headers.length ? (
+          {hasNoHeader ? null : (
+            <thead className={thead()}>
+              {headers.length ? (
+                <tr className={tr()}>
+                  {headers.map((header) => (
+                    <th key={header.id} className={th()} style={{ maxWidth: header.column.columnDef.maxSize }}>
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                    </th>
+                  ))}
+                </tr>
+              ) : null}
+            </thead>
+          )}
+          <tbody className={tbody()}>
+            {!isLoading && !data.length ? (
               <tr className={tr()}>
-                {headers.map((header) => (
-                  <th key={header.id} className={th()}>
-                    {flexRender(header.column.columnDef.header, header.getContext())}
-                  </th>
-                ))}
+                <td>ALERT HERE</td>
               </tr>
             ) : null}
-          </thead>
-          <tbody className={tbody()}>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className={tr()}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className={td()}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
+            {isLoading && isOpen ? <TableSkeleton td={td()} tr={tr()} /> : null}
+            {!isLoading && isOpen && data.length
+              ? table.getRowModel().rows.map((row) => (
+                  <tr key={row.id} className={tr()}>
+                    {row.getVisibleCells().map((cell) => (
+                      <td key={cell.id} className={td()} style={{ maxWidth: cell.column.columnDef.maxSize }}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              : null}
           </tbody>
         </table>
       </div>

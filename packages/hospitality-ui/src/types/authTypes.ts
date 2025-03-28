@@ -11,8 +11,15 @@ export type LoginResponse = {
     locationTitle: string | null;
     roleId: string | null;
     role: string | null;
+    companyId: string | null;
   };
-  locations: { locationId: Locations["id"]; locationTitle: Locations["title"]; roleId: Roles["id"]; role: Roles["title"] }[];
+  locations: {
+    locationId: Locations["id"];
+    locationTitle: Locations["title"];
+    roleId: Roles["id"];
+    role: Roles["title"];
+    companyId: Locations["companyId"];
+  }[];
 };
 
 export type AuthContextType = {

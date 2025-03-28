@@ -1,6 +1,6 @@
 import type { locationsId } from "./Locations";
-import type { usersId } from "./Users";
 import type { rolesId } from "./Roles";
+import type { usersId } from "./Users";
 export type locationsUsersId = string;
 /** Represents the table public.locations_users */
 export default interface LocationsUsers {

@@ -1,4 +1,4 @@
-import type { locationsId } from "./Locations";
+import type { companiesId } from "./Companies";
 export type productsCategoriesId = string;
 /** Represents the table public.products_categories */
 export default interface ProductsCategories {
@@ -8,7 +8,7 @@ export default interface ProductsCategories {
   deletedAt: Date | null;
   title: string;
   parentId: productsCategoriesId | null;
-  locationId: locationsId | null;
+  companyId: companiesId | null;
   isDefault: boolean;
 }
 /** Represents the initializer for the table public.products_categories */
@@ -22,7 +22,7 @@ export interface ProductsCategoriesInitializer {
   deletedAt?: Date | null;
   title: string;
   parentId?: productsCategoriesId | null;
-  locationId?: locationsId | null;
+  companyId?: companiesId | null;
   isDefault: boolean;
 }
 /** Represents the mutator for the table public.products_categories */
@@ -33,6 +33,6 @@ export interface ProductsCategoriesMutator {
   deletedAt?: Date | null;
   title?: string;
   parentId?: productsCategoriesId | null;
-  locationId?: locationsId | null;
+  companyId?: companiesId | null;
   isDefault?: boolean;
 }

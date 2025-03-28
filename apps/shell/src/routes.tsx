@@ -2,9 +2,13 @@
 import {
   AuthContextType,
   authFetchFunction,
-  fetchFunction,
   getLoginRoute,
+  locationsAvailableProductsFields,
+  LocationsAvailableProductsQuery,
+  LocationsAvailableProductsSettings,
   LoginResponse,
+  ProductCategoriesQuery,
+  productCategoryFields,
   ProductsCategories,
 } from "@hospitality/hospitality-ui";
 import { SettingsLayout } from "@hospitality/settings";
@@ -68,10 +72,23 @@ const locationSelectRoute = createRoute({
 });
 
 // #region INVENTORY_ROUTES
-const inventoryRootRoute = createRoute({ path: "inventory-management", getParentRoute: () => mainLayout, component: Outlet });
-const invDashboard = createRoute({ getParentRoute: () => inventoryRootRoute, path: "dashboard" }).lazy(() =>
-  import("@hospitality/inventory-management").then((d) => d.InvetoryDashboardRoute)
-);
+const inventoryCategoryRoute = createRoute({
+  path: "inventory-management",
+  getParentRoute: () => mainLayout,
+  loader: async (ctx) => {
+    const categories = await queryClient.ensureQueryData<ProductsCategories[]>(ProductCategoriesQuery);
+    const firstCategoryId = categories.at(0)?.id;
+    if (!("categoryId" in ctx.params) && firstCategoryId) {
+      throw redirect({ to: `/inventory-management/$categoryId`, params: { categoryId: firstCategoryId } });
+    }
+  },
+
+  component: Outlet,
+});
+const productInventoryRoute = createRoute({
+  getParentRoute: () => inventoryCategoryRoute,
+  path: "/$categoryId",
+}).lazy(() => import("@hospitality/inventory-management").then((d) => d.ProductInventoryRoute));
 
 // #endregion INVENTORY_ROUTES
 
@@ -84,20 +101,12 @@ const settingsProducts = createRoute({
   getParentRoute: () => settingsRootRoute,
   path: "products",
   loader: async () => {
-    const fields: (keyof ProductsCategories)[] = ["id", "title", "locationId", "parentId", "isDefault"];
     return {
-      categories: await queryClient.ensureQueryData<ProductsCategories[]>({
-        queryKey: ["products_categories", "list"],
-        queryFn: () =>
-          fetchFunction<ProductsCategories[]>({
-            method: "GET",
-            userReset: () => {},
-            searchParams: new URLSearchParams([["fields", fields.join(",")]]),
-            model: "products_categories",
-          }),
-        staleTime: 5 * 60 * 1000,
-      }),
-      fields,
+      locationsAvailableProducts:
+        await queryClient.ensureQueryData<LocationsAvailableProductsSettings>(LocationsAvailableProductsQuery),
+      categories: await queryClient.ensureQueryData<ProductsCategories[]>(ProductCategoriesQuery),
+      productCategoryFields,
+      locationsAvailableProductsFields,
     };
   },
 }).lazy(() => import("@hospitality/settings").then((d) => d.SettingsProductsRoute));
@@ -105,7 +114,7 @@ const settingsProducts = createRoute({
 
 const routeTree = rootRoute.addChildren([
   mainLayout.addChildren([
-    inventoryRootRoute.addChildren([invDashboard]),
+    inventoryCategoryRoute.addChildren([productInventoryRoute]),
     settingsRootRoute.addChildren([settingsUsers, settingsProducts]),
   ]),
   loginRoute,
@@ -114,6 +123,7 @@ const routeTree = rootRoute.addChildren([
 
 export const router = createRouter({
   routeTree,
+
   context: {
     auth: null,
   },

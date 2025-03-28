@@ -13,11 +13,13 @@ export const loginResponseSchema = object({
     roleId: string().uuid().nullable(),
     role: string().nullable(),
     locationTitle: string().nullable(),
+    companyId: string().uuid().nullable(),
   }),
   locations: object({
     locationId: string().uuid(),
     roleId: string().uuid(),
     role: string(),
     locationTitle: string(),
+    companyId: string().uuid(),
   }).array(),
 });

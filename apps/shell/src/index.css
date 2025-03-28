@@ -1,3 +1,35 @@
 @import "tailwindcss";
-@source "../../../apps/**/*.{ts,tsx}"; /* Any app */
-@source "../../../packages/**/*.{ts,tsx}"; /* Any components in ui package*/
+@source "../../../apps/**/src/*.{ts,tsx,css}"; /* Any app */
+@source "../../../packages/**/src/**/*.{ts,tsx,css}"; /* Any components in ui package*/
+
+@layer base {
+  body {
+    overflow: hidden;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+@theme {
+  --color-layout: var(--color-gray-200);
+  --color-layout-dark: var(--color-gray-950);
+
+  --color-primary: var(--color-gray-500);
+  --color-secondary: var(--color-gray-400);
+  --color-info: var(--color-blue-500);
+  --color-success: var(--color-green-600);
+  --color-warning: var(--color-orange-500);
+  --color-error: var(--color-red-600);
+
+  --color-primary-highlight: var(--color-gray-500);
+  --color-secondary-highlight: var(--color-gray-300);
+  --color-info-highlight: var(--color-blue-400);
+  --color-success-highlight: var(--color-green-500);
+  --color-warning-highlight: var(--color-orange-400);
+  --color-error-highlight: var(--color-red-500);
+
+  --color-disabled: var(--color-gray-300);
+}
