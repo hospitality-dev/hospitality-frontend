@@ -72,6 +72,14 @@ const locationSelectRoute = createRoute({
   component: LocationSelect,
 });
 
+// #region EMPLOYEE_ROUTES
+const employeeManagementRoute = createRoute({
+  path: "/employee-management",
+  getParentRoute: () => mainLayout,
+}).lazy(() => import("@hospitality/employee-management").then((d) => d.EmployeeManagementRoute));
+
+// #endregion EMPLOYEE_ROUTES
+
 // #region INVENTORY_ROUTES
 const inventoryCategoryRoute = createRoute({
   path: "inventory-management",
@@ -117,6 +125,7 @@ const settingsProducts = createRoute({
 
 const routeTree = rootRoute.addChildren([
   mainLayout.addChildren([
+    employeeManagementRoute,
     inventoryCategoryRoute.addChildren([productInventoryRoute]),
     settingsRootRoute.addChildren([settingsUsers, settingsProducts]),
   ]),
