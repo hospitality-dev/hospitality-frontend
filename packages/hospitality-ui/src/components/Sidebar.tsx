@@ -43,10 +43,10 @@ function SidebarLink({ icon, title, to }: SidebarSectionType["links"][number]) {
   const { isLg } = useScreenSize();
   return (
     <Link
-      className={`flex w-full items-center gap-x-2 px-4 font-semibold duration-0 select-none hover:bg-white hover:text-gray-900 ${isLg ? "h-fit py-2" : "h-full justify-center"} `}
+      className={`flex items-center gap-x-2 px-4 font-semibold duration-0 select-none hover:bg-white hover:text-gray-900 ${isLg ? "h-fit w-full py-2" : "h-full w-16 justify-center"} `}
       to={to}
       variant="secondary">
-      <Icon fontSize={24} icon={icon} />
+      <Icon fontSize={isLg ? 24 : 32} icon={icon} />
       {isLg ? <span>{title}</span> : null}
     </Link>
   );
