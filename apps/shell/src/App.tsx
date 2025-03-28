@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider, ReactQueryDevtools, RouterProvider } from "@hospitality/hospitality-ui";
+import { QueryClient, QueryClientProvider, RouterProvider } from "@hospitality/hospitality-ui";
 
 import { router } from "./routes";
 
@@ -15,8 +15,6 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider context={{ auth: null }} router={router} />
-
-      <ReactQueryDevtools client={queryClient} />
     </QueryClientProvider>
   );
 }

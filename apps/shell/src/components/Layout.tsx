@@ -1,13 +1,4 @@
-import {
-  BarcodeScanner,
-  Drawer,
-  Navbar,
-  Outlet,
-  Sidebar,
-  TanStackRouterDevtools,
-  useBarcodeScanner,
-  useScreenSize,
-} from "@hospitality/hospitality-ui";
+import { BarcodeScanner, Drawer, Navbar, Outlet, Sidebar, useBarcodeScanner, useScreenSize } from "@hospitality/hospitality-ui";
 
 import { Modules } from "../enums";
 
@@ -33,7 +24,6 @@ export function Layout() {
         </div>
         {isLg ? null : <Sidebar sections={sections} />}
       </div>
-      <TanStackRouterDevtools position="bottom-right" />
     </main>
   );
 }
