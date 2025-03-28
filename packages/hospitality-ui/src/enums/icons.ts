@@ -16,6 +16,7 @@ export const Icons = {
   input: "streamline:input-box" as const,
   inventory: "system-uicons:boxes" as const,
   loading: "ph:circle-notch" as const,
+  "location-user": "streamline:office-building-1" as const,
   manage: "fluent:clipboard-text-edit-24-regular" as const,
   menu: "ph:dots-three-circle-thin" as const,
   modules: "oui:index-mapping" as const,
