@@ -17,6 +17,7 @@ export const Icons = {
   loading: "ph:circle-notch" as const,
   manage: "fluent:clipboard-text-edit-24-regular" as const,
   menu: "ph:dots-three-circle-thin" as const,
+  modules: "oui:index-mapping" as const,
   "remove-item": "mdi:basket-minus-outline" as const,
   settings: "ph:gear" as const,
   supplier: "ph:truck" as const,
