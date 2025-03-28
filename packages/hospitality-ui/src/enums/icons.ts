@@ -1,6 +1,7 @@
 export const Icons = {
   add: "ph:plus" as const,
   "add-item": "mdi:basket-plus-outline" as const,
+  "add-user": "ph:user-plus" as const,
   "arrow-down": "ph:caret-down" as const,
   "arrow-right": "ph:caret-right" as const,
   "arrow-up": "ph:caret-up" as const,
@@ -19,6 +20,7 @@ export const Icons = {
   menu: "ph:dots-three-circle-thin" as const,
   modules: "oui:index-mapping" as const,
   "remove-item": "mdi:basket-minus-outline" as const,
+  "remove-user": "ph:user-minus" as const,
   settings: "ph:gear" as const,
   supplier: "ph:truck" as const,
 };
