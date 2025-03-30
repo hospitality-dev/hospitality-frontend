@@ -18,6 +18,10 @@ export type DrawerTypes = (
         | { type: "remove_products"; categoryId: string; maxAmount: number }
       );
     }
+  | {
+      type: "add_new_user";
+      data: null;
+    }
 ) & { title: string };
 
 type DrawerState = {
