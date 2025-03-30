@@ -17,7 +17,7 @@ import {
   useScreenSize,
 } from "../../hooks";
 import { Products, ProductsCategories, ProductsInitializer, productsInitializer } from "../../types";
-import { formatForOptions, getSentenceCase } from "../../utils";
+import { formatErrorsForHelperText, formatForOptions, getSentenceCase } from "../../utils";
 
 // * For creating a product definition
 export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "create_products" }>, "data">) {
@@ -60,9 +60,10 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
           <form.Field
             children={(field) => (
               <Input
-                helperText={field.state.meta.errors.join("\n ")}
+                helperText={formatErrorsForHelperText(field.state.meta.errors)}
                 isAutofocused
                 label={getSentenceCase(field.name)}
+                name={field.name}
                 onChange={(e) => field.handleChange(e.target.value)}
                 value={field.state.value}
                 variant={field.state.meta.errors.length ? "error" : "primary"}
@@ -104,8 +105,9 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
                         }
                       : undefined
                   }
-                  helperText={field.state.meta.errors.join("\n ")}
+                  helperText={formatErrorsForHelperText(field.state.meta.errors)}
                   label={getSentenceCase(field.name)}
+                  name={field.name}
                   onChange={(e) => field.handleChange(e.target.value)}
                   type={"number"}
                   value={field.state.value || ""}
@@ -197,7 +199,15 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
             children={(field) => (
               <div>
                 {data.id || data.barcode ? (
-                  <Input isDisabled label="Product" onChange={() => {}} value={product?.title} variant="secondary" />
+                  <Input
+                    helperText={formatErrorsForHelperText(field.state.meta.errors)}
+                    isDisabled
+                    label="Product"
+                    name={field.name}
+                    onChange={() => {}}
+                    value={product?.title}
+                    variant="secondary"
+                  />
                 ) : (
                   <Select
                     isDisabled={isLoading || isLoadingProduct}
@@ -219,8 +229,10 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
           <form.Field
             children={(field) => (
               <Input
+                helperText={formatErrorsForHelperText(field.state.meta.errors)}
                 isDisabled={isLoading || isLoadingProduct}
                 label="Amount"
+                name={field.name}
                 onChange={(e) => field.handleChange(Number(e.target.value))}
                 value={field.state.value}
                 variant={field.state.meta.errors.length ? "error" : "primary"}
