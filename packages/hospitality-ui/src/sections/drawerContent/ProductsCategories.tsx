@@ -10,7 +10,7 @@ import { drawerAtom } from "../../atoms";
 import { Button, Form, Input } from "../../components";
 import { useAuth, useCreate } from "../../hooks";
 import { ProductsCategoriesInitializer, productsCategoriesInitializer } from "../../types";
-import { getSentenceCase } from "../../utils";
+import { formatErrorsForHelperText, getSentenceCase } from "../../utils";
 
 export function ProductsCategories() {
   const auth = useAuth();
@@ -38,9 +38,10 @@ export function ProductsCategories() {
           <form.Field
             children={(field) => (
               <Input
-                helperText={field.state.meta.errors.join("\n ")}
+                helperText={formatErrorsForHelperText(field.state.meta.errors)}
                 isAutofocused
                 label={getSentenceCase(field.name)}
+                name={field.name}
                 onChange={(e) => field.handleChange(e.target.value as string)}
                 value={field.state.value}
                 variant={field.state.meta.errors.length ? "error" : "primary"}
