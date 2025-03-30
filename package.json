@@ -29,7 +29,7 @@
   "scripts": {
     "start:dev": "cd apps/shell && vite --config ../../vite.config.ts",
     "start:dev:preview": "cd apps/shell && vite preview --config ../../vite.config.ts",
-    "build": "cd apps/shell && bun run build --config ../../vite.config.ts",
+    "build": "tsc -b && cd apps/shell && bun run build --config ../../vite.config.ts",
     "generate-types": "cd packages/hospitality-ui && bunx kanel",
     "prepare": "husky"
   },
