@@ -65,7 +65,7 @@ const locationSelectRoute = createRoute({
   getParentRoute: () => rootRoute,
   beforeLoad: (c) => {
     if (c.context.auth?.user?.locationId) {
-      throw redirect({ to: "/settings/users" });
+      throw redirect({ to: "/settings/products" });
     }
   },
   path: "/location-select",
