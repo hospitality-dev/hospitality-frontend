@@ -1,4 +1,4 @@
-import { Button, createColumnHelper, Icons, Roles, Table, useList, User } from "@hospitality/hospitality-ui";
+import { Button, createColumnHelper, Icons, Roles, Table, useAuth, useList, User } from "@hospitality/hospitality-ui";
 
 type EntityType = Pick<User, "id" | "firstName" | "lastName"> & { role: Pick<Roles, "id" | "title"> };
 const columnHelper = createColumnHelper<EntityType>();
@@ -38,7 +38,11 @@ const columns = [
   }),
 ];
 export function EmployeeManagement() {
-  const { data = [] } = useList<EntityType>({ model: "users", fields: ["id", "firstName", "lastName"] });
+  const auth = useAuth();
+  const { data = [] } = useList<EntityType>(
+    { model: "users", fields: ["id", "firstName", "lastName"] },
+    { urlSuffix: `location/${auth.user?.locationId}`, enabled: !!auth.user?.locationId }
+  );
   return (
     <div className="flex flex-col gap-y-2 overflow-hidden">
       <div className="self-end">
