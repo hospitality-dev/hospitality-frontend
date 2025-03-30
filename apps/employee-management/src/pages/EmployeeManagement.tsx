@@ -54,7 +54,7 @@ export function EmployeeManagement() {
             {
               id: "2",
               title: "Add from other location",
-              icon: Icons["add-user"],
+              icon: Icons["location-user"],
             },
           ]}
           label="Manage"
