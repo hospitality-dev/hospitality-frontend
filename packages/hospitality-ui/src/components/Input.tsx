@@ -6,6 +6,7 @@ import { Button } from "./Button";
 
 type Props = {
   label?: string;
+  name: string;
   value: string | number | undefined;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   helperText?: string;
@@ -69,6 +70,7 @@ const classes = tv({
 
 export function Input({
   label,
+  name,
   variant = "primary",
   size = "md",
   isDisabled = false,
@@ -93,6 +95,7 @@ export function Input({
           autoFocus={isAutofocused}
           className={inputClasses()}
           disabled={isDisabled}
+          name={name}
           onChange={onChange}
           placeholder={placeholder}
           type={type}
