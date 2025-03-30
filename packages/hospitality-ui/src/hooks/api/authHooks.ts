@@ -5,7 +5,7 @@ import { useResetAtom } from "jotai/utils";
 import ky from "ky";
 import { useLayoutEffect } from "react";
 
-import { userAtom } from "../../atoms";
+import { locationAtom, userAtom } from "../../atoms";
 import { loginResponseSchema } from "../../schemas";
 import { LoginParams, LoginResponse, ResponseType } from "../../types";
 import { authFetchFunction } from "../../utils";
@@ -51,6 +51,7 @@ export function useLogin() {
 export function useAuth() {
   const userId = localStorage.getItem("user_id") || "";
   const [user, setUser] = useAtom(userAtom);
+  const setLocation = useSetAtom(locationAtom);
   const reset = useResetAtom(userAtom);
   const res = useQuery<LoginResponse>({
     queryKey: ["users", userId],
@@ -63,6 +64,8 @@ export function useAuth() {
       const validation = loginResponseSchema.safeParse(res.data);
       if (validation.success) {
         setUser(validation.data);
+        const location = validation.data.locations.find((loc) => loc.locationId === validation.data.user.locationId);
+        if (location) setLocation(location);
       } else {
         console.error(validation);
       }
