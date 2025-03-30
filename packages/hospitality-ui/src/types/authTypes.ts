@@ -9,6 +9,13 @@ export type LoginParams = {
 };
 
 export type UserPermissions = z.infer<typeof userPermissionsSchema>;
+export type AuthLocation = {
+  locationId: Locations["id"];
+  locationTitle: Locations["title"];
+  roleId: Roles["id"];
+  role: Roles["title"];
+  companyId: Locations["companyId"];
+};
 export type LoginResponse = {
   user: Pick<Users, "id" | "firstName" | "lastName" | "username" | "phone" | "email"> & {
     locationId: string | null;
@@ -18,13 +25,7 @@ export type LoginResponse = {
     permissions: UserPermissions;
     companyId: string | null;
   };
-  locations: {
-    locationId: Locations["id"];
-    locationTitle: Locations["title"];
-    roleId: Roles["id"];
-    role: Roles["title"];
-    companyId: Locations["companyId"];
-  }[];
+  locations: AuthLocation[];
 };
 
 export type AuthContextType = {
