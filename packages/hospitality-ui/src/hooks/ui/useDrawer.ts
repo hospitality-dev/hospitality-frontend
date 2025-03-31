@@ -1,4 +1,4 @@
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useResetAtom } from "jotai/utils";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
@@ -24,4 +24,10 @@ export function useDrawer<T extends DrawerTypes["type"]>(type: T, closeOnOutside
   }
 
   return { drawer, openDrawer, closeDrawer };
+}
+
+export function useDrawerValue() {
+  const drawer = useAtomValue(drawerAtom);
+
+  return drawer;
 }
