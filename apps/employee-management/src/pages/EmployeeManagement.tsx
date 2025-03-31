@@ -1,4 +1,14 @@
-import { Button, createColumnHelper, Icons, Roles, Table, useAuth, useList, User } from "@hospitality/hospitality-ui";
+import {
+  Button,
+  createColumnHelper,
+  Icons,
+  Roles,
+  Table,
+  useAuth,
+  useDrawer,
+  useList,
+  User,
+} from "@hospitality/hospitality-ui";
 
 type EntityType = Pick<User, "id" | "firstName" | "lastName"> & { role: Pick<Roles, "id" | "title"> };
 const columnHelper = createColumnHelper<EntityType>();
@@ -39,6 +49,7 @@ const columns = [
 ];
 export function EmployeeManagement() {
   const auth = useAuth();
+  const { openDrawer: openAddNewUserDrawer } = useDrawer("add_new_user");
   const { data = [] } = useList<EntityType>(
     { model: "users", fields: ["id", "firstName", "lastName"] },
     { urlSuffix: `location/${auth.user?.locationId}`, enabled: !!auth.user?.locationId }
@@ -54,6 +65,7 @@ export function EmployeeManagement() {
               id: "1",
               title: "Add new user",
               icon: Icons["add-user"],
+              onClick: () => openAddNewUserDrawer("Add new user to location"),
             },
             {
               id: "2",
