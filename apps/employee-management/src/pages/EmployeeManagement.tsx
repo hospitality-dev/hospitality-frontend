@@ -2,15 +2,15 @@ import {
   Button,
   createColumnHelper,
   Icons,
-  Roles,
+  RolesType,
   Table,
   useAuth,
   useDrawer,
   useList,
-  User,
+  UsersType,
 } from "@hospitality/hospitality-ui";
 
-type EntityType = Pick<User, "id" | "firstName" | "lastName"> & { role: Pick<Roles, "id" | "title"> };
+type EntityType = Pick<UsersType, "id" | "firstName" | "lastName"> & { role: Pick<RolesType, "id" | "title"> };
 const columnHelper = createColumnHelper<EntityType>();
 
 const columns = [

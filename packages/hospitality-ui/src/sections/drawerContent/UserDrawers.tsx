@@ -2,15 +2,15 @@ import { useForm } from "@tanstack/react-form";
 
 import { Button, Form, Input } from "../../components";
 import { useCreate } from "../../hooks";
-import { UsersInitializer, usersInitializer } from "../../types";
+import { UsersInitializerSchema, UsersInitializerType } from "../../types";
 import { formatErrorsForHelperText } from "../../utils";
 
 export function AddNewUser() {
-  const { mutate: create } = useCreate<UsersInitializer>("users");
+  const { mutate: create } = useCreate<UsersInitializerType>("users");
 
-  const form = useForm<UsersInitializer>({
+  const form = useForm<UsersInitializerType>({
     validators: {
-      onSubmit: usersInitializer,
+      onSubmit: UsersInitializerSchema,
     },
     onSubmit: create,
   });

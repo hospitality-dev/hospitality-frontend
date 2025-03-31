@@ -13,7 +13,7 @@ export const LocationsSchema = object({
 });
 
 export const LocationsInitializerSchema = object({
-  title: string().nonempty("Location title cannot be empty."),
+  title: string().nonempty("Title cannot be empty."),
   address: string().nullish(),
   phone: string().nullish(),
   email: string().nullish(),
@@ -29,6 +29,6 @@ export const LocationsMutatorSchema = object({
   longitude: number().nullish(),
 });
 
-export type Locations = zodInfer<typeof LocationsSchema>;
-export type LocationsInitalizer = zodInfer<typeof LocationsInitializerSchema>;
-export type LocationsMutator = zodInfer<typeof LocationsMutatorSchema>;
+export type LocationsType = zodInfer<typeof LocationsSchema>;
+export type LocationsInitalizerType = zodInfer<typeof LocationsInitializerSchema>;
+export type LocationsMutatorType = zodInfer<typeof LocationsMutatorSchema>;

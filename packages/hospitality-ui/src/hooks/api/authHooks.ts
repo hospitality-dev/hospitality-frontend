@@ -7,7 +7,7 @@ import { useLayoutEffect } from "react";
 
 import { locationAtom, userAtom } from "../../atoms";
 import { loginResponseSchema } from "../../schemas";
-import { LoginParams, LoginResponse, ResponseType } from "../../types";
+import { LoginParamsType, LoginResponseType, ResponseType } from "../../types";
 import { authFetchFunction } from "../../utils";
 
 export function useLogin() {
@@ -16,12 +16,12 @@ export function useLogin() {
   const params = useLocation();
   const navigate = useNavigate();
   const { mutate: login } = useMutation({
-    mutationFn: async ({ value }: { value: LoginParams }) => {
+    mutationFn: async ({ value }: { value: LoginParamsType }) => {
       if (!params.search.code_challenge || !params.search.state) {
         return redirect({ to: "/" });
       }
       const res = await ky
-        .get<ResponseType<LoginResponse>>(`${import.meta.env.VITE_SERVER_URL}/auth/callback`, {
+        .get<ResponseType<LoginResponseType>>(`${import.meta.env.VITE_SERVER_URL}/auth/callback`, {
           credentials: "include",
           retry: { limit: 0 },
           searchParams: new URLSearchParams([
@@ -53,9 +53,9 @@ export function useAuth() {
   const [user, setUser] = useAtom(userAtom);
   const setLocation = useSetAtom(locationAtom);
   const reset = useResetAtom(userAtom);
-  const res = useQuery<LoginResponse>({
+  const res = useQuery<LoginResponseType>({
     queryKey: ["users", userId],
-    queryFn: () => authFetchFunction<LoginResponse>({ method: "GET", userReset: reset, route: "session" }),
+    queryFn: () => authFetchFunction<LoginResponseType>({ method: "GET", userReset: reset, route: "session" }),
     staleTime: 5 * 60 * 1000,
   });
 
@@ -79,7 +79,7 @@ export function useSessionLocation() {
   const navigate = useNavigate();
   const { mutate } = useMutation({
     mutationFn: async (locationId: string) =>
-      authFetchFunction<LoginResponse>({ method: "GET", userReset: () => {}, route: `session/location/${locationId}` }),
+      authFetchFunction<LoginResponseType>({ method: "GET", userReset: () => {}, route: `session/location/${locationId}` }),
     onSuccess: (data) => {
       setUser(data);
       navigate({ to: "/settings/users" });

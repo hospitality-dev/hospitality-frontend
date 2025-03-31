@@ -1,7 +1,7 @@
 import { boolean, object, record, string } from "zod";
 
+import { UsersSchema } from "../../types";
 import { zodAvailableActions, zodAvailableEntities } from "../baseSchemas";
-import { users } from "../models";
 
 export const loginParamsSchema = object({
   username: string().nonempty("Username cannot be empty."),
@@ -13,7 +13,7 @@ export const loginParamsSchema = object({
 export const userPermissionsSchema = record(zodAvailableEntities, record(zodAvailableActions, boolean())).nullable().readonly();
 
 export const loginResponseSchema = object({
-  user: users.pick({ id: true, firstName: true, lastName: true, username: true, phone: true, email: true }).extend({
+  user: UsersSchema.pick({ id: true, firstName: true, lastName: true, username: true, phone: true, email: true }).extend({
     locationId: string().uuid().nullable(),
     roleId: string().uuid().nullable(),
     role: string().nullable(),

@@ -38,12 +38,10 @@ export const RolesSchema = object({
   isDefault: boolean(),
 });
 
-export type Roles = zodInfer<typeof RolesSchema>;
+export type RolesType = zodInfer<typeof RolesSchema>;
 
-export type Users = zodInfer<typeof UsersSchema> & {
-  role: Roles;
+export type UsersType = zodInfer<typeof UsersSchema> & {
+  role: RolesType;
 };
-
-// export interface ProductsWithCount extends Products {
-//   count: number;
-// }
+export type UsersInitializerType = zodInfer<typeof UsersInitializerSchema>;
+export type UsersMutatorType = zodInfer<typeof UsersMutatorSchema>;

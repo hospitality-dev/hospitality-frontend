@@ -1,34 +1,27 @@
-// type Props = {
-//   data?: { id?: string };
-// };
-
 import { useForm } from "@tanstack/react-form";
 import { useResetAtom } from "jotai/utils";
-import { string } from "zod";
 
 import { drawerAtom } from "../../atoms";
 import { Button, Form, Input } from "../../components";
-import { useAuth, useCreate } from "../../hooks";
-import { ProductsCategoriesInitializer, productsCategoriesInitializer } from "../../types";
+import { useCreate } from "../../hooks";
+import { ProductsCategoriesInitalizerSchema, ProductsCategoriesInitalizerType } from "../../types/productTypes";
 import { formatErrorsForHelperText, getSentenceCase } from "../../utils";
 
 export function ProductsCategoriesDrawer() {
-  const auth = useAuth();
   const resetDrawer = useResetAtom(drawerAtom);
-  const { mutate: create } = useCreate<ProductsCategoriesInitializer>("products_categories");
+  const { mutate: create } = useCreate<ProductsCategoriesInitalizerType>("products_categories");
   const form = useForm({
     defaultValues: {
       title: "",
-      isDefault: false,
-      companyId: auth.user?.companyId,
+      parentId: null,
     },
     onSubmit: (payload) =>
       create(payload, {
         onSuccess: resetDrawer,
       }),
     validators: {
-      onChange: productsCategoriesInitializer.extend({ title: string().nonempty("Title must be at least 1 character.") }),
-      onSubmit: productsCategoriesInitializer.extend({ title: string().nonempty("Title must be at least 1 character.") }),
+      onChange: ProductsCategoriesInitalizerSchema,
+      onSubmit: ProductsCategoriesInitalizerSchema,
     },
   });
   return (

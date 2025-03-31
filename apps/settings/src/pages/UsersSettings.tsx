@@ -1,6 +1,6 @@
-import { createColumnHelper, Roles, Table, useList, User } from "@hospitality/hospitality-ui";
+import { createColumnHelper, RolesType, Table, useList, UsersType } from "@hospitality/hospitality-ui";
 
-type EntityType = Pick<User, "id" | "firstName" | "lastName"> & { role: Pick<Roles, "id" | "title"> };
+type EntityType = Pick<UsersType, "id" | "firstName" | "lastName"> & { role: Pick<RolesType, "id" | "title"> };
 const columnHelper = createColumnHelper<EntityType>();
 
 const columns = [

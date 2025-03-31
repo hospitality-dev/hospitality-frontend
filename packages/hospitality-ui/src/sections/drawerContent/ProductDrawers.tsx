@@ -8,7 +8,6 @@ import { Button, Form, Input, Numpad, Select, Spinner } from "../../components";
 import { Icons } from "../../enums";
 import {
   useAddInventoryProducts,
-  useAuth,
   useBarcodeScanner,
   useCreate,
   useList,
@@ -16,17 +15,21 @@ import {
   useRemoveProducts,
   useScreenSize,
 } from "../../hooks";
-import { Products, ProductsCategories, ProductsInitializer, productsInitializer } from "../../types";
+import {
+  ProductsCategoriesType,
+  ProductsInitalizerSchema,
+  ProductsInitalizerType,
+  ProductsType,
+} from "../../types/productTypes";
 import { formatErrorsForHelperText, formatForOptions, getSentenceCase } from "../../utils";
 
 // * For creating a product definition
 export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "create_products" }>, "data">) {
-  const auth = useAuth();
   const { isLg } = useScreenSize();
   const resetDrawer = useResetAtom(drawerAtom);
   const { setOnResult, closeBarcodeScanner } = useBarcodeScanner();
-  const { mutate: create } = useCreate<ProductsInitializer>("products");
-  const { data: categories } = useList<ProductsCategories>({
+  const { mutate: create } = useCreate<ProductsInitalizerType>("products");
+  const { data: categories } = useList<ProductsCategoriesType>({
     model: "products_categories",
     fields: ["id", "title"],
   });
@@ -34,8 +37,12 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
   const form = useForm({
     defaultValues: {
       title: "",
-      companyId: auth.user?.companyId || "",
       barcode: null,
+      description: null,
+      weight: null,
+      volume: null,
+      subCategoryId: null,
+      imageId: null,
       categoryId: data.categoryId || "",
     },
     onSubmit: (payload) =>
@@ -43,14 +50,8 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
         onSuccess: resetDrawer,
       }),
     validators: {
-      onChange: productsInitializer.extend({
-        title: string().nonempty("Title must be at least 1 character."),
-        categoryId: string().uuid().nonempty("Must have a category selected."),
-      }),
-      onSubmit: productsInitializer.extend({
-        title: string().nonempty("Title must be at least 1 character."),
-        categoryId: string().uuid().nonempty("Must have a category selected."),
-      }),
+      onChange: ProductsInitalizerSchema,
+      onSubmit: ProductsInitalizerSchema,
     },
   });
   return (
@@ -145,11 +146,11 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
 export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { type: "manage_product_inventory" }>, "data">) {
   const resetDrawer = useResetAtom(drawerAtom);
   const { isLg } = useScreenSize();
-  const { data: product, isLoading: isLoadingProduct } = useRead<Products>(
+  const { data: product, isLoading: isLoadingProduct } = useRead<ProductsType>(
     { id: `${data.barcode ? "barcode/" : ""}${data.barcode || data.id}`, model: "products", fields: ["id", "title"] },
     { enabled: !!(data.barcode || data.id) }
   );
-  const { data: products, isLoading } = useList<Products>(
+  const { data: products, isLoading } = useList<ProductsType>(
     { model: "products", fields: ["id", "title"] },
     { enabled: !data.barcode && !data.id, urlSuffix: `category/${data.categoryId}/active` }
   );

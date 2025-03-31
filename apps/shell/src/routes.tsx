@@ -5,12 +5,14 @@ import {
   getLoginRoute,
   locationsAvailableProductsFields,
   LocationsAvailableProductsQuery,
-  LocationsAvailableProductsSettings,
-  LoginResponse,
+  LoginResponseType,
   ProductCategoriesQuery,
   productCategoryFields,
-  ProductsCategories,
 } from "@hospitality/hospitality-ui";
+import {
+  LocationsAvailableProductsSettingsType,
+  ProductsCategoriesType,
+} from "@hospitality/hospitality-ui/src/types/productTypes";
 import { createRootRouteWithContext, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 
@@ -29,9 +31,9 @@ const rootRoute = createRootRouteWithContext<AuthContextType>()({
       return { auth: null };
     }
     return {
-      auth: await queryClient.ensureQueryData<LoginResponse>({
+      auth: await queryClient.ensureQueryData<LoginResponseType>({
         queryKey: ["users", userId],
-        queryFn: () => authFetchFunction<LoginResponse>({ method: "GET", userReset: () => {}, route: "session" }),
+        queryFn: () => authFetchFunction<LoginResponseType>({ method: "GET", userReset: () => {}, route: "session" }),
       }),
     };
   },
@@ -85,7 +87,7 @@ const inventoryCategoryRoute = createRoute({
   path: "inventory-management",
   getParentRoute: () => mainLayout,
   loader: async (ctx) => {
-    const categories = await queryClient.ensureQueryData<ProductsCategories[]>(ProductCategoriesQuery);
+    const categories = await queryClient.ensureQueryData<ProductsCategoriesType[]>(ProductCategoriesQuery);
     const firstCategoryId = categories.at(0)?.id;
     if (!("categoryId" in ctx.params) && firstCategoryId) {
       throw redirect({ to: `/inventory-management/$categoryId`, params: { categoryId: firstCategoryId } });
@@ -114,8 +116,8 @@ const settingsProducts = createRoute({
   loader: async () => {
     return {
       locationsAvailableProducts:
-        await queryClient.ensureQueryData<LocationsAvailableProductsSettings>(LocationsAvailableProductsQuery),
-      categories: await queryClient.ensureQueryData<ProductsCategories[]>(ProductCategoriesQuery),
+        await queryClient.ensureQueryData<LocationsAvailableProductsSettingsType>(LocationsAvailableProductsQuery),
+      categories: await queryClient.ensureQueryData<ProductsCategoriesType[]>(ProductCategoriesQuery),
       productCategoryFields,
       locationsAvailableProductsFields,
     };

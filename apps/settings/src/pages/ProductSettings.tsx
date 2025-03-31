@@ -2,10 +2,10 @@ import {
   Button,
   createColumnHelper,
   Icons,
-  LocationsAvailableProductsInitializer,
+  LocationsAvailableProductsInitalizerType,
   LocationsAvailableProductsQuery,
-  Products,
-  ProductsCategories,
+  ProductsCategoriesType,
+  ProductsType,
   Table,
   useAuth,
   useBarcodeScanner,
@@ -19,7 +19,7 @@ import {
 } from "@hospitality/hospitality-ui";
 import { useState } from "react";
 
-const columnHelper = createColumnHelper<Pick<ProductsCategories, "id" | "title">>();
+const columnHelper = createColumnHelper<Pick<ProductsCategoriesType, "id" | "title">>();
 
 function columns({
   create,
@@ -27,7 +27,16 @@ function columns({
   locationId,
   locationsAvailableProducts,
 }: {
-  create: UseMutateFunction<unknown, Error, { value: LocationsAvailableProductsInitializer }, unknown>;
+  create: UseMutateFunction<
+    unknown,
+    unknown,
+    {
+      value: {
+        productId: string;
+      };
+    },
+    unknown
+  >;
   deleteMutation: UseMutateFunction<unknown, Error, string, unknown>;
   locationId: string | null | undefined;
   locationsAvailableProducts: Record<string, string>;
@@ -45,7 +54,7 @@ function columns({
               label={locationsAvailableProducts?.[row.original.id] ? "Active" : "Inactive"}
               onClick={() => {
                 if (locationId && !locationsAvailableProducts?.[row.original.id])
-                  create({ value: { productId: row.original.id, locationId } });
+                  create({ value: { productId: row.original.id } });
                 else if (locationId && locationsAvailableProducts?.[row.original.id])
                   deleteMutation(locationsAvailableProducts?.[row.original.id]);
               }}
@@ -59,7 +68,7 @@ function columns({
   ];
 }
 
-function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategories, "id" | "title" | "isDefault">) {
+function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategoriesType, "id" | "title" | "isDefault">) {
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const { openDrawer: openProductDrawer } = useDrawer("create_products");
@@ -67,7 +76,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
   // #region queries
   const { data } = useQuery(LocationsAvailableProductsQuery);
 
-  const query = useList<Products>(
+  const query = useList<ProductsType>(
     { model: "products", fields: ["id", "title"] },
     { enabled: isOpen, urlSuffix: `category/${id}` }
   );
@@ -75,7 +84,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
   // #endregion queries
 
   // #region mutations
-  const { mutate: create } = useCreate<LocationsAvailableProductsInitializer>("locations_available_products", {
+  const { mutate: create } = useCreate<LocationsAvailableProductsInitalizerType>("locations_available_products", {
     invalidateModels: ["products"],
   });
   const { mutate: deleteMutation } = useDelete("locations_available_products", { invalidateModels: ["products"] });
@@ -107,7 +116,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
 export function ProductSettings() {
   const { categories: placeholderData, productCategoryFields } = useLoaderData({ from: "/settings/products" });
 
-  const { data: categories } = useList<ProductsCategories>({
+  const { data: categories } = useList<ProductsCategoriesType>({
     model: "products_categories",
     placeholderData,
     fields: productCategoryFields,

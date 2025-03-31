@@ -1,12 +1,16 @@
-import { LocationsAvailableProducts, LocationsAvailableProductsSettings, ProductsCategories } from "../types";
+import {
+  LocationsAvailableProductsSettingsType,
+  LocationsAvailableProductsType,
+  ProductsCategoriesType,
+} from "../types/productTypes";
 import { fetchFunction, getSearchParams } from "./request";
-export const locationsAvailableProductsFields: (keyof LocationsAvailableProducts)[] = ["productId"];
-export const productCategoryFields: (keyof ProductsCategories)[] = ["id", "title", "companyId", "parentId", "isDefault"];
+export const locationsAvailableProductsFields: (keyof LocationsAvailableProductsType)[] = ["productId"];
+export const productCategoryFields: (keyof ProductsCategoriesType)[] = ["id", "title", "companyId", "parentId", "isDefault"];
 
 export const LocationsAvailableProductsQuery = {
   queryKey: ["locations_available_products"],
   queryFn: () =>
-    fetchFunction<LocationsAvailableProductsSettings>({
+    fetchFunction<LocationsAvailableProductsSettingsType>({
       method: "GET",
       searchParams: getSearchParams<typeof locationsAvailableProductsFields, null>(locationsAvailableProductsFields),
       userReset: () => {},
@@ -21,10 +25,10 @@ export const LocationsAvailableProductsQuery = {
 export const ProductCategoriesQuery = {
   queryKey: ["products_categories", "list"],
   queryFn: () =>
-    fetchFunction<ProductsCategories[]>({
+    fetchFunction<ProductsCategoriesType[]>({
       method: "GET",
       userReset: () => {},
-      searchParams: getSearchParams<typeof productCategoryFields, ProductsCategories>(productCategoryFields),
+      searchParams: getSearchParams<typeof productCategoryFields, ProductsCategoriesType>(productCategoryFields),
       model: "products_categories",
       urlSuffix: "list",
     }),

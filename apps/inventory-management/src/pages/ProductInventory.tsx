@@ -3,7 +3,7 @@ import {
   createColumnHelper,
   Icons,
   ProductCategoriesQuery,
-  ProductsWithCount,
+  ProductsWithCountType,
   Table,
   Tabs,
   useBarcodeScanner,
@@ -13,7 +13,7 @@ import {
   useQuery,
 } from "@hospitality/hospitality-ui";
 
-type Entity = Pick<ProductsWithCount, "id" | "title" | "categoryId" | "count">;
+type Entity = Pick<ProductsWithCountType & { count: number }, "id" | "title" | "categoryId" | "count">;
 const columnHelper = createColumnHelper<Entity>();
 
 function ActionButton({ data }: { data: Entity }) {
@@ -82,7 +82,7 @@ export function ProductInventory() {
   const { categoryId: active } = useParams({ from: "/inventory-management/$categoryId" });
 
   const { data } = useQuery(ProductCategoriesQuery);
-  const { data: products, isPending } = useList<ProductsWithCount>(
+  const { data: products, isPending } = useList<ProductsWithCountType>(
     { model: "products", fields: ["id", "title", "categoryId"] },
     { enabled: !!active, urlSuffix: `category/${active}/active` }
   );

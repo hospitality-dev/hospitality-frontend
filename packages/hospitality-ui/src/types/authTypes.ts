@@ -1,34 +1,34 @@
 import { z } from "zod";
 
 import { userPermissionsSchema } from "../schemas";
-import { Locations } from "./locationTypes";
-import { Roles, Users } from "./userTypes";
+import { LocationsType } from "./locationTypes";
+import { RolesType, UsersType } from "./userTypes";
 
-export type LoginParams = {
+export type LoginParamsType = {
   username: string;
   password: string;
 };
 
-export type UserPermissions = z.infer<typeof userPermissionsSchema>;
-export type AuthLocation = {
-  locationId: Locations["id"];
-  locationTitle: Locations["title"];
-  roleId: Roles["id"];
-  role: Roles["title"];
-  companyId: Locations["companyId"];
+export type UserPermissionsType = z.infer<typeof userPermissionsSchema>;
+export type AuthLocationType = {
+  locationId: LocationsType["id"];
+  locationTitle: LocationsType["title"];
+  roleId: RolesType["id"];
+  role: RolesType["title"];
+  companyId: LocationsType["companyId"];
 };
-export type LoginResponse = {
-  user: Pick<Users, "id" | "firstName" | "lastName" | "username" | "phone" | "email"> & {
+export type LoginResponseType = {
+  user: Pick<UsersType, "id" | "firstName" | "lastName" | "username" | "phone" | "email"> & {
     locationId: string | null;
     locationTitle: string | null;
     roleId: string | null;
     role: string | null;
-    permissions: UserPermissions;
+    permissions: UserPermissionsType;
     companyId: string | null;
   };
-  locations: AuthLocation[];
+  locations: AuthLocationType[];
 };
 
 export type AuthContextType = {
-  auth: LoginResponse | null;
+  auth: LoginResponseType | null;
 };
