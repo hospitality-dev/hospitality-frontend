@@ -12,7 +12,7 @@ import { useAuth, useCreate } from "../../hooks";
 import { ProductsCategoriesInitializer, productsCategoriesInitializer } from "../../types";
 import { formatErrorsForHelperText, getSentenceCase } from "../../utils";
 
-export function ProductsCategories() {
+export function ProductsCategoriesDrawer() {
   const auth = useAuth();
   const resetDrawer = useResetAtom(drawerAtom);
   const { mutate: create } = useCreate<ProductsCategoriesInitializer>("products_categories");
@@ -49,14 +49,14 @@ export function ProductsCategories() {
             )}
             name="title"
           />
-          <div className="mt-auto">
-            <form.Subscribe<[boolean, boolean]>
-              children={(p) => {
-                return <Button isDisabled={!p[0]} label="Create" onClick={undefined} variant="success" />;
-              }}
-              selector={(state) => [state.canSubmit, state.isSubmitting]}
-            />
-          </div>
+        </div>
+        <div className="mt-auto">
+          <form.Subscribe<[boolean, boolean]>
+            children={(p) => {
+              return <Button isDisabled={!p[0]} label="Create" onClick={undefined} variant="success" />;
+            }}
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+          />
         </div>
       </Form>
     </>
