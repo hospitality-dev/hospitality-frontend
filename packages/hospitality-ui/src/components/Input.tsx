@@ -36,25 +36,29 @@ const classes = tv({
     variant: {
       primary: {
         inputContainer: "border-primary focus-within:border-info-highlight",
+        helperTextClasses: "text-primary-highlight",
       },
       secondary: {
         inputContainer: "border-secondary focus-within:border-info-highlight",
+        helperTextClasses: "text-secondary-highlight",
       },
       info: {
         inputContainer: "border-info-border focus-within:border-info-highlight",
+        helperTextClasses: "text-info-highlight",
       },
       success: {
         inputContainer: "border-success focus-within:border-success-highlight",
+        helperTextClasses: "text-success-highlight",
       },
       warning: {
         inputContainer: "border-warning group-has-[input:focus]:border-warning-highlight",
         labelClasses: "group-has-[input:focus]:text-warning-highlight text-warning",
-        helperTextClasses: "text-warning",
+        helperTextClasses: "text-warning-highlight",
       },
       error: {
         inputContainer: "border-error group-has-[input:focus]:error-highlight",
         labelClasses: "text-error",
-        helperTextClasses: "text-error",
+        helperTextClasses: "text-error-highlight",
       },
     },
     size: {
