@@ -2,12 +2,15 @@ import { autoUpdate, useFloating, useMergeRefs, useTransitionStyles } from "@flo
 import { useLocation } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { drawerAtom } from "../atoms";
 import { useClickOutside } from "../hooks";
-import { CreateProduct, ManageProductInventory, ProductsCategories } from "../sections/drawerContent";
+
+type Props = {
+  children: ReactNode;
+};
 
 const DrawerClasses = tv({
   slots: {
@@ -31,7 +34,7 @@ const DrawerClasses = tv({
   },
 });
 
-export function Drawer() {
+export function Drawer({ children }: Props) {
   const [drawer, setDrawer] = useAtom(drawerAtom);
   const resetDrawer = useResetAtom(drawerAtom);
   //   const [isExpanded, setIsExpanded] = useState(false);
@@ -108,13 +111,7 @@ export function Drawer() {
               </div> */}
             </div>
           </h3>
-          {renderContent ? (
-            <div className="h-[92.5%]">
-              {drawer.type === "products_categories" ? <ProductsCategories /> : null}
-              {drawer.type === "create_products" && drawer.data ? <CreateProduct data={drawer.data} /> : null}
-              {drawer.type === "manage_product_inventory" && drawer.data ? <ManageProductInventory data={drawer.data} /> : null}
-            </div>
-          ) : null}
+          {renderContent ? <div className="h-[calc(100%-110px)]">{children}</div> : null}
         </div>
       </div>
     );
