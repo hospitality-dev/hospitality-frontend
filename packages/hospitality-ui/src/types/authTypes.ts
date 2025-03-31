@@ -1,7 +1,8 @@
 import { z } from "zod";
 
 import { userPermissionsSchema } from "../schemas";
-import { Locations, Roles, Users } from "./models";
+import { Locations } from "./locationTypes";
+import { Roles, Users } from "./userTypes";
 
 export type LoginParams = {
   username: string;
