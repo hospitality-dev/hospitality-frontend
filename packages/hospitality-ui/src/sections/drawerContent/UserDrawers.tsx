@@ -1,14 +1,18 @@
 import { useForm } from "@tanstack/react-form";
 
 import { Button, Form, Input } from "../../components";
+import { useCreate } from "../../hooks";
 import { UsersInitializer, usersInitializer } from "../../types";
 import { formatErrorsForHelperText } from "../../utils";
 
 export function AddNewUser() {
+  const { mutate: create } = useCreate<UsersInitializer>("users");
+
   const form = useForm<UsersInitializer>({
     validators: {
       onSubmit: usersInitializer,
     },
+    onSubmit: create,
   });
 
   return (
