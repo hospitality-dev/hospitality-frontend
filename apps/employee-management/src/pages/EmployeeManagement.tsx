@@ -1,6 +1,8 @@
 import {
+  Badge,
   Button,
   createColumnHelper,
+  getSentenceCase,
   Icons,
   RolesType,
   Table,
@@ -25,7 +27,7 @@ const columns = [
   }),
   columnHelper.accessor((row) => row.role, {
     id: "role",
-    cell: (info) => <span className="rounded-sm bg-blue-600 p-2 text-xs text-white">{info.getValue().title || ""}</span>,
+    cell: (info) => <Badge label={getSentenceCase(info.getValue().title)} variant="info" />,
     header: () => <span>Role</span>,
     meta: {
       isCentered: true,
