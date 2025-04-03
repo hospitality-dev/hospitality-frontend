@@ -23,8 +23,8 @@ const classes = tv({
     size: {
       xs: "h-10 w-10 text-xs",
       sm: "h-11 w-11 text-sm",
-      md: "h-12 w-12 text-sm",
-      lg: "h-13 w-13",
+      md: "h-12 w-12 text-base",
+      lg: "h-13 w-13 text-lg",
       xl: "h-14 w-14 text-xl",
     },
   },
