@@ -40,6 +40,7 @@ export type DropdownItemType = {
   iconThickness?: IconThickness;
   subItems?: DropdownItemType[];
   isDisabled?: boolean;
+  isHidden?: boolean;
   onClick?: () => void;
   variant?: Variant;
   tooltip?: string;
@@ -206,14 +207,41 @@ function DropdownComponent({ allowedPlacements = [], children, items, event, isD
                 style={{ transform: floatingStyles.transform }}
                 {...getFloatingProps()}>
                 {items && isOpen
-                  ? items.map((dropdownItem) =>
-                      dropdownItem.subItems?.length ? (
-                        <Dropdown
-                          key={dropdownItem.id}
-                          allowedPlacements={dropdownItem?.allowedPlacements || allowedPlacements}
-                          isDisabled={dropdownItem?.isDisabled}
-                          items={dropdownItem.subItems}>
+                  ? items
+                      .filter((dropdownItem) => !dropdownItem?.isHidden)
+                      .map((dropdownItem) =>
+                        dropdownItem.subItems?.length ? (
+                          <Dropdown
+                            key={dropdownItem.id}
+                            allowedPlacements={dropdownItem?.allowedPlacements || allowedPlacements}
+                            isDisabled={dropdownItem?.isDisabled}
+                            items={dropdownItem.subItems}>
+                            <DropdownItem
+                              allowedPlacements={dropdownItem?.allowedPlacements || allowedPlacements}
+                              child={dropdownItem?.child}
+                              icon={dropdownItem.icon}
+                              iconColor={dropdownItem?.iconColor}
+                              iconThickness={dropdownItem?.iconThickness}
+                              id={dropdownItem.id}
+                              image={dropdownItem?.image}
+                              isDisabled={dropdownItem?.isDisabled}
+                              onClick={() => {
+                                if (dropdownItem?.isDisabled) return;
+                                if (dropdownItem?.onClick) {
+                                  dropdownItem.onClick();
+                                }
+                                tree?.events.emit("click");
+                                setIsOpen(false);
+                              }}
+                              subItems={dropdownItem.subItems.filter((subItem) => !subItem.isHidden)}
+                              title={dropdownItem.title}
+                              tooltip={dropdownItem?.tooltip}
+                              variant={dropdownItem?.variant || "primary"}
+                            />
+                          </Dropdown>
+                        ) : (
                           <DropdownItem
+                            key={dropdownItem.id}
                             allowedPlacements={dropdownItem?.allowedPlacements || allowedPlacements}
                             child={dropdownItem?.child}
                             icon={dropdownItem.icon}
@@ -235,33 +263,8 @@ function DropdownComponent({ allowedPlacements = [], children, items, event, isD
                             tooltip={dropdownItem?.tooltip}
                             variant={dropdownItem?.variant || "primary"}
                           />
-                        </Dropdown>
-                      ) : (
-                        <DropdownItem
-                          key={dropdownItem.id}
-                          allowedPlacements={dropdownItem?.allowedPlacements || allowedPlacements}
-                          child={dropdownItem?.child}
-                          icon={dropdownItem.icon}
-                          iconColor={dropdownItem?.iconColor}
-                          iconThickness={dropdownItem?.iconThickness}
-                          id={dropdownItem.id}
-                          image={dropdownItem?.image}
-                          isDisabled={dropdownItem?.isDisabled}
-                          onClick={() => {
-                            if (dropdownItem?.isDisabled) return;
-                            if (dropdownItem?.onClick) {
-                              dropdownItem.onClick();
-                            }
-                            tree?.events.emit("click");
-                            setIsOpen(false);
-                          }}
-                          subItems={dropdownItem.subItems}
-                          title={dropdownItem.title}
-                          tooltip={dropdownItem?.tooltip}
-                          variant={dropdownItem?.variant || "primary"}
-                        />
+                        )
                       )
-                    )
                   : null}
               </div>
             </FloatingFocusManager>
