@@ -186,7 +186,7 @@ function DropdownComponent({ allowedPlacements = [], children, items, event, isD
   }, [event]);
   if (items?.length === 0) return children;
   const dropdownItemClasses = DropdownItemClasses({ isRoot: true, hasSubitems: !!items?.length });
-
+  const filteredItems = items.filter((dropdownItem) => !dropdownItem?.isHidden);
   return (
     <FloatingNode id={nodeId}>
       <div
@@ -197,19 +197,18 @@ function DropdownComponent({ allowedPlacements = [], children, items, event, isD
         {...getReferenceProps()}>
         {children || null}
       </div>
-      <FloatingList elementsRef={elementsRef}>
-        {isOpen ? (
-          <FloatingPortal>
-            <FloatingFocusManager context={context} initialFocus={isNested ? -1 : 0} modal={false} returnFocus={!isNested}>
-              <div
-                ref={refs.setFloating}
-                className={floatingBase()}
-                style={{ transform: floatingStyles.transform }}
-                {...getFloatingProps()}>
-                {items && isOpen
-                  ? items
-                      .filter((dropdownItem) => !dropdownItem?.isHidden)
-                      .map((dropdownItem) =>
+      {filteredItems.length ? (
+        <FloatingList elementsRef={elementsRef}>
+          {isOpen ? (
+            <FloatingPortal>
+              <FloatingFocusManager context={context} initialFocus={isNested ? -1 : 0} modal={false} returnFocus={!isNested}>
+                <div
+                  ref={refs.setFloating}
+                  className={floatingBase()}
+                  style={{ transform: floatingStyles.transform }}
+                  {...getFloatingProps()}>
+                  {filteredItems && isOpen
+                    ? filteredItems.map((dropdownItem) =>
                         dropdownItem.subItems?.length ? (
                           <Dropdown
                             key={dropdownItem.id}
@@ -265,12 +264,13 @@ function DropdownComponent({ allowedPlacements = [], children, items, event, isD
                           />
                         )
                       )
-                  : null}
-              </div>
-            </FloatingFocusManager>
-          </FloatingPortal>
-        ) : null}
-      </FloatingList>
+                    : null}
+                </div>
+              </FloatingFocusManager>
+            </FloatingPortal>
+          ) : null}
+        </FloatingList>
+      ) : null}
     </FloatingNode>
   );
 }
