@@ -1,3 +1,4 @@
+import { useNavigate } from "@tanstack/react-router";
 import { MouseEvent } from "react";
 
 import { Icons } from "../enums";
@@ -9,6 +10,7 @@ import { Dropdown } from "./Dropdown";
 export function Navbar() {
   const auth = useAuth();
   const name = auth.user ? getUserInfo(auth.user).title : "";
+  const navigate = useNavigate();
   function routeToLogin(e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) {
     e.preventDefault();
     getLoginRoute();
@@ -27,6 +29,7 @@ export function Navbar() {
                     title: "Change location",
                     icon: Icons["location-change"],
                     isHidden: (auth?.locations?.length || 0) < 2,
+                    onClick: () => navigate({ to: "/location-select" }),
                   },
                 ]}>
                 <Avatar label={name} />

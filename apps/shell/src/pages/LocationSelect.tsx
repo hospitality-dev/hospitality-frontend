@@ -1,7 +1,7 @@
-import { Button, Card, getSentenceCase, Icons, useRouteContext, useSessionLocation } from "@hospitality/hospitality-ui";
+import { Button, Card, getSentenceCase, Icons, useAuth, useSessionLocation } from "@hospitality/hospitality-ui";
 
 export function LocationSelect() {
-  const { auth } = useRouteContext({ from: "/location-select" });
+  const auth = useAuth();
   const { changeLocation } = useSessionLocation();
   return (
     <div className="flex h-screen w-screen items-center justify-center overflow-hidden bg-gray-200">
@@ -9,8 +9,12 @@ export function LocationSelect() {
         <Card isFullWidth>
           <div className="flex h-96 w-full flex-col gap-y-10 p-4">
             <div className="flex flex-col gap-y-1">
-              <h2 className="text-center text-2xl font-semibold">Welcome back {auth?.user.firstName}</h2>
-              <h3 className="text-center font-light">Please choose a location to sign in to.</h3>
+              <h2 className="text-center text-2xl font-semibold">
+                {auth?.user?.locationId ? "Change location" : `Welcome back ${auth?.user?.firstName}`}
+              </h2>
+              <h3 className="text-center font-light">
+                {auth?.user?.locationId ? "Please choose a location" : "Please choose a location to sign in to."}
+              </h3>
             </div>
             <ul className="flex w-full flex-col gap-y-2">
               {(auth?.locations || []).map((location) => {

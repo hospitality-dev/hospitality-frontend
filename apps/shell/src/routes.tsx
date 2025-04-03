@@ -66,8 +66,8 @@ const loginRoute = createRoute({
 const locationSelectRoute = createRoute({
   getParentRoute: () => rootRoute,
   beforeLoad: (c) => {
-    if (c.context.auth?.user?.locationId) {
-      throw redirect({ to: "/settings/products" });
+    if (!c.context.auth?.user) {
+      throw redirect({ to: "/login" });
     }
   },
   path: "/location-select",
