@@ -1,10 +1,12 @@
 import { MouseEvent } from "react";
 
 import { useAuth } from "../hooks";
-import { getLoginRoute } from "../utils";
+import { getLoginRoute, getUserInfo } from "../utils";
+import { Avatar } from "./Avatar";
 
 export function Navbar() {
   const auth = useAuth();
+  const name = auth.user ? getUserInfo(auth.user).title : "";
   function routeToLogin(e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) {
     e.preventDefault();
     getLoginRoute();
@@ -15,10 +17,13 @@ export function Navbar() {
       <nav className="h-full">
         <ul className="flex h-full items-center justify-end">
           <li>
-            {auth?.user?.firstName || ""}
-            <a href="#" onClick={routeToLogin}>
-              Login
-            </a>
+            {auth.user ? (
+              <Avatar label={name} />
+            ) : (
+              <a href="#" onClick={routeToLogin}>
+                Login
+              </a>
+            )}
           </li>
         </ul>
       </nav>
