@@ -33,6 +33,11 @@ const AddNewUser = lazy(() =>
     default: module.AddNewUser,
   }))
 );
+const AddUserFromLocation = lazy(() =>
+  import("@hospitality/hospitality-ui").then((module) => ({
+    default: module.AddUserFromLocation,
+  }))
+);
 
 const sections = [
   {
@@ -58,6 +63,7 @@ export function Layout() {
           {drawer.type === "create_products" && drawer.data ? <CreateProduct data={drawer.data} /> : null}
           {drawer.type === "manage_product_inventory" && drawer.data ? <ManageProductInventory data={drawer.data} /> : null}
           {drawer.type === "add_new_user" ? <AddNewUser /> : null}
+          {drawer.type === "add_user_from_location" ? <AddUserFromLocation /> : null}
         </Suspense>
       </Drawer>
       {scannerState.isOpen ? <BarcodeScanner /> : null}
