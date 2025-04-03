@@ -56,11 +56,11 @@ type DropdownType = {
 const DropdownClasses = tv({
   slots: {
     base: "font-lato z-30 max-w-fit min-w-fit outline-none",
-    floatingBase: "font-lato absolute top-0 left-0 z-[9999] overflow-y-auto rounded-md border border-gray-400 shadow-lg",
+    floatingBase: "font-lato absolute top-0 left-0 z-[9999] overflow-y-auto rounded-md border border-gray-300 shadow-lg",
   },
 });
 const DropdownItemClasses = tv({
-  base: "group m-0 flex w-full cursor-pointer flex-nowrap items-center truncate border-b border-gray-400 px-1 py-1.5 text-left text-white outline-0 transition-colors group-hover:bg-gray-200 last:border-0 hover:bg-gray-200 active:bg-gray-400 active:text-white",
+  base: "group m-0 flex w-full cursor-pointer flex-nowrap items-center truncate border-b border-gray-300 px-1 py-1.5 text-left text-white outline-0 transition-colors group-hover:bg-gray-200 last:border-0 hover:bg-gray-200 active:bg-gray-400 active:text-white",
   variants: {
     variant: {
       primary: "bg-white text-gray-900",
