@@ -20,7 +20,15 @@ export function Navbar() {
         <ul className="flex h-full items-center justify-end">
           <li>
             {auth.user ? (
-              <Dropdown items={[{ id: "change_location", title: "Change location", icon: Icons["location-change"] }]}>
+              <Dropdown
+                items={[
+                  {
+                    id: "change_location",
+                    title: "Change location",
+                    icon: Icons["location-change"],
+                    isHidden: (auth?.locations?.length || 0) < 2,
+                  },
+                ]}>
                 <Avatar label={name} />
               </Dropdown>
             ) : (
