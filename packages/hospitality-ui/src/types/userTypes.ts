@@ -1,5 +1,12 @@
 import { boolean, date, infer as zodInfer, object, string } from "zod";
 
+export const RolesSchema = object({
+  id: string().uuid().nonempty(),
+  title: string().nonempty(),
+  isDefault: boolean(),
+  companyId: string().uuid().nullable(),
+});
+
 export const UsersSchema = object({
   id: string().uuid().nonempty(),
   firstName: string().nonempty(),
@@ -16,10 +23,15 @@ export const UsersInitializerSchema = object({
   firstName: string().nonempty("First name cannot be empty."),
   lastName: string().nonempty("Last name cannot be empty."),
   username: string().nonempty("Username cannot be empty").min(6, "Username must have at least 6 characters"),
+  password1: string().min(8, "Must be at least 8 characters long.").nonempty("Password cannot be empty."),
+  password2: string()
+    .min(8, "Must be at least 8 characters long and match the password.")
+    .nonempty("Password confirm cannot be empty."),
   email: string().email("This email is not valid.").nullish(),
   phone: string().nullish(),
   dateOfBirth: date().nullish(),
   dateOfEmployment: date().nullish(),
+  roleId: string().uuid("User must have a role selected"),
 });
 
 export const UsersMutatorSchema = object({
@@ -30,12 +42,6 @@ export const UsersMutatorSchema = object({
   phone: string().nullish(),
   dateOfBirth: date().nullish(),
   dateOfEmployment: date().nullish(),
-});
-
-export const RolesSchema = object({
-  id: string().uuid().nonempty(),
-  title: string().nonempty(),
-  isDefault: boolean(),
 });
 
 export type RolesType = zodInfer<typeof RolesSchema>;
