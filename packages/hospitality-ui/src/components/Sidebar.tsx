@@ -67,8 +67,7 @@ function SidebarSection({ title, links }: SidebarSectionType) {
         </div>
         <Icon fontSize={24} icon={Icons[sidebarState.isModulesOpen ? "arrow-up" : "arrow-down"]} />
       </h3>
-      <div
-        className={`flex flex-col gap-y-1 ${sidebarState.isModulesOpen ? "h-auto" : "h-0"} overflow-hidden transition-[height]`}>
+      <div className={`flex-col gap-y-1 ${sidebarState.isModulesOpen ? "flex" : "hidden"} overflow-hidden transition-[height]`}>
         {links.map((link) => (
           <SidebarLink key={link.to} icon={link.icon} title={link.title} to={link.to} />
         ))}
