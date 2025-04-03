@@ -29,6 +29,21 @@ export const LocationsMutatorSchema = object({
   longitude: number().nullish(),
 });
 
+export const LocationsUsersSchema = object({
+  id: string().uuid().nonempty(),
+  locationId: string().uuid(),
+  userId: string().uuid(),
+  roleId: string().uuid(),
+});
+
+export const LocationsUsersInitializerSchema = object({
+  userId: string().uuid().nonempty("User must be selected."),
+  roleId: string().uuid().nonempty("Role must be selected."),
+});
+
 export type LocationsType = zodInfer<typeof LocationsSchema>;
 export type LocationsInitalizerType = zodInfer<typeof LocationsInitializerSchema>;
 export type LocationsMutatorType = zodInfer<typeof LocationsMutatorSchema>;
+
+export type LocationsUsersType = zodInfer<typeof LocationsUsersSchema>;
+export type LocationsUsersInitalizerType = zodInfer<typeof LocationsUsersInitializerSchema>;
