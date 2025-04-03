@@ -4,8 +4,9 @@ import { tv } from "tailwind-variants";
 
 import { sidebarStateAtom } from "../atoms";
 import { Icons } from "../enums";
-import { useScreenSize } from "../hooks";
+import { useAuth, useScreenSize } from "../hooks";
 import { availableIcons } from "../types";
+import { Avatar } from "./Avatar";
 import { Icon } from "./Icon";
 import { Link } from "./Link";
 
@@ -62,7 +63,6 @@ function SidebarSection({ title, links }: SidebarSectionType) {
         className="flex cursor-pointer items-center justify-between border-gray-100 px-4 py-1 text-sm font-bold"
         onClick={() => setSidebarState((prev) => ({ ...prev, isModulesOpen: !sidebarState.isModulesOpen }))}>
         <div className="flex items-center gap-x-2">
-          <Icon fontSize={24} icon={Icons.modules} />
           {isLg ? <span className="pt-0.5 capitalize select-none">{title}</span> : null}
         </div>
         <Icon fontSize={24} icon={Icons[sidebarState.isModulesOpen ? "arrow-up" : "arrow-down"]} />
@@ -79,15 +79,14 @@ function SidebarSection({ title, links }: SidebarSectionType) {
 
 export function Sidebar({ sections = [] }: Props) {
   const { isLg } = useScreenSize();
+  const auth = useAuth();
   const { base, rootList, moduleItemsList, settingsButton } = classes({ isSmallScreen: !isLg });
   return (
     <div className={base()}>
       <ul className={rootList()}>
         <li className={`flex h-16 flex-nowrap items-center gap-x-4 px-4 ${isLg ? "" : "justify-center"}`}>
-          <div className="flex h-10 w-10 items-center justify-center rounded-full border-blue-300 bg-blue-500 text-sm">
-            LOGO
-          </div>
-          {isLg ? <h2 className="text-2xl">Filtz</h2> : null}
+          <Avatar label={auth.user?.locationTitle || ""} />
+          {isLg ? <h2 className="text-2xl font-bold">Filtz</h2> : null}
         </li>
         <ul className={moduleItemsList()}>
           {isLg
