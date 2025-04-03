@@ -22,6 +22,10 @@ export type DrawerTypes = (
       type: "add_new_user";
       data: null;
     }
+  | {
+      type: "add_user_from_location";
+      data: null;
+    }
 ) & { title: string };
 
 type DrawerState = {
