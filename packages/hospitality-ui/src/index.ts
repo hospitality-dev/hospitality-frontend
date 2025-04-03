@@ -26,7 +26,7 @@ export {
   useParams,
   useRouteContext,
 } from "@tanstack/react-router";
-export { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
+export { type ColumnDef, createColumnHelper, type Row } from "@tanstack/react-table";
 export { TanStackRouterDevtools } from "@tanstack/router-devtools";
 export * as ky from "ky";
 export { z } from "zod";
