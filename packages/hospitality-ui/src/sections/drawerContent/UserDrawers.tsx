@@ -16,7 +16,10 @@ import { formatErrorsForHelperText, formatForOptions, getUserInfo } from "../../
 export function AddNewUser() {
   const { data: roles } = useList<RolesType>({ model: "roles", fields: ["id", "title", "isDefault", "companyId"] });
   const closeDrawer = useCloseDrawer();
-  const { mutate: create } = useCreate<UsersInitializerType>("users", { onSuccess: closeDrawer });
+  const { mutate: create } = useCreate<UsersInitializerType>("users", {
+    onSuccess: closeDrawer,
+    invalidateModels: ["locations_users"],
+  });
 
   const form = useForm<UsersInitializerType>({
     validators: {
@@ -154,7 +157,10 @@ export function AddUserFromLocation() {
     }
   );
   const closeDrawer = useCloseDrawer();
-  const { mutate: create } = useCreate<LocationsUsersInitalizerType>("locations_users", { onSuccess: closeDrawer });
+  const { mutate: create } = useCreate<LocationsUsersInitalizerType>("locations_users", {
+    onSuccess: closeDrawer,
+    invalidateModels: ["users"],
+  });
 
   const form = useForm<LocationsUsersInitalizerType>({
     validators: {
