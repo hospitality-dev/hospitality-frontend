@@ -9,5 +9,6 @@ export const AvailableEntitiesEnum = [
   "products_categories",
   "locations_available_products",
   "locations_products",
+  "locations_users",
   "unknown",
 ] as const;
