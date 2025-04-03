@@ -41,11 +41,11 @@ export interface IconType {
 }
 
 // =========REQUEST=========
-type RequestFilterOperators = "eq" | "neq" | "gt" | "gte" | "is" | "is not";
+type RequestFilterOperators = "eq" | "neq" | "gt" | "gte" | "is" | "is not" | "in" | "not in" | "ilike";
 type RequestFilterType<T> = {
   field: keyof T;
   operator: RequestFilterOperators;
-  value: string | number | RequestFilterType<T>;
+  value: string | number | string[] | number[] | RequestFilterType<T>;
 };
 type RequestFilterBase<T> = {
   and?: (RequestFilterType<T> | RequestFilterBase<T>[])[];
