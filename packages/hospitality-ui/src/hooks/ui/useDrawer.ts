@@ -31,3 +31,7 @@ export function useDrawerValue() {
 
   return drawer;
 }
+
+export function useCloseDrawer() {
+  return useResetAtom(drawerAtom);
+}
