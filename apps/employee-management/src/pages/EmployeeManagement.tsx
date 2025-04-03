@@ -56,6 +56,7 @@ export function EmployeeManagement() {
     { model: "users", fields: ["id", "firstName", "lastName"] },
     { urlSuffix: `location/${auth.user?.locationId}`, enabled: !!auth.user?.locationId }
   );
+  const { openDrawer: openAddUserFromLocation } = useDrawer("add_user_from_location");
   return (
     <div className="flex flex-col gap-y-2 overflow-hidden">
       <div className="self-end">
@@ -73,6 +74,7 @@ export function EmployeeManagement() {
               id: "2",
               title: "Add from other location",
               icon: Icons["location-user"],
+              onClick: () => openAddUserFromLocation("Add user from other location"),
             },
           ]}
           label="Manage"
