@@ -47,7 +47,7 @@ function getInitials(name: Props["label"]) {
   return initials;
 }
 
-export function Avatar({ label, variant = "error", size = "xl", imageId }: Props) {
+export function Avatar({ label, variant = "error", size = "md", imageId }: Props) {
   return (
     <div className={classes({ variant, size })}>
       {imageId ? <img className="h-full w-full object-cover" src={imageId} /> : getInitials(label)}
