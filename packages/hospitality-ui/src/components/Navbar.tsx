@@ -1,8 +1,10 @@
 import { MouseEvent } from "react";
 
+import { Icons } from "../enums";
 import { useAuth } from "../hooks";
 import { getLoginRoute, getUserInfo } from "../utils";
 import { Avatar } from "./Avatar";
+import { Dropdown } from "./Dropdown";
 
 export function Navbar() {
   const auth = useAuth();
@@ -18,7 +20,9 @@ export function Navbar() {
         <ul className="flex h-full items-center justify-end">
           <li>
             {auth.user ? (
-              <Avatar label={name} />
+              <Dropdown items={[{ id: "change_location", title: "Change location", icon: Icons["location-change"] }]}>
+                <Avatar label={name} />
+              </Dropdown>
             ) : (
               <a href="#" onClick={routeToLogin}>
                 Login
