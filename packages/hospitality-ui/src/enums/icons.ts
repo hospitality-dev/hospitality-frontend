@@ -26,6 +26,7 @@ export const Icons = {
   modules: "oui:index-mapping" as const,
   "remove-item": "mdi:basket-minus-outline" as const,
   "remove-user": "ph:user-minus" as const,
+  save: "ph:floppy-disk" as const,
   settings: "ph:gear" as const,
   supplier: "ph:truck" as const,
   upload: "ph:upload" as const,
