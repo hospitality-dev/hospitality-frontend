@@ -1,1 +1,2 @@
-export * from "./UsersSettings";
+export * from "./LocationSettings";
+export * from "./ProductSettings";

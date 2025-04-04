@@ -107,9 +107,11 @@ const productInventoryRoute = createRoute({
 const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => mainLayout }).lazy(() =>
   import("@hospitality/settings").then((d) => d.SettingsLayoutRoute)
 );
-const settingsUsers = createRoute({ getParentRoute: () => settingsRootRoute, path: "users" }).lazy(() =>
-  import("@hospitality/settings").then((d) => d.SettingsUsersRoute)
-);
+
+const settingsLocation = createRoute({
+  getParentRoute: () => settingsRootRoute,
+  path: "location",
+}).lazy(() => import("@hospitality/settings").then((d) => d.SettingsLocationRoute));
 const settingsProducts = createRoute({
   getParentRoute: () => settingsRootRoute,
   path: "products",
@@ -123,13 +125,14 @@ const settingsProducts = createRoute({
     };
   },
 }).lazy(() => import("@hospitality/settings").then((d) => d.SettingsProductsRoute));
+
 // #endregion SETTINGS_ROUTES
 
 const routeTree = rootRoute.addChildren([
   mainLayout.addChildren([
     employeeManagementRoute,
     inventoryCategoryRoute.addChildren([productInventoryRoute]),
-    settingsRootRoute.addChildren([settingsUsers, settingsProducts]),
+    settingsRootRoute.addChildren([settingsLocation, settingsProducts]),
   ]),
   loginRoute,
   locationSelectRoute,

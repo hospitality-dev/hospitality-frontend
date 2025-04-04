@@ -19,7 +19,7 @@ const columns = [
     header: () => <span>Role</span>,
   }),
 ];
-export function UsersSettings() {
+export function LocationSettings() {
   const { data = [] } = useList<EntityType>({ model: "users", fields: ["id", "firstName", "lastName"] });
   return (
     <div>
