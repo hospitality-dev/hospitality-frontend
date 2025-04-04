@@ -28,4 +28,5 @@ export const Icons = {
   "remove-user": "ph:user-minus" as const,
   settings: "ph:gear" as const,
   supplier: "ph:truck" as const,
+  upload: "ph:upload" as const,
 };
