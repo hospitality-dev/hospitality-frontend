@@ -20,18 +20,20 @@ type Props = {
 };
 
 const tabContainer = tv({
-  base: "relative box-content flex w-full max-w-full flex-row flex-nowrap items-center overflow-x-auto overflow-y-hidden border-b-2 border-gray-300",
+  base: "after:bg-secondary-highlight relative box-content flex w-full max-w-full flex-row flex-nowrap items-center overflow-x-auto after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full",
 });
 
 const tabClasses = tv({
   slots: {
-    tab: "pointer-events-none relative top-0.5 flex min-w-fit cursor-pointer justify-center border-b-2 py-1 text-lg font-medium transition-colors select-none",
+    tab: "pointer-events-none relative flex min-w-fit cursor-pointer justify-center py-1 text-lg font-medium transition-colors select-none after:absolute after:bottom-0 after:left-0 after:z-10 after:h-0.5 after:w-full",
     linkClasses: "pointer-events-auto px-4 active:text-gray-500",
   },
   variants: {
     isActive: {
-      true: { tab: "border-blue-400" },
-      false: { tab: "border-gray-300 hover:border-blue-300" },
+      true: {
+        tab: "after:bg-info",
+      },
+      false: { tab: "hover:after:bg-info-highlight border-transparent" },
     },
     isDisabled: {
       true: {
