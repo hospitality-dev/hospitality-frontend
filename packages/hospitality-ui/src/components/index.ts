@@ -18,3 +18,4 @@ export * from "./Spinner";
 export * from "./Table";
 export * from "./Tabs";
 export * from "./Title";
+export * from "./Upload";
