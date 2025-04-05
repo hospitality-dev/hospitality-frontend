@@ -2,7 +2,7 @@ import ky from "ky";
 import kebabcase from "lodash.kebabcase";
 import snakecase from "lodash.snakecase";
 
-import { AvailableEntities, ResponseType } from "../types";
+import { AvailableEntities, AvailableSearchableEntities, ResponseType } from "../types";
 import { formatDataResponseHook } from "./response";
 
 export function getSearchParams<F, T>(fields: F, filters?: T) {
@@ -79,4 +79,30 @@ export async function authFetchFunction<DataType>({
     console.error(error);
     return {} as DataType;
   }
+}
+
+export async function searchFunction<DataType>({
+  model,
+  searchQuery,
+  userReset,
+}: {
+  model: AvailableSearchableEntities;
+  searchQuery: string;
+  urlSuffix?: string;
+  searchParams?: URLSearchParams;
+  userReset: () => void;
+}): Promise<DataType> {
+  const result = await ky
+    .get(`search/${model}`, {
+      throwHttpErrors: true,
+      searchParams: `search_query=${searchQuery}`,
+      prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
+      credentials: "include",
+      hooks: {
+        afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
+      },
+    })
+    .json<ResponseType<DataType>>();
+
+  return result?.data;
 }
