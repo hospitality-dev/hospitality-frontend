@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@source "../../../apps/**/src/**/*.{ts,tsx,css}"; /* Any app */
-@source "../../../packages/**/src/**/*.{ts,tsx,css}"; /* Any components in ui package*/
+@source "../../../apps/**/src/**/*.{js,jsx,ts,tsx,html,css}"; /* Any app */
+@source "../../../packages/**/src/**/*.{js,jsx,ts,tsx,html,css}"; /* Any components in ui package*/
 
 @layer base {
   body {
