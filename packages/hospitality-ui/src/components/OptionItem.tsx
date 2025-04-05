@@ -28,7 +28,7 @@ export function OptionItem({
   return (
     <div
       aria-selected={isActive}
-      className={classes({ isSelected, isDisabled: true })}
+      className={classes({ isSelected, isDisabled: !!item?.isDisabled })}
       id={item.value}
       onClick={() => {
         if (item.isDisabled) return;
