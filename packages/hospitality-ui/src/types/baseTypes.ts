@@ -1,11 +1,16 @@
-import { AvailableActionsEnum, AvailableEntitiesEnum, valueof } from "@hospitality/hospitality-ui/src";
+import {
+  AvailableActionsEnum,
+  AvailableEntitiesEnum,
+  AvailableSearchableEntitiesEnum,
+  valueof,
+} from "@hospitality/hospitality-ui/src";
 
 import { Icons } from "../enums/icons";
 
 // =========ENTITIES=========
 export type AvailableEntities = (typeof AvailableEntitiesEnum)[number];
-
 export type AvailableActions = (typeof AvailableActionsEnum)[number];
+export type AvailableSearchableEntities = (typeof AvailableSearchableEntitiesEnum)[number];
 // =========COMPONENTS=========
 export type Variant = "primary" | "secondary" | "info" | "success" | "warning" | "error";
 

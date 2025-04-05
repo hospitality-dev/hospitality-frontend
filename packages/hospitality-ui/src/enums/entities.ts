@@ -12,3 +12,15 @@ export const AvailableEntitiesEnum = [
   "locations_users",
   "unknown",
 ] as const;
+
+export const AvailableSearchableEntitiesEnum = [
+  "addresses",
+  "locations",
+  "roles",
+  "products",
+  // "products_categories",
+  // "locations_available_products",
+  "locations_products",
+  "locations_users",
+  "users",
+] as const;
