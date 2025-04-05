@@ -1,3 +1,4 @@
+export * from "./addressTypes";
 export * from "./authTypes";
 export * from "./baseTypes";
 export * from "./locationTypes";
