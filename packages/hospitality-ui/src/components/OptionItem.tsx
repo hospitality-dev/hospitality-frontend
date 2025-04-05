@@ -1,0 +1,42 @@
+import { tv } from "tailwind-variants";
+
+import { OptionType } from "../types";
+
+const classes = tv({
+  base: "flex cursor-pointer flex-col gap-y-1 p-2 hover:bg-blue-200",
+  variants: {
+    isSelected: {
+      true: "text-info bg-blue-100",
+    },
+    isDisabled: {
+      true: "bg-secondary-highlight text-primary cursor-not-allowed",
+    },
+  },
+});
+
+export function OptionItem({
+  isActive,
+  isSelected,
+  item,
+  onChange,
+}: {
+  isActive?: boolean;
+  isSelected?: boolean;
+  item: OptionType;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div
+      aria-selected={isActive}
+      className={classes({ isSelected, isDisabled: true })}
+      id={item.value}
+      onClick={() => {
+        if (item.isDisabled) return;
+        onChange(item.value);
+      }}
+      role="option">
+      <span className="font-semibold">{item.label}</span>
+      {item.description ? <span className="text-sm">{item.description}</span> : null}
+    </div>
+  );
+}
