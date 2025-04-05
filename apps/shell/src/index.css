@@ -11,6 +11,9 @@
     -webkit-appearance: none;
     margin: 0;
   }
+  input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+  }
 
   /* Webkit (Chrome, Edge, Safari) */
   ::-webkit-scrollbar {
