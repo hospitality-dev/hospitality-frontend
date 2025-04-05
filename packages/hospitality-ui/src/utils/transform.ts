@@ -1,6 +1,6 @@
 import { ValidationError } from "@tanstack/react-form";
 
-import { OptionType } from "../types";
+import { AddressesType, OptionType } from "../types";
 
 export function getSentenceCase(field: string) {
   const text = field?.replaceAll(/[_-]/g, " ")?.replace(/([A-Z])/g, " $1") || "";
@@ -12,6 +12,14 @@ export function formatForOptions<T extends { id: string; title: string }>(data?:
   return data.map((item) => ({
     label: isSentenceCase === true || isSentenceCase === undefined ? getSentenceCase(item.title) : item.title,
     value: item.id,
+  }));
+}
+export function formatAddressesForOptions(data: AddressesType["features"]): OptionType[] {
+  if (!data) return [];
+  return data.map((item) => ({
+    label: getSentenceCase(`${item.address.road} ${item.address.houseNumber}`),
+    description: `${item.address.suburb} | ${item.address.city} | ${item.address.postcode}`,
+    value: item.placeId.toString(),
   }));
 }
 
