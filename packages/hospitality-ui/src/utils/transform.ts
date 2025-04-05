@@ -14,7 +14,7 @@ export function formatForOptions<T extends { id: string; title: string }>(data?:
     value: item.id,
   }));
 }
-export function formatAddressesForOptions(data: AddressesType["features"]): OptionType[] {
+export function formatAddressesForOptions(data: AddressesType[]): OptionType[] {
   if (!data) return [];
   return data.map((item) => ({
     label: getSentenceCase(`${item.address.road} ${item.address.houseNumber}`),
