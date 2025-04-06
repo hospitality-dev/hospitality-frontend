@@ -1,38 +1,22 @@
-import { infer as zodInfer, number, object, string } from "zod";
+import { infer as zodInfer, object, string } from "zod";
+
+import { ContactInitializerSchema, ContactMutatorSchema, ContactSchema } from "./contactTypes";
 
 export const LocationsSchema = object({
   id: string().uuid().nonempty(),
   title: string().nonempty(),
   ownerId: string().uuid().nonempty(),
   companyId: string().uuid().nonempty(),
-  address: string().nullish(),
-  boundingBox: number().array().nullish(),
-  placeId: number().nullish(),
-  phone: string().nullish(),
-  email: string().nullish(),
-  latitude: number().nullish(),
-  longitude: number().nullish(),
+  contacts: ContactSchema.array().nullable(),
 });
 
 export const LocationsInitializerSchema = object({
   title: string().nonempty("Title cannot be empty."),
-  address: string().nullish(),
-  phone: string().nullish(),
-  email: string().nullish(),
-  latitude: number().nullish(),
-  longitude: number().nullish(),
-  boundingBox: number().array().nullish(),
-  placeId: number().nullish(),
+  contacts: ContactInitializerSchema.array().default([]),
 });
 export const LocationsMutatorSchema = object({
   title: string().optional(),
-  address: string().nullish(),
-  phone: string().nullish(),
-  email: string().nullish(),
-  latitude: number().nullish(),
-  longitude: number().nullish(),
-  boundingBox: number().array().nullish(),
-  placeId: number().nullish(),
+  contacts: ContactInitializerSchema.or(ContactMutatorSchema).array().default([]),
 });
 
 export const LocationsUsersSchema = object({
