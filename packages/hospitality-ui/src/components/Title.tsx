@@ -53,7 +53,14 @@ export function Title({ label, variant = "info", size = "md", hasBorder, icon, i
         <span>{label}</span>
         {(items || []).map((item) => (
           <div key={item.id} className="ml-auto">
-            <Button hasNoBorder icon={item.icon} isOutline items={item.items || []} onClick={item.onClick} />
+            <Button
+              allowedPlacements={["left", "left-start", "left-end"]}
+              hasNoBorder
+              icon={item.icon}
+              isOutline
+              items={item.items || []}
+              onClick={item.onClick}
+            />
           </div>
         ))}
       </span>
