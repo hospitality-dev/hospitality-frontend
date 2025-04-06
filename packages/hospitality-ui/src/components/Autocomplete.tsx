@@ -18,7 +18,7 @@ import { OptionType, Size, Variant } from "../types";
 import { Input } from "./Input";
 import { OptionItem } from "./OptionItem";
 
-type Props = {
+type Props<OT> = {
   label: string;
   query: string;
   value?: string;
@@ -26,14 +26,14 @@ type Props = {
   size?: Size;
   helperText?: string;
   onQueryChange: (value: string) => void;
-  onChange: (value: string) => void;
-  options: OptionType[];
+  onChange: (item: OptionType<OT> | null) => void;
+  options: OptionType<OT>[];
   isSearch?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
 };
 
-export function Autocomplete({
+export function Autocomplete<OT = null>({
   label,
   variant = "primary",
   size = "md",
@@ -44,7 +44,7 @@ export function Autocomplete({
   isSearch,
   isDisabled,
   options = [],
-}: Props) {
+}: Props<OT>) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -84,6 +84,7 @@ export function Autocomplete({
 
   const { getReferenceProps, getFloatingProps } = useInteractions([role, dismiss, listNav]);
   const items = isSearch ? options : options.filter((item) => item.label.toLowerCase().includes(query.toLowerCase()));
+  const displayItem = items.find((el) => el?.value === value);
 
   useEffect(() => {
     if (query && items.length) {
@@ -117,9 +118,17 @@ export function Autocomplete({
           label={label}
           name="search"
           onChange={(e) => onQueryChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Backspace" || e.key === "Delete") {
+              e.preventDefault();
+              e.stopPropagation();
+              onQueryChange("");
+              onChange(null);
+            }
+          }}
           size={size}
           type="search"
-          value={value || query}
+          value={displayItem?.label || query}
           variant={variant}
         />
       </div>
