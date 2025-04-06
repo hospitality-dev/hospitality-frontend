@@ -2,16 +2,17 @@ import { useState } from "react";
 
 import { useSearch } from "../hooks/api/searchHooks";
 import { useDebounce } from "../hooks/ui/useDebounce";
-import { AddressesType, LocationsType, OptionType } from "../types";
+import { AddressesType, ContactType, OptionType } from "../types";
 import { formatAddressesForOptions } from "../utils";
 import { Autocomplete } from "./Autocomplete";
 type Props = {
+  label?: string;
   isDisabled?: boolean;
-  onChange: (item: OptionType<Pick<LocationsType, "address" | "latitude" | "longitude" | "boundingBox">> | null) => void;
+  onChange: (item: OptionType<Pick<ContactType, "latitude" | "longitude" | "boundingBox">> | null) => void;
   value: string | null;
 };
 
-export function AddressSearch({ onChange, isDisabled, value }: Props) {
+export function AddressSearch({ label = "Address", onChange, isDisabled, value }: Props) {
   const [searchQuery, setQuery] = useState("");
   const debouncedValue = useDebounce<typeof searchQuery>(searchQuery);
   const { data = [], isFetched } = useSearch<AddressesType>(
@@ -23,7 +24,7 @@ export function AddressSearch({ onChange, isDisabled, value }: Props) {
     <Autocomplete
       isDisabled={isDisabled}
       isSearch
-      label="Address"
+      label={label}
       onChange={onChange}
       onQueryChange={(value) => setQuery(value)}
       options={
