@@ -60,7 +60,7 @@ const DropdownClasses = tv({
   },
 });
 const DropdownItemClasses = tv({
-  base: "group m-0 flex w-full cursor-pointer flex-nowrap items-center justify-center truncate border-b border-gray-300 px-1 py-1.5 text-left text-white outline-0 transition-colors group-hover:bg-gray-200 last:border-0 hover:bg-gray-200 active:bg-gray-400 active:text-white",
+  base: "group m-0 flex w-full cursor-pointer flex-nowrap items-center justify-center truncate border-b border-gray-300 px-2 py-1.5 text-left text-white outline-0 transition-colors group-hover:bg-gray-200 last:border-0 hover:bg-gray-200 active:bg-gray-400 active:text-white",
   variants: {
     variant: {
       primary: "bg-white text-gray-900",
