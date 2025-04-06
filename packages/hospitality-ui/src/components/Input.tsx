@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent as ReactMouseEvent } from "react";
+import { ChangeEvent, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 import { tv } from "tailwind-variants";
 
 import { availableIcons, Size, Variant } from "../types/baseTypes";
@@ -9,6 +9,7 @@ type Props = {
   name: string;
   value: string | number | undefined;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   helperText?: string;
   isDisabled?: boolean;
   isAutofocused?: boolean;
