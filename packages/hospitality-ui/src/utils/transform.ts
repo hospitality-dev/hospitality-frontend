@@ -22,8 +22,8 @@ export function formatAddressesForOptions(
 ): OptionType<Pick<LocationsType, "latitude" | "longitude" | "boundingBox">>[] {
   if (!data) return [];
   return data.map((item) => ({
-    label: `${item.address.road} ${item.address.houseNumber}`.trim(),
-    description: [item.address.suburb, item.address.city, item.address.postcode].filter(Boolean).join(" | "),
+    label: `${item.address.road} ${item.address.houseNumber} ${item.address.suburb ? `| ${item.address.suburb}` : ""}`.trim(),
+    description: [item.address.city, item.address.postcode].filter(Boolean).join(" | "),
     value: item.placeId.toString(),
     additionalData: {
       latitude: item.lat,
