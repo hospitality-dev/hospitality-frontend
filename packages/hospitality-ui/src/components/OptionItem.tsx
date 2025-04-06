@@ -12,7 +12,7 @@ const classes = tv({
       true: "text-info bg-blue-100",
     },
     isDisabled: {
-      true: "bg-secondary-highlight text-primary cursor-not-allowed",
+      true: "cursor-not-allowed bg-gray-50 text-gray-400 hover:bg-gray-300 hover:text-gray-400",
     },
   },
 });
