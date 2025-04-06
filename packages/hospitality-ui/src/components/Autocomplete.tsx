@@ -78,11 +78,12 @@ export function Autocomplete<OT = null>({
     listRef,
     activeIndex,
     onNavigate: setActiveIndex,
+    openOnArrowKeyDown: true,
     virtual: true,
     loop: true,
   });
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([role, dismiss, listNav]);
+  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([role, dismiss, listNav]);
   const items = isSearch ? options : options.filter((item) => item.label.toLowerCase().includes(query.toLowerCase()));
   const displayItem = items.find((el) => el?.value === value);
 
@@ -92,15 +93,15 @@ export function Autocomplete<OT = null>({
       setActiveIndex(0);
     }
   }, [query, items.length]);
-
   return (
     <>
       <div
         {...getReferenceProps({
           onClick: () => setOpen(true),
-          ref: refs.setReference,
           "aria-autocomplete": "list",
-        })}>
+          ref: refs.setReference,
+        })}
+        className="w-full">
         <Input
           isDisabled={isDisabled}
           label={label}
@@ -112,7 +113,9 @@ export function Autocomplete<OT = null>({
               e.stopPropagation();
               onQueryChange("");
               onChange(null);
-            } else if (e.key !== "Backspace" && e.key !== "Delete" && value) {
+            } else if (e.key === "Enter" && !value && activeIndex !== null) {
+              onChange(items[activeIndex]);
+            } else if (e.key !== "Backspace" && e.key !== "Delete" && e.key !== "ArrowUp" && e.key !== "ArrowDown" && value) {
               e.preventDefault();
               e.stopPropagation();
             }
@@ -133,13 +136,20 @@ export function Autocomplete<OT = null>({
                 className: "divide-y divide-gray-200 bg-white rounded-md border border-gray-300 shadow-lg overflow-y-auto",
               })}>
               {items.map((item, index) => (
-                <OptionItem
+                <div
                   key={item.value}
-                  isActive={activeIndex === index}
-                  isSelected={item.value === value}
-                  item={item}
-                  onChange={onChange}
-                />
+                  {...getItemProps({
+                    ref(node) {
+                      listRef.current[index] = node;
+                    },
+                  })}>
+                  <OptionItem
+                    isActive={activeIndex === index}
+                    isSelected={item.value === value}
+                    item={item}
+                    onChange={onChange}
+                  />
+                </div>
               ))}
             </div>
           </FloatingFocusManager>
