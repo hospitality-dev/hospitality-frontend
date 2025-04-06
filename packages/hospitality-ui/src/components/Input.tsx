@@ -37,11 +37,11 @@ const classes = tv({
     variant: {
       primary: {
         inputContainer: "border-primary focus-within:border-info-highlight",
-        helperTextClasses: "text-primary-highlight",
+        helperTextClasses: "text-primary",
       },
       secondary: {
         inputContainer: "border-secondary focus-within:border-info-highlight",
-        helperTextClasses: "text-secondary-highlight",
+        helperTextClasses: "text-secondary",
       },
       info: {
         inputContainer: "border-info-border focus-within:border-info-highlight",
