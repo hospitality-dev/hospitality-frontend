@@ -18,7 +18,7 @@ export function formatAddressesForOptions(data: AddressesType[]): OptionType[] {
   if (!data) return [];
   return data.map((item) => ({
     label: getSentenceCase(`${item.address.road} ${item.address.houseNumber}`),
-    description: `${item.address.suburb} | ${item.address.city} | ${item.address.postcode}`,
+    description: [item.address.suburb, item.address.city, item.address.postcode].filter(Boolean).join(" | "),
     value: item.placeId.toString(),
   }));
 }
