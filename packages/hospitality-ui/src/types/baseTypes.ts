@@ -16,7 +16,13 @@ export type Variant = "primary" | "secondary" | "info" | "success" | "warning" |
 
 export type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
-export type OptionType = { label: string; description?: string; value: string; isDisabled?: boolean };
+export type OptionType<T> = {
+  label: string;
+  description?: string;
+  value: string;
+  isDisabled?: boolean;
+  additionalData?: T;
+};
 
 export type PositionType = (
   | "top"

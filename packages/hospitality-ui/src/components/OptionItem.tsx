@@ -14,7 +14,7 @@ const classes = tv({
   },
 });
 
-export function OptionItem({
+export function OptionItem<OT = null>({
   isActive,
   isSelected,
   item,
@@ -22,8 +22,8 @@ export function OptionItem({
 }: {
   isActive?: boolean;
   isSelected?: boolean;
-  item: OptionType;
-  onChange: (value: string) => void;
+  item: OptionType<OT>;
+  onChange: (item: OptionType<OT>) => void;
 }) {
   return (
     <div
@@ -32,7 +32,7 @@ export function OptionItem({
       id={item.value}
       onClick={() => {
         if (item.isDisabled) return;
-        onChange(item.value);
+        onChange(item);
       }}
       role="option">
       <span className="font-semibold">{item.label}</span>
