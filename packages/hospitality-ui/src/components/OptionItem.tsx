@@ -3,8 +3,11 @@ import { tv } from "tailwind-variants";
 import { OptionType } from "../types";
 
 const classes = tv({
-  base: "flex cursor-pointer flex-col gap-y-1 p-2 hover:bg-blue-200",
+  base: "hover:text-info-highlight flex cursor-pointer flex-col gap-y-1 p-2 hover:bg-blue-50",
   variants: {
+    isActive: {
+      true: "text-info-highlight bg-blue-50",
+    },
     isSelected: {
       true: "text-info bg-blue-100",
     },
@@ -28,7 +31,7 @@ export function OptionItem<OT = null>({
   return (
     <div
       aria-selected={isActive}
-      className={classes({ isSelected, isDisabled: !!item?.isDisabled })}
+      className={classes({ isSelected, isActive, isDisabled: !!item?.isDisabled })}
       id={item.value}
       onClick={() => {
         if (item.isDisabled) return;
