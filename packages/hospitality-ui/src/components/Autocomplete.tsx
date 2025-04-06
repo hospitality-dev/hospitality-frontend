@@ -58,7 +58,7 @@ export function Autocomplete<OT>({
       offset({
         mainAxis: 5,
       }),
-      autoPlacement(),
+      autoPlacement({ allowedPlacements: ["bottom", "top"] }),
       flip({ padding: 10 }),
       floatingSize({
         apply({ rects, availableHeight, elements }) {
