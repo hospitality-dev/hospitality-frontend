@@ -18,6 +18,7 @@ type Props = {
     icon: availableIcons;
     isDisabled?: boolean;
     items?: DropdownItemType[];
+    variant?: Variant;
   }[];
 };
 
@@ -49,15 +50,16 @@ export function Title({ label, variant = "info", size = "md", hasBorder, icon, i
   return (
     <h3 className={classes({ variant, size, hasBorder })}>
       <span className="flex items-center">
-        {icon ? <Icon className="-rotate-45" color="#cccbbb" fontSize={28} icon={icon} /> : null}
+        {icon ? <Icon fontSize={28} icon={icon} /> : null}
         <span>{label}</span>
         {(items || []).map((item) => (
-          <div key={item.id} className="ml-auto">
+          <div key={item.id} className="ml-auto h-8 w-8">
             <Button
               allowedPlacements={["left", "left-start", "left-end"]}
               hasNoBorder
               icon={item.icon}
               isOutline
+              variant={item.variant || "primary"}
               items={item.items || []}
               onClick={item.onClick}
             />
