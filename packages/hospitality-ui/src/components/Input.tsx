@@ -96,6 +96,7 @@ export function Input({
       <label className={labelClasses()}>{label ? <span>{label}</span> : null}</label>
       <div className={inputContainer()}>
         <input
+          autoComplete="off"
           autoFocus={isAutofocused}
           className={inputClasses()}
           disabled={isDisabled}

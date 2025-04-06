@@ -7,6 +7,7 @@ type Props = {
 export function Form({ handleSubmit, children }: Props) {
   return (
     <form
+      autoComplete="off"
       className="h-full w-full"
       onSubmit={(e) => {
         e.preventDefault();
