@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { useResetAtom } from "jotai/utils";
 
 import { userAtom } from "../../atoms";
-import { AvailableEntities, valueof } from "../../types";
+import { AvailableEntities } from "../../types";
 import { fetchFunction, getSearchParams } from "../../utils";
 
 export type useReadProps<F> = {
@@ -11,7 +11,7 @@ export type useReadProps<F> = {
   fields: (keyof Omit<F, "created_at" | "updated_at">)[];
 };
 
-export function useRead<F extends Record<keyof F, valueof<F>>>(
+export function useRead<F>(
   { id, model, fields }: useReadProps<F>,
   options?: Pick<UseQueryOptions<F>, "enabled"> & { urlSuffix?: string }
 ) {

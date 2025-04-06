@@ -10,9 +10,9 @@ export function useSearch<F>(
   options?: Pick<UseQueryOptions<F>, "enabled">
 ) {
   const userReset = useResetAtom(userAtom);
-  return useQuery({
+  return useQuery<F[]>({
     queryKey: [model, "search", searchQuery],
-    queryFn: () => searchFunction<F>({ model, searchQuery, userReset }),
+    queryFn: () => searchFunction<F[]>({ model, searchQuery, userReset }),
     enabled: options?.enabled === undefined || !!options?.enabled,
   });
 }
