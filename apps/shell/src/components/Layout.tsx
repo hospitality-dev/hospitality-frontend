@@ -70,7 +70,7 @@ export function Layout() {
       {isLg ? <Sidebar sections={sections} /> : null}
       <div className="flex w-full flex-col">
         <Navbar />
-        <div className="overflow-auto p-4">
+        <div className="h-full overflow-auto p-4">
           <Outlet />
         </div>
         {isLg ? null : <Sidebar sections={sections} />}
