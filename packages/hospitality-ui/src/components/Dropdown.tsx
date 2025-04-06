@@ -7,8 +7,8 @@ import {
   FloatingPortal,
   FloatingTree,
   offset,
+  Placement,
   safePolygon,
-  shift,
   useClick,
   useDismiss,
   useFloating,
@@ -25,7 +25,6 @@ import {
 import { MouseEvent, ReactNode, useEffect, useRef, useState } from "react";
 import { tv } from "tailwind-variants";
 
-import { Icons } from "../enums";
 import { availableIcons, IconThickness, PositionType, Variant } from "../types";
 import { Icon } from "./Icon";
 
@@ -44,6 +43,7 @@ export type DropdownItemType = {
   onClick?: () => void;
   variant?: Variant;
   tooltip?: string;
+  placement?: Placement;
 };
 type DropdownType = {
   allowedPlacements?: PositionType;
@@ -60,7 +60,7 @@ const DropdownClasses = tv({
   },
 });
 const DropdownItemClasses = tv({
-  base: "group m-0 flex w-full cursor-pointer flex-nowrap items-center truncate border-b border-gray-300 px-1 py-1.5 text-left text-white outline-0 transition-colors group-hover:bg-gray-200 last:border-0 hover:bg-gray-200 active:bg-gray-400 active:text-white",
+  base: "group m-0 flex w-full cursor-pointer flex-nowrap items-center justify-center truncate border-b border-gray-300 px-1 py-1.5 text-left text-white outline-0 transition-colors group-hover:bg-gray-200 last:border-0 hover:bg-gray-200 active:bg-gray-400 active:text-white",
   variants: {
     variant: {
       primary: "bg-white text-gray-900",
@@ -106,11 +106,14 @@ function DropdownComponent({ allowedPlacements = [], children, items, event, isD
 
   const isNested = parentId !== null;
 
-  const { floatingStyles, refs, context } = useFloating({
+  const { floatingStyles, refs, context, placement } = useFloating({
     nodeId,
     open: isOpen,
     onOpenChange: setIsOpen,
-    middleware: [offset({ mainAxis: isNested ? 8 : 4, alignmentAxis: 0 }), autoPlacement({ allowedPlacements }), shift()],
+    middleware: [
+      offset({ mainAxis: isNested ? 8 : 4, alignmentAxis: 0 }),
+      autoPlacement({ allowedPlacements: ["left-start"] }),
+    ],
     whileElementsMounted: autoUpdate,
   });
 
@@ -165,6 +168,7 @@ function DropdownComponent({ allowedPlacements = [], children, items, event, isD
   const { getReferenceProps, getFloatingProps } = useInteractions([hover, click, role, dismiss, listNavigation]);
   const item = useListItem();
   const mergedRefs = useMergeRefs([refs.setReference, item.ref]);
+
   useEffect(() => {
     if (event) {
       refs.setPositionReference({
@@ -202,11 +206,7 @@ function DropdownComponent({ allowedPlacements = [], children, items, event, isD
           {isOpen ? (
             <FloatingPortal>
               <FloatingFocusManager context={context} initialFocus={isNested ? -1 : 0} modal={false} returnFocus={!isNested}>
-                <div
-                  ref={refs.setFloating}
-                  className={floatingBase()}
-                  style={{ transform: floatingStyles.transform }}
-                  {...getFloatingProps()}>
+                <div ref={refs.setFloating} className={floatingBase()} style={floatingStyles} {...getFloatingProps()}>
                   {filteredItems && isOpen
                     ? filteredItems.map((dropdownItem) =>
                         dropdownItem.subItems?.length ? (
@@ -232,6 +232,7 @@ function DropdownComponent({ allowedPlacements = [], children, items, event, isD
                                 tree?.events.emit("click");
                                 setIsOpen(false);
                               }}
+                              placement={placement}
                               subItems={dropdownItem.subItems.filter((subItem) => !subItem.isHidden)}
                               title={dropdownItem.title}
                               tooltip={dropdownItem?.tooltip}
@@ -257,6 +258,7 @@ function DropdownComponent({ allowedPlacements = [], children, items, event, isD
                               tree?.events.emit("click");
                               setIsOpen(false);
                             }}
+                            placement={placement}
                             subItems={dropdownItem.subItems}
                             title={dropdownItem.title}
                             tooltip={dropdownItem?.tooltip}
@@ -294,6 +296,7 @@ function DropdownItem({
     hasIcon: !!icon,
     variant,
   });
+
   return (
     <div
       className={dropdownItemClasses}
@@ -305,21 +308,15 @@ function DropdownItem({
       onKeyDown={() => {}}
       role="menuitem"
       tabIndex={0}>
-      {/* {image && !subItems?.length ? <Avatar image_id={image} size="sm" /> : null} */}
-      {label && !child ? <div className="truncate px-2 select-none">{label}</div> : null}
+      {label && !child ? <div className="w-full truncate select-none">{label}</div> : null}
       {child ?? null}
-      <div className="ml-auto flex gap-x-2 pr-2">
-        {icon ? (
+      {icon ? (
+        <div className="ml-auto flex gap-x-2 px-2">
           <div>
             <Icon color={iconColor} fontSize={20} icon={icon} thickness={iconThickness || "regular"} />
           </div>
-        ) : null}
-        {subItems?.length ? (
-          <div>
-            <Icon color={"#000000"} fontSize={20} icon={Icons["arrow-right"]} thickness={iconThickness || "regular"} />
-          </div>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 }
