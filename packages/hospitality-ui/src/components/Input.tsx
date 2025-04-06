@@ -84,6 +84,7 @@ export function Input({
   helperText,
   value,
   onChange,
+  onKeyDown,
   type = "text",
   action,
 }: Props) {
@@ -103,6 +104,7 @@ export function Input({
           disabled={isDisabled}
           name={name}
           onChange={onChange}
+          onKeyDown={onKeyDown}
           placeholder={placeholder}
           type={type}
           value={value}
