@@ -6,6 +6,8 @@ export const LocationsSchema = object({
   ownerId: string().uuid().nonempty(),
   companyId: string().uuid().nonempty(),
   address: string().nullish(),
+  boundingBox: number().array().nullish(),
+  placeId: number().nullish(),
   phone: string().nullish(),
   email: string().nullish(),
   latitude: number().nullish(),
@@ -19,6 +21,8 @@ export const LocationsInitializerSchema = object({
   email: string().nullish(),
   latitude: number().nullish(),
   longitude: number().nullish(),
+  boundingBox: number().array().nullish(),
+  placeId: number().nullish(),
 });
 export const LocationsMutatorSchema = object({
   title: string().optional(),
@@ -27,6 +31,8 @@ export const LocationsMutatorSchema = object({
   email: string().nullish(),
   latitude: number().nullish(),
   longitude: number().nullish(),
+  boundingBox: number().array().nullish(),
+  placeId: number().nullish(),
 });
 
 export const LocationsUsersSchema = object({
