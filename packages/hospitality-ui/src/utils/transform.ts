@@ -1,6 +1,6 @@
 import { ValidationError } from "@tanstack/react-form";
 
-import { AddressesType, LocationsType, OptionType } from "../types";
+import { AddressesType, ContactType, OptionType } from "../types";
 
 export function getSentenceCase(field: string) {
   const text = field?.replaceAll(/[_-]/g, " ")?.replace(/([A-Z])/g, " $1") || "";
@@ -19,7 +19,7 @@ export function formatForOptions<T extends { id: string; title: string }>(
 }
 export function formatAddressesForOptions(
   data: AddressesType[]
-): OptionType<Pick<LocationsType, "latitude" | "longitude" | "boundingBox">>[] {
+): OptionType<Pick<ContactType, "latitude" | "longitude" | "boundingBox">>[] {
   if (!data) return [];
   return data.map((item) => ({
     label: `${item.address.road} ${item.address.houseNumber} ${item.address.suburb ? `| ${item.address.suburb}` : ""}`.trim(),
