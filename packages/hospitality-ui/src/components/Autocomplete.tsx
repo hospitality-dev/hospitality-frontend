@@ -67,7 +67,6 @@ export function Autocomplete<OT>({
             maxHeight: `${availableHeight}px`,
           });
         },
-        padding: 10,
       }),
     ],
   });
@@ -101,7 +100,7 @@ export function Autocomplete<OT>({
           "aria-autocomplete": "list",
           ref: refs.setReference,
         })}
-        className="w-full">
+        className="h-fit w-full">
         <Input
           isDisabled={isDisabled}
           label={label}
