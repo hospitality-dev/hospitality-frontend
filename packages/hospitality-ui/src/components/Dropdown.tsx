@@ -80,15 +80,15 @@ const DropdownItemClasses = tv({
       true: "justify-start gap-x-2",
     },
     hasSubitems: {
-      true: {},
-      false: {},
+      true: "",
+      false: "",
     },
     isEvent: {
       true: "absolute",
     },
     isRoot: {
-      true: {},
-      false: {},
+      true: "p-0",
+      false: "",
     },
   },
 });
