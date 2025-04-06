@@ -93,18 +93,6 @@ export function Autocomplete<OT = null>({
     }
   }, [query, items.length]);
 
-  //   function onChange(event: ChangeEvent<HTMLInputElement>) {
-  //     const value = event.target.value;
-  //     setInputValue(value);
-
-  //     if (value) {
-  //       setOpen(true);
-  //       setActiveIndex(0);
-  //     } else {
-  //       setOpen(false);
-  //     }
-  //   }
-
   return (
     <>
       <div
@@ -119,11 +107,14 @@ export function Autocomplete<OT = null>({
           name="search"
           onChange={(e) => onQueryChange(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Backspace" || e.key === "Delete") {
+            if ((e.key === "Backspace" || e.key === "Delete") && value) {
               e.preventDefault();
               e.stopPropagation();
               onQueryChange("");
               onChange(null);
+            } else if (e.key !== "Backspace" && e.key !== "Delete" && value) {
+              e.preventDefault();
+              e.stopPropagation();
             }
           }}
           size={size}
