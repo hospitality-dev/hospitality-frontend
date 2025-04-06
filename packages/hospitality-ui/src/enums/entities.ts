@@ -24,3 +24,41 @@ export const AvailableSearchableEntitiesEnum = [
   "locations_users",
   "users",
 ] as const;
+
+export const AvailableContactTypes = {
+  email: [
+    "work_email",
+    "personal_email",
+    "support_email",
+    "billing_email",
+    "sales_email",
+    "marketing_email",
+    "hr_email",
+    "contact_email",
+  ] as const,
+  phone: [
+    "work_phone",
+    "personal_phone",
+    "mobile_phone",
+    "home_phone",
+    "sales_phone",
+    "support_phone",
+    "customer_service_phone",
+    "general_inquiry_phone",
+    "whatsapp",
+    "fax",
+  ] as const,
+  address: [
+    "work_address",
+    "home_address",
+    "billing_address",
+    "shipping_address",
+    "office_address",
+    "headquarters_address",
+    "warehouse_address",
+    "company_website",
+    "support_website",
+    "website",
+  ] as const,
+  other: ["linkedin", "twitter", "facebook", "instagram", "slack"] as const,
+};
