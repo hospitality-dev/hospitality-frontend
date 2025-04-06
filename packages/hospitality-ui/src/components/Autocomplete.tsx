@@ -33,7 +33,7 @@ type Props<OT> = {
   isDisabled?: boolean;
 };
 
-export function Autocomplete<OT = null>({
+export function Autocomplete<OT>({
   label,
   variant = "primary",
   size = "md",
