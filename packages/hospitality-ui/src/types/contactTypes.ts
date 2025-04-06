@@ -42,6 +42,7 @@ export const ContactSchema = object({
   id: string().uuid().nonempty(),
   title: string().nullable(),
   parentId: string().uuid().nonempty(),
+  placeId: number().nullish(),
   prefix: string().max(4).nullish(),
   value: string().nonempty("Contact value cannot be empty."),
   latitude: number().nullish(),
@@ -58,6 +59,10 @@ export const ContactInitializerSchema = object({
   prefix: string().max(4).nullish(),
   value: string().nonempty("Contact value cannot be empty."),
   isPublic: boolean().default(false).nullable(),
+  placeId: number().nullish(),
+  latitude: number().nullish(),
+  longitude: number().nullish(),
+  boundingBox: number().array().nullish(),
   contactType: ContactTypesSchema,
 });
 
@@ -67,6 +72,10 @@ export const ContactMutatorSchema = object({
   prefix: string().max(4).nullish(),
   value: string().nonempty("Contact value cannot be empty."),
   isPublic: boolean().default(false).nullable(),
+  placeId: number().nullish(),
+  latitude: number().nullish(),
+  longitude: number().nullish(),
+  boundingBox: number().array().nullish(),
   contactType: ContactTypesSchema,
 });
 
