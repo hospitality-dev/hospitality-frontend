@@ -34,11 +34,11 @@ type Props<OT> = {
 
 const classes = tv({
   slots: {
-    container: "flex h-fit w-full flex-col",
+    container: "flex h-fit w-full min-w-fit flex-col",
     labelClasses: "font-small text-gray-900",
     selectBox: "relative flex w-full items-center bg-white",
-    base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center rounded-md border px-1 shadow-sm outline-0",
-    icon: "absolute right-1",
+    base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center gap-x-1 rounded-md border px-1 shadow-sm outline-0",
+    icon: "",
     optionsContainer: "z-[61] divide-y divide-gray-200 overflow-y-auto rounded-md border border-gray-300 bg-white shadow-lg",
   },
 
@@ -58,6 +58,7 @@ const classes = tv({
       lg: { labelClasses: "text-lg", base: "h-9" },
       xl: { labelClasses: "text-xl", base: "h-10" },
     },
+
     isDisabled: { true: "cursor-not-allowed" },
     hasNoBorder: { true: "border-0 outline-0 outline-none" },
   },
@@ -74,12 +75,6 @@ export function Select<OT>({
   options = [],
   value,
 }: Props<OT>) {
-  const { base, container, labelClasses, icon, selectBox, optionsContainer } = classes({
-    variant,
-    size,
-    isDisabled: isDisabled || !options.length,
-    hasNoBorder,
-  });
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -119,7 +114,12 @@ export function Select<OT>({
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([dismiss, role, listNav, click]);
 
   const selectedItemLabel = options.find((opt) => opt?.value === value)?.label || "";
-
+  const { base, container, labelClasses, icon, selectBox, optionsContainer } = classes({
+    variant,
+    size,
+    isDisabled: isDisabled || !options.length,
+    hasNoBorder,
+  });
   return (
     <div className={container()}>
       <p className={labelClasses()}>{label ? <label>{label}</label> : null}</p>
@@ -132,9 +132,9 @@ export function Select<OT>({
           tabIndex={0}
           {...getReferenceProps()}>
           {!options?.length ? "No options" : selectedItemLabel || "Select one"}
-          <span className={icon()}>
+          <div className={icon()}>
             <Icon icon={Icons["arrow-down"]} />
-          </span>
+          </div>
         </div>
       </div>
       {isOpen ? (
