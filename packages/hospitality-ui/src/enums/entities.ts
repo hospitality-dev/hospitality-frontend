@@ -38,17 +38,16 @@ export const AvailableContactTypes = {
     "contact_email",
   ] as const,
   phone: {
-    professional: ["work_phone", "mobile_phone", "whatsapp", "fax"] as const,
-    personal: [
-      "personal_phone",
+    professional: [
+      "work_phone",
       "mobile_phone",
-      "home_phone",
       "sales_phone",
       "support_phone",
       "customer_service_phone",
       "general_inquiry_phone",
-      "whatsapp",
+      "fax",
     ] as const,
+    personal: ["personal_phone", "mobile_phone", "home_phone"] as const,
   },
   address: {
     professional: [
@@ -63,7 +62,7 @@ export const AvailableContactTypes = {
   },
   website: { professional: ["company_website", "support_website", "website"] as const, personal: [] },
   other: {
-    professional: ["linkedin", "twitter", "facebook", "instagram", "slack"] as const,
-    personal: ["linkedin", "twitter", "facebook", "instagram"] as const,
+    professional: ["whatsapp", "linkedin", "twitter", "facebook", "instagram", "slack"] as const,
+    personal: ["whatsapp", "linkedin", "twitter", "facebook", "instagram"] as const,
   },
 };
