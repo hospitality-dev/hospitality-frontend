@@ -10,6 +10,7 @@ export const AvailableEntitiesEnum = [
   "locations_available_products",
   "locations_products",
   "locations_users",
+  "contacts",
   "unknown",
 ] as const;
 
