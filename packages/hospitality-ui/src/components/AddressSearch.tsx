@@ -8,11 +8,12 @@ import { Autocomplete } from "./Autocomplete";
 type Props = {
   label?: string;
   isDisabled?: boolean;
+  isAutofocused?: boolean;
   onChange: (item: OptionType<Pick<ContactType, "latitude" | "longitude" | "boundingBox">> | null) => void;
   value: string | null;
 };
 
-export function AddressSearch({ label = "Address", onChange, isDisabled, value }: Props) {
+export function AddressSearch({ label = "Address", onChange, isDisabled, value, isAutofocused }: Props) {
   const [searchQuery, setQuery] = useState("");
   const debouncedValue = useDebounce<typeof searchQuery>(searchQuery);
   const { data = [], isFetched } = useSearch<AddressesType>(
@@ -22,6 +23,8 @@ export function AddressSearch({ label = "Address", onChange, isDisabled, value }
 
   return (
     <Autocomplete
+      helperText="Enter the full address e.g. Jurija Gagarina 25 / Ugrinovacka 17 Zemun"
+      isAutofocused={isAutofocused}
       isDisabled={isDisabled}
       isSearch
       label={label}
