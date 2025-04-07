@@ -14,6 +14,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 import { OptionType, Size, Variant } from "../types";
+import { formatDisplayItem } from "../utils";
 import { Input } from "./Input";
 import { OptionItem } from "./OptionItem";
 
@@ -30,6 +31,7 @@ type Props<OT> = {
   isSearch?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
+  isAutofocused?: boolean;
 };
 
 export function Autocomplete<OT>({
@@ -43,6 +45,8 @@ export function Autocomplete<OT>({
   isSearch,
   isDisabled,
   options = [],
+  isAutofocused,
+  helperText,
 }: Props<OT>) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -101,6 +105,8 @@ export function Autocomplete<OT>({
         })}
         className="h-fit w-full">
         <Input
+          helperText={helperText}
+          isAutofocused={isAutofocused}
           isDisabled={isDisabled}
           label={label}
           name="search"
@@ -120,7 +126,7 @@ export function Autocomplete<OT>({
           }}
           size={size}
           type="search"
-          value={displayItem?.label || query}
+          value={displayItem ? formatDisplayItem(displayItem) : query}
           variant={variant}
         />
       </div>

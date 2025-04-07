@@ -22,11 +22,9 @@ export function formatAddressesForOptions(
 ): OptionType<Pick<ContactType, "latitude" | "longitude" | "boundingBox">>[] {
   if (!data) return [];
   return data.map((item) => {
-    const description = [item.address.suburb, item.address.city, item.address.postcode].filter(Boolean).join(" | ");
-
     return {
-      label: `${item.address.road} ${item.address.houseNumber} ${description ? `| ${description}` : ""}`.trim(),
-      description,
+      label: `${item.address.road} ${item.address.houseNumber}`.trim(),
+      description: [item.address.suburb, item.address.city, item.address.postcode].filter(Boolean).join(" | "),
       value: item.placeId.toString(),
       additionalData: {
         latitude: item.lat,
@@ -39,4 +37,8 @@ export function formatAddressesForOptions(
 
 export function formatErrorsForHelperText(errors: ValidationError[]) {
   return errors.join("\n ");
+}
+
+export function formatDisplayItem<OT>(item: OptionType<OT>): string {
+  return `${item.label}${item.description ? ` | ${item.description}` : ""}`.trim();
 }
