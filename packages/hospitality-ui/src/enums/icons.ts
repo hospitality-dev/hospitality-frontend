@@ -35,6 +35,7 @@ export const Icons = {
   modules: "oui:index-mapping" as const,
   office_address: "fluent:building-20-regular" as const,
   phone: "ph:phone" as const,
+  "remove-item": "mdi:basket-minus-outline" as const,
   "remove-user": "ph:user-minus" as const,
   sales_phone: "ph:phone-incoming" as const,
   save: "ph:floppy-disk" as const,
