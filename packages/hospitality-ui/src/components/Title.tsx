@@ -29,11 +29,11 @@ const classes = tv({
       error: "border-error-highlight",
     },
     size: {
-      xs: "text-xs",
-      sm: "text-sm",
-      md: "text-base",
-      lg: "text-lg",
-      xl: "text-xl",
+      xs: "text-xs [&>svg]:text-sm",
+      sm: "text-sm [&>svg]:text-base",
+      md: "text-base [&>svg]:text-lg",
+      lg: "text-lg [&>svg]:text-xl",
+      xl: "text-xl [&>svg]:text-2xl",
     },
     hasBorder: {
       true: "border-b",
