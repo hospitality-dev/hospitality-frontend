@@ -75,7 +75,26 @@ const DropdownItemClasses = tv({
   },
 });
 
-function DropdownComponent({ allowedPlacements = [], children, items, event, isDisabled }: DropdownType) {
+function DropdownComponent({
+  allowedPlacements = [
+    "left",
+    "left-start",
+    "left-end",
+    "right",
+    "right-start",
+    "right-end",
+    "top",
+    "top-start",
+    "top-end",
+    "bottom",
+    "bottom-start",
+    "bottom-end",
+  ],
+  children,
+  items,
+  event,
+  isDisabled,
+}: DropdownType) {
   const { base, floatingBase } = DropdownClasses();
 
   const [isOpen, setIsOpen] = useState(false);
