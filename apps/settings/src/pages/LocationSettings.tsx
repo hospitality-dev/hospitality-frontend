@@ -101,66 +101,68 @@ export function LocationSettings() {
                 <form.Field
                   children={(field) =>
                     field.state.value.length
-                      ? field.state.value
-                          .filter((contact) => contact.contactType.includes("address"))
-                          .map((contact, i) => (
-                            <div key={contact.id} className="flex w-full flex-row gap-x-2 md:col-span-2">
-                              <form.Field
-                                children={(subfield) => (
-                                  <Input
-                                    helperText="Customize the title that will appear for others."
-                                    label="Address display title"
-                                    name={subfield.name}
-                                    onChange={(e) => subfield.handleChange(e.target.value)}
-                                    value={subfield.state.value || ""}
-                                  />
-                                )}
-                                name={`contacts[${i}].title`}
-                              />
-                              <form.Subscribe<[string | null, string]>
-                                children={(title) => (
-                                  <form.Field
-                                    children={(subfield) => (
-                                      <AddressSearch
-                                        isDisabled={isLoading}
-                                        label={title[0] || getSentenceCase(contact.contactType)}
-                                        onChange={(value) => {
-                                          if (value) {
-                                            subfield.handleChange(value.value);
-                                            form.setFieldValue(`contacts[${i}].placeId`, Number(value.value || 0));
-                                            if (value.additionalData?.longitude)
-                                              form.setFieldValue(
-                                                `contacts[${i}].longitude`,
-                                                Number(value.additionalData?.longitude || 0)
-                                              );
-                                            if (value.additionalData?.latitude)
-                                              form.setFieldValue(
-                                                `contacts[${i}].latitude`,
-                                                Number(value.additionalData?.latitude || 0)
-                                              );
-                                            if (value.additionalData?.boundingBox)
-                                              form.setFieldValue(
-                                                `contacts[${i}].boundingBox`,
-                                                value.additionalData?.boundingBox
-                                              );
-                                          } else {
-                                            subfield.handleChange("");
-                                            form.setFieldValue(`contacts[${i}].placeId`, null);
-                                            form.setFieldValue(`contacts[${i}].longitude`, null);
-                                            form.setFieldValue(`contacts[${i}].latitude`, null);
-                                            form.setFieldValue(`contacts[${i}].boundingBox`, null);
-                                          }
-                                        }}
-                                        value={contact.value}
-                                      />
-                                    )}
-                                    name={`contacts[${i}].value`}
-                                  />
-                                )}
-                                selector={(state) => [state.values.contacts[i].title, state.values.contacts[i].value]}
-                              />
-                            </div>
-                          ))
+                      ? field.state.value.map((contact, i) => {
+                          if (contact.contactType.includes("address"))
+                            return (
+                              <div key={contact.id} className="flex w-full flex-row gap-x-2 md:col-span-2">
+                                <form.Field
+                                  children={(subfield) => (
+                                    <Input
+                                      helperText="Customize the title that will appear for others."
+                                      label="Address display title"
+                                      name={subfield.name}
+                                      onChange={(e) => subfield.handleChange(e.target.value)}
+                                      value={subfield.state.value || ""}
+                                    />
+                                  )}
+                                  name={`contacts[${i}].title`}
+                                />
+                                <form.Subscribe<[string | null, string]>
+                                  children={(title) => (
+                                    <form.Field
+                                      children={(subfield) => (
+                                        <AddressSearch
+                                          isDisabled={isLoading}
+                                          label={title[0] || getSentenceCase(contact.contactType)}
+                                          onChange={(value) => {
+                                            if (value) {
+                                              subfield.handleChange(value.value);
+                                              form.setFieldValue(`contacts[${i}].placeId`, Number(value.value || 0));
+                                              if (value.additionalData?.longitude)
+                                                form.setFieldValue(
+                                                  `contacts[${i}].longitude`,
+                                                  Number(value.additionalData?.longitude || 0)
+                                                );
+                                              if (value.additionalData?.latitude)
+                                                form.setFieldValue(
+                                                  `contacts[${i}].latitude`,
+                                                  Number(value.additionalData?.latitude || 0)
+                                                );
+                                              if (value.additionalData?.boundingBox)
+                                                form.setFieldValue(
+                                                  `contacts[${i}].boundingBox`,
+                                                  value.additionalData?.boundingBox
+                                                );
+                                            } else {
+                                              subfield.handleChange("");
+                                              form.setFieldValue(`contacts[${i}].placeId`, null);
+                                              form.setFieldValue(`contacts[${i}].longitude`, null);
+                                              form.setFieldValue(`contacts[${i}].latitude`, null);
+                                              form.setFieldValue(`contacts[${i}].boundingBox`, null);
+                                            }
+                                          }}
+                                          value={subfield.state.value}
+                                        />
+                                      )}
+                                      name={`contacts[${i}].value`}
+                                    />
+                                  )}
+                                  selector={(state) => [state.values.contacts[i].title, state.values.contacts[i].value]}
+                                />
+                              </div>
+                            );
+                          return null;
+                        })
                       : "ALERT HERE"
                   }
                   mode="array"
@@ -195,66 +197,44 @@ export function LocationSettings() {
                 <form.Field
                   children={(field) =>
                     field.state.value.length
-                      ? field.state.value
-                          .filter((contact) => contact.contactType.includes("phone") || contact.contactType === "fax")
-                          .map((contact, i) => (
-                            <div key={contact.id} className="flex w-full flex-row gap-x-2 md:col-span-2">
-                              <form.Field
-                                children={(subfield) => (
-                                  <Input
-                                    helperText="Customize the title that will appear for others."
-                                    label="Address display title"
-                                    name={subfield.name}
-                                    onChange={(e) => subfield.handleChange(e.target.value)}
-                                    value={subfield.state.value || ""}
-                                  />
-                                )}
-                                name={`contacts[${i}].title`}
-                              />
-                              <form.Subscribe<[string | null, string]>
-                                children={(title) => (
-                                  <form.Field
-                                    children={(subfield) => (
-                                      <AddressSearch
-                                        isDisabled={isLoading}
-                                        label={title[0] || getSentenceCase(contact.contactType)}
-                                        onChange={(value) => {
-                                          if (value) {
-                                            subfield.handleChange(value.value);
-                                            form.setFieldValue(`contacts[${i}].placeId`, Number(value.value || 0));
-                                            if (value.additionalData?.longitude)
-                                              form.setFieldValue(
-                                                `contacts[${i}].longitude`,
-                                                Number(value.additionalData?.longitude || 0)
-                                              );
-                                            if (value.additionalData?.latitude)
-                                              form.setFieldValue(
-                                                `contacts[${i}].latitude`,
-                                                Number(value.additionalData?.latitude || 0)
-                                              );
-                                            if (value.additionalData?.boundingBox)
-                                              form.setFieldValue(
-                                                `contacts[${i}].boundingBox`,
-                                                value.additionalData?.boundingBox
-                                              );
-                                          } else {
-                                            subfield.handleChange("");
-                                            form.setFieldValue(`contacts[${i}].placeId`, null);
-                                            form.setFieldValue(`contacts[${i}].longitude`, null);
-                                            form.setFieldValue(`contacts[${i}].latitude`, null);
-                                            form.setFieldValue(`contacts[${i}].boundingBox`, null);
-                                          }
-                                        }}
-                                        value={contact.value}
-                                      />
-                                    )}
-                                    name={`contacts[${i}].value`}
-                                  />
-                                )}
-                                selector={(state) => [state.values.contacts[i].title, state.values.contacts[i].value]}
-                              />
-                            </div>
-                          ))
+                      ? field.state.value.map((contact, i) => {
+                          if (contact.contactType.includes("phone") || contact.contactType === "fax")
+                            return (
+                              <div key={contact.id} className="flex w-full flex-row gap-x-2 md:col-span-2">
+                                <form.Field
+                                  children={(subfield) => (
+                                    <Input
+                                      helperText="Customize the title that will appear for others."
+                                      label="Address display title"
+                                      name={subfield.name}
+                                      onChange={(e) => subfield.handleChange(e.target.value)}
+                                      value={subfield.state.value || ""}
+                                    />
+                                  )}
+                                  name={`contacts[${i}].title`}
+                                />
+                                <form.Subscribe<[string | null, string]>
+                                  children={(watched) => (
+                                    <form.Field
+                                      children={(subfield) => (
+                                        <Input
+                                          isDisabled={isLoading}
+                                          label={watched[0] || getSentenceCase(contact.contactType)}
+                                          name={subfield.name}
+                                          onChange={(e) => subfield.handleChange(e.target.value)}
+                                          type="tel"
+                                          value={subfield.state.value}
+                                        />
+                                      )}
+                                      name={`contacts[${i}].value`}
+                                    />
+                                  )}
+                                  selector={(state) => [state.values.contacts[i].title, state.values.contacts[i].value]}
+                                />
+                              </div>
+                            );
+                          return null;
+                        })
                       : "ALERT HERE"
                   }
                   mode="array"
