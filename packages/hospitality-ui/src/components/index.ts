@@ -6,6 +6,7 @@ export * from "./BarcodeScanner";
 export * from "./Button";
 export * from "./Card";
 export * from "./Checkbox";
+export * from "./Collapsible";
 export * from "./Drawer";
 export * from "./Dropdown";
 export * from "./Form";
