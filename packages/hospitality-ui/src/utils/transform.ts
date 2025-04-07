@@ -21,16 +21,20 @@ export function formatAddressesForOptions(
   data: AddressesType[]
 ): OptionType<Pick<ContactType, "latitude" | "longitude" | "boundingBox">>[] {
   if (!data) return [];
-  return data.map((item) => ({
-    label: `${item.address.road} ${item.address.houseNumber} ${item.address.suburb ? `| ${item.address.suburb}` : ""}`.trim(),
-    description: [item.address.city, item.address.postcode].filter(Boolean).join(" | "),
-    value: item.placeId.toString(),
-    additionalData: {
-      latitude: item.lat,
-      longitude: item.lng,
-      boundingBox: item.boundingbox,
-    },
-  }));
+  return data.map((item) => {
+    const description = [item.address.suburb, item.address.city, item.address.postcode].filter(Boolean).join(" | ");
+
+    return {
+      label: `${item.address.road} ${item.address.houseNumber} ${description ? `| ${description}` : ""}`.trim(),
+      description,
+      value: item.placeId.toString(),
+      additionalData: {
+        latitude: item.lat,
+        longitude: item.lng,
+        boundingBox: item.boundingbox,
+      },
+    };
+  });
 }
 
 export function formatErrorsForHelperText(errors: ValidationError[]) {
