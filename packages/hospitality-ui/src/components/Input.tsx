@@ -7,7 +7,7 @@ import { availableIcons, Size, Variant } from "../types/baseTypes";
 import { defaultMask, numbersOnlyMask, phoneMask } from "../utils";
 import { Button } from "./Button";
 
-type AllowedTypes = Extract<HTMLInputTypeAttribute, "text" | "number" | "tel">;
+type AllowedTypes = Extract<HTMLInputTypeAttribute, "text" | "number" | "tel" | "search">;
 
 type Props = {
   label?: string;
@@ -32,6 +32,7 @@ type Props = {
 const masks: Record<AllowedTypes, MaskitoOptions> = {
   number: numbersOnlyMask,
   text: defaultMask,
+  search: defaultMask,
   tel: phoneMask,
 };
 
