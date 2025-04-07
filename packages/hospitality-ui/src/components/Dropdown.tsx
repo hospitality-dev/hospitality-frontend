@@ -7,7 +7,6 @@ import {
   FloatingPortal,
   FloatingTree,
   offset,
-  Placement,
   safePolygon,
   useClick,
   useDismiss,
@@ -25,26 +24,9 @@ import {
 import { MouseEvent, ReactNode, useEffect, useRef, useState } from "react";
 import { tv } from "tailwind-variants";
 
-import { availableIcons, IconThickness, PositionType, Variant } from "../types";
+import { DropdownItemType, PositionType } from "../types";
 import { Icon } from "./Icon";
 
-export type DropdownItemType = {
-  id: string;
-  allowedPlacements?: PositionType;
-  title?: string;
-  child?: ReactNode;
-  icon?: availableIcons;
-  image?: string;
-  iconColor?: string;
-  iconThickness?: IconThickness;
-  subItems?: DropdownItemType[];
-  isDisabled?: boolean;
-  isHidden?: boolean;
-  onClick?: () => void;
-  variant?: Variant;
-  tooltip?: string;
-  placement?: Placement;
-};
 type DropdownType = {
   allowedPlacements?: PositionType;
   children?: ReactNode | null;

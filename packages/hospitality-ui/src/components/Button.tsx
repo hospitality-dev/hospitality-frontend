@@ -3,8 +3,8 @@ import { Icon } from "@iconify/react";
 import { MouseEventHandler } from "react";
 import { tv } from "tailwind-variants";
 
-import { availableIcons, Size, Variant } from "../types/baseTypes";
-import { Dropdown, DropdownItemType } from "./Dropdown";
+import { availableIcons, DropdownItemType, Size, Variant } from "../types/baseTypes";
+import { Dropdown } from "./Dropdown";
 
 type Props = {
   label?: string;

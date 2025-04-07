@@ -1,9 +1,12 @@
+import { Placement } from "@floating-ui/react";
 import {
   AvailableActionsEnum,
   AvailableEntitiesEnum,
   AvailableSearchableEntitiesEnum,
   valueof,
 } from "@hospitality/hospitality-ui/src";
+import { ReactNode } from "@tanstack/react-router";
+import { MouseEventHandler } from "react";
 
 import { Icons } from "../enums/icons";
 
@@ -16,13 +19,8 @@ export type Variant = "primary" | "secondary" | "info" | "success" | "warning" |
 
 export type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
-export type OptionType<T> = {
-  label: string;
-  description?: string;
-  value: string;
-  isDisabled?: boolean;
-  additionalData?: T;
-};
+export type availableIcons = valueof<typeof Icons>;
+export type IconThickness = "thin" | "light" | "regular" | "bold" | "fill";
 
 export type PositionType = (
   | "top"
@@ -39,8 +37,45 @@ export type PositionType = (
   | "bottom-end"
 )[];
 
-export type availableIcons = valueof<typeof Icons>;
-export type IconThickness = "thin" | "light" | "regular" | "bold" | "fill";
+export type OptionType<T> = {
+  label: string;
+  description?: string;
+  value: string;
+  isDisabled?: boolean;
+  additionalData?: T;
+};
+
+export type DropdownItemType = {
+  id: string;
+  allowedPlacements?: PositionType;
+  title?: string;
+  child?: ReactNode;
+  icon?: availableIcons;
+  image?: string;
+  iconColor?: string;
+  iconThickness?: IconThickness;
+  subItems?: DropdownItemType[];
+  isDisabled?: boolean;
+  isHidden?: boolean;
+  onClick?: () => void;
+  variant?: Variant;
+  tooltip?: string;
+  placement?: Placement;
+};
+
+export type ActionType = {
+  id: string;
+  label?: string;
+  variant?: Variant;
+  size?: Size;
+  isDisabled?: boolean;
+  icon?: availableIcons;
+  className?: string;
+  onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+  items?: DropdownItemType[];
+  allowedPlacements?: Placement[];
+};
+
 export interface IconType {
   icon: availableIcons;
   fontSize?: number;
