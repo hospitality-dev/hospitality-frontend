@@ -3,6 +3,7 @@ import {
   AvailableContactTypes,
   Avatar,
   Button,
+  Card,
   Collapsible,
   ContactType,
   ContactTypes,
@@ -12,6 +13,7 @@ import {
   Input,
   LocationsMutatorType,
   LocationsType,
+  ReactFormExtendedApi,
   Title,
   useAuth,
   useForm,
@@ -31,6 +33,98 @@ function getBaseContact(contactType: ContactTypes): ContactType {
     isPublic: false,
   };
 }
+
+function ContactDisplay({
+  contact,
+  form,
+  index,
+  isDisabled,
+  type,
+}: {
+  contact: LocationsMutatorType["contacts"][number];
+  form: ReactFormExtendedApi<LocationsMutatorType>;
+  index: number;
+  isDisabled?: boolean;
+  type: "address" | "phone" | "email" | "other";
+}) {
+  return (
+    <Card isFullWidth>
+      <div className="flex w-full flex-col p-2 lg:flex-row">
+        <form.Field
+          children={(subfield) => (
+            <div className="flex flex-col">
+              <Title
+                hasBorder
+                icon={Icons[contact.contactType]}
+                label={subfield.state.value || getSentenceCase(contact.contactType)}
+                size="sm"
+                variant="secondary"
+              />
+              <Input
+                helperText="Customize the title of the address."
+                label="Address display title"
+                name={subfield.name}
+                onChange={(e) => subfield.handleChange(e.target.value)}
+                value={subfield.state.value || ""}
+              />
+            </div>
+          )}
+          name={`contacts[${index}].title`}
+        />
+        <form.Field
+          children={(subfield) => {
+            if (type === "address")
+              return (
+                <AddressSearch
+                  isAutofocused
+                  isDisabled={isDisabled}
+                  label="Address"
+                  onChange={(value) => {
+                    if (value) {
+                      subfield.handleChange(value.value);
+                      form.setFieldValue(`contacts[${index}].placeId`, Number(value.value || 0));
+                      if (value.additionalData?.longitude)
+                        form.setFieldValue(`contacts[${index}].longitude`, Number(value.additionalData?.longitude || 0));
+                      if (value.additionalData?.latitude)
+                        form.setFieldValue(`contacts[${index}].latitude`, Number(value.additionalData?.latitude || 0));
+                      if (value.additionalData?.boundingBox)
+                        form.setFieldValue(`contacts[${index}].boundingBox`, value.additionalData?.boundingBox);
+                    } else {
+                      subfield.handleChange("");
+                      form.setFieldValue(`contacts[${index}].placeId`, null);
+                      form.setFieldValue(`contacts[${index}].longitude`, null);
+                      form.setFieldValue(`contacts[${index}].latitude`, null);
+                      form.setFieldValue(`contacts[${index}].boundingBox`, null);
+                    }
+                  }}
+                  value={subfield.state.value}
+                />
+              );
+            if (type === "phone")
+              return (
+                <form.Field
+                  children={(subfield) => (
+                    <Input
+                      isDisabled={isDisabled}
+                      label={getSentenceCase(contact.contactType)}
+                      name={subfield.name}
+                      onChange={(e) => subfield.handleChange(e.target.value)}
+                      type="tel"
+                      value={subfield.state.value}
+                    />
+                  )}
+                  name={`contacts[${index}].value`}
+                />
+              );
+            return null;
+          }}
+          name={`contacts[${index}].value`}
+        />
+      </div>
+    </Card>
+  );
+}
+
 export function LocationSettings() {
   const auth = useAuth();
   const { isSmallScreen } = useScreenSize();
@@ -53,8 +147,8 @@ export function LocationSettings() {
   return (
     <Form handleSubmit={form.handleSubmit}>
       <div className="flex h-full flex-col justify-between gap-y-2">
-        <div className="grid grid-cols-1 content-start gap-2 md:grid-cols-2">
-          <div className="flex items-end gap-x-2 md:col-span-2">
+        <div className="flex flex-col gap-y-2">
+          <div className="flex items-end gap-x-2">
             <div>
               <Avatar label={data?.title || ""} size={isSmallScreen ? "xl" : "md"} />
             </div>
@@ -71,178 +165,100 @@ export function LocationSettings() {
               name="title"
             />
           </div>
-          <div className="md:col-span-2">
-            <Title hasBorder label="Contacts" size="lg" variant="primary" />
-          </div>
+          <Title hasBorder label="Contacts" size="xl" variant="primary" />
 
-          <div className="md:col-span-2">
-            <Collapsible
-              icon={Icons.office_address}
-              isOpen
-              items={[
-                {
-                  id: "1",
-                  label: "Add",
-                  icon: Icons.add,
-                  variant: "info",
+          <Collapsible
+            icon={Icons.office_address}
+            isOpen
+            items={[
+              {
+                id: "1",
+                label: "Add",
+                icon: Icons.add,
+                variant: "info",
+                allowedPlacements: ["left-start"] as const,
+                onClick: () => {},
+                items: AvailableContactTypes.address.professional.map((addr) => ({
+                  icon: Icons[addr],
                   allowedPlacements: ["left-start"] as const,
-                  onClick: () => {},
-                  items: AvailableContactTypes.address.professional.map((addr) => ({
-                    icon: Icons[addr],
-                    allowedPlacements: ["left-start"] as const,
-                    id: addr,
-                    title: getSentenceCase(addr),
-                    onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(addr)),
-                  })),
-                },
-              ]}
-              label="Addresses">
-              <div className="flex flex-col gap-y-2 py-1">
-                <form.Field
-                  children={(field) =>
-                    field.state.value.length
-                      ? field.state.value.map((contact, i) => {
-                          if (contact.contactType.includes("address"))
-                            return (
-                              <div key={contact.id} className="flex w-full flex-row gap-x-2 md:col-span-2">
-                                <form.Field
-                                  children={(subfield) => (
-                                    <Input
-                                      helperText="Customize the title that will appear for others."
-                                      label="Address display title"
-                                      name={subfield.name}
-                                      onChange={(e) => subfield.handleChange(e.target.value)}
-                                      value={subfield.state.value || ""}
-                                    />
-                                  )}
-                                  name={`contacts[${i}].title`}
-                                />
-                                <form.Subscribe<[string | null, string]>
-                                  children={(title) => (
-                                    <form.Field
-                                      children={(subfield) => (
-                                        <AddressSearch
-                                          isDisabled={isLoading}
-                                          label={title[0] || getSentenceCase(contact.contactType)}
-                                          onChange={(value) => {
-                                            if (value) {
-                                              subfield.handleChange(value.value);
-                                              form.setFieldValue(`contacts[${i}].placeId`, Number(value.value || 0));
-                                              if (value.additionalData?.longitude)
-                                                form.setFieldValue(
-                                                  `contacts[${i}].longitude`,
-                                                  Number(value.additionalData?.longitude || 0)
-                                                );
-                                              if (value.additionalData?.latitude)
-                                                form.setFieldValue(
-                                                  `contacts[${i}].latitude`,
-                                                  Number(value.additionalData?.latitude || 0)
-                                                );
-                                              if (value.additionalData?.boundingBox)
-                                                form.setFieldValue(
-                                                  `contacts[${i}].boundingBox`,
-                                                  value.additionalData?.boundingBox
-                                                );
-                                            } else {
-                                              subfield.handleChange("");
-                                              form.setFieldValue(`contacts[${i}].placeId`, null);
-                                              form.setFieldValue(`contacts[${i}].longitude`, null);
-                                              form.setFieldValue(`contacts[${i}].latitude`, null);
-                                              form.setFieldValue(`contacts[${i}].boundingBox`, null);
-                                            }
-                                          }}
-                                          value={subfield.state.value}
-                                        />
-                                      )}
-                                      name={`contacts[${i}].value`}
-                                    />
-                                  )}
-                                  selector={(state) => [state.values.contacts[i].title, state.values.contacts[i].value]}
-                                />
-                              </div>
-                            );
-                          return null;
-                        })
-                      : "ALERT HERE"
-                  }
-                  mode="array"
-                  name="contacts"
-                />
-              </div>
-            </Collapsible>
-          </div>
-          <div className="md:col-span-2">
-            <Collapsible
-              icon={Icons.phone}
-              isOpen
-              items={[
-                {
-                  id: "1",
-                  label: "Add",
-                  icon: Icons.add,
-                  variant: "info",
+                  id: addr,
+                  title: getSentenceCase(addr),
+                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(addr)),
+                })),
+              },
+            ]}
+            label="Addresses">
+            <div className="flex flex-col gap-y-4 pt-4">
+              <form.Field
+                children={(field) =>
+                  field.state.value.length
+                    ? field.state.value.map((contact, i) => {
+                        if (contact.contactType.includes("address"))
+                          return (
+                            <ContactDisplay
+                              key={contact.id}
+                              contact={contact}
+                              form={form}
+                              index={i}
+                              isDisabled={isLoading}
+                              type="address"
+                            />
+                          );
+                        return null;
+                      })
+                    : "ALERT HERE"
+                }
+                mode="array"
+                name="contacts"
+              />
+            </div>
+          </Collapsible>
+          <Collapsible
+            icon={Icons.phone}
+            isOpen
+            items={[
+              {
+                id: "1",
+                label: "Add",
+                icon: Icons.add,
+                variant: "info",
+                allowedPlacements: ["left-start"] as const,
+                onClick: () => {},
+                items: AvailableContactTypes.phone.professional.map((phone) => ({
+                  icon: Icons[phone],
                   allowedPlacements: ["left-start"] as const,
-                  onClick: () => {},
-                  items: AvailableContactTypes.phone.professional.map((phone) => ({
-                    icon: Icons[phone],
-                    allowedPlacements: ["left-start"] as const,
-                    id: phone,
-                    title: getSentenceCase(phone),
-                    onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(phone)),
-                  })),
-                },
-              ]}
-              label="Phones">
-              <div className="flex flex-col gap-y-2 py-1">
-                <form.Field
-                  children={(field) =>
-                    field.state.value.length
-                      ? field.state.value.map((contact, i) => {
-                          if (contact.contactType.includes("phone") || contact.contactType === "fax")
-                            return (
-                              <div key={contact.id} className="flex w-full flex-row gap-x-2 md:col-span-2">
-                                <form.Field
-                                  children={(subfield) => (
-                                    <Input
-                                      helperText="Customize the title that will appear for others."
-                                      label="Address display title"
-                                      name={subfield.name}
-                                      onChange={(e) => subfield.handleChange(e.target.value)}
-                                      value={subfield.state.value || ""}
-                                    />
-                                  )}
-                                  name={`contacts[${i}].title`}
-                                />
-                                <form.Subscribe<[string | null, string]>
-                                  children={(watched) => (
-                                    <form.Field
-                                      children={(subfield) => (
-                                        <Input
-                                          isDisabled={isLoading}
-                                          label={watched[0] || getSentenceCase(contact.contactType)}
-                                          name={subfield.name}
-                                          onChange={(e) => subfield.handleChange(e.target.value)}
-                                          type="tel"
-                                          value={subfield.state.value}
-                                        />
-                                      )}
-                                      name={`contacts[${i}].value`}
-                                    />
-                                  )}
-                                  selector={(state) => [state.values.contacts[i].title, state.values.contacts[i].value]}
-                                />
-                              </div>
-                            );
-                          return null;
-                        })
-                      : "ALERT HERE"
-                  }
-                  mode="array"
-                  name="contacts"
-                />
-              </div>
-            </Collapsible>
-          </div>
+                  id: phone,
+                  title: getSentenceCase(phone),
+                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(phone)),
+                })),
+              },
+            ]}
+            label="Phones">
+            <div className="flex flex-col gap-y-2 py-1">
+              <form.Field
+                children={(field) =>
+                  field.state.value.length
+                    ? field.state.value.map((contact, i) => {
+                        if (contact.contactType.includes("phone") || contact.contactType === "fax")
+                          return (
+                            <ContactDisplay
+                              key={contact.id}
+                              contact={contact}
+                              form={form}
+                              index={i}
+                              isDisabled={isLoading}
+                              type="phone"
+                            />
+                          );
+                        return null;
+                      })
+                    : "ALERT HERE"
+                }
+                mode="array"
+                name="contacts"
+              />
+            </div>
+          </Collapsible>
         </div>
         <div className="md:col-span-2">
           <Button icon={Icons.save} label="Save" onClick={undefined} size="lg" variant="success" />
