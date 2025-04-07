@@ -1,5 +1,6 @@
 export * from "./auth";
 export * from "./format";
+export * from "./inputMasks";
 export * from "./queries";
 export * from "./request";
 export * from "./response";
