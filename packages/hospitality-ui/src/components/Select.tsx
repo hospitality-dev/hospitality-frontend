@@ -21,7 +21,7 @@ import { OptionItem } from "./OptionItem";
 
 type Props<OT> = {
   label?: string;
-  value: string | string[];
+  value: string | string[] | undefined | null;
   isMultiple?: boolean;
   isDisabled?: boolean;
   hasNoBorder?: boolean;
@@ -38,8 +38,9 @@ const classes = tv({
     labelClasses: "font-small text-gray-900",
     selectBox: "relative flex w-full items-center bg-white",
     base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center gap-x-1 rounded-md border px-1 shadow-sm outline-0",
-    icon: "",
-    optionsContainer: "z-[61] divide-y divide-gray-200 overflow-y-auto rounded-md border border-gray-300 bg-white shadow-lg",
+    icon: "text-primary pt-0.5",
+    optionsContainer:
+      "z-[61] divide-y divide-gray-300 overflow-y-auto rounded-md border border-gray-400 bg-white shadow-lg outline-0",
   },
 
   variants: {
@@ -54,7 +55,7 @@ const classes = tv({
     size: {
       xs: { labelClasses: "text-xs", base: "h-6" },
       sm: { labelClasses: "text-sm", base: "h-7" },
-      md: { base: "h-8 min-h-8" },
+      md: { base: "h-8 min-h-8 text-lg" },
       lg: { labelClasses: "text-lg", base: "h-9" },
       xl: { labelClasses: "text-xl", base: "h-10" },
     },
@@ -107,13 +108,14 @@ export function Select<OT>({
     listRef,
     activeIndex,
     onNavigate: setActiveIndex,
+    virtual: true,
     // This is a large list, allow looping.
     loop: true,
   });
 
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([dismiss, role, listNav, click]);
 
-  const selectedItemLabel = options.find((opt) => opt?.value === value)?.label || "";
+  const selectedItem = options.find((opt) => opt?.value === value);
   const { base, container, labelClasses, icon, selectBox, optionsContainer } = classes({
     variant,
     size,
@@ -131,7 +133,12 @@ export function Select<OT>({
           className={base()}
           tabIndex={0}
           {...getReferenceProps()}>
-          {!options?.length ? "No options" : selectedItemLabel || "Select one"}
+          {selectedItem?.additionalData &&
+          typeof selectedItem.additionalData === "object" &&
+          "iso3" in selectedItem.additionalData ? (
+            <img src={`/flags/${selectedItem.additionalData.iso3}.svg`} />
+          ) : null}
+          {!options?.length ? "No options" : selectedItem?.label || "Select one"}
           <div className={icon()}>
             <Icon icon={Icons["arrow-down"]} />
           </div>
@@ -142,15 +149,15 @@ export function Select<OT>({
           <div ref={refs.setFloating} className={optionsContainer()} style={floatingStyles} {...getFloatingProps()}>
             {options.map((opt, i) => (
               <div
-                key={opt.value}
+                key={opt.id || opt.value}
                 ref={(node) => {
                   listRef.current[i] = node;
                 }}
                 aria-selected={i === activeIndex}
                 role="option"
                 tabIndex={i === activeIndex ? 0 : -1}
-                {...getItemProps({})}>
-                <OptionItem item={opt} onChange={onChange} />
+                {...getItemProps({ className: "outline-0 outline-none" })}>
+                <OptionItem isActive={i === activeIndex} isSelected={opt?.value === value} item={opt} onChange={onChange} />
               </div>
             ))}
           </div>
