@@ -22,11 +22,11 @@ import {
 } from "@hospitality/hospitality-ui";
 
 type EntityType = Pick<LocationsType, "id" | "title" | "contacts">;
-function getBaseContact(contactType: ContactTypes): ContactType {
+function getBaseContact(contactType: ContactTypes, parentId: string): ContactType {
   return {
     id: crypto.randomUUID(),
     title: getSentenceCase(contactType),
-    parentId: "",
+    parentId,
     prefix: "",
     value: "",
     contactType,
@@ -102,19 +102,25 @@ function ContactDisplay({
               );
             if (type === "phone")
               return (
-                <form.Field
-                  children={(subfield) => (
-                    <Input
-                      isDisabled={isDisabled}
-                      label={getSentenceCase(contact.contactType)}
-                      name={subfield.name}
-                      onChange={(e) => subfield.handleChange(e.target.value)}
-                      type="tel"
-                      value={subfield.state.value}
+                <form.Subscribe<ContactType["prefix"]> selector={(s) => s.values.contacts[index].prefix}>
+                  {(prefix) => (
+                    <form.Field
+                      children={(subfield) => (
+                        <Input
+                          isDisabled={isDisabled}
+                          label={getSentenceCase(contact.contactType)}
+                          name={subfield.name}
+                          onChange={(e) => subfield.handleChange(e.target.value)}
+                          onSelectChange={(item) => form.setFieldValue(`contacts[${index}].prefix`, item?.value)}
+                          selectValue={prefix}
+                          type="tel"
+                          value={subfield.state.value}
+                        />
+                      )}
+                      name={`contacts[${index}].value`}
                     />
                   )}
-                  name={`contacts[${index}].value`}
-                />
+                </form.Subscribe>
               );
             return null;
           }}
@@ -128,7 +134,7 @@ function ContactDisplay({
 export function LocationSettings() {
   const auth = useAuth();
   const { isSmallScreen } = useScreenSize();
-  const { data, isLoading } = useRead<EntityType>(
+  const { data, isLoading, isSuccess } = useRead<EntityType>(
     {
       model: "locations",
       id: auth.user?.locationId || "",
@@ -143,7 +149,7 @@ export function LocationSettings() {
       contacts: data?.contacts || [],
     },
   });
-
+  if (!isSuccess) return null;
   return (
     <Form handleSubmit={form.handleSubmit}>
       <div className="flex h-full flex-col justify-between gap-y-2">
@@ -183,7 +189,7 @@ export function LocationSettings() {
                   allowedPlacements: ["left-start"] as const,
                   id: addr,
                   title: getSentenceCase(addr),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(addr)),
+                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(addr, data?.id)),
                 })),
               },
             ]}
@@ -226,10 +232,10 @@ export function LocationSettings() {
                 onClick: () => {},
                 items: AvailableContactTypes.phone.professional.map((phone) => ({
                   icon: Icons[phone],
-                  allowedPlacements: ["left-start"] as const,
+                  allowedPlacements: ["left-start"],
                   id: phone,
                   title: getSentenceCase(phone),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(phone)),
+                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(phone, data?.id)),
                 })),
               },
             ]}
