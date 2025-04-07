@@ -3,18 +3,22 @@ import { useMaskito } from "@maskito/react";
 import { ChangeEvent, HTMLInputTypeAttribute, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 import { tv } from "tailwind-variants";
 
-import { availableIcons, Size, Variant } from "../types/baseTypes";
+import { countriesPhoneCodes } from "../enums";
+import { availableIcons, OptionType, Size, Variant } from "../types/baseTypes";
 import { defaultMask, numbersOnlyMask, phoneMask } from "../utils";
 import { Button } from "./Button";
+import { Select } from "./Select";
 
 type AllowedTypes = Extract<HTMLInputTypeAttribute, "text" | "number" | "tel" | "search" | "password">;
 
-type Props = {
+type Props<OT> = {
   label?: string;
   name: string;
   value: string | number | undefined;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  selectValue?: string | null;
+  onSelectChange?: (item: OptionType<OT> | null) => void;
   helperText?: string;
   isDisabled?: boolean;
   isAutofocused?: boolean;
@@ -41,10 +45,11 @@ const classes = tv({
   slots: {
     container: "group flex h-fit w-full flex-col outline-0",
     inputContainer:
-      "flex w-full cursor-pointer flex-nowrap items-center justify-between rounded-md border bg-white px-2 text-gray-900 shadow-sm outline-0",
+      "flex w-full cursor-pointer flex-nowrap items-center justify-between overflow-hidden rounded-md border bg-white px-2 text-gray-900 shadow-sm outline-0",
     inputClasses: "flex-1 pr-2 focus-within:outline-0 focus:outline-0",
     labelClasses: "font-small text-gray-900",
     helperTextClasses: "text-sm",
+    selectClasses: "",
   },
   variants: {
     variant: {
@@ -82,6 +87,16 @@ const classes = tv({
       lg: { labelClasses: "text-lg", inputClasses: "h-9 text-xl" },
       xl: { labelClasses: "text-xl", inputClasses: "h-10 text-2xl" },
     },
+    type: {
+      tel: {
+        inputContainer: "pr-1 pl-0",
+        selectClasses: "w-fit",
+      },
+      number: "",
+      password: "",
+      text: "",
+      search: "",
+    },
     isDisabled: { true: { inputClasses: "cursor-not-allowed" } },
   },
 });
@@ -90,6 +105,8 @@ export function Input({
   label,
   name,
   variant = "primary",
+  selectValue,
+  onSelectChange,
   size = "md",
   isDisabled = false,
   isAutofocused,
@@ -100,18 +117,32 @@ export function Input({
   onKeyDown,
   type = "text",
   action,
-}: Props) {
+}: Props<(typeof countriesPhoneCodes)[number]["additionalData"]>) {
   const inputRef = useMaskito({ options: masks[type] });
-  const { inputClasses, inputContainer, container, labelClasses, helperTextClasses } = classes({
+  const { inputClasses, inputContainer, container, labelClasses, helperTextClasses, selectClasses } = classes({
     variant,
     size,
     isDisabled,
+    type,
   });
 
   return (
     <div className={container()}>
       <label className={labelClasses()}>{label ? <span>{label}</span> : null}</label>
+
       <div className={inputContainer()}>
+        {type === "tel" ? (
+          <div className={selectClasses()}>
+            <Select
+              hasNoBorder
+              onChange={(item) => {
+                if (onSelectChange) onSelectChange(item);
+              }}
+              options={countriesPhoneCodes}
+              value={selectValue}
+            />
+          </div>
+        ) : null}
         <input
           ref={inputRef}
           autoComplete="off"
