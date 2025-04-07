@@ -1,1247 +1,1943 @@
-export const countries = [
-  {
-    iso3: "ABW",
-    prefix: "297",
-    title: "Aruba",
-  },
-  {
-    iso3: "AFG",
-    prefix: "93",
-    title: "Afghanistan",
-  },
-  {
-    iso3: "AGO",
-    prefix: "244",
-    title: "Angola",
-  },
-  {
-    iso3: "AIA",
-    prefix: "1-264",
-    title: "Anguilla",
-  },
-  {
-    iso3: "ALA",
-    prefix: "358-18",
-    title: "Aland Islands",
-  },
-  {
-    iso3: "ALB",
-    prefix: "355",
-    title: "Albania",
-  },
-  {
-    iso3: "AND",
-    prefix: "376",
-    title: "Andorra",
-  },
-  {
-    iso3: "ARE",
-    prefix: "971",
-    title: "United Arab Emirates",
-  },
-  {
-    iso3: "ARG",
-    prefix: "54",
-    title: "Argentina",
-  },
-  {
-    iso3: "ARM",
-    prefix: "374",
-    title: "Armenia",
-  },
-  {
-    iso3: "ASM",
-    prefix: "1-684",
-    title: "American Samoa",
-  },
-  {
-    iso3: "ATF",
-    prefix: "",
-    title: "French Southern Territories",
-  },
-  {
-    iso3: "ATG",
-    prefix: "1-268",
-    title: "Antigua and Barbuda",
-  },
-  {
-    iso3: "AUS",
-    prefix: "61",
-    title: "Australia",
-  },
-  {
-    iso3: "AUT",
-    prefix: "43",
-    title: "Austria",
-  },
-  {
-    iso3: "AZE",
-    prefix: "994",
-    title: "Azerbaijan",
-  },
-  {
-    iso3: "BDI",
-    prefix: "257",
-    title: "Burundi",
-  },
-  {
-    iso3: "BEL",
-    prefix: "32",
-    title: "Belgium",
-  },
-  {
-    iso3: "BEN",
-    prefix: "229",
-    title: "Benin",
-  },
-  {
-    iso3: "BES",
-    prefix: "599",
-    title: "Bonaire, Saint Eustatius and Saba ",
-  },
-  {
-    iso3: "BFA",
-    prefix: "226",
-    title: "Burkina Faso",
-  },
-  {
-    iso3: "BGD",
-    prefix: "880",
-    title: "Bangladesh",
-  },
-  {
-    iso3: "BGR",
-    prefix: "359",
-    title: "Bulgaria",
-  },
-  {
-    iso3: "BHR",
-    prefix: "973",
-    title: "Bahrain",
-  },
-  {
-    iso3: "BHS",
-    prefix: "1-242",
-    title: "Bahamas",
-  },
-  {
-    iso3: "BIH",
-    prefix: "387",
-    title: "Bosnia and Herzegovina",
-  },
-  {
-    iso3: "BLM",
-    prefix: "590",
-    title: "Saint Barthelemy",
-  },
-  {
-    iso3: "BLR",
-    prefix: "375",
-    title: "Belarus",
-  },
-  {
-    iso3: "BLZ",
-    prefix: "501",
-    title: "Belize",
-  },
-  {
-    iso3: "BMU",
-    prefix: "1-441",
-    title: "Bermuda",
-  },
-  {
-    iso3: "BOL",
-    prefix: "591",
-    title: "Bolivia",
-  },
-  {
-    iso3: "BRA",
-    prefix: "55",
-    title: "Brazil",
-  },
-  {
-    iso3: "BRB",
-    prefix: "1-246",
-    title: "Barbados",
-  },
-  {
-    iso3: "BRN",
-    prefix: "673",
-    title: "Brunei",
-  },
-  {
-    iso3: "BTN",
-    prefix: "975",
-    title: "Bhutan",
-  },
-  {
-    iso3: "BVT",
-    prefix: "",
-    title: "Bouvet Island",
-  },
-  {
-    iso3: "BWA",
-    prefix: "267",
-    title: "Botswana",
-  },
-  {
-    iso3: "CAF",
-    prefix: "236",
-    title: "Central African Republic",
-  },
-  {
-    iso3: "CAN",
-    prefix: "1",
-    title: "Canada",
-  },
-  {
-    iso3: "CCK",
-    prefix: "61",
-    title: "Cocos Islands",
-  },
-  {
-    iso3: "CHE",
-    prefix: "41",
-    title: "Switzerland",
-  },
-  {
-    iso3: "CHL",
-    prefix: "56",
-    title: "Chile",
-  },
-  {
-    iso3: "CHN",
-    prefix: "86",
-    title: "China",
-  },
-  {
-    iso3: "CIV",
-    prefix: "225",
-    title: "Ivory Coast",
-  },
-  {
-    iso3: "CMR",
-    prefix: "237",
-    title: "Cameroon",
-  },
-  {
-    iso3: "COD",
-    prefix: "243",
-    title: "Democratic Republic of the Congo",
-  },
-  {
-    iso3: "COG",
-    prefix: "242",
-    title: "Republic of the Congo",
-  },
-  {
-    iso3: "COK",
-    prefix: "682",
-    title: "Cook Islands",
-  },
-  {
-    iso3: "COL",
-    prefix: "57",
-    title: "Colombia",
-  },
-  {
-    iso3: "COM",
-    prefix: "269",
-    title: "Comoros",
-  },
-  {
-    iso3: "CPV",
-    prefix: "238",
-    title: "Cape Verde",
-  },
-  {
-    iso3: "CRI",
-    prefix: "506",
-    title: "Costa Rica",
-  },
-  {
-    iso3: "CUB",
-    prefix: "53",
-    title: "Cuba",
-  },
-  {
-    iso3: "CUW",
-    prefix: "599",
-    title: "Curacao",
-  },
-  {
-    iso3: "CXR",
-    prefix: "61",
-    title: "Christmas Island",
-  },
-  {
-    iso3: "CYM",
-    prefix: "1-345",
-    title: "Cayman Islands",
-  },
-  {
-    iso3: "CYP",
-    prefix: "357",
-    title: "Cyprus",
-  },
-  {
-    iso3: "CZE",
-    prefix: "420",
-    title: "Czech Republic",
-  },
-  {
-    iso3: "DEU",
-    prefix: "49",
-    title: "Germany",
-  },
-  {
-    iso3: "DJI",
-    prefix: "253",
-    title: "Djibouti",
-  },
-  {
-    iso3: "DMA",
-    prefix: "1-767",
-    title: "Dominica",
-  },
-  {
-    iso3: "DNK",
-    prefix: "45",
-    title: "Denmark",
-  },
-  {
-    iso3: "DOM",
-    prefix: "1-809 and 1-829",
-    title: "Dominican Republic",
-  },
-  {
-    iso3: "DZA",
-    prefix: "213",
-    title: "Algeria",
-  },
-  {
-    iso3: "ECU",
-    prefix: "593",
-    title: "Ecuador",
-  },
-  {
-    iso3: "EGY",
-    prefix: "20",
-    title: "Egypt",
-  },
-  {
-    iso3: "ERI",
-    prefix: "291",
-    title: "Eritrea",
-  },
-  {
-    iso3: "ESH",
-    prefix: "212",
-    title: "Western Sahara",
-  },
-  {
-    iso3: "ESP",
-    prefix: "34",
-    title: "Spain",
-  },
-  {
-    iso3: "EST",
-    prefix: "372",
-    title: "Estonia",
-  },
-  {
-    iso3: "ETH",
-    prefix: "251",
-    title: "Ethiopia",
-  },
-  {
-    iso3: "FIN",
-    prefix: "358",
-    title: "Finland",
-  },
-  {
-    iso3: "FJI",
-    prefix: "679",
-    title: "Fiji",
-  },
-  {
-    iso3: "FLK",
-    prefix: "500",
-    title: "Falkland Islands",
-  },
-  {
-    iso3: "FRA",
-    prefix: "33",
-    title: "France",
-  },
-  {
-    iso3: "FRO",
-    prefix: "298",
-    title: "Faroe Islands",
-  },
-  {
-    iso3: "FSM",
-    prefix: "691",
-    title: "Micronesia",
-  },
-  {
-    iso3: "GAB",
-    prefix: "241",
-    title: "Gabon",
-  },
-  {
-    iso3: "GBR",
-    prefix: "44",
-    title: "United Kingdom",
-  },
-  {
-    iso3: "GEO",
-    prefix: "995",
-    title: "Georgia",
-  },
-  {
-    iso3: "GGY",
-    prefix: "44-1481",
-    title: "Guernsey",
-  },
-  {
-    iso3: "GHA",
-    prefix: "233",
-    title: "Ghana",
-  },
-  {
-    iso3: "GIB",
-    prefix: "350",
-    title: "Gibraltar",
-  },
-  {
-    iso3: "GIN",
-    prefix: "224",
-    title: "Guinea",
-  },
-  {
-    iso3: "GLP",
-    prefix: "590",
-    title: "Guadeloupe",
-  },
-  {
-    iso3: "GMB",
-    prefix: "220",
-    title: "Gambia",
-  },
-  {
-    iso3: "GNB",
-    prefix: "245",
-    title: "Guinea-Bissau",
-  },
-  {
-    iso3: "GNQ",
-    prefix: "240",
-    title: "Equatorial Guinea",
-  },
-  {
-    iso3: "GRC",
-    prefix: "30",
-    title: "Greece",
-  },
-  {
-    iso3: "GRD",
-    prefix: "1-473",
-    title: "Grenada",
-  },
-  {
-    iso3: "GRL",
-    prefix: "299",
-    title: "Greenland",
-  },
-  {
-    iso3: "GTM",
-    prefix: "502",
-    title: "Guatemala",
-  },
-  {
-    iso3: "GUF",
-    prefix: "594",
-    title: "French Guiana",
-  },
-  {
-    iso3: "GUM",
-    prefix: "1-671",
-    title: "Guam",
-  },
-  {
-    iso3: "GUY",
-    prefix: "592",
-    title: "Guyana",
-  },
-  {
-    iso3: "HKG",
-    prefix: "852",
-    title: "Hong Kong",
-  },
-  {
-    iso3: "HMD",
-    prefix: " ",
-    title: "Heard Island and McDonald Islands",
-  },
-  {
-    iso3: "HND",
-    prefix: "504",
-    title: "Honduras",
-  },
-  {
-    iso3: "HRV",
-    prefix: "385",
-    title: "Croatia",
-  },
-  {
-    iso3: "HTI",
-    prefix: "509",
-    title: "Haiti",
-  },
-  {
-    iso3: "HUN",
-    prefix: "36",
-    title: "Hungary",
-  },
-  {
-    iso3: "IDN",
-    prefix: "62",
-    title: "Indonesia",
-  },
-  {
-    iso3: "IMN",
-    prefix: "44-1624",
-    title: "Isle of Man",
-  },
-  {
-    iso3: "IND",
-    prefix: "91",
-    title: "India",
-  },
-  {
-    iso3: "IOT",
-    prefix: "246",
-    title: "British Indian Ocean Territory",
-  },
-  {
-    iso3: "IRL",
-    prefix: "353",
-    title: "Ireland",
-  },
-  {
-    iso3: "IRN",
-    prefix: "98",
-    title: "Iran",
-  },
-  {
-    iso3: "IRQ",
-    prefix: "964",
-    title: "Iraq",
-  },
-  {
-    iso3: "ISL",
-    prefix: "354",
-    title: "Iceland",
-  },
-  {
-    iso3: "ISR",
-    prefix: "972",
-    title: "Israel",
-  },
-  {
-    iso3: "ITA",
-    prefix: "39",
-    title: "Italy",
-  },
-  {
-    iso3: "JAM",
-    prefix: "1-876",
-    title: "Jamaica",
-  },
-  {
-    iso3: "JEY",
-    prefix: "44-1534",
-    title: "Jersey",
-  },
-  {
-    iso3: "JOR",
-    prefix: "962",
-    title: "Jordan",
-  },
-  {
-    iso3: "JPN",
-    prefix: "81",
-    title: "Japan",
-  },
-  {
-    iso3: "KAZ",
-    prefix: "7",
-    title: "Kazakhstan",
-  },
-  {
-    iso3: "KEN",
-    prefix: "254",
-    title: "Kenya",
-  },
-  {
-    iso3: "KGZ",
-    prefix: "996",
-    title: "Kyrgyzstan",
-  },
-  {
-    iso3: "KHM",
-    prefix: "855",
-    title: "Cambodia",
-  },
-  {
-    iso3: "KIR",
-    prefix: "686",
-    title: "Kiribati",
-  },
-  {
-    iso3: "KNA",
-    prefix: "1-869",
-    title: "Saint Kitts and Nevis",
-  },
-  {
-    iso3: "KOR",
-    prefix: "82",
-    title: "South Korea",
-  },
-  {
-    iso3: "KWT",
-    prefix: "965",
-    title: "Kuwait",
-  },
-  {
-    iso3: "LAO",
-    prefix: "856",
-    title: "Laos",
-  },
-  {
-    iso3: "LBN",
-    prefix: "961",
-    title: "Lebanon",
-  },
-  {
-    iso3: "LBR",
-    prefix: "231",
-    title: "Liberia",
-  },
-  {
-    iso3: "LBY",
-    prefix: "218",
-    title: "Libya",
-  },
-  {
-    iso3: "LCA",
-    prefix: "1-758",
-    title: "Saint Lucia",
-  },
-  {
-    iso3: "LIE",
-    prefix: "423",
-    title: "Liechtenstein",
-  },
-  {
-    iso3: "LKA",
-    prefix: "94",
-    title: "Sri Lanka",
-  },
-  {
-    iso3: "LSO",
-    prefix: "266",
-    title: "Lesotho",
-  },
-  {
-    iso3: "LTU",
-    prefix: "370",
-    title: "Lithuania",
-  },
-  {
-    iso3: "LUX",
-    prefix: "352",
-    title: "Luxembourg",
-  },
-  {
-    iso3: "LVA",
-    prefix: "371",
-    title: "Latvia",
-  },
-  {
-    iso3: "MAC",
-    prefix: "853",
-    title: "Macao",
-  },
-  {
-    iso3: "MAF",
-    prefix: "590",
-    title: "Saint Martin",
-  },
-  {
-    iso3: "MAR",
-    prefix: "212",
-    title: "Morocco",
-  },
-  {
-    iso3: "MCO",
-    prefix: "377",
-    title: "Monaco",
-  },
-  {
-    iso3: "MDA",
-    prefix: "373",
-    title: "Moldova",
-  },
-  {
-    iso3: "MDG",
-    prefix: "261",
-    title: "Madagascar",
-  },
-  {
-    iso3: "MDV",
-    prefix: "960",
-    title: "Maldives",
-  },
-  {
-    iso3: "MEX",
-    prefix: "52",
-    title: "Mexico",
-  },
-  {
-    iso3: "MHL",
-    prefix: "692",
-    title: "Marshall Islands",
-  },
-  {
-    iso3: "MKD",
-    prefix: "389",
-    title: "Macedonia",
-  },
-  {
-    iso3: "MLI",
-    prefix: "223",
-    title: "Mali",
-  },
-  {
-    iso3: "MLT",
-    prefix: "356",
-    title: "Malta",
-  },
-  {
-    iso3: "MMR",
-    prefix: "95",
-    title: "Myanmar",
-  },
-  {
-    iso3: "MNE",
-    prefix: "382",
-    title: "Montenegro",
-  },
-  {
-    iso3: "MNG",
-    prefix: "976",
-    title: "Mongolia",
-  },
-  {
-    iso3: "MNP",
-    prefix: "1-670",
-    title: "Northern Mariana Islands",
-  },
-  {
-    iso3: "MOZ",
-    prefix: "258",
-    title: "Mozambique",
-  },
-  {
-    iso3: "MRT",
-    prefix: "222",
-    title: "Mauritania",
-  },
-  {
-    iso3: "MSR",
-    prefix: "1-664",
-    title: "Montserrat",
-  },
-  {
-    iso3: "MTQ",
-    prefix: "596",
-    title: "Martinique",
-  },
-  {
-    iso3: "MUS",
-    prefix: "230",
-    title: "Mauritius",
-  },
-  {
-    iso3: "MWI",
-    prefix: "265",
-    title: "Malawi",
-  },
-  {
-    iso3: "MYS",
-    prefix: "60",
-    title: "Malaysia",
-  },
-  {
-    iso3: "MYT",
-    prefix: "262",
-    title: "Mayotte",
-  },
-  {
-    iso3: "NAM",
-    prefix: "264",
-    title: "Namibia",
-  },
-  {
-    iso3: "NCL",
-    prefix: "687",
-    title: "New Caledonia",
-  },
-  {
-    iso3: "NER",
-    prefix: "227",
-    title: "Niger",
-  },
-  {
-    iso3: "NFK",
-    prefix: "672",
-    title: "Norfolk Island",
-  },
-  {
-    iso3: "NGA",
-    prefix: "234",
-    title: "Nigeria",
-  },
-  {
-    iso3: "NIC",
-    prefix: "505",
-    title: "Nicaragua",
-  },
-  {
-    iso3: "NIU",
-    prefix: "683",
-    title: "Niue",
-  },
-  {
-    iso3: "NLD",
-    prefix: "31",
-    title: "Netherlands",
-  },
-  {
-    iso3: "NOR",
-    prefix: "47",
-    title: "Norway",
-  },
-  {
-    iso3: "NPL",
-    prefix: "977",
-    title: "Nepal",
-  },
-  {
-    iso3: "NRU",
-    prefix: "674",
-    title: "Nauru",
-  },
-  {
-    iso3: "NZL",
-    prefix: "64",
-    title: "New Zealand",
-  },
-  {
-    iso3: "OMN",
-    prefix: "968",
-    title: "Oman",
-  },
-  {
-    iso3: "PAK",
-    prefix: "92",
-    title: "Pakistan",
-  },
-  {
-    iso3: "PAN",
-    prefix: "507",
-    title: "Panama",
-  },
-  {
-    iso3: "PCN",
-    prefix: "870",
-    title: "Pitcairn",
-  },
-  {
-    iso3: "PER",
-    prefix: "51",
-    title: "Peru",
-  },
-  {
-    iso3: "PHL",
-    prefix: "63",
-    title: "Philippines",
-  },
-  {
-    iso3: "PLW",
-    prefix: "680",
-    title: "Palau",
-  },
-  {
-    iso3: "PNG",
-    prefix: "675",
-    title: "Papua New Guinea",
-  },
-  {
-    iso3: "POL",
-    prefix: "48",
-    title: "Poland",
-  },
-  {
-    iso3: "PRI",
-    prefix: "1-787 and 1-939",
-    title: "Puerto Rico",
-  },
-  {
-    iso3: "PRK",
-    prefix: "850",
-    title: "North Korea",
-  },
-  {
-    iso3: "PRT",
-    prefix: "351",
-    title: "Portugal",
-  },
-  {
-    iso3: "PRY",
-    prefix: "595",
-    title: "Paraguay",
-  },
-  {
-    iso3: "PSE",
-    prefix: "970",
-    title: "Palestinian Territory",
-  },
-  {
-    iso3: "PYF",
-    prefix: "689",
-    title: "French Polynesia",
-  },
-  {
-    iso3: "QAT",
-    prefix: "974",
-    title: "Qatar",
-  },
-  {
-    iso3: "REU",
-    prefix: "262",
-    title: "Reunion",
-  },
-  {
-    iso3: "ROU",
-    prefix: "40",
-    title: "Romania",
-  },
-  {
-    iso3: "RUS",
-    prefix: "7",
-    title: "Russia",
-  },
-  {
-    iso3: "RWA",
-    prefix: "250",
-    title: "Rwanda",
-  },
-  {
-    iso3: "SAU",
-    prefix: "966",
-    title: "Saudi Arabia",
-  },
-  {
-    iso3: "SDN",
-    prefix: "249",
-    title: "Sudan",
-  },
-  {
-    iso3: "SEN",
-    prefix: "221",
-    title: "Senegal",
-  },
-  {
-    iso3: "SGP",
-    prefix: "65",
-    title: "Singapore",
-  },
-  {
-    iso3: "SGS",
-    prefix: "",
-    title: "South Georgia and the South Sandwich Islands",
-  },
-  {
-    iso3: "SHN",
-    prefix: "290",
-    title: "Saint Helena",
-  },
-  {
-    iso3: "SJM",
-    prefix: "47",
-    title: "Svalbard and Jan Mayen",
-  },
-  {
-    iso3: "SLB",
-    prefix: "677",
-    title: "Solomon Islands",
-  },
-  {
-    iso3: "SLE",
-    prefix: "232",
-    title: "Sierra Leone",
-  },
-  {
-    iso3: "SLV",
-    prefix: "503",
-    title: "El Salvador",
-  },
-  {
-    iso3: "SMR",
-    prefix: "378",
-    title: "San Marino",
-  },
-  {
-    iso3: "SOM",
-    prefix: "252",
-    title: "Somalia",
-  },
-  {
-    iso3: "SPM",
-    prefix: "508",
-    title: "Saint Pierre and Miquelon",
-  },
-  {
-    iso3: "SRB",
-    prefix: "381",
-    title: "Serbia",
-  },
-  {
-    iso3: "SSD",
-    prefix: "211",
-    title: "South Sudan",
-  },
-  {
-    iso3: "STP",
-    prefix: "239",
-    title: "Sao Tome and Principe",
-  },
-  {
-    iso3: "SUR",
-    prefix: "597",
-    title: "Suriname",
-  },
-  {
-    iso3: "SVK",
-    prefix: "421",
-    title: "Slovakia",
-  },
-  {
-    iso3: "SVN",
-    prefix: "386",
-    title: "Slovenia",
-  },
-  {
-    iso3: "SWE",
-    prefix: "46",
-    title: "Sweden",
-  },
-  {
-    iso3: "SWZ",
-    prefix: "268",
-    title: "Swaziland",
-  },
-  {
-    iso3: "SXM",
-    prefix: "599",
-    title: "Sint Maarten",
-  },
-  {
-    iso3: "SYC",
-    prefix: "248",
-    title: "Seychelles",
-  },
-  {
-    iso3: "SYR",
-    prefix: "963",
-    title: "Syria",
-  },
-  {
-    iso3: "TCA",
-    prefix: "1-649",
-    title: "Turks and Caicos Islands",
-  },
-  {
-    iso3: "TCD",
-    prefix: "235",
-    title: "Chad",
-  },
-  {
-    iso3: "TGO",
-    prefix: "228",
-    title: "Togo",
-  },
-  {
-    iso3: "THA",
-    prefix: "66",
-    title: "Thailand",
-  },
-  {
-    iso3: "TJK",
-    prefix: "992",
-    title: "Tajikistan",
-  },
-  {
-    iso3: "TKL",
-    prefix: "690",
-    title: "Tokelau",
-  },
-  {
-    iso3: "TKM",
-    prefix: "993",
-    title: "Turkmenistan",
-  },
-  {
-    iso3: "TLS",
-    prefix: "670",
-    title: "East Timor",
-  },
-  {
-    iso3: "TON",
-    prefix: "676",
-    title: "Tonga",
-  },
-  {
-    iso3: "TTO",
-    prefix: "1-868",
-    title: "Trinidad and Tobago",
-  },
-  {
-    iso3: "TUN",
-    prefix: "216",
-    title: "Tunisia",
-  },
-  {
-    iso3: "TUR",
-    prefix: "90",
-    title: "Turkey",
-  },
-  {
-    iso3: "TUV",
-    prefix: "688",
-    title: "Tuvalu",
-  },
-  {
-    iso3: "TWN",
-    prefix: "886",
-    title: "Taiwan",
-  },
-  {
-    iso3: "TZA",
-    prefix: "255",
-    title: "Tanzania",
-  },
-  {
-    iso3: "UGA",
-    prefix: "256",
-    title: "Uganda",
-  },
-  {
-    iso3: "UKR",
-    prefix: "380",
-    title: "Ukraine",
-  },
-  {
-    iso3: "UMI",
-    prefix: "1",
-    title: "United States Minor Outlying Islands",
-  },
-  {
-    iso3: "URY",
-    prefix: "598",
-    title: "Uruguay",
-  },
-  {
-    iso3: "USA",
-    prefix: "1",
-    title: "United States",
-  },
-  {
-    iso3: "UZB",
-    prefix: "998",
-    title: "Uzbekistan",
-  },
-  {
-    iso3: "VAT",
-    prefix: "379",
-    title: "Vatican",
-  },
-  {
-    iso3: "VCT",
-    prefix: "1-784",
-    title: "Saint Vincent and the Grenadines",
-  },
-  {
-    iso3: "VEN",
-    prefix: "58",
-    title: "Venezuela",
-  },
-  {
-    iso3: "VGB",
-    prefix: "1-284",
-    title: "British Virgin Islands",
-  },
-  {
-    iso3: "VIR",
-    prefix: "1-340",
-    title: "U.S. Virgin Islands",
-  },
-  {
-    iso3: "VNM",
-    prefix: "84",
-    title: "Vietnam",
-  },
-  {
-    iso3: "VUT",
-    prefix: "678",
-    title: "Vanuatu",
-  },
-  {
-    iso3: "WLF",
-    prefix: "681",
-    title: "Wallis and Futuna",
-  },
-  {
-    iso3: "WSM",
-    prefix: "685",
-    title: "Samoa",
-  },
-  {
-    iso3: "XKX",
-    prefix: "",
-    title: "Kosovo",
-  },
-  {
-    iso3: "YEM",
-    prefix: "967",
-    title: "Yemen",
-  },
-  {
-    iso3: "ZAF",
-    prefix: "27",
-    title: "South Africa",
-  },
-  {
-    iso3: "ZMB",
-    prefix: "260",
-    title: "Zambia",
-  },
-  {
-    iso3: "ZWE",
-    prefix: "263",
-    title: "Zimbabwe",
+import { OptionType } from "../types";
+
+export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
+  {
+    value: "297",
+    label: "Aruba (+297)",
+    additionalData: {
+      iso3: "ABW",
+    },
+    id: "ABW",
+  },
+  {
+    value: "93",
+    label: "Afghanistan (+93)",
+    additionalData: {
+      iso3: "AFG",
+    },
+    id: "AFG",
+  },
+  {
+    value: "244",
+    label: "Angola (+244)",
+    additionalData: {
+      iso3: "AGO",
+    },
+    id: "AGO",
+  },
+  {
+    value: "1-264",
+    label: "Anguilla (+1-264)",
+    additionalData: {
+      iso3: "AIA",
+    },
+    id: "AIA",
+  },
+  {
+    value: "358-18",
+    label: "Aland Islands (+358-18)",
+    additionalData: {
+      iso3: "ALA",
+    },
+    id: "ALA",
+  },
+  {
+    value: "355",
+    label: "Albania (+355)",
+    additionalData: {
+      iso3: "ALB",
+    },
+    id: "ALB",
+  },
+  {
+    value: "376",
+    label: "Andorra (+376)",
+    additionalData: {
+      iso3: "AND",
+    },
+    id: "AND",
+  },
+  {
+    value: "971",
+    label: "United Arab Emirates (+971)",
+    additionalData: {
+      iso3: "ARE",
+    },
+    id: "ARE",
+  },
+  {
+    value: "54",
+    label: "Argentina (+54)",
+    additionalData: {
+      iso3: "ARG",
+    },
+    id: "ARG",
+  },
+  {
+    value: "374",
+    label: "Armenia (+374)",
+    additionalData: {
+      iso3: "ARM",
+    },
+    id: "ARM",
+  },
+  {
+    value: "1-684",
+    label: "American Samoa (+1-684)",
+    additionalData: {
+      iso3: "ASM",
+    },
+    id: "ASM",
+  },
+  {
+    value: "1-268",
+    label: "Antigua and Barbuda (+1-268)",
+    additionalData: {
+      iso3: "ATG",
+    },
+    id: "ATG",
+  },
+  {
+    value: "61",
+    label: "Australia (+61)",
+    additionalData: {
+      iso3: "AUS",
+    },
+    id: "AUS",
+  },
+  {
+    value: "43",
+    label: "Austria (+43)",
+    additionalData: {
+      iso3: "AUT",
+    },
+    id: "AUT",
+  },
+  {
+    value: "994",
+    label: "Azerbaijan (+994)",
+    additionalData: {
+      iso3: "AZE",
+    },
+    id: "AZE",
+  },
+  {
+    value: "257",
+    label: "Burundi (+257)",
+    additionalData: {
+      iso3: "BDI",
+    },
+    id: "BDI",
+  },
+  {
+    value: "32",
+    label: "Belgium (+32)",
+    additionalData: {
+      iso3: "BEL",
+    },
+    id: "BEL",
+  },
+  {
+    value: "229",
+    label: "Benin (+229)",
+    additionalData: {
+      iso3: "BEN",
+    },
+    id: "BEN",
+  },
+  {
+    value: "226",
+    label: "Burkina Faso (+226)",
+    additionalData: {
+      iso3: "BFA",
+    },
+    id: "BFA",
+  },
+  {
+    value: "880",
+    label: "Bangladesh (+880)",
+    additionalData: {
+      iso3: "BGD",
+    },
+    id: "BGD",
+  },
+  {
+    value: "359",
+    label: "Bulgaria (+359)",
+    additionalData: {
+      iso3: "BGR",
+    },
+    id: "BGR",
+  },
+  {
+    value: "973",
+    label: "Bahrain (+973)",
+    additionalData: {
+      iso3: "BHR",
+    },
+    id: "BHR",
+  },
+  {
+    value: "1-242",
+    label: "Bahamas (+1-242)",
+    additionalData: {
+      iso3: "BHS",
+    },
+    id: "BHS",
+  },
+  {
+    value: "387",
+    label: "Bosnia and Herzegovina (+387)",
+    additionalData: {
+      iso3: "BIH",
+    },
+    id: "BIH",
+  },
+  {
+    value: "590",
+    label: "Saint Barthelemy (+590)",
+    additionalData: {
+      iso3: "BLM",
+    },
+    id: "BLM",
+  },
+  {
+    value: "375",
+    label: "Belarus (+375)",
+    additionalData: {
+      iso3: "BLR",
+    },
+    id: "BLR",
+  },
+  {
+    value: "501",
+    label: "Belize (+501)",
+    additionalData: {
+      iso3: "BLZ",
+    },
+    id: "BLZ",
+  },
+  {
+    value: "1-441",
+    label: "Bermuda (+1-441)",
+    additionalData: {
+      iso3: "BMU",
+    },
+    id: "BMU",
+  },
+  {
+    value: "591",
+    label: "Bolivia (+591)",
+    additionalData: {
+      iso3: "BOL",
+    },
+    id: "BOL",
+  },
+  {
+    value: "55",
+    label: "Brazil (+55)",
+    additionalData: {
+      iso3: "BRA",
+    },
+    id: "BRA",
+  },
+  {
+    value: "1-246",
+    label: "Barbados (+1-246)",
+    additionalData: {
+      iso3: "BRB",
+    },
+    id: "BRB",
+  },
+  {
+    value: "673",
+    label: "Brunei (+673)",
+    additionalData: {
+      iso3: "BRN",
+    },
+    id: "BRN",
+  },
+  {
+    value: "975",
+    label: "Bhutan (+975)",
+    additionalData: {
+      iso3: "BTN",
+    },
+    id: "BTN",
+  },
+  {
+    value: "267",
+    label: "Botswana (+267)",
+    additionalData: {
+      iso3: "BWA",
+    },
+    id: "BWA",
+  },
+  {
+    value: "236",
+    label: "Central African Republic (+236)",
+    additionalData: {
+      iso3: "CAF",
+    },
+    id: "CAF",
+  },
+  {
+    value: "1",
+    label: "Canada (+1)",
+    additionalData: {
+      iso3: "CAN",
+    },
+    id: "CAN",
+  },
+  {
+    value: "61",
+    label: "Cocos Islands (+61)",
+    additionalData: {
+      iso3: "CCK",
+    },
+    id: "CCK",
+  },
+  {
+    value: "41",
+    label: "Switzerland (+41)",
+    additionalData: {
+      iso3: "CHE",
+    },
+    id: "CHE",
+  },
+  {
+    value: "56",
+    label: "Chile (+56)",
+    additionalData: {
+      iso3: "CHL",
+    },
+    id: "CHL",
+  },
+  {
+    value: "86",
+    label: "China (+86)",
+    additionalData: {
+      iso3: "CHN",
+    },
+    id: "CHN",
+  },
+  {
+    value: "225",
+    label: "Ivory Coast (+225)",
+    additionalData: {
+      iso3: "CIV",
+    },
+    id: "CIV",
+  },
+  {
+    value: "237",
+    label: "Cameroon (+237)",
+    additionalData: {
+      iso3: "CMR",
+    },
+    id: "CMR",
+  },
+  {
+    value: "243",
+    label: "Democratic Republic of the Congo (+243)",
+    additionalData: {
+      iso3: "COD",
+    },
+    id: "COD",
+  },
+  {
+    value: "242",
+    label: "Republic of the Congo (+242)",
+    additionalData: {
+      iso3: "COG",
+    },
+    id: "COG",
+  },
+  {
+    value: "682",
+    label: "Cook Islands (+682)",
+    additionalData: {
+      iso3: "COK",
+    },
+    id: "COK",
+  },
+  {
+    value: "57",
+    label: "Colombia (+57)",
+    additionalData: {
+      iso3: "COL",
+    },
+    id: "COL",
+  },
+  {
+    value: "269",
+    label: "Comoros (+269)",
+    additionalData: {
+      iso3: "COM",
+    },
+    id: "COM",
+  },
+  {
+    value: "238",
+    label: "Cape Verde (+238)",
+    additionalData: {
+      iso3: "CPV",
+    },
+    id: "CPV",
+  },
+  {
+    value: "506",
+    label: "Costa Rica (+506)",
+    additionalData: {
+      iso3: "CRI",
+    },
+    id: "CRI",
+  },
+  {
+    value: "53",
+    label: "Cuba (+53)",
+    additionalData: {
+      iso3: "CUB",
+    },
+    id: "CUB",
+  },
+  {
+    value: "599",
+    label: "Curacao (+599)",
+    additionalData: {
+      iso3: "CUW",
+    },
+    id: "CUW",
+  },
+  {
+    value: "61",
+    label: "Christmas Island (+61)",
+    additionalData: {
+      iso3: "CXR",
+    },
+    id: "CXR",
+  },
+  {
+    value: "1-345",
+    label: "Cayman Islands (+1-345)",
+    additionalData: {
+      iso3: "CYM",
+    },
+    id: "CYM",
+  },
+  {
+    value: "357",
+    label: "Cyprus (+357)",
+    additionalData: {
+      iso3: "CYP",
+    },
+    id: "CYP",
+  },
+  {
+    value: "420",
+    label: "Czech Republic (+420)",
+    additionalData: {
+      iso3: "CZE",
+    },
+    id: "CZE",
+  },
+  {
+    value: "49",
+    label: "Germany (+49)",
+    additionalData: {
+      iso3: "DEU",
+    },
+    id: "DEU",
+  },
+  {
+    value: "253",
+    label: "Djibouti (+253)",
+    additionalData: {
+      iso3: "DJI",
+    },
+    id: "DJI",
+  },
+  {
+    value: "1-767",
+    label: "Dominica (+1-767)",
+    additionalData: {
+      iso3: "DMA",
+    },
+    id: "DMA",
+  },
+  {
+    value: "45",
+    label: "Denmark (+45)",
+    additionalData: {
+      iso3: "DNK",
+    },
+    id: "DNK",
+  },
+  {
+    value: "1-809 and 1-829",
+    label: "Dominican Republic (+1-809 and 1-829)",
+    additionalData: {
+      iso3: "DOM",
+    },
+    id: "DOM",
+  },
+  {
+    value: "213",
+    label: "Algeria (+213)",
+    additionalData: {
+      iso3: "DZA",
+    },
+    id: "DZA",
+  },
+  {
+    value: "593",
+    label: "Ecuador (+593)",
+    additionalData: {
+      iso3: "ECU",
+    },
+    id: "ECU",
+  },
+  {
+    value: "20",
+    label: "Egypt (+20)",
+    additionalData: {
+      iso3: "EGY",
+    },
+    id: "EGY",
+  },
+  {
+    value: "291",
+    label: "Eritrea (+291)",
+    additionalData: {
+      iso3: "ERI",
+    },
+    id: "ERI",
+  },
+  {
+    value: "212",
+    label: "Western Sahara (+212)",
+    additionalData: {
+      iso3: "ESH",
+    },
+    id: "ESH",
+  },
+  {
+    value: "34",
+    label: "Spain (+34)",
+    additionalData: {
+      iso3: "ESP",
+    },
+    id: "ESP",
+  },
+  {
+    value: "372",
+    label: "Estonia (+372)",
+    additionalData: {
+      iso3: "EST",
+    },
+    id: "EST",
+  },
+  {
+    value: "251",
+    label: "Ethiopia (+251)",
+    additionalData: {
+      iso3: "ETH",
+    },
+    id: "ETH",
+  },
+  {
+    value: "358",
+    label: "Finland (+358)",
+    additionalData: {
+      iso3: "FIN",
+    },
+    id: "FIN",
+  },
+  {
+    value: "679",
+    label: "Fiji (+679)",
+    additionalData: {
+      iso3: "FJI",
+    },
+    id: "FJI",
+  },
+  {
+    value: "500",
+    label: "Falkland Islands (+500)",
+    additionalData: {
+      iso3: "FLK",
+    },
+    id: "FLK",
+  },
+  {
+    value: "33",
+    label: "France (+33)",
+    additionalData: {
+      iso3: "FRA",
+    },
+    id: "FRA",
+  },
+  {
+    value: "298",
+    label: "Faroe Islands (+298)",
+    additionalData: {
+      iso3: "FRO",
+    },
+    id: "FRO",
+  },
+  {
+    value: "691",
+    label: "Micronesia (+691)",
+    additionalData: {
+      iso3: "FSM",
+    },
+    id: "FSM",
+  },
+  {
+    value: "241",
+    label: "Gabon (+241)",
+    additionalData: {
+      iso3: "GAB",
+    },
+    id: "GAB",
+  },
+  {
+    value: "44",
+    label: "United Kingdom (+44)",
+    additionalData: {
+      iso3: "GBR",
+    },
+    id: "GBR",
+  },
+  {
+    value: "995",
+    label: "Georgia (+995)",
+    additionalData: {
+      iso3: "GEO",
+    },
+    id: "GEO",
+  },
+  {
+    value: "44-1481",
+    label: "Guernsey (+44-1481)",
+    additionalData: {
+      iso3: "GGY",
+    },
+    id: "GGY",
+  },
+  {
+    value: "233",
+    label: "Ghana (+233)",
+    additionalData: {
+      iso3: "GHA",
+    },
+    id: "GHA",
+  },
+  {
+    value: "350",
+    label: "Gibraltar (+350)",
+    additionalData: {
+      iso3: "GIB",
+    },
+    id: "GIB",
+  },
+  {
+    value: "224",
+    label: "Guinea (+224)",
+    additionalData: {
+      iso3: "GIN",
+    },
+    id: "GIN",
+  },
+  {
+    value: "590",
+    label: "Guadeloupe (+590)",
+    additionalData: {
+      iso3: "GLP",
+    },
+    id: "GLP",
+  },
+  {
+    value: "220",
+    label: "Gambia (+220)",
+    additionalData: {
+      iso3: "GMB",
+    },
+    id: "GMB",
+  },
+  {
+    value: "245",
+    label: "Guinea-Bissau (+245)",
+    additionalData: {
+      iso3: "GNB",
+    },
+    id: "GNB",
+  },
+  {
+    value: "240",
+    label: "Equatorial Guinea (+240)",
+    additionalData: {
+      iso3: "GNQ",
+    },
+    id: "GNQ",
+  },
+  {
+    value: "30",
+    label: "Greece (+30)",
+    additionalData: {
+      iso3: "GRC",
+    },
+    id: "GRC",
+  },
+  {
+    value: "1-473",
+    label: "Grenada (+1-473)",
+    additionalData: {
+      iso3: "GRD",
+    },
+    id: "GRD",
+  },
+  {
+    value: "299",
+    label: "Greenland (+299)",
+    additionalData: {
+      iso3: "GRL",
+    },
+    id: "GRL",
+  },
+  {
+    value: "502",
+    label: "Guatemala (+502)",
+    additionalData: {
+      iso3: "GTM",
+    },
+    id: "GTM",
+  },
+  {
+    value: "594",
+    label: "French Guiana (+594)",
+    additionalData: {
+      iso3: "GUF",
+    },
+    id: "GUF",
+  },
+  {
+    value: "1-671",
+    label: "Guam (+1-671)",
+    additionalData: {
+      iso3: "GUM",
+    },
+    id: "GUM",
+  },
+  {
+    value: "592",
+    label: "Guyana (+592)",
+    additionalData: {
+      iso3: "GUY",
+    },
+    id: "GUY",
+  },
+  {
+    value: "852",
+    label: "Hong Kong (+852)",
+    additionalData: {
+      iso3: "HKG",
+    },
+    id: "HKG",
+  },
+
+  {
+    value: "504",
+    label: "Honduras (+504)",
+    additionalData: {
+      iso3: "HND",
+    },
+    id: "HND",
+  },
+  {
+    value: "385",
+    label: "Croatia (+385)",
+    additionalData: {
+      iso3: "HRV",
+    },
+    id: "HRV",
+  },
+  {
+    value: "509",
+    label: "Haiti (+509)",
+    additionalData: {
+      iso3: "HTI",
+    },
+    id: "HTI",
+  },
+  {
+    value: "36",
+    label: "Hungary (+36)",
+    additionalData: {
+      iso3: "HUN",
+    },
+    id: "HUN",
+  },
+  {
+    value: "62",
+    label: "Indonesia (+62)",
+    additionalData: {
+      iso3: "IDN",
+    },
+    id: "IDN",
+  },
+  {
+    value: "44-1624",
+    label: "Isle of Man (+44-1624)",
+    additionalData: {
+      iso3: "IMN",
+    },
+    id: "IMN",
+  },
+  {
+    value: "91",
+    label: "India (+91)",
+    additionalData: {
+      iso3: "IND",
+    },
+    id: "IND",
+  },
+  {
+    value: "246",
+    label: "British Indian Ocean Territory (+246)",
+    additionalData: {
+      iso3: "IOT",
+    },
+    id: "IOT",
+  },
+  {
+    value: "353",
+    label: "Ireland (+353)",
+    additionalData: {
+      iso3: "IRL",
+    },
+    id: "IRL",
+  },
+  {
+    value: "98",
+    label: "Iran (+98)",
+    additionalData: {
+      iso3: "IRN",
+    },
+    id: "IRN",
+  },
+  {
+    value: "964",
+    label: "Iraq (+964)",
+    additionalData: {
+      iso3: "IRQ",
+    },
+    id: "IRQ",
+  },
+  {
+    value: "354",
+    label: "Iceland (+354)",
+    additionalData: {
+      iso3: "ISL",
+    },
+    id: "ISL",
+  },
+  {
+    value: "972",
+    label: "Israel (+972)",
+    additionalData: {
+      iso3: "ISR",
+    },
+    id: "ISR",
+  },
+  {
+    value: "39",
+    label: "Italy (+39)",
+    additionalData: {
+      iso3: "ITA",
+    },
+    id: "ITA",
+  },
+  {
+    value: "1-876",
+    label: "Jamaica (+1-876)",
+    additionalData: {
+      iso3: "JAM",
+    },
+    id: "JAM",
+  },
+  {
+    value: "44-1534",
+    label: "Jersey (+44-1534)",
+    additionalData: {
+      iso3: "JEY",
+    },
+    id: "JEY",
+  },
+  {
+    value: "962",
+    label: "Jordan (+962)",
+    additionalData: {
+      iso3: "JOR",
+    },
+    id: "JOR",
+  },
+  {
+    value: "81",
+    label: "Japan (+81)",
+    additionalData: {
+      iso3: "JPN",
+    },
+    id: "JPN",
+  },
+  {
+    value: "7",
+    label: "Kazakhstan (+7)",
+    additionalData: {
+      iso3: "KAZ",
+    },
+    id: "KAZ",
+  },
+  {
+    value: "254",
+    label: "Kenya (+254)",
+    additionalData: {
+      iso3: "KEN",
+    },
+    id: "KEN",
+  },
+  {
+    value: "996",
+    label: "Kyrgyzstan (+996)",
+    additionalData: {
+      iso3: "KGZ",
+    },
+    id: "KGZ",
+  },
+  {
+    value: "855",
+    label: "Cambodia (+855)",
+    additionalData: {
+      iso3: "KHM",
+    },
+    id: "KHM",
+  },
+  {
+    value: "686",
+    label: "Kiribati (+686)",
+    additionalData: {
+      iso3: "KIR",
+    },
+    id: "KIR",
+  },
+  {
+    value: "1-869",
+    label: "Saint Kitts and Nevis (+1-869)",
+    additionalData: {
+      iso3: "KNA",
+    },
+    id: "KNA",
+  },
+  {
+    value: "82",
+    label: "South Korea (+82)",
+    additionalData: {
+      iso3: "KOR",
+    },
+    id: "KOR",
+  },
+  {
+    value: "965",
+    label: "Kuwait (+965)",
+    additionalData: {
+      iso3: "KWT",
+    },
+    id: "KWT",
+  },
+  {
+    value: "856",
+    label: "Laos (+856)",
+    additionalData: {
+      iso3: "LAO",
+    },
+    id: "LAO",
+  },
+  {
+    value: "961",
+    label: "Lebanon (+961)",
+    additionalData: {
+      iso3: "LBN",
+    },
+    id: "LBN",
+  },
+  {
+    value: "231",
+    label: "Liberia (+231)",
+    additionalData: {
+      iso3: "LBR",
+    },
+    id: "LBR",
+  },
+  {
+    value: "218",
+    label: "Libya (+218)",
+    additionalData: {
+      iso3: "LBY",
+    },
+    id: "LBY",
+  },
+  {
+    value: "1-758",
+    label: "Saint Lucia (+1-758)",
+    additionalData: {
+      iso3: "LCA",
+    },
+    id: "LCA",
+  },
+  {
+    value: "423",
+    label: "Liechtenstein (+423)",
+    additionalData: {
+      iso3: "LIE",
+    },
+    id: "LIE",
+  },
+  {
+    value: "94",
+    label: "Sri Lanka (+94)",
+    additionalData: {
+      iso3: "LKA",
+    },
+    id: "LKA",
+  },
+  {
+    value: "266",
+    label: "Lesotho (+266)",
+    additionalData: {
+      iso3: "LSO",
+    },
+    id: "LSO",
+  },
+  {
+    value: "370",
+    label: "Lithuania (+370)",
+    additionalData: {
+      iso3: "LTU",
+    },
+    id: "LTU",
+  },
+  {
+    value: "352",
+    label: "Luxembourg (+352)",
+    additionalData: {
+      iso3: "LUX",
+    },
+    id: "LUX",
+  },
+  {
+    value: "371",
+    label: "Latvia (+371)",
+    additionalData: {
+      iso3: "LVA",
+    },
+    id: "LVA",
+  },
+  {
+    value: "853",
+    label: "Macao (+853)",
+    additionalData: {
+      iso3: "MAC",
+    },
+    id: "MAC",
+  },
+  {
+    value: "590",
+    label: "Saint Martin (+590)",
+    additionalData: {
+      iso3: "MAF",
+    },
+    id: "MAF",
+  },
+  {
+    value: "212",
+    label: "Morocco (+212)",
+    additionalData: {
+      iso3: "MAR",
+    },
+    id: "MAR",
+  },
+
+  {
+    value: "373",
+    label: "Moldova (+373)",
+    additionalData: {
+      iso3: "MDA",
+    },
+    id: "MDA",
+  },
+  {
+    value: "261",
+    label: "Madagascar (+261)",
+    additionalData: {
+      iso3: "MDG",
+    },
+    id: "MDG",
+  },
+  {
+    value: "960",
+    label: "Maldives (+960)",
+    additionalData: {
+      iso3: "MDV",
+    },
+    id: "MDV",
+  },
+  {
+    value: "52",
+    label: "Mexico (+52)",
+    additionalData: {
+      iso3: "MEX",
+    },
+    id: "MEX",
+  },
+  {
+    value: "692",
+    label: "Marshall Islands (+692)",
+    additionalData: {
+      iso3: "MHL",
+    },
+    id: "MHL",
+  },
+  {
+    value: "389",
+    label: "Macedonia (+389)",
+    additionalData: {
+      iso3: "MKD",
+    },
+    id: "MKD",
+  },
+  {
+    value: "223",
+    label: "Mali (+223)",
+    additionalData: {
+      iso3: "MLI",
+    },
+    id: "MLI",
+  },
+  {
+    value: "356",
+    label: "Malta (+356)",
+    additionalData: {
+      iso3: "MLT",
+    },
+    id: "MLT",
+  },
+  {
+    value: "95",
+    label: "Myanmar (+95)",
+    additionalData: {
+      iso3: "MMR",
+    },
+    id: "MMR",
+  },
+  {
+    value: "382",
+    label: "Montenegro (+382)",
+    additionalData: {
+      iso3: "MNE",
+    },
+    id: "MNE",
+  },
+  {
+    value: "976",
+    label: "Mongolia (+976)",
+    additionalData: {
+      iso3: "MNG",
+    },
+    id: "MNG",
+  },
+  {
+    value: "1-670",
+    label: "Northern Mariana Islands (+1-670)",
+    additionalData: {
+      iso3: "MNP",
+    },
+    id: "MNP",
+  },
+  {
+    value: "258",
+    label: "Mozambique (+258)",
+    additionalData: {
+      iso3: "MOZ",
+    },
+    id: "MOZ",
+  },
+  {
+    value: "222",
+    label: "Mauritania (+222)",
+    additionalData: {
+      iso3: "MRT",
+    },
+    id: "MRT",
+  },
+  {
+    value: "1-664",
+    label: "Montserrat (+1-664)",
+    additionalData: {
+      iso3: "MSR",
+    },
+    id: "MSR",
+  },
+  {
+    value: "596",
+    label: "Martinique (+596)",
+    additionalData: {
+      iso3: "MTQ",
+    },
+    id: "MTQ",
+  },
+  {
+    value: "230",
+    label: "Mauritius (+230)",
+    additionalData: {
+      iso3: "MUS",
+    },
+    id: "MUS",
+  },
+  {
+    value: "265",
+    label: "Malawi (+265)",
+    additionalData: {
+      iso3: "MWI",
+    },
+    id: "MWI",
+  },
+  {
+    value: "60",
+    label: "Malaysia (+60)",
+    additionalData: {
+      iso3: "MYS",
+    },
+    id: "MYS",
+  },
+  {
+    value: "262",
+    label: "Mayotte (+262)",
+    additionalData: {
+      iso3: "MYT",
+    },
+    id: "MYT",
+  },
+  {
+    value: "264",
+    label: "Namibia (+264)",
+    additionalData: {
+      iso3: "NAM",
+    },
+    id: "NAM",
+  },
+  {
+    value: "687",
+    label: "New Caledonia (+687)",
+    additionalData: {
+      iso3: "NCL",
+    },
+    id: "NCL",
+  },
+  {
+    value: "227",
+    label: "Niger (+227)",
+    additionalData: {
+      iso3: "NER",
+    },
+    id: "NER",
+  },
+  {
+    value: "672",
+    label: "Norfolk Island (+672)",
+    additionalData: {
+      iso3: "NFK",
+    },
+    id: "NFK",
+  },
+  {
+    value: "234",
+    label: "Nigeria (+234)",
+    additionalData: {
+      iso3: "NGA",
+    },
+    id: "NGA",
+  },
+  {
+    value: "505",
+    label: "Nicaragua (+505)",
+    additionalData: {
+      iso3: "NIC",
+    },
+    id: "NIC",
+  },
+  {
+    value: "683",
+    label: "Niue (+683)",
+    additionalData: {
+      iso3: "NIU",
+    },
+    id: "NIU",
+  },
+  {
+    value: "31",
+    label: "Netherlands (+31)",
+    additionalData: {
+      iso3: "NLD",
+    },
+    id: "NLD",
+  },
+  {
+    value: "47",
+    label: "Norway (+47)",
+    additionalData: {
+      iso3: "NOR",
+    },
+    id: "NOR",
+  },
+  {
+    value: "977",
+    label: "Nepal (+977)",
+    additionalData: {
+      iso3: "NPL",
+    },
+    id: "NPL",
+  },
+  {
+    value: "674",
+    label: "Nauru (+674)",
+    additionalData: {
+      iso3: "NRU",
+    },
+    id: "NRU",
+  },
+  {
+    value: "64",
+    label: "New Zealand (+64)",
+    additionalData: {
+      iso3: "NZL",
+    },
+    id: "NZL",
+  },
+  {
+    value: "968",
+    label: "Oman (+968)",
+    additionalData: {
+      iso3: "OMN",
+    },
+    id: "OMN",
+  },
+  {
+    value: "92",
+    label: "Pakistan (+92)",
+    additionalData: {
+      iso3: "PAK",
+    },
+    id: "PAK",
+  },
+  {
+    value: "507",
+    label: "Panama (+507)",
+    additionalData: {
+      iso3: "PAN",
+    },
+    id: "PAN",
+  },
+  {
+    value: "870",
+    label: "Pitcairn (+870)",
+    additionalData: {
+      iso3: "PCN",
+    },
+    id: "PCN",
+  },
+  {
+    value: "51",
+    label: "Peru (+51)",
+    additionalData: {
+      iso3: "PER",
+    },
+    id: "PER",
+  },
+  {
+    value: "63",
+    label: "Philippines (+63)",
+    additionalData: {
+      iso3: "PHL",
+    },
+    id: "PHL",
+  },
+  {
+    value: "680",
+    label: "Palau (+680)",
+    additionalData: {
+      iso3: "PLW",
+    },
+    id: "PLW",
+  },
+  {
+    value: "675",
+    label: "Papua New Guinea (+675)",
+    additionalData: {
+      iso3: "PNG",
+    },
+    id: "PNG",
+  },
+  {
+    value: "48",
+    label: "Poland (+48)",
+    additionalData: {
+      iso3: "POL",
+    },
+    id: "POL",
+  },
+  {
+    value: "1-787 and 1-939",
+    label: "Puerto Rico (+1-787 and 1-939)",
+    additionalData: {
+      iso3: "PRI",
+    },
+    id: "PRI",
+  },
+  {
+    value: "850",
+    label: "North Korea (+850)",
+    additionalData: {
+      iso3: "PRK",
+    },
+    id: "PRK",
+  },
+  {
+    value: "351",
+    label: "Portugal (+351)",
+    additionalData: {
+      iso3: "PRT",
+    },
+    id: "PRT",
+  },
+  {
+    value: "595",
+    label: "Paraguay (+595)",
+    additionalData: {
+      iso3: "PRY",
+    },
+    id: "PRY",
+  },
+  {
+    value: "970",
+    label: "Palestinian Territory (+970)",
+    additionalData: {
+      iso3: "PSE",
+    },
+    id: "PSE",
+  },
+  {
+    value: "689",
+    label: "French Polynesia (+689)",
+    additionalData: {
+      iso3: "PYF",
+    },
+    id: "PYF",
+  },
+  {
+    value: "974",
+    label: "Qatar (+974)",
+    additionalData: {
+      iso3: "QAT",
+    },
+    id: "QAT",
+  },
+  {
+    value: "262",
+    label: "Reunion (+262)",
+    additionalData: {
+      iso3: "REU",
+    },
+    id: "REU",
+  },
+  {
+    value: "40",
+    label: "Romania (+40)",
+    additionalData: {
+      iso3: "ROU",
+    },
+    id: "ROU",
+  },
+  {
+    value: "7",
+    label: "Russia (+7)",
+    additionalData: {
+      iso3: "RUS",
+    },
+    id: "RUS",
+  },
+  {
+    value: "250",
+    label: "Rwanda (+250)",
+    additionalData: {
+      iso3: "RWA",
+    },
+    id: "RWA",
+  },
+  {
+    value: "966",
+    label: "Saudi Arabia (+966)",
+    additionalData: {
+      iso3: "SAU",
+    },
+    id: "SAU",
+  },
+  {
+    value: "249",
+    label: "Sudan (+249)",
+    additionalData: {
+      iso3: "SDN",
+    },
+    id: "SDN",
+  },
+  {
+    value: "221",
+    label: "Senegal (+221)",
+    additionalData: {
+      iso3: "SEN",
+    },
+    id: "SEN",
+  },
+  {
+    value: "65",
+    label: "Singapore (+65)",
+    additionalData: {
+      iso3: "SGP",
+    },
+    id: "SGP",
+  },
+
+  {
+    value: "290",
+    label: "Saint Helena (+290)",
+    additionalData: {
+      iso3: "SHN",
+    },
+    id: "SHN",
+  },
+  {
+    value: "47",
+    label: "Svalbard and Jan Mayen (+47)",
+    additionalData: {
+      iso3: "SJM",
+    },
+    id: "SJM",
+  },
+  {
+    value: "677",
+    label: "Solomon Islands (+677)",
+    additionalData: {
+      iso3: "SLB",
+    },
+    id: "SLB",
+  },
+  {
+    value: "232",
+    label: "Sierra Leone (+232)",
+    additionalData: {
+      iso3: "SLE",
+    },
+    id: "SLE",
+  },
+  {
+    value: "503",
+    label: "El Salvador (+503)",
+    additionalData: {
+      iso3: "SLV",
+    },
+    id: "SLV",
+  },
+  {
+    value: "378",
+    label: "San Marino (+378)",
+    additionalData: {
+      iso3: "SMR",
+    },
+    id: "SMR",
+  },
+  {
+    value: "252",
+    label: "Somalia (+252)",
+    additionalData: {
+      iso3: "SOM",
+    },
+    id: "SOM",
+  },
+  {
+    value: "508",
+    label: "Saint Pierre and Miquelon (+508)",
+    additionalData: {
+      iso3: "SPM",
+    },
+    id: "SPM",
+  },
+  {
+    value: "381",
+    label: "Serbia (+381)",
+    additionalData: {
+      iso3: "SRB",
+    },
+    id: "SRB",
+  },
+  {
+    value: "211",
+    label: "South Sudan (+211)",
+    additionalData: {
+      iso3: "SSD",
+    },
+    id: "SSD",
+  },
+  {
+    value: "239",
+    label: "Sao Tome and Principe (+239)",
+    additionalData: {
+      iso3: "STP",
+    },
+    id: "STP",
+  },
+  {
+    value: "597",
+    label: "Suriname (+597)",
+    additionalData: {
+      iso3: "SUR",
+    },
+    id: "SUR",
+  },
+  {
+    value: "421",
+    label: "Slovakia (+421)",
+    additionalData: {
+      iso3: "SVK",
+    },
+    id: "SVK",
+  },
+  {
+    value: "386",
+    label: "Slovenia (+386)",
+    additionalData: {
+      iso3: "SVN",
+    },
+    id: "SVN",
+  },
+  {
+    value: "46",
+    label: "Sweden (+46)",
+    additionalData: {
+      iso3: "SWE",
+    },
+    id: "SWE",
+  },
+  {
+    value: "268",
+    label: "Swaziland (+268)",
+    additionalData: {
+      iso3: "SWZ",
+    },
+    id: "SWZ",
+  },
+  {
+    value: "599",
+    label: "Sint Maarten (+599)",
+    additionalData: {
+      iso3: "SXM",
+    },
+    id: "SXM",
+  },
+  {
+    value: "248",
+    label: "Seychelles (+248)",
+    additionalData: {
+      iso3: "SYC",
+    },
+    id: "SYC",
+  },
+  {
+    value: "963",
+    label: "Syria (+963)",
+    additionalData: {
+      iso3: "SYR",
+    },
+    id: "SYR",
+  },
+  {
+    value: "1-649",
+    label: "Turks and Caicos Islands (+1-649)",
+    additionalData: {
+      iso3: "TCA",
+    },
+    id: "TCA",
+  },
+  {
+    value: "235",
+    label: "Chad (+235)",
+    additionalData: {
+      iso3: "TCD",
+    },
+    id: "TCD",
+  },
+  {
+    value: "228",
+    label: "Togo (+228)",
+    additionalData: {
+      iso3: "TGO",
+    },
+    id: "TGO",
+  },
+  {
+    value: "66",
+    label: "Thailand (+66)",
+    additionalData: {
+      iso3: "THA",
+    },
+    id: "THA",
+  },
+  {
+    value: "992",
+    label: "Tajikistan (+992)",
+    additionalData: {
+      iso3: "TJK",
+    },
+    id: "TJK",
+  },
+  {
+    value: "690",
+    label: "Tokelau (+690)",
+    additionalData: {
+      iso3: "TKL",
+    },
+    id: "TKL",
+  },
+  {
+    value: "993",
+    label: "Turkmenistan (+993)",
+    additionalData: {
+      iso3: "TKM",
+    },
+    id: "TKM",
+  },
+  {
+    value: "670",
+    label: "East Timor (+670)",
+    additionalData: {
+      iso3: "TLS",
+    },
+    id: "TLS",
+  },
+  {
+    value: "676",
+    label: "Tonga (+676)",
+    additionalData: {
+      iso3: "TON",
+    },
+    id: "TON",
+  },
+  {
+    value: "1-868",
+    label: "Trinidad and Tobago (+1-868)",
+    additionalData: {
+      iso3: "TTO",
+    },
+    id: "TTO",
+  },
+  {
+    value: "216",
+    label: "Tunisia (+216)",
+    additionalData: {
+      iso3: "TUN",
+    },
+    id: "TUN",
+  },
+  {
+    value: "90",
+    label: "Turkey (+90)",
+    additionalData: {
+      iso3: "TUR",
+    },
+    id: "TUR",
+  },
+  {
+    value: "688",
+    label: "Tuvalu (+688)",
+    additionalData: {
+      iso3: "TUV",
+    },
+    id: "TUV",
+  },
+  {
+    value: "886",
+    label: "Taiwan (+886)",
+    additionalData: {
+      iso3: "TWN",
+    },
+    id: "TWN",
+  },
+  {
+    value: "255",
+    label: "Tanzania (+255)",
+    additionalData: {
+      iso3: "TZA",
+    },
+    id: "TZA",
+  },
+  {
+    value: "256",
+    label: "Uganda (+256)",
+    additionalData: {
+      iso3: "UGA",
+    },
+    id: "UGA",
+  },
+  {
+    value: "380",
+    label: "Ukraine (+380)",
+    additionalData: {
+      iso3: "UKR",
+    },
+    id: "UKR",
+  },
+  {
+    value: "1",
+    label: "United States Minor Outlying Islands (+1)",
+    additionalData: {
+      iso3: "UMI",
+    },
+    id: "UMI",
+  },
+  {
+    value: "598",
+    label: "Uruguay (+598)",
+    additionalData: {
+      iso3: "URY",
+    },
+    id: "URY",
+  },
+  {
+    value: "1",
+    label: "United States (+1)",
+    additionalData: {
+      iso3: "USA",
+    },
+    id: "USA",
+  },
+  {
+    value: "998",
+    label: "Uzbekistan (+998)",
+    additionalData: {
+      iso3: "UZB",
+    },
+    id: "UZB",
+  },
+  {
+    value: "379",
+    label: "Vatican (+379)",
+    additionalData: {
+      iso3: "VAT",
+    },
+    id: "VAT",
+  },
+  {
+    value: "1-784",
+    label: "Saint Vincent and the Grenadines (+1-784)",
+    additionalData: {
+      iso3: "VCT",
+    },
+    id: "VCT",
+  },
+  {
+    value: "58",
+    label: "Venezuela (+58)",
+    additionalData: {
+      iso3: "VEN",
+    },
+    id: "VEN",
+  },
+  {
+    value: "1-284",
+    label: "British Virgin Islands (+1-284)",
+    additionalData: {
+      iso3: "VGB",
+    },
+    id: "VGB",
+  },
+  {
+    value: "1-340",
+    label: "U.S. Virgin Islands (+1-340)",
+    additionalData: {
+      iso3: "VIR",
+    },
+    id: "VIR",
+  },
+  {
+    value: "84",
+    label: "Vietnam (+84)",
+    additionalData: {
+      iso3: "VNM",
+    },
+    id: "VNM",
+  },
+  {
+    value: "678",
+    label: "Vanuatu (+678)",
+    additionalData: {
+      iso3: "VUT",
+    },
+    id: "VUT",
+  },
+  {
+    value: "681",
+    label: "Wallis and Futuna (+681)",
+    additionalData: {
+      iso3: "WLF",
+    },
+    id: "WLF",
+  },
+  {
+    value: "685",
+    label: "Samoa (+685)",
+    additionalData: {
+      iso3: "WSM",
+    },
+    id: "WSM",
+  },
+  {
+    value: "967",
+    label: "Yemen (+967)",
+    additionalData: {
+      iso3: "YEM",
+    },
+    id: "YEM",
+  },
+  {
+    value: "27",
+    label: "South Africa (+27)",
+    additionalData: {
+      iso3: "ZAF",
+    },
+    id: "ZAF",
+  },
+  {
+    value: "260",
+    label: "Zambia (+260)",
+    additionalData: {
+      iso3: "ZMB",
+    },
+    id: "ZMB",
+  },
+  {
+    value: "263",
+    label: "Zimbabwe (+263)",
+    additionalData: {
+      iso3: "ZWE",
+    },
+    id: "ZWE",
   },
 ];
