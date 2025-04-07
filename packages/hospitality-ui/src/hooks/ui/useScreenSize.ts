@@ -19,7 +19,7 @@ export function useScreenSize() {
     isXs: useMediaQuery("(min-width: 320px)"),
     isSm: useMediaQuery("(min-width: 640px)"),
     isMd: useMediaQuery("(min-width: 768px)"),
-    isSmallScreen: useMediaQuery("(max-width: 768px)"),
+    isSmallScreen: useMediaQuery("(max-width: 1023px)"),
     isLg: useMediaQuery("(min-width: 1024px)"),
     isXl: useMediaQuery("(min-width: 1280px)"),
     is2Xl: useMediaQuery("(min-width: 1281px)"),
