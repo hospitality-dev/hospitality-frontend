@@ -3,7 +3,6 @@ import {
   autoUpdate,
   flip,
   FloatingFocusManager,
-  FloatingPortal,
   offset,
   size as floatingSize,
   useDismiss,
@@ -126,33 +125,31 @@ export function Autocomplete<OT>({
         />
       </div>
       {open && items.length ? (
-        <FloatingPortal>
-          <FloatingFocusManager context={context} initialFocus={-1} visuallyHiddenDismiss>
-            <div
-              {...getFloatingProps({
-                ref: refs.setFloating,
-                style: floatingStyles,
-                className: "divide-y divide-gray-200 bg-white rounded-md border border-gray-300 shadow-lg overflow-y-auto",
-              })}>
-              {items.map((item, index) => (
-                <div
-                  key={item.value}
-                  {...getItemProps({
-                    ref(node) {
-                      listRef.current[index] = node;
-                    },
-                  })}>
-                  <OptionItem
-                    isActive={activeIndex === index}
-                    isSelected={item.value === value}
-                    item={item}
-                    onChange={onChange}
-                  />
-                </div>
-              ))}
-            </div>
-          </FloatingFocusManager>
-        </FloatingPortal>
+        <FloatingFocusManager context={context} initialFocus={-1} visuallyHiddenDismiss>
+          <div
+            {...getFloatingProps({
+              ref: refs.setFloating,
+              style: floatingStyles,
+              className: "divide-y divide-gray-200 bg-white rounded-md border border-gray-300 shadow-lg overflow-y-auto z-[61]",
+            })}>
+            {items.map((item, index) => (
+              <div
+                key={item.value}
+                {...getItemProps({
+                  ref(node) {
+                    listRef.current[index] = node;
+                  },
+                })}>
+                <OptionItem
+                  isActive={activeIndex === index}
+                  isSelected={item.value === value}
+                  item={item}
+                  onChange={onChange}
+                />
+              </div>
+            ))}
+          </div>
+        </FloatingFocusManager>
       ) : null}
     </>
   );
