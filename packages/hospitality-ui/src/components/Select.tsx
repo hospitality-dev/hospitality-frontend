@@ -59,7 +59,7 @@ const classes = tv({
       xl: { labelClasses: "text-xl", base: "h-10" },
     },
 
-    isDisabled: { true: "cursor-not-allowed" },
+    isDisabled: { true: "cursor-not-allowed text-gray-400" },
     hasNoBorder: { true: "border-0 outline-0 outline-none" },
   },
 });
