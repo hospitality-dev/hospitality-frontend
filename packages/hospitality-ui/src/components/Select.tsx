@@ -19,7 +19,7 @@ import { Icons } from "../enums";
 import { availableIcons, OptionType, Size, Variant } from "../types/baseTypes";
 import { OptionItem } from "./OptionItem";
 
-type Props<OT = null> = {
+type Props<OT> = {
   label?: string;
   value: string | string[];
   isMultiple?: boolean;
@@ -28,7 +28,7 @@ type Props<OT = null> = {
   variant?: Variant;
   size?: Size;
   icon?: availableIcons;
-  options: OptionType<null>[];
+  options: OptionType<OT>[];
   onChange: (item: OptionType<OT> | null) => void;
 };
 
@@ -63,7 +63,7 @@ const classes = tv({
   },
 });
 
-export function Select({
+export function Select<OT>({
   label,
   variant = "info",
   size = "md",
@@ -73,7 +73,7 @@ export function Select({
   onChange,
   options = [],
   value,
-}: Props) {
+}: Props<OT>) {
   const { base, container, labelClasses, icon, selectBox, optionsContainer } = classes({
     variant,
     size,

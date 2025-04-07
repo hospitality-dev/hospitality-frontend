@@ -82,7 +82,7 @@ export function useSessionLocation() {
       authFetchFunction<LoginResponseType>({ method: "GET", userReset: () => {}, route: `session/location/${locationId}` }),
     onSuccess: (data) => {
       setUser(data);
-      navigate({ to: "/settings/users" });
+      navigate({ to: "/settings/location" });
     },
   });
 

@@ -77,7 +77,9 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
             children={(field) => (
               <Select
                 label="Product category"
-                onChange={(e) => field.handleChange(e.target.value as string)}
+                onChange={(e) => {
+                  if (e) field.handleChange(e.value);
+                }}
                 options={(categories || [])?.map((cat) => ({ label: cat.title, value: cat.id }))}
                 value={field.state.value}
                 variant={field.state.meta.errors.length ? "error" : "primary"}
@@ -214,7 +216,7 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
                     isDisabled={isLoading || isLoadingProduct}
                     label="Product"
                     onChange={(e) => {
-                      field.handleChange(e.target.value);
+                      if (e?.value) field.handleChange(e?.value);
                     }}
                     options={formatForOptions(products)}
                     value={field.state.value as string}

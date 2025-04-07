@@ -106,7 +106,9 @@ export function AddNewUser() {
               <Select
                 // helperText={formatErrorsForHelperText(field.state.meta.errors) || "Must be at least 6 characters long"}
                 label="Role"
-                onChange={(e) => field.handleChange(e.target.value)}
+                onChange={(e) => {
+                  if (e) field.handleChange(e.value);
+                }}
                 options={formatForOptions(roles)}
                 value={field.state.value}
               />
@@ -178,7 +180,9 @@ export function AddUserFromLocation() {
               <Select
                 // helperText={formatErrorsForHelperText(field.state.meta.errors) || "Must be at least 6 characters long"}
                 label="User"
-                onChange={(e) => field.handleChange(e.target.value)}
+                onChange={(e) => {
+                  if (e) field.handleChange(e.value);
+                }}
                 options={formatForOptions((users || []).map((user) => getUserInfo(user)))}
                 value={field.state.value}
               />
@@ -192,7 +196,9 @@ export function AddUserFromLocation() {
               <Select
                 // helperText={formatErrorsForHelperText(field.state.meta.errors) || "Must be at least 6 characters long"}
                 label="Role"
-                onChange={(e) => field.handleChange(e.target.value)}
+                onChange={(e) => {
+                  if (e) field.handleChange(e.value);
+                }}
                 options={formatForOptions(roles)}
                 value={field.state.value}
               />
