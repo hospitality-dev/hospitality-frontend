@@ -10,10 +10,12 @@ type Props = {
   value: string | string[];
   isMultiple?: boolean;
   isDisabled?: boolean;
+  hasNoBorder?: boolean;
   variant?: Variant;
   size?: Size;
   icon?: availableIcons;
-  options: OptionType[];
+  options: OptionType<null>[];
+
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 };
 
@@ -43,6 +45,7 @@ const classes = tv({
       xl: { labelClasses: "text-xl", base: "h-10" },
     },
     isDisabled: { true: "cursor-not-allowed" },
+    hasNoBorder: { true: "border-0 outline-0 outline-none" },
   },
 });
 
@@ -52,18 +55,24 @@ export function Select({
   size = "md",
   isMultiple = false,
   isDisabled = false,
+  hasNoBorder,
   onChange,
-  options,
+  options = [],
   value,
 }: Props) {
-  const { base, container, labelClasses, icon, selectBox } = classes({ variant, size, isDisabled });
+  const { base, container, labelClasses, icon, selectBox } = classes({
+    variant,
+    size,
+    isDisabled: isDisabled || !!options.length,
+    hasNoBorder,
+  });
   return (
     <div className={container()}>
       <p className={labelClasses()}>{label ? <label>{label}</label> : null}</p>
       <div className={selectBox()}>
         <select className={base()} disabled={isDisabled} multiple={isMultiple} onChange={onChange} value={value}>
           <option className="text-gray-300" defaultValue="true" value="">
-            Select one
+            {options.length ? "No options." : "Select one"}
           </option>
           {options.map((opt) => (
             <option key={opt.value} value={opt.value}>
