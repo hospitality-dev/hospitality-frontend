@@ -55,7 +55,7 @@ type DropdownType = {
 
 const DropdownClasses = tv({
   slots: {
-    base: "font-lato z-30 max-w-fit min-w-fit outline-none",
+    base: "font-lato z-30 min-w-fit outline-none",
     floatingBase: "font-lato absolute top-0 left-0 z-[9999] overflow-y-auto rounded-md border border-gray-300 shadow-lg",
   },
 });
@@ -110,10 +110,7 @@ function DropdownComponent({ allowedPlacements = [], children, items, event, isD
     nodeId,
     open: isOpen,
     onOpenChange: setIsOpen,
-    middleware: [
-      offset({ mainAxis: isNested ? 8 : 4, alignmentAxis: 0 }),
-      autoPlacement({ allowedPlacements: ["left-start"] }),
-    ],
+    middleware: [offset({ mainAxis: isNested ? 8 : 4, alignmentAxis: 0 }), autoPlacement({ allowedPlacements })],
     whileElementsMounted: autoUpdate,
   });
 
