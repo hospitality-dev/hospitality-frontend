@@ -3,7 +3,6 @@ export const Icons = {
   add: "ph:plus" as const,
   "add-item": "mdi:basket-plus-outline" as const,
   "add-user": "ph:user-plus" as const,
-  address: "entypo:address" as const,
   "arrow-down": "ph:caret-down" as const,
   "arrow-left": "ph:caret-left" as const,
   "arrow-right": "ph:caret-right" as const,

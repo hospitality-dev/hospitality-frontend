@@ -77,7 +77,7 @@ export function LocationSettings() {
 
           <div className="md:col-span-2">
             <Collapsible
-              icon={Icons.address}
+              icon={Icons.office_address}
               isOpen
               items={[
                 {
