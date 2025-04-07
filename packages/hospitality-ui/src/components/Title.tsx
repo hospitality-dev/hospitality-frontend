@@ -1,9 +1,8 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { tv } from "tailwind-variants";
 
-import { availableIcons, Size, Variant } from "../types";
+import { ActionType, availableIcons, Size, Variant } from "../types";
 import { Button } from "./Button";
-import { DropdownItemType } from "./Dropdown";
 
 type Props = {
   label: string;
@@ -11,23 +10,19 @@ type Props = {
   variant?: Variant;
   size?: Size;
   hasBorder?: boolean;
-  items?: {
-    id: string;
-    label: string;
-    onClick: () => void;
-    icon: availableIcons;
-    isDisabled?: boolean;
-    items?: DropdownItemType[];
-    variant?: Variant;
-  }[];
+  items?: ActionType[];
 };
 
 const classes = tv({
-  base: "flex-1 font-medium select-none",
+  slots: {
+    base: "flex flex-1 items-center gap-x-1 font-medium select-none",
+    actionsContainer: "ml-auto flex items-center gap-x-1",
+    actionButtonContainer: "h-7 w-7",
+  },
   variants: {
     variant: {
-      primary: "border-primary-highlight",
-      secondary: "border-secondary-highlight",
+      primary: "border-primary",
+      secondary: "border-secondary",
       info: "border-info-highlight",
       success: "border-success-highlight",
       warning: "border-warning-highlight",
@@ -47,25 +42,30 @@ const classes = tv({
 });
 
 export function Title({ label, variant = "info", size = "md", hasBorder, icon, items }: Props) {
+  const { base, actionsContainer, actionButtonContainer } = classes({ variant, size, hasBorder });
   return (
-    <h3 className={classes({ variant, size, hasBorder })}>
-      <span className="flex items-center">
-        {icon ? <Icon fontSize={28} icon={icon} /> : null}
-        <span>{label}</span>
+    <h3 className={base()}>
+      {icon ? <Icon fontSize={22} icon={icon} /> : null}
+      <span>{label}</span>
+      <div className={actionsContainer()}>
         {(items || []).map((item) => (
-          <div key={item.id} className="ml-auto h-8 w-8">
+          <div key={item.id} className={actionButtonContainer()}>
             <Button
-              allowedPlacements={["left", "left-start", "left-end"]}
+              allowedPlacements={item.allowedPlacements || []}
               hasNoBorder
               icon={item.icon}
               isOutline
-              variant={item.variant || "primary"}
               items={item.items || []}
-              onClick={item.onClick}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (item.onClick) item.onClick(e);
+              }}
+              variant={item.variant || "primary"}
             />
           </div>
         ))}
-      </span>
+      </div>
     </h3>
   );
 }
