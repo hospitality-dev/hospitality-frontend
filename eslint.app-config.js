@@ -21,5 +21,12 @@ export default tseslint.config({
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-curly-brace-presence": ["error", { props: "never" }],
+    "react/boolean-prop-naming": [
+      "error",
+      {
+        rule: "^(is|has)[A-Z]([A-Za-z0-9]?)+",
+        message: "Boolean props should be prefixed with 'is' or 'has'",
+      },
+    ],
   },
 });

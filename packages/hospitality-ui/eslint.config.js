@@ -20,5 +20,12 @@ export default tseslint.config({
     "react/prop-types": "off", // Not needed with TypeScript
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "off",
+    "react/boolean-prop-naming": [
+      "error",
+      {
+        rule: "^(is|has)[A-Z]([A-Za-z0-9]?)+",
+        message: "Boolean props should be prefixed with 'is' or 'has'",
+      },
+    ],
   },
 });
