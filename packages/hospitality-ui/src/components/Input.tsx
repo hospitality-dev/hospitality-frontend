@@ -1,8 +1,13 @@
-import { ChangeEvent, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
+import { MaskitoOptions } from "@maskito/core";
+import { useMaskito } from "@maskito/react";
+import { ChangeEvent, HTMLInputTypeAttribute, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 import { tv } from "tailwind-variants";
 
 import { availableIcons, Size, Variant } from "../types/baseTypes";
+import { defaultMask, numbersOnlyMask, phoneMask } from "../utils";
 import { Button } from "./Button";
+
+type AllowedTypes = Extract<HTMLInputTypeAttribute, "text" | "number" | "tel">;
 
 type Props = {
   label?: string;
@@ -16,12 +21,18 @@ type Props = {
   variant?: Variant;
   size?: Size;
   placeholder?: string;
-  type?: HTMLInputElement["type"];
+  type?: AllowedTypes;
   action?: {
     onClick: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void;
     icon: availableIcons;
     tooltip?: string;
   };
+};
+
+const masks: Record<AllowedTypes, MaskitoOptions> = {
+  number: numbersOnlyMask,
+  text: defaultMask,
+  tel: phoneMask,
 };
 
 const classes = tv({
@@ -88,22 +99,25 @@ export function Input({
   type = "text",
   action,
 }: Props) {
+  const inputRef = useMaskito({ options: masks[type] });
   const { inputClasses, inputContainer, container, labelClasses, helperTextClasses } = classes({
     variant,
     size,
     isDisabled,
   });
+
   return (
     <div className={container()}>
       <label className={labelClasses()}>{label ? <span>{label}</span> : null}</label>
       <div className={inputContainer()}>
         <input
+          ref={inputRef}
           autoComplete="off"
           autoFocus={isAutofocused}
           className={inputClasses()}
           disabled={isDisabled}
           name={name}
-          onChange={onChange}
+          onInput={onChange}
           onKeyDown={onKeyDown}
           placeholder={placeholder}
           type={type}
