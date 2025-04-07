@@ -136,7 +136,7 @@ export function Autocomplete<OT>({
             {...getFloatingProps({
               ref: refs.setFloating,
               style: floatingStyles,
-              className: "divide-y divide-gray-200 bg-white rounded-md border border-gray-300 shadow-lg overflow-y-auto z-[61]",
+              className: "divide-y divide-gray-300 bg-white rounded-md border border-gray-400 shadow-lg overflow-y-auto z-[61]",
             })}>
             {items.map((item, index) => (
               <div
