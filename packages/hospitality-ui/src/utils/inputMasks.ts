@@ -12,7 +12,7 @@ export const phoneMask: MaskitoOptions = {
 };
 
 export const websiteMask: MaskitoOptions = {
-  mask: /^https:\/\/(\w*)(\.*)?([\w]{0,5})?(\.*)?([\w]{0,5})$/,
+  mask: /^https:\/\/(www\.)?(\w*)(\.*)?([\w]{0,5})?(\.*)?([\w]{0,5})$/,
   postprocessors: [maskitoPrefixPostprocessorGenerator("https://")],
   plugins: [maskitoAddOnFocusPlugin("https://"), maskitoRemoveOnBlurPlugin("https://")],
 };
