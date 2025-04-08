@@ -11,7 +11,7 @@ export const phoneMask: MaskitoOptions = {
   mask: [/\d/, /\d/, "-", /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d?/],
 };
 export const websiteMask: MaskitoOptions = {
-  mask: /^https:\/\/(\w*\.)?(\w*)(\.*)?([\w]{0,5})?(\.*)?([\w]{0,5})$/,
+  mask: /^https:\/\/((\w*\.)?(\w*)((\.|\/)*)?([\w]*)?((\.|\/)*)?([\w]*))+$/,
   postprocessors: [maskitoPrefixPostprocessorGenerator("https://")],
   plugins: [maskitoAddOnFocusPlugin("https://"), maskitoRemoveOnBlurPlugin("https://")],
 };

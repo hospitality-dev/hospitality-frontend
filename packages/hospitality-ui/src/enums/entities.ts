@@ -68,3 +68,18 @@ export const AvailableContactTypes = {
     personal: ["whatsapp", "linkedin", "twitter", "facebook", "instagram"] as const,
   },
 };
+
+export const AvailableDomains = [
+  "com",
+  "net",
+  "app",
+  "org",
+  "co",
+  "io",
+  "xyz",
+  "co.uk",
+  "co.ca",
+  "co.us",
+  "rs",
+  "срб",
+] as const;
