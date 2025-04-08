@@ -23,7 +23,9 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
-    "**/*.{ts,tsx}": "tsc"
+    "**/*.{ts,tsx}": [
+      "bash -c tsc --noEmit"
+    ]
   },
   "private": true,
   "scripts": {
