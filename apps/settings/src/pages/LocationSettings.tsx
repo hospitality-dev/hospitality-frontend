@@ -169,6 +169,28 @@ function ContactDisplay({
                   }}
                 />
               );
+            if (type === "other")
+              return (
+                <form.Field
+                  children={(subfield) => (
+                    <Input
+                      helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+                      isDisabled={isDisabled}
+                      label={getSentenceCase(contact.contactType)}
+                      name={subfield.name}
+                      onBlur={subfield.handleBlur}
+                      onChange={(e) => subfield.handleChange(e.target.value)}
+                      type="url"
+                      value={subfield.state.value}
+                      variant={subfield.state.meta.errors.length ? "error" : "primary"}
+                    />
+                  )}
+                  name={`contacts[${index}].value`}
+                  validators={{
+                    onBlur: urlValidation,
+                  }}
+                />
+              );
             return null;
           }}
           name={`contacts[${index}].value`}
@@ -430,7 +452,14 @@ export function LocationSettings() {
                 children={(field) =>
                   field.state.value.length
                     ? field.state.value.map((contact, i) => {
-                        if (contact.contactType.includes("email"))
+                        if (
+                          contact.contactType === "whatsapp" ||
+                          contact.contactType === "linkedin" ||
+                          contact.contactType === "twitter" ||
+                          contact.contactType === "facebook" ||
+                          contact.contactType === "instagram" ||
+                          contact.contactType === "slack"
+                        )
                           return (
                             <ContactDisplay
                               key={contact.id}
