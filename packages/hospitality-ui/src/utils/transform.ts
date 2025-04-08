@@ -1,4 +1,5 @@
 import { ValidationError } from "@tanstack/react-form";
+import { ZodIssue } from "zod";
 
 import { AddressesType, ContactType, OptionType } from "../types";
 
@@ -35,7 +36,7 @@ export function formatAddressesForOptions(
   });
 }
 
-export function formatErrorsForHelperText(errors: ValidationError[]) {
+export function formatErrorsForHelperText(errors: ValidationError[] | ZodIssue[]) {
   return errors.join("\n ");
 }
 
