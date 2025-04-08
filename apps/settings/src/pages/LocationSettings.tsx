@@ -7,7 +7,9 @@ import {
   Collapsible,
   ContactType,
   ContactTypes,
+  emailValidation,
   Form,
+  formatErrorsForHelperText,
   getSentenceCase,
   Icons,
   Input,
@@ -121,6 +123,28 @@ function ContactDisplay({
                     />
                   )}
                 </form.Subscribe>
+              );
+            if (type === "email")
+              return (
+                <form.Field
+                  children={(subfield) => (
+                    <Input
+                      helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+                      isDisabled={isDisabled}
+                      label={getSentenceCase(contact.contactType)}
+                      name={subfield.name}
+                      onBlur={subfield.handleBlur}
+                      onChange={(e) => subfield.handleChange(e.target.value)}
+                      type="text"
+                      value={subfield.state.value}
+                      variant={subfield.state.meta.errors.length ? "error" : "primary"}
+                    />
+                  )}
+                  name={`contacts[${index}].value`}
+                  validators={{
+                    onBlur: emailValidation,
+                  }}
+                />
               );
             return null;
           }}
@@ -254,6 +278,52 @@ export function LocationSettings() {
                               index={i}
                               isDisabled={isLoading}
                               type="phone"
+                            />
+                          );
+                        return null;
+                      })
+                    : "ALERT HERE"
+                }
+                mode="array"
+                name="contacts"
+              />
+            </div>
+          </Collapsible>
+          <Collapsible
+            icon={Icons.email}
+            isOpen
+            items={[
+              {
+                id: "1",
+                label: "Add",
+                icon: Icons.add,
+                variant: "info",
+                allowedPlacements: ["left-start"] as const,
+                onClick: () => {},
+                items: AvailableContactTypes.email.professional.map((email) => ({
+                  icon: Icons[email],
+                  allowedPlacements: ["left-start"],
+                  id: email,
+                  title: getSentenceCase(email),
+                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(email, data?.id)),
+                })),
+              },
+            ]}
+            label="Emails">
+            <div className="flex flex-col gap-y-2 py-1">
+              <form.Field
+                children={(field) =>
+                  field.state.value.length
+                    ? field.state.value.map((contact, i) => {
+                        if (contact.contactType.includes("email"))
+                          return (
+                            <ContactDisplay
+                              key={contact.id}
+                              contact={contact}
+                              form={form}
+                              index={i}
+                              isDisabled={isLoading}
+                              type="email"
                             />
                           );
                         return null;
