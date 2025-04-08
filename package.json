@@ -22,7 +22,8 @@
     "typescript-eslint": "^8.22.0"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": "prettier --write --ignore-unknown",
+    "**/*.{ts,tsx}": "tsc"
   },
   "private": true,
   "scripts": {
