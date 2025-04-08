@@ -27,16 +27,18 @@ export const AvailableSearchableEntitiesEnum = [
 ] as const;
 
 export const AvailableContactTypes = {
-  email: [
-    "work_email",
-    "personal_email",
-    "support_email",
-    "billing_email",
-    "sales_email",
-    "marketing_email",
-    "hr_email",
-    "contact_email",
-  ] as const,
+  email: {
+    professional: [
+      "work_email",
+      "billing_email",
+      "hr_email",
+      "sales_email",
+      "marketing_email",
+      "contact_email",
+      "support_email",
+    ] as const,
+    personal: ["personal_email", "work_email"],
+  },
   phone: {
     professional: [
       "work_phone",
