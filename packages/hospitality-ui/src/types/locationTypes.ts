@@ -1,6 +1,6 @@
 import { infer as zodInfer, object, string } from "zod";
 
-import { ContactInitializerSchema, ContactMutatorSchema, ContactSchema } from "./contactTypes";
+import { ContactSchema } from "./contactTypes";
 
 export const LocationsSchema = object({
   id: string().uuid().nonempty(),
@@ -12,13 +12,13 @@ export const LocationsSchema = object({
 
 export const LocationsInitializerSchema = object({
   title: string().nonempty("Title cannot be empty."),
-  contacts: ContactInitializerSchema.array().default([]),
+  contacts: ContactSchema.array(),
 });
 export const LocationsMutatorSchema = object({
+  id: string().uuid().nonempty("Must have id"),
   title: string().optional(),
-  contacts: ContactInitializerSchema.or(ContactMutatorSchema).array().default([]),
+  contacts: ContactSchema.array(),
 });
-
 export const LocationsUsersSchema = object({
   id: string().uuid().nonempty(),
   locationId: string().uuid(),

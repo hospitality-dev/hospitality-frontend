@@ -13,6 +13,7 @@ import {
   getSentenceCase,
   Icons,
   Input,
+  LocationsMutatorSchema,
   LocationsMutatorType,
   LocationsType,
   ReactFormExtendedApi,
@@ -22,15 +23,15 @@ import {
   useForm,
   useRead,
   useScreenSize,
+  useUpdate,
 } from "@hospitality/hospitality-ui";
 
 type EntityType = Pick<LocationsType, "id" | "title" | "contacts">;
-function getBaseContact(contactType: ContactTypes, parentId: string): ContactType {
+function getBaseContact(contactType: ContactTypes): ContactType {
   return {
     id: crypto.randomUUID(),
     title: getSentenceCase(contactType),
-    parentId,
-    prefix: "",
+    prefix: null,
     value: "",
     contactType,
     isPublic: false,
@@ -114,8 +115,10 @@ function ContactDisplay({
                           label={getSentenceCase(contact.contactType)}
                           name={subfield.name}
                           onChange={(e) => subfield.handleChange(e.target.value)}
-                          onSelectChange={(item) => form.setFieldValue(`contacts[${index}].prefix`, item?.value)}
-                          selectValue={prefix}
+                          onSelectChange={(item) =>
+                            form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null)
+                          }
+                          selectValue={(prefix || "")?.toString()}
                           type="tel"
                           value={subfield.state.value}
                         />
@@ -212,11 +215,18 @@ export function LocationSettings() {
     { enabled: !!auth.user?.locationId }
   );
 
+  const { mutate: update } = useUpdate<LocationsMutatorType>("locations");
+
   const form = useForm<LocationsMutatorType>({
     defaultValues: {
+      id: data?.id || crypto.randomUUID(),
       title: data?.title,
-      contacts: data?.contacts || [],
+      contacts: [],
     },
+    validators: {
+      onSubmit: LocationsMutatorSchema,
+    },
+    onSubmit: update,
   });
   if (!isSuccess) return null;
   return (
@@ -234,7 +244,7 @@ export function LocationSettings() {
                   label="Title"
                   name={field.name}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  value={field.state.value}
+                  value={field.state.value || ""}
                 />
               )}
               name="title"
@@ -258,7 +268,7 @@ export function LocationSettings() {
                   allowedPlacements: ["left-start"] as const,
                   id: addr,
                   title: getSentenceCase(addr),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(addr, data?.id)),
+                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(addr)),
                 })),
               },
             ]}
@@ -304,7 +314,7 @@ export function LocationSettings() {
                   allowedPlacements: ["left-start"],
                   id: phone,
                   title: getSentenceCase(phone),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(phone, data?.id)),
+                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(phone)),
                 })),
               },
             ]}
@@ -350,7 +360,7 @@ export function LocationSettings() {
                   allowedPlacements: ["left-start"],
                   id: email,
                   title: getSentenceCase(email),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(email, data?.id)),
+                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(email)),
                 })),
               },
             ]}
@@ -396,7 +406,7 @@ export function LocationSettings() {
                   allowedPlacements: ["left-start"],
                   id: other,
                   title: getSentenceCase(other),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other, data?.id)),
+                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other)),
                 })),
               },
             ]}
@@ -442,7 +452,7 @@ export function LocationSettings() {
                   allowedPlacements: ["left-start"],
                   id: other,
                   title: getSentenceCase(other),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other, data?.id)),
+                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other)),
                 })),
               },
             ]}

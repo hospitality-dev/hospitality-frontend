@@ -5,13 +5,19 @@ import { userAtom } from "../../atoms";
 import { AvailableEntities } from "../../types";
 import { fetchFunction } from "../../utils";
 
-export function useUpdate<F>(model: AvailableEntities) {
+export function useUpdate<F extends { id: string }>(model: AvailableEntities) {
   const userReset = useResetAtom(userAtom);
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (payload: { value: F }) => {
-      return fetchFunction({ method: "PATCH", payload: JSON.stringify(payload.value), model, userReset });
+      return fetchFunction({
+        method: "PATCH",
+        id: payload.value.id,
+        payload: JSON.stringify(payload.value),
+        model,
+        userReset,
+      });
     },
 
     onSuccess: () => {

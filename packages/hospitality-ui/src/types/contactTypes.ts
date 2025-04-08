@@ -41,45 +41,20 @@ export const ContactTypesSchema = enum_([
 export const ContactSchema = object({
   id: string().uuid().nonempty(),
   title: string().nullable(),
-  parentId: string().uuid().nonempty(),
-  placeId: number().nullish(),
-  prefix: string().max(4).nullish(),
+  placeId: number()
+    .nullish()
+    .transform((arg) => {
+      if (arg === null || arg === undefined) return arg;
+      return Number(arg);
+    }),
+  prefix: number().max(7).nullish(),
   value: string().nonempty("Contact value cannot be empty."),
   latitude: number().nullish(),
   longitude: number().nullish(),
   boundingBox: number().array().nullish(),
-  isPublic: boolean().default(false).nullable(),
-  contactType: ContactTypesSchema,
-});
-
-export const ContactInitializerSchema = object({
-  id: string().uuid().nonempty(),
-  title: string().nullable(),
-  parentId: string().uuid().nonempty(),
-  prefix: string().max(4).nullish(),
-  value: string().nonempty("Contact value cannot be empty."),
-  isPublic: boolean().default(false).nullable(),
-  placeId: number().nullish(),
-  latitude: number().nullish(),
-  longitude: number().nullish(),
-  boundingBox: number().array().nullish(),
-  contactType: ContactTypesSchema,
-});
-
-export const ContactMutatorSchema = object({
-  id: string().uuid().nonempty(),
-  title: string().nullable(),
-  prefix: string().max(4).nullish(),
-  value: string().nonempty("Contact value cannot be empty."),
-  isPublic: boolean().default(false).nullable(),
-  placeId: number().nullish(),
-  latitude: number().nullish(),
-  longitude: number().nullish(),
-  boundingBox: number().array().nullish(),
+  isPublic: boolean().default(false).nullish(),
   contactType: ContactTypesSchema,
 });
 
 export type ContactTypes = zodInfer<typeof ContactTypesSchema>;
 export type ContactType = zodInfer<typeof ContactSchema>;
-export type ContactInitializerType = zodInfer<typeof ContactInitializerSchema>;
-export type ContactMutatorType = zodInfer<typeof ContactMutatorSchema>;
