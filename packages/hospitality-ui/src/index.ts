@@ -29,4 +29,4 @@ export {
 export { type ColumnDef, createColumnHelper, type Row } from "@tanstack/react-table";
 export { TanStackRouterDevtools } from "@tanstack/router-devtools";
 export * as ky from "ky";
-export { z } from "zod";
+export { boolean, number, object, record, string, z } from "zod";
