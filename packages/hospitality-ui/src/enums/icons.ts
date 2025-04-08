@@ -66,6 +66,6 @@ export const Icons = {
   website: "fluent-mdl2:website" as const,
   whatsapp: "ph:whatsapp-logo" as const,
   work_address: "ph:briefcase" as const,
-  work_email: "fluent:mail-briefcase-24-regular" as const,
+  work_email: "fluent:mail-briefcase-48-regular" as const,
   work_phone: "carbon:phone-ip" as const,
 };
