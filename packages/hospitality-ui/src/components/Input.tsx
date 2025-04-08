@@ -1,6 +1,6 @@
 import { MaskitoOptions } from "@maskito/core";
 import { useMaskito } from "@maskito/react";
-import { ChangeEvent, HTMLInputTypeAttribute, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
+import { ChangeEvent, FocusEventHandler, HTMLInputTypeAttribute, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 import { tv } from "tailwind-variants";
 
 import { countriesPhoneCodes } from "../enums";
@@ -17,6 +17,7 @@ type Props<OT> = {
   value: string | number | undefined;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
   selectValue?: string | null;
   onSelectChange?: (item: OptionType<OT> | null) => void;
   helperText?: string;
@@ -96,6 +97,7 @@ const classes = tv({
       password: "",
       text: "",
       search: "",
+      email: "",
     },
     isDisabled: { true: { inputClasses: "cursor-not-allowed" } },
   },
@@ -115,6 +117,7 @@ export function Input({
   value,
   onChange,
   onKeyDown,
+  onBlur,
   type = "text",
   action,
 }: Props<(typeof countriesPhoneCodes)[number]["additionalData"]>) {
@@ -150,6 +153,7 @@ export function Input({
           className={inputClasses()}
           disabled={isDisabled}
           name={name}
+          onBlur={onBlur}
           onInput={onChange}
           onKeyDown={onKeyDown}
           placeholder={placeholder}
