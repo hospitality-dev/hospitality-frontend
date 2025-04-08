@@ -5,11 +5,11 @@ import { tv } from "tailwind-variants";
 
 import { countriesPhoneCodes } from "../enums";
 import { availableIcons, OptionType, Size, Variant } from "../types/baseTypes";
-import { defaultMask, numbersOnlyMask, phoneMask } from "../utils";
+import { defaultMask, numbersOnlyMask, phoneMask, websiteMask } from "../utils";
 import { Button } from "./Button";
 import { Select } from "./Select";
 
-type AllowedTypes = Extract<HTMLInputTypeAttribute, "text" | "number" | "tel" | "search" | "password">;
+type AllowedTypes = Extract<HTMLInputTypeAttribute, "text" | "number" | "tel" | "search" | "password" | "url">;
 
 type Props<OT> = {
   label?: string;
@@ -40,6 +40,7 @@ const masks: Record<AllowedTypes, MaskitoOptions> = {
   search: defaultMask,
   password: defaultMask,
   tel: phoneMask,
+  url: websiteMask,
 };
 
 const classes = tv({
@@ -98,6 +99,7 @@ const classes = tv({
       text: "",
       search: "",
       email: "",
+      url: "",
     },
     isDisabled: { true: { inputClasses: "cursor-not-allowed" } },
   },
