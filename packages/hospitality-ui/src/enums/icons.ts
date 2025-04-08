@@ -63,7 +63,7 @@ export const Icons = {
   twitter: "ph:twitter-logo" as const,
   upload: "ph:upload" as const,
   warehouse_address: "material-symbols:warehouse-outline-rounded" as const,
-  website: "fluent-mdl2:website" as const,
+  website: "ph:globe" as const,
   whatsapp: "ph:whatsapp-logo" as const,
   work_address: "ph:briefcase" as const,
   work_email: "fluent:mail-briefcase-48-regular" as const,
