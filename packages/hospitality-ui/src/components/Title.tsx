@@ -22,7 +22,7 @@ const classes = tv({
   variants: {
     variant: {
       primary: "border-primary",
-      secondary: "border-secondary",
+      secondary: "border-secondary font-normal",
       info: "border-info-highlight",
       success: "border-success-highlight",
       warning: "border-warning-highlight",
