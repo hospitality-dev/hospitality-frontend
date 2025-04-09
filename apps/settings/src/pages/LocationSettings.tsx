@@ -9,6 +9,7 @@ import {
   ContactTypes,
   emailValidation,
   Form,
+  formatDisplayItem,
   formatErrorsForHelperText,
   getSentenceCase,
   Icons,
@@ -21,6 +22,7 @@ import {
   urlValidation,
   useAuth,
   useForm,
+  useList,
   useRead,
   useScreenSize,
   useUpdate,
@@ -80,13 +82,17 @@ function ContactDisplay({
             if (type === "address")
               return (
                 <AddressSearch
+                  helperText={
+                    formatErrorsForHelperText(subfield.state.meta.errors) ||
+                    "Enter the full address e.g. Jurija Gagarina 25 / Ugrinovacka 17 Zemun"
+                  }
                   isAutofocused
                   isDisabled={isDisabled}
                   label="Address"
                   onChange={(value) => {
                     if (value) {
-                      subfield.handleChange(value.value);
-                      form.setFieldValue(`contacts[${index}].placeId`, Number(value.value || 0));
+                      subfield.handleChange(formatDisplayItem(value));
+                      form.setFieldValue(`contacts[${index}].placeId`, Number(value.additionalData?.placeId || 0));
                       if (value.additionalData?.longitude)
                         form.setFieldValue(`contacts[${index}].longitude`, Number(value.additionalData?.longitude || 0));
                       if (value.additionalData?.latitude)
@@ -111,6 +117,7 @@ function ContactDisplay({
                     <form.Field
                       children={(subfield) => (
                         <Input
+                          helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
                           isDisabled={isDisabled}
                           label={getSentenceCase(contact.contactType)}
                           name={subfield.name}
@@ -150,51 +157,51 @@ function ContactDisplay({
                   }}
                 />
               );
-            if (type === "websites")
-              return (
-                <form.Field
-                  children={(subfield) => (
-                    <Input
-                      helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
-                      isDisabled={isDisabled}
-                      label={getSentenceCase(contact.contactType)}
-                      name={subfield.name}
-                      onBlur={subfield.handleBlur}
-                      onChange={(e) => subfield.handleChange(e.target.value)}
-                      type="url"
-                      value={subfield.state.value}
-                      variant={subfield.state.meta.errors.length ? "error" : "primary"}
-                    />
-                  )}
-                  name={`contacts[${index}].value`}
-                  validators={{
-                    onBlur: urlValidation,
-                  }}
-                />
-              );
-            if (type === "other")
-              return (
-                <form.Field
-                  children={(subfield) => (
-                    <Input
-                      helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
-                      isDisabled={isDisabled}
-                      label={getSentenceCase(contact.contactType)}
-                      name={subfield.name}
-                      onBlur={subfield.handleBlur}
-                      onChange={(e) => subfield.handleChange(e.target.value)}
-                      type="url"
-                      value={subfield.state.value}
-                      variant={subfield.state.meta.errors.length ? "error" : "primary"}
-                    />
-                  )}
-                  name={`contacts[${index}].value`}
-                  validators={{
-                    onBlur: urlValidation,
-                  }}
-                />
-              );
-            return null;
+
+            return (
+              <form.Field
+                children={(subfield) => (
+                  <Input
+                    helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+                    isDisabled={isDisabled}
+                    label={getSentenceCase(contact.contactType)}
+                    name={subfield.name}
+                    onBlur={subfield.handleBlur}
+                    onChange={(e) => subfield.handleChange(e.target.value)}
+                    type="url"
+                    value={subfield.state.value}
+                    variant={subfield.state.meta.errors.length ? "error" : "primary"}
+                  />
+                )}
+                name={`contacts[${index}].value`}
+                validators={{
+                  onBlur: urlValidation,
+                }}
+              />
+            );
+            // if (type === "other")
+            //   return (
+            //     <form.Field
+            //       children={(subfield) => (
+            //         <Input
+            //           helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+            //           isDisabled={isDisabled}
+            //           label={getSentenceCase(contact.contactType)}
+            //           name={subfield.name}
+            //           onBlur={subfield.handleBlur}
+            //           onChange={(e) => subfield.handleChange(e.target.value)}
+            //           type="url"
+            //           value={subfield.state.value}
+            //           variant={subfield.state.meta.errors.length ? "error" : "primary"}
+            //         />
+            //       )}
+            //       name={`contacts[${index}].value`}
+            //       validators={{
+            //         onBlur: urlValidation,
+            //       }}
+            //     />
+            //   );
+            // return null;
           }}
           name={`contacts[${index}].value`}
         />
@@ -206,7 +213,11 @@ function ContactDisplay({
 export function LocationSettings() {
   const auth = useAuth();
   const { isSmallScreen } = useScreenSize();
-  const { data, isLoading, isSuccess } = useRead<EntityType>(
+  const {
+    data: locationData,
+    isLoading,
+    isSuccess,
+  } = useRead<EntityType>(
     {
       model: "locations",
       id: auth.user?.locationId || "",
@@ -214,14 +225,18 @@ export function LocationSettings() {
     },
     { enabled: !!auth.user?.locationId }
   );
+  const { data: locationContacts, isLoading: isLoadingContacts } = useList<ContactType>(
+    { model: "contacts", fields: ["id", "value", "title", "prefix", "contactType"] },
+    { urlSuffix: `location/${auth?.user?.locationId}`, enabled: isSuccess && !!auth?.user?.locationId }
+  );
 
   const { mutate: update } = useUpdate<LocationsMutatorType>("locations");
 
   const form = useForm<LocationsMutatorType>({
     defaultValues: {
-      id: data?.id || crypto.randomUUID(),
-      title: data?.title,
-      contacts: [],
+      id: locationData?.id || crypto.randomUUID(),
+      title: locationData?.title,
+      contacts: locationContacts || [],
     },
     validators: {
       onSubmit: LocationsMutatorSchema,
@@ -235,7 +250,7 @@ export function LocationSettings() {
         <div className="flex flex-col gap-y-2">
           <div className="flex items-end gap-x-2">
             <div>
-              <Avatar label={data?.title || ""} size={isSmallScreen ? "xl" : "md"} />
+              <Avatar label={locationData?.title || ""} size={isSmallScreen ? "xl" : "md"} />
             </div>
             <form.Field
               children={(field) => (
@@ -250,245 +265,249 @@ export function LocationSettings() {
               name="title"
             />
           </div>
-          <Title hasBorder label="Contacts" size="xl" variant="primary" />
+          {isLoadingContacts ? null : (
+            <>
+              <Title hasBorder label="Contacts" size="xl" variant="primary" />
 
-          <Collapsible
-            icon={Icons.office_address}
-            isOpen
-            items={[
-              {
-                id: "1",
-                label: "Add",
-                icon: Icons.add,
-                variant: "info",
-                allowedPlacements: ["left-start"] as const,
-                onClick: () => {},
-                items: AvailableContactTypes.address.professional.map((addr) => ({
-                  icon: Icons[addr],
-                  allowedPlacements: ["left-start"] as const,
-                  id: addr,
-                  title: getSentenceCase(addr),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(addr)),
-                })),
-              },
-            ]}
-            label="Addresses">
-            <div className="flex flex-col gap-y-4 py-1">
-              <form.Field
-                children={(field) =>
-                  field.state.value.length
-                    ? field.state.value.map((contact, i) => {
-                        if (contact.contactType.includes("address"))
-                          return (
-                            <ContactDisplay
-                              key={contact.id}
-                              contact={contact}
-                              form={form}
-                              index={i}
-                              isDisabled={isLoading}
-                              type="address"
-                            />
-                          );
-                        return null;
-                      })
-                    : null
-                }
-                mode="array"
-                name="contacts"
-              />
-            </div>
-          </Collapsible>
-          <Collapsible
-            icon={Icons.phone}
-            isOpen
-            items={[
-              {
-                id: "1",
-                label: "Add",
-                icon: Icons.add,
-                variant: "info",
-                allowedPlacements: ["left-start"] as const,
-                onClick: () => {},
-                items: AvailableContactTypes.phone.professional.map((phone) => ({
-                  icon: Icons[phone],
-                  allowedPlacements: ["left-start"],
-                  id: phone,
-                  title: getSentenceCase(phone),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(phone)),
-                })),
-              },
-            ]}
-            label="Phones">
-            <div className="flex flex-col gap-y-2 py-1">
-              <form.Field
-                children={(field) =>
-                  field.state.value.length
-                    ? field.state.value.map((contact, i) => {
-                        if (contact.contactType.includes("phone") || contact.contactType === "fax")
-                          return (
-                            <ContactDisplay
-                              key={contact.id}
-                              contact={contact}
-                              form={form}
-                              index={i}
-                              isDisabled={isLoading}
-                              type="phone"
-                            />
-                          );
-                        return null;
-                      })
-                    : null
-                }
-                mode="array"
-                name="contacts"
-              />
-            </div>
-          </Collapsible>
-          <Collapsible
-            icon={Icons.email}
-            isOpen
-            items={[
-              {
-                id: "1",
-                label: "Add",
-                icon: Icons.add,
-                variant: "info",
-                allowedPlacements: ["left-start"] as const,
-                onClick: () => {},
-                items: AvailableContactTypes.email.professional.map((email) => ({
-                  icon: Icons[email],
-                  allowedPlacements: ["left-start"],
-                  id: email,
-                  title: getSentenceCase(email),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(email)),
-                })),
-              },
-            ]}
-            label="Emails">
-            <div className="flex flex-col gap-y-2 py-1">
-              <form.Field
-                children={(field) =>
-                  field.state.value.length
-                    ? field.state.value.map((contact, i) => {
-                        if (contact.contactType.includes("email"))
-                          return (
-                            <ContactDisplay
-                              key={contact.id}
-                              contact={contact}
-                              form={form}
-                              index={i}
-                              isDisabled={isLoading}
-                              type="email"
-                            />
-                          );
-                        return null;
-                      })
-                    : null
-                }
-                mode="array"
-                name="contacts"
-              />
-            </div>
-          </Collapsible>
-          <Collapsible
-            icon={Icons.website}
-            isOpen
-            items={[
-              {
-                id: "1",
-                label: "Add",
-                icon: Icons.add,
-                variant: "info",
-                allowedPlacements: ["left-start"] as const,
-                onClick: () => {},
-                items: AvailableContactTypes.website.professional.map((other) => ({
-                  icon: Icons[other],
-                  allowedPlacements: ["left-start"],
-                  id: other,
-                  title: getSentenceCase(other),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other)),
-                })),
-              },
-            ]}
-            label="Websites">
-            <div className="flex flex-col gap-y-2 py-1">
-              <form.Field
-                children={(field) =>
-                  field.state.value.length
-                    ? field.state.value.map((contact, i) => {
-                        if (contact.contactType.includes("website"))
-                          return (
-                            <ContactDisplay
-                              key={contact.id}
-                              contact={contact}
-                              form={form}
-                              index={i}
-                              isDisabled={isLoading}
-                              type="websites"
-                            />
-                          );
-                        return null;
-                      })
-                    : null
-                }
-                mode="array"
-                name="contacts"
-              />
-            </div>
-          </Collapsible>
-          <Collapsible
-            icon={Icons.info}
-            isOpen
-            items={[
-              {
-                id: "1",
-                label: "Add",
-                icon: Icons.add,
-                variant: "info",
-                allowedPlacements: ["left-start"] as const,
-                onClick: () => {},
-                items: AvailableContactTypes.other.professional.map((other) => ({
-                  icon: Icons[other],
-                  allowedPlacements: ["left-start"],
-                  id: other,
-                  title: getSentenceCase(other),
-                  onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other)),
-                })),
-              },
-            ]}
-            label="Other">
-            <div className="flex flex-col gap-y-2 py-1">
-              <form.Field
-                children={(field) =>
-                  field.state.value.length
-                    ? field.state.value.map((contact, i) => {
-                        if (
-                          contact.contactType === "whatsapp" ||
-                          contact.contactType === "linkedin" ||
-                          contact.contactType === "twitter" ||
-                          contact.contactType === "facebook" ||
-                          contact.contactType === "instagram" ||
-                          contact.contactType === "slack"
-                        )
-                          return (
-                            <ContactDisplay
-                              key={contact.id}
-                              contact={contact}
-                              form={form}
-                              index={i}
-                              isDisabled={isLoading}
-                              type="other"
-                            />
-                          );
-                        return null;
-                      })
-                    : null
-                }
-                mode="array"
-                name="contacts"
-              />
-            </div>
-          </Collapsible>
+              <Collapsible
+                icon={Icons.office_address}
+                isOpen
+                items={[
+                  {
+                    id: "1",
+                    label: "Add",
+                    icon: Icons.add,
+                    variant: "info",
+                    allowedPlacements: ["left-start"] as const,
+                    onClick: () => {},
+                    items: AvailableContactTypes.address.professional.map((addr) => ({
+                      icon: Icons[addr],
+                      allowedPlacements: ["left-start"] as const,
+                      id: addr,
+                      title: getSentenceCase(addr),
+                      onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(addr)),
+                    })),
+                  },
+                ]}
+                label="Addresses">
+                <div className="flex flex-col gap-y-4 py-1">
+                  <form.Field
+                    children={(field) =>
+                      field.state.value.length
+                        ? field.state.value.map((contact, i) => {
+                            if (contact.contactType.includes("address"))
+                              return (
+                                <ContactDisplay
+                                  key={contact.id}
+                                  contact={contact}
+                                  form={form}
+                                  index={i}
+                                  isDisabled={isLoading}
+                                  type="address"
+                                />
+                              );
+                            return null;
+                          })
+                        : null
+                    }
+                    mode="array"
+                    name="contacts"
+                  />
+                </div>
+              </Collapsible>
+              <Collapsible
+                icon={Icons.phone}
+                isOpen
+                items={[
+                  {
+                    id: "1",
+                    label: "Add",
+                    icon: Icons.add,
+                    variant: "info",
+                    allowedPlacements: ["left-start"] as const,
+                    onClick: () => {},
+                    items: AvailableContactTypes.phone.professional.map((phone) => ({
+                      icon: Icons[phone],
+                      allowedPlacements: ["left-start"],
+                      id: phone,
+                      title: getSentenceCase(phone),
+                      onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(phone)),
+                    })),
+                  },
+                ]}
+                label="Phones">
+                <div className="flex flex-col gap-y-2 py-1">
+                  <form.Field
+                    children={(field) =>
+                      field.state.value.length
+                        ? field.state.value.map((contact, i) => {
+                            if (contact.contactType.includes("phone") || contact.contactType === "fax")
+                              return (
+                                <ContactDisplay
+                                  key={contact.id}
+                                  contact={contact}
+                                  form={form}
+                                  index={i}
+                                  isDisabled={isLoading}
+                                  type="phone"
+                                />
+                              );
+                            return null;
+                          })
+                        : null
+                    }
+                    mode="array"
+                    name="contacts"
+                  />
+                </div>
+              </Collapsible>
+              <Collapsible
+                icon={Icons.email}
+                isOpen
+                items={[
+                  {
+                    id: "1",
+                    label: "Add",
+                    icon: Icons.add,
+                    variant: "info",
+                    allowedPlacements: ["left-start"] as const,
+                    onClick: () => {},
+                    items: AvailableContactTypes.email.professional.map((email) => ({
+                      icon: Icons[email],
+                      allowedPlacements: ["left-start"],
+                      id: email,
+                      title: getSentenceCase(email),
+                      onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(email)),
+                    })),
+                  },
+                ]}
+                label="Emails">
+                <div className="flex flex-col gap-y-2 py-1">
+                  <form.Field
+                    children={(field) =>
+                      field.state.value.length
+                        ? field.state.value.map((contact, i) => {
+                            if (contact.contactType.includes("email"))
+                              return (
+                                <ContactDisplay
+                                  key={contact.id}
+                                  contact={contact}
+                                  form={form}
+                                  index={i}
+                                  isDisabled={isLoading}
+                                  type="email"
+                                />
+                              );
+                            return null;
+                          })
+                        : null
+                    }
+                    mode="array"
+                    name="contacts"
+                  />
+                </div>
+              </Collapsible>
+              <Collapsible
+                icon={Icons.website}
+                isOpen
+                items={[
+                  {
+                    id: "1",
+                    label: "Add",
+                    icon: Icons.add,
+                    variant: "info",
+                    allowedPlacements: ["left-start"] as const,
+                    onClick: () => {},
+                    items: AvailableContactTypes.website.professional.map((other) => ({
+                      icon: Icons[other],
+                      allowedPlacements: ["left-start"],
+                      id: other,
+                      title: getSentenceCase(other),
+                      onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other)),
+                    })),
+                  },
+                ]}
+                label="Websites">
+                <div className="flex flex-col gap-y-2 py-1">
+                  <form.Field
+                    children={(field) =>
+                      field.state.value.length
+                        ? field.state.value.map((contact, i) => {
+                            if (contact.contactType.includes("website"))
+                              return (
+                                <ContactDisplay
+                                  key={contact.id}
+                                  contact={contact}
+                                  form={form}
+                                  index={i}
+                                  isDisabled={isLoading}
+                                  type="websites"
+                                />
+                              );
+                            return null;
+                          })
+                        : null
+                    }
+                    mode="array"
+                    name="contacts"
+                  />
+                </div>
+              </Collapsible>
+              <Collapsible
+                icon={Icons.info}
+                isOpen
+                items={[
+                  {
+                    id: "1",
+                    label: "Add",
+                    icon: Icons.add,
+                    variant: "info",
+                    allowedPlacements: ["left-start"] as const,
+                    onClick: () => {},
+                    items: AvailableContactTypes.other.professional.map((other) => ({
+                      icon: Icons[other],
+                      allowedPlacements: ["left-start"],
+                      id: other,
+                      title: getSentenceCase(other),
+                      onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other)),
+                    })),
+                  },
+                ]}
+                label="Other">
+                <div className="flex flex-col gap-y-2 py-1">
+                  <form.Field
+                    children={(field) =>
+                      field.state.value.length
+                        ? field.state.value.map((contact, i) => {
+                            if (
+                              contact.contactType === "whatsapp" ||
+                              contact.contactType === "linkedin" ||
+                              contact.contactType === "twitter" ||
+                              contact.contactType === "facebook" ||
+                              contact.contactType === "instagram" ||
+                              contact.contactType === "slack"
+                            )
+                              return (
+                                <ContactDisplay
+                                  key={contact.id}
+                                  contact={contact}
+                                  form={form}
+                                  index={i}
+                                  isDisabled={isLoading}
+                                  type="other"
+                                />
+                              );
+                            return null;
+                          })
+                        : null
+                    }
+                    mode="array"
+                    name="contacts"
+                  />
+                </div>
+              </Collapsible>
+            </>
+          )}
         </div>
         <div className="md:col-span-2">
           <Button icon={Icons.save} label="Save" onClick={undefined} size="lg" variant="success" />

@@ -22,6 +22,7 @@ type Props<OT> = {
   label: string;
   query: string;
   value?: string;
+  displayTitle?: string | null;
   variant?: Variant;
   size?: Size;
   helperText?: string;
@@ -47,6 +48,7 @@ export function Autocomplete<OT>({
   options = [],
   isAutofocused,
   helperText,
+  displayTitle,
 }: Props<OT>) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -126,7 +128,7 @@ export function Autocomplete<OT>({
           }}
           size={size}
           type="search"
-          value={displayItem ? formatDisplayItem(displayItem) : query}
+          value={displayItem ? formatDisplayItem(displayItem) : query || displayTitle || ""}
           variant={variant}
         />
       </div>

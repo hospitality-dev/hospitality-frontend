@@ -20,17 +20,20 @@ export function formatForOptions<T extends { id: string; title: string }>(
 }
 export function formatAddressesForOptions(
   data: AddressesType[]
-): OptionType<Pick<ContactType, "latitude" | "longitude" | "boundingBox">>[] {
+): OptionType<Pick<ContactType, "latitude" | "longitude" | "boundingBox" | "placeId">>[] {
   if (!data) return [];
   return data.map((item) => {
+    const label = `${item.address.road} ${item.address.houseNumber}`.trim();
+    const description = [item.address.suburb, item.address.city, item.address.postcode].filter(Boolean).join(" | ");
     return {
       label: `${item.address.road} ${item.address.houseNumber}`.trim(),
       description: [item.address.suburb, item.address.city, item.address.postcode].filter(Boolean).join(" | "),
-      value: item.placeId.toString(),
+      value: formatDisplayItem({ label, description, value: item.placeId.toString() }),
       additionalData: {
         latitude: item.lat,
         longitude: item.lng,
         boundingBox: item.boundingbox,
+        placeId: item.placeId,
       },
     };
   });
