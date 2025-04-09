@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useSearch } from "../hooks/api/searchHooks";
 import { useDebounce } from "../hooks/ui/useDebounce";
-import { AddressesType, ContactType, OptionType } from "../types";
+import { AddressesType, ContactType, OptionType, Variant } from "../types";
 import { formatAddressesForOptions } from "../utils";
 import { Autocomplete } from "./Autocomplete";
 type Props = {
@@ -12,9 +12,10 @@ type Props = {
   onChange: (item: OptionType<Pick<ContactType, "latitude" | "longitude" | "boundingBox" | "placeId">> | null) => void;
   value: string | null;
   helperText?: string;
+  variant?: Variant;
 };
 
-export function AddressSearch({ label = "Address", onChange, isDisabled, value, isAutofocused, helperText }: Props) {
+export function AddressSearch({ label = "Address", onChange, isDisabled, value, isAutofocused, helperText, variant }: Props) {
   const [searchQuery, setQuery] = useState("");
   const debouncedValue = useDebounce<typeof searchQuery>(searchQuery);
   const { data = [], isFetched } = useSearch<AddressesType>(
@@ -43,6 +44,7 @@ export function AddressSearch({ label = "Address", onChange, isDisabled, value, 
       }
       query={searchQuery}
       value={value || ""}
+      variant={variant}
     />
   );
 }

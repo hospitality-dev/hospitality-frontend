@@ -26,6 +26,7 @@ export function formatAddressesForOptions(
     const label = `${item.address.road} ${item.address.houseNumber}`.trim();
     const description = [item.address.suburb, item.address.city, item.address.postcode].filter(Boolean).join(" | ");
     return {
+      id: crypto.randomUUID(),
       label: `${item.address.road} ${item.address.houseNumber}`.trim(),
       description: [item.address.suburb, item.address.city, item.address.postcode].filter(Boolean).join(" | "),
       value: formatDisplayItem({ label, description, value: item.placeId.toString() }),

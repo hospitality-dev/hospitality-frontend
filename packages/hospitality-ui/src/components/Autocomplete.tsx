@@ -142,7 +142,7 @@ export function Autocomplete<OT>({
             })}>
             {items.map((item, index) => (
               <div
-                key={item.value}
+                key={item.id || item.value}
                 {...getItemProps({
                   ref(node) {
                     listRef.current[index] = node;
