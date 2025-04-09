@@ -35,7 +35,7 @@ type Props<OT> = {
 const classes = tv({
   slots: {
     container: "flex h-fit w-full min-w-fit flex-col",
-    labelClasses: "font-small font-medium text-gray-900",
+    labelClasses: "font-small font-light text-gray-900",
     selectBox: "relative flex w-full items-center bg-white",
     base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center gap-x-1 rounded-md border px-1 shadow-sm outline-0",
     icon: "text-primary pt-0.5",

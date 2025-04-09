@@ -15,14 +15,14 @@ type Props = {
 
 const classes = tv({
   slots: {
-    base: "flex w-full flex-1 items-center gap-x-1 font-medium select-none",
+    base: "flex w-full flex-1 items-center gap-x-1 uppercase select-none",
     actionsContainer: "ml-auto flex items-center gap-x-1",
     actionButtonContainer: "h-7 w-7",
   },
   variants: {
     variant: {
-      primary: "border-primary",
-      secondary: "border-secondary",
+      primary: "border-primary font-normal",
+      secondary: "border-secondary font-light",
       info: "border-info-highlight",
       success: "border-success-highlight",
       warning: "border-warning-highlight",

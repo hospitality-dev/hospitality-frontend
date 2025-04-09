@@ -20,7 +20,7 @@ export function Collapsible({ icon, label, children, isOpen, items, variant = "p
   return (
     <details open={isExpanded}>
       <summary
-        className="cursor-pointer"
+        className="cursor-pointer p-0.5"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
