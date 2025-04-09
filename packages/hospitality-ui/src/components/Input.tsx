@@ -1,15 +1,13 @@
 import { MaskitoOptions } from "@maskito/core";
 import { useMaskito } from "@maskito/react";
-import { ChangeEvent, FocusEventHandler, HTMLInputTypeAttribute, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
+import { ChangeEvent, FocusEventHandler, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 import { tv } from "tailwind-variants";
 
 import { countriesPhoneCodes } from "../enums";
-import { availableIcons, OptionType, Size, Variant } from "../types/baseTypes";
+import { AllowedInputTypes, availableIcons, OptionType, Size, Variant } from "../types/baseTypes";
 import { defaultMask, numbersOnlyMask, phoneMask, websiteMask } from "../utils";
 import { Button } from "./Button";
 import { Select } from "./Select";
-
-type AllowedTypes = Extract<HTMLInputTypeAttribute, "text" | "number" | "tel" | "search" | "password" | "url">;
 
 type Props<OT> = {
   label?: string;
@@ -26,7 +24,7 @@ type Props<OT> = {
   variant?: Variant;
   size?: Size;
   placeholder?: string;
-  type?: AllowedTypes;
+  type?: AllowedInputTypes;
   action?: {
     onClick: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void;
     icon: availableIcons;
@@ -34,7 +32,7 @@ type Props<OT> = {
   };
 };
 
-const masks: Record<AllowedTypes, MaskitoOptions> = {
+const masks: Record<AllowedInputTypes, MaskitoOptions> = {
   number: numbersOnlyMask,
   text: defaultMask,
   search: defaultMask,

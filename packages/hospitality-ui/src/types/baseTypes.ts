@@ -6,7 +6,7 @@ import {
   valueof,
 } from "@hospitality/hospitality-ui/src";
 import { ReactNode } from "@tanstack/react-router";
-import { MouseEventHandler } from "react";
+import { HTMLInputTypeAttribute, MouseEventHandler } from "react";
 
 import { Icons } from "../enums/icons";
 
@@ -86,6 +86,7 @@ export interface IconType {
   className?: string;
   thickness?: IconThickness;
 }
+export type AllowedInputTypes = Extract<HTMLInputTypeAttribute, "text" | "number" | "tel" | "search" | "password" | "url">;
 
 // =========REQUEST=========
 type RequestFilterOperators = "eq" | "neq" | "gt" | "gte" | "is" | "is not" | "in" | "not in" | "ilike";
