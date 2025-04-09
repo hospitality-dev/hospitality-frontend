@@ -44,6 +44,7 @@ function ContactDisplay({
   contact,
   form,
   index,
+  onDelete,
   isDisabled,
   type,
 }: {
@@ -52,6 +53,7 @@ function ContactDisplay({
   index: number;
   isDisabled?: boolean;
   type: "address" | "phone" | "email" | "websites" | "other";
+  onDelete: () => void;
 }) {
   return (
     <Card isFullWidth>
@@ -62,6 +64,14 @@ function ContactDisplay({
               <Title
                 hasBorder
                 icon={Icons[contact.contactType]}
+                items={[
+                  {
+                    id: "delete",
+                    icon: Icons.delete,
+                    variant: "error",
+                    onClick: onDelete,
+                  },
+                ]}
                 label={subfield.state.value || getSentenceCase(contact.contactType)}
                 size="sm"
                 variant="secondary"
@@ -179,29 +189,6 @@ function ContactDisplay({
                 }}
               />
             );
-            // if (type === "other")
-            //   return (
-            //     <form.Field
-            //       children={(subfield) => (
-            //         <Input
-            //           helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
-            //           isDisabled={isDisabled}
-            //           label={getSentenceCase(contact.contactType)}
-            //           name={subfield.name}
-            //           onBlur={subfield.handleBlur}
-            //           onChange={(e) => subfield.handleChange(e.target.value)}
-            //           type="url"
-            //           value={subfield.state.value}
-            //           variant={subfield.state.meta.errors.length ? "error" : "primary"}
-            //         />
-            //       )}
-            //       name={`contacts[${index}].value`}
-            //       validators={{
-            //         onBlur: urlValidation,
-            //       }}
-            //     />
-            //   );
-            // return null;
           }}
           name={`contacts[${index}].value`}
         />
@@ -232,7 +219,7 @@ export function LocationSettings() {
 
   const { mutate: update } = useUpdate<LocationsMutatorType>("locations");
 
-  const form = useForm<LocationsMutatorType>({
+  const form = useForm({
     defaultValues: {
       id: locationData?.id || crypto.randomUUID(),
       title: locationData?.title,
@@ -298,11 +285,12 @@ export function LocationSettings() {
                             if (contact.contactType.includes("address"))
                               return (
                                 <ContactDisplay
-                                  key={contact.id}
+                                  key={i}
                                   contact={contact}
                                   form={form}
                                   index={i}
                                   isDisabled={isLoading}
+                                  onDelete={() => field.removeValue(i)}
                                   type="address"
                                 />
                               );
@@ -344,11 +332,12 @@ export function LocationSettings() {
                             if (contact.contactType.includes("phone") || contact.contactType === "fax")
                               return (
                                 <ContactDisplay
-                                  key={contact.id}
+                                  key={i}
                                   contact={contact}
                                   form={form}
                                   index={i}
                                   isDisabled={isLoading}
+                                  onDelete={() => field.removeValue(i)}
                                   type="phone"
                                 />
                               );
@@ -390,11 +379,12 @@ export function LocationSettings() {
                             if (contact.contactType.includes("email"))
                               return (
                                 <ContactDisplay
-                                  key={contact.id}
+                                  key={i}
                                   contact={contact}
                                   form={form}
                                   index={i}
                                   isDisabled={isLoading}
+                                  onDelete={() => field.removeValue(i)}
                                   type="email"
                                 />
                               );
@@ -436,11 +426,12 @@ export function LocationSettings() {
                             if (contact.contactType.includes("website"))
                               return (
                                 <ContactDisplay
-                                  key={contact.id}
+                                  key={i}
                                   contact={contact}
                                   form={form}
                                   index={i}
                                   isDisabled={isLoading}
+                                  onDelete={() => field.removeValue(i)}
                                   type="websites"
                                 />
                               );
@@ -489,11 +480,12 @@ export function LocationSettings() {
                             )
                               return (
                                 <ContactDisplay
-                                  key={contact.id}
+                                  key={i}
                                   contact={contact}
                                   form={form}
                                   index={i}
                                   isDisabled={isLoading}
+                                  onDelete={() => field.removeValue(i)}
                                   type="other"
                                 />
                               );
