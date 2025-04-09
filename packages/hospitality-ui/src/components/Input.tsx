@@ -47,7 +47,7 @@ const classes = tv({
     inputContainer:
       "flex w-full cursor-pointer flex-nowrap items-center justify-between overflow-hidden rounded-md border bg-white px-2 text-gray-900 shadow-sm outline-0",
     inputClasses: "flex-1 pr-2 focus-within:outline-0 focus:outline-0",
-    labelClasses: "font-small text-gray-900",
+    labelClasses: "font-small font-medium text-gray-900",
     helperTextClasses: "text-sm",
     selectClasses: "",
   },
