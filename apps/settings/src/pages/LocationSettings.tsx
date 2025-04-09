@@ -57,25 +57,25 @@ function ContactDisplay({
 }) {
   return (
     <Card isFullWidth>
-      <div className="flex w-full flex-col p-2 lg:flex-row">
-        <form.Field
-          children={(subfield) => (
-            <div className="flex flex-col">
-              <Title
-                hasBorder
-                icon={Icons[contact.contactType]}
-                items={[
-                  {
-                    id: "delete",
-                    icon: Icons.delete,
-                    variant: "error",
-                    onClick: onDelete,
-                  },
-                ]}
-                label={subfield.state.value || getSentenceCase(contact.contactType)}
-                size="sm"
-                variant="secondary"
-              />
+      <div className="flex w-full flex-col items-end p-2">
+        <Title
+          hasBorder
+          icon={Icons[contact.contactType]}
+          items={[
+            {
+              id: "delete",
+              icon: Icons.delete,
+              variant: "error",
+              onClick: onDelete,
+            },
+          ]}
+          label={contact.title || getSentenceCase(contact.contactType)}
+          size="sm"
+          variant="secondary"
+        />
+        <div className="flex w-full flex-col pt-2 lg:flex-row lg:gap-2">
+          <form.Field
+            children={(subfield) => (
               <Input
                 helperText="Customize the title of the address."
                 label="Address display title"
@@ -83,71 +83,92 @@ function ContactDisplay({
                 onChange={(e) => subfield.handleChange(e.target.value)}
                 value={subfield.state.value || ""}
               />
-            </div>
-          )}
-          name={`contacts[${index}].title`}
-        />
-        <form.Field
-          children={(subfield) => {
-            if (type === "address")
-              return (
-                <AddressSearch
-                  helperText={
-                    formatErrorsForHelperText(subfield.state.meta.errors) ||
-                    "Enter the full address e.g. Jurija Gagarina 25 / Ugrinovacka 17 Zemun"
-                  }
-                  isAutofocused
-                  isDisabled={isDisabled}
-                  label="Address"
-                  onChange={(value) => {
-                    if (value) {
-                      subfield.handleChange(formatDisplayItem(value));
-                      form.setFieldValue(`contacts[${index}].placeId`, Number(value.additionalData?.placeId || 0));
-                      if (value.additionalData?.longitude)
-                        form.setFieldValue(`contacts[${index}].longitude`, Number(value.additionalData?.longitude || 0));
-                      if (value.additionalData?.latitude)
-                        form.setFieldValue(`contacts[${index}].latitude`, Number(value.additionalData?.latitude || 0));
-                      if (value.additionalData?.boundingBox)
-                        form.setFieldValue(`contacts[${index}].boundingBox`, value.additionalData?.boundingBox);
-                    } else {
-                      subfield.handleChange("");
-                      form.setFieldValue(`contacts[${index}].placeId`, null);
-                      form.setFieldValue(`contacts[${index}].longitude`, null);
-                      form.setFieldValue(`contacts[${index}].latitude`, null);
-                      form.setFieldValue(`contacts[${index}].boundingBox`, null);
+            )}
+            name={`contacts[${index}].title`}
+          />
+          <form.Field
+            children={(subfield) => {
+              if (type === "address")
+                return (
+                  <AddressSearch
+                    helperText={
+                      formatErrorsForHelperText(subfield.state.meta.errors) ||
+                      "Enter the full address e.g. Jurija Gagarina 25 / Ugrinovacka 17 Zemun"
                     }
-                  }}
-                  value={subfield.state.value}
-                  variant={subfield.state.meta.errors.length ? "error" : "primary"}
-                />
-              );
-            if (type === "phone")
-              return (
-                <form.Subscribe<ContactType["prefix"]> selector={(s) => s.values.contacts[index].prefix}>
-                  {(prefix) => (
-                    <form.Field
-                      children={(subfield) => (
-                        <Input
-                          helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
-                          isDisabled={isDisabled}
-                          label={getSentenceCase(contact.contactType)}
-                          name={subfield.name}
-                          onChange={(e) => subfield.handleChange(e.target.value)}
-                          onSelectChange={(item) =>
-                            form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null)
-                          }
-                          selectValue={(prefix || "")?.toString()}
-                          type="tel"
-                          value={subfield.state.value}
-                          variant={subfield.state.meta.errors.length ? "error" : "primary"}
-                        />
-                      )}
-                      name={`contacts[${index}].value`}
-                    />
-                  )}
-                </form.Subscribe>
-              );
-            if (type === "email")
+                    isAutofocused
+                    isDisabled={isDisabled}
+                    label="Address"
+                    onChange={(value) => {
+                      if (value) {
+                        subfield.handleChange(formatDisplayItem(value));
+                        form.setFieldValue(`contacts[${index}].placeId`, Number(value.additionalData?.placeId || 0));
+                        if (value.additionalData?.longitude)
+                          form.setFieldValue(`contacts[${index}].longitude`, Number(value.additionalData?.longitude || 0));
+                        if (value.additionalData?.latitude)
+                          form.setFieldValue(`contacts[${index}].latitude`, Number(value.additionalData?.latitude || 0));
+                        if (value.additionalData?.boundingBox)
+                          form.setFieldValue(`contacts[${index}].boundingBox`, value.additionalData?.boundingBox);
+                      } else {
+                        subfield.handleChange("");
+                        form.setFieldValue(`contacts[${index}].placeId`, null);
+                        form.setFieldValue(`contacts[${index}].longitude`, null);
+                        form.setFieldValue(`contacts[${index}].latitude`, null);
+                        form.setFieldValue(`contacts[${index}].boundingBox`, null);
+                      }
+                    }}
+                    value={subfield.state.value}
+                    variant={subfield.state.meta.errors.length ? "error" : "primary"}
+                  />
+                );
+              if (type === "phone")
+                return (
+                  <form.Subscribe<ContactType["prefix"]> selector={(s) => s.values.contacts[index].prefix}>
+                    {(prefix) => (
+                      <form.Field
+                        children={(subfield) => (
+                          <Input
+                            helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+                            isDisabled={isDisabled}
+                            label={getSentenceCase(contact.contactType)}
+                            name={subfield.name}
+                            onChange={(e) => subfield.handleChange(e.target.value)}
+                            onSelectChange={(item) =>
+                              form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null)
+                            }
+                            selectValue={(prefix || "")?.toString()}
+                            type="tel"
+                            value={subfield.state.value}
+                            variant={subfield.state.meta.errors.length ? "error" : "primary"}
+                          />
+                        )}
+                        name={`contacts[${index}].value`}
+                      />
+                    )}
+                  </form.Subscribe>
+                );
+              if (type === "email")
+                return (
+                  <form.Field
+                    children={(subfield) => (
+                      <Input
+                        helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+                        isDisabled={isDisabled}
+                        label={getSentenceCase(contact.contactType)}
+                        name={subfield.name}
+                        onBlur={subfield.handleBlur}
+                        onChange={(e) => subfield.handleChange(e.target.value)}
+                        type="text"
+                        value={subfield.state.value}
+                        variant={subfield.state.meta.errors.length ? "error" : "primary"}
+                      />
+                    )}
+                    name={`contacts[${index}].value`}
+                    validators={{
+                      onBlur: emailValidation,
+                    }}
+                  />
+                );
+
               return (
                 <form.Field
                   children={(subfield) => (
@@ -158,49 +179,28 @@ function ContactDisplay({
                       name={subfield.name}
                       onBlur={subfield.handleBlur}
                       onChange={(e) => subfield.handleChange(e.target.value)}
-                      type="text"
+                      type="url"
                       value={subfield.state.value}
                       variant={subfield.state.meta.errors.length ? "error" : "primary"}
                     />
                   )}
                   name={`contacts[${index}].value`}
                   validators={{
-                    onBlur: emailValidation,
+                    onBlur: urlValidation,
                   }}
                 />
               );
-
-            return (
-              <form.Field
-                children={(subfield) => (
-                  <Input
-                    helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
-                    isDisabled={isDisabled}
-                    label={getSentenceCase(contact.contactType)}
-                    name={subfield.name}
-                    onBlur={subfield.handleBlur}
-                    onChange={(e) => subfield.handleChange(e.target.value)}
-                    type="url"
-                    value={subfield.state.value}
-                    variant={subfield.state.meta.errors.length ? "error" : "primary"}
-                  />
-                )}
-                name={`contacts[${index}].value`}
-                validators={{
-                  onBlur: urlValidation,
-                }}
-              />
-            );
-          }}
-          name={`contacts[${index}].value`}
-          validators={{
-            onSubmit: () => {
-              const res = ContactSchema.safeParse(contact);
-              if (res.success) return null;
-              return res.error.errors.map((e) => e.message).join("\n");
-            },
-          }}
-        />
+            }}
+            name={`contacts[${index}].value`}
+            validators={{
+              onSubmit: () => {
+                const res = ContactSchema.safeParse(contact);
+                if (res.success) return null;
+                return res.error.errors.map((e) => e.message).join("\n");
+              },
+            }}
+          />
+        </div>
       </div>
     </Card>
   );
