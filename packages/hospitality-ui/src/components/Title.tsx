@@ -15,7 +15,7 @@ type Props = {
 
 const classes = tv({
   slots: {
-    base: "flex flex-1 items-center gap-x-1 font-medium select-none",
+    base: "flex w-full flex-1 items-center gap-x-1 font-medium select-none",
     actionsContainer: "ml-auto flex items-center gap-x-1",
     actionButtonContainer: "h-7 w-7",
   },
