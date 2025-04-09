@@ -19,6 +19,7 @@ export const Icons = {
   company_website: "hugeicons:job-link" as const,
   contact_email: "fluent:person-mail-48-filled" as const,
   customer_service_phone: "hugeicons:customer-service" as const,
+  delete: "ph:trash" as const,
   employee: "mdi:user-badge-outline" as const,
   email: "entypo:email" as const,
   eye: "ph:eye-light" as const,
