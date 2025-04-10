@@ -69,7 +69,7 @@ export function Layout() {
           {drawer.type === "manage_product_inventory" && drawer.data ? <ManageProductInventory data={drawer.data} /> : null}
           {drawer.type === "add_new_user" ? <AddNewUser /> : null}
           {drawer.type === "add_user_from_location" ? <AddUserFromLocation /> : null}
-          {drawer.type === "upload" ? <UploadDrawer /> : null}
+          {drawer.type === "upload" ? <UploadDrawer data={drawer.data} /> : null}
         </Suspense>
       </Drawer>
       {scannerState.isOpen ? <BarcodeScanner /> : null}
