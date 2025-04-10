@@ -7,7 +7,7 @@ import { AllowedFileTypes } from "../../types";
 
 export function UploadDrawer({ data }: Pick<Extract<DrawerTypes, { type: "upload" }>, "data">) {
   const [files, setFiles] = useState<File[]>([]);
-  const { mutate } = useUploadFiles({ uploadType: data.uploadType }, { invalidateModels: ["locations"] });
+  const { mutate } = useUploadFiles({ uploadType: data.uploadType }, { invalidateModels: ["locations", "files"] });
   const closeDrawer = useCloseDrawer();
   return (
     <div className="flex h-full flex-col gap-y-2">
