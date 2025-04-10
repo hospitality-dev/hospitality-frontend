@@ -232,7 +232,7 @@ export function LocationSettings() {
     { urlSuffix: `location/${auth?.user?.locationId}`, enabled: isSuccess && !!auth?.user?.locationId }
   );
 
-  const { mutate: update } = useUpdate<LocationsMutatorType>("locations");
+  const { mutate: update } = useUpdate<LocationsMutatorType>("locations", { refetchModels: ["locations"] });
 
   const form = useForm<LocationsMutatorType>({
     defaultValues: {

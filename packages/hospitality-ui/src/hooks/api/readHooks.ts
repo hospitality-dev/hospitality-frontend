@@ -13,7 +13,7 @@ export type useReadProps<F> = {
 
 export function useRead<F>(
   { id, model, fields }: useReadProps<F>,
-  options?: Pick<UseQueryOptions<F>, "enabled"> & { urlSuffix?: string }
+  options?: Pick<UseQueryOptions<F>, "enabled" | "staleTime"> & { urlSuffix?: string }
 ) {
   const reset = useResetAtom(userAtom);
   const searchParams = getSearchParams<useReadProps<F>["fields"], F>(fields);
@@ -23,6 +23,7 @@ export function useRead<F>(
     queryFn: () =>
       fetchFunction<F>({ method: "GET", model, id, searchParams, userReset: reset, urlSuffix: options?.urlSuffix || "" }),
     enabled: !!(options?.enabled ?? true),
+    staleTime: options?.staleTime,
   });
 }
 

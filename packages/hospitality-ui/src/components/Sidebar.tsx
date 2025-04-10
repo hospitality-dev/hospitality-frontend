@@ -4,8 +4,8 @@ import { tv } from "tailwind-variants";
 
 import { sidebarStateAtom } from "../atoms";
 import { Icons } from "../enums";
-import { useAuth, useScreenSize } from "../hooks";
-import { availableIcons } from "../types";
+import { useAuth, useRead, useScreenSize } from "../hooks";
+import { availableIcons, LocationsType } from "../types";
 import { Avatar } from "./Avatar";
 import { Icon } from "./Icon";
 import { Link } from "./Link";
@@ -79,14 +79,17 @@ function SidebarSection({ title, links }: SidebarSectionType) {
 export function Sidebar({ sections = [] }: Props) {
   const { isLg } = useScreenSize();
   const auth = useAuth();
-  const locationImageId = auth.locations.find((loc) => loc.locationId === auth.user?.locationId)?.imageId;
+  const { data: locationData } = useRead<LocationsType>(
+    { model: "locations", id: auth.user?.locationId || "", fields: ["title", "imageId"] },
+    { enabled: !!auth.user?.locationId, staleTime: 8 * 60 * 60 * 1000 } // 8 hrs
+  );
   const { base, rootList, moduleItemsList, settingsButton } = classes({ isSmallScreen: !isLg });
   return (
     <div className={base()}>
       <ul className={rootList()}>
         <li className={`flex h-16 flex-nowrap items-center gap-x-4 px-4 ${isLg ? "" : "justify-center"}`}>
-          <Avatar imageId={locationImageId} label={auth.user?.locationTitle || ""} />
-          {isLg ? <h2 className="text-2xl font-bold">Filtz</h2> : null}
+          <Avatar imageId={locationData?.imageId} label={locationData?.title || ""} />
+          {isLg ? <h2 className="text-2xl font-bold">{locationData?.title || ""}</h2> : null}
         </li>
         <ul className={moduleItemsList()}>
           {isLg
