@@ -106,3 +106,24 @@ export async function searchFunction<DataType>({
 
   return result?.data;
 }
+
+export async function uploadFunction<DataType>({
+  payload,
+  userReset,
+}: {
+  payload: FormData;
+  userReset: () => void;
+}): Promise<DataType> {
+  const result = await ky("files", {
+    method: "POST",
+    throwHttpErrors: true,
+    prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
+    credentials: "include",
+    body: payload,
+    hooks: {
+      afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
+    },
+  }).json<ResponseType<DataType>>();
+
+  return result?.data;
+}
