@@ -129,3 +129,24 @@ export async function uploadFunction<DataType>({
 
   return result?.data;
 }
+
+export async function urlFunction({
+  id,
+  urlSuffix,
+  userReset,
+}: {
+  id: string;
+  urlSuffix?: string;
+  userReset: () => void;
+}): Promise<string> {
+  const result = await ky(`url/${id}${urlSuffix ? `/${urlSuffix}` : ""}`, {
+    method: "GET",
+    throwHttpErrors: true,
+    prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
+    credentials: "include",
+    hooks: {
+      afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
+    },
+  });
+  return result.text();
+}
