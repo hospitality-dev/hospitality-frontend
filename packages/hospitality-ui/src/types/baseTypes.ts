@@ -91,6 +91,14 @@ export type AllowedInputTypes = Extract<HTMLInputTypeAttribute, "text" | "number
 
 export type AllowedFileTypes = (typeof AvailableFileTypes)[number];
 
+export type AllowedUploadTypes =
+  | "company_logo"
+  | "location_logo"
+  | "company_image"
+  | "location_image"
+  | "user_avatar"
+  | "product_image";
+
 // =========REQUEST=========
 type RequestFilterOperators = "eq" | "neq" | "gt" | "gte" | "is" | "is not" | "in" | "not in" | "ilike";
 type RequestFilterType<T> = {
