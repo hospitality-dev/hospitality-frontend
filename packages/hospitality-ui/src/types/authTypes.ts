@@ -16,6 +16,7 @@ export type AuthLocationType = {
   roleId: RolesType["id"];
   role: RolesType["title"];
   companyId: LocationsType["companyId"];
+  imageId: string | null;
 };
 export type LoginResponseType = {
   user: Pick<UsersType, "id" | "firstName" | "lastName" | "username" | "phone" | "email"> & {

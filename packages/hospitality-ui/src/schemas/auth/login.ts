@@ -28,5 +28,6 @@ export const loginResponseSchema = object({
     role: string(),
     locationTitle: string(),
     companyId: string().uuid(),
+    imageId: string().uuid().nullable(),
   }).array(),
 });
