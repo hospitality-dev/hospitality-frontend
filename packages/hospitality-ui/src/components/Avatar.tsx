@@ -54,8 +54,8 @@ function getInitials(name: Props["label"]) {
 
 export function Avatar({ label, variant = "primary", size = "md", imageId, onClick }: Props) {
   return (
-    <div className={classes({ variant, size, hasAction: !!onClick })}>
-      {imageId ? <img className="h-full w-full object-cover" onClick={onClick} src={imageId} /> : getInitials(label)}
+    <div className={classes({ variant, size, hasAction: !!onClick })} onClick={onClick}>
+      {imageId ? <img className="h-full w-full object-cover" src={imageId} /> : getInitials(label)}
     </div>
   );
 }
