@@ -26,6 +26,10 @@ export type DrawerTypes = (
       type: "add_user_from_location";
       data: null;
     }
+  | {
+      type: "upload";
+      data: null;
+    }
 ) & { title: string };
 
 type DrawerState = {
