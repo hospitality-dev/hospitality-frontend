@@ -110,14 +110,16 @@ export async function searchFunction<DataType>({
 export async function uploadFunction<DataType>({
   payload,
   userReset,
+  urlSuffix,
 }: {
   payload: FormData;
   userReset: () => void;
+  urlSuffix?: string;
 }): Promise<DataType> {
   const result = await ky("files", {
     method: "POST",
     throwHttpErrors: true,
-    prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
+    prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1${urlSuffix ? `/${urlSuffix}` : ""}`,
     credentials: "include",
     body: payload,
     hooks: {
