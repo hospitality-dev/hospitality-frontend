@@ -116,10 +116,10 @@ export async function uploadFunction<DataType>({
   userReset: () => void;
   urlSuffix?: string;
 }): Promise<DataType> {
-  const result = await ky("files", {
+  const result = await ky(`files${urlSuffix ? `/${urlSuffix}` : ""}`, {
     method: "POST",
     throwHttpErrors: true,
-    prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1${urlSuffix ? `/${urlSuffix}` : ""}`,
+    prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1/`,
     credentials: "include",
     body: payload,
     hooks: {
