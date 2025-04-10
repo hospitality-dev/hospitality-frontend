@@ -38,7 +38,7 @@ const classes = tv({
     labelClasses: "font-small font-light text-gray-900",
     selectBox: "relative flex w-full items-center bg-white",
     base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center gap-x-1 rounded-md border px-1 shadow-sm outline-0",
-    icon: "text-primary pt-0.5",
+    icon: "text-primary ml-auto pt-0.5",
     optionsContainer:
       "z-[61] divide-y divide-gray-300 overflow-y-auto rounded-md border border-gray-400 bg-white shadow-lg outline-0",
   },
