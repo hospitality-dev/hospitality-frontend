@@ -79,12 +79,13 @@ function SidebarSection({ title, links }: SidebarSectionType) {
 export function Sidebar({ sections = [] }: Props) {
   const { isLg } = useScreenSize();
   const auth = useAuth();
+  const locationImageId = auth.locations.find((loc) => loc.locationId === auth.user?.locationId)?.imageId;
   const { base, rootList, moduleItemsList, settingsButton } = classes({ isSmallScreen: !isLg });
   return (
     <div className={base()}>
       <ul className={rootList()}>
         <li className={`flex h-16 flex-nowrap items-center gap-x-4 px-4 ${isLg ? "" : "justify-center"}`}>
-          <Avatar label={auth.user?.locationTitle || ""} />
+          <Avatar imageId={locationImageId} label={auth.user?.locationTitle || ""} />
           {isLg ? <h2 className="text-2xl font-bold">Filtz</h2> : null}
         </li>
         <ul className={moduleItemsList()}>
