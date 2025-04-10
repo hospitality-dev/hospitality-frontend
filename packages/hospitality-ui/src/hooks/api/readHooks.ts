@@ -3,7 +3,7 @@ import { useResetAtom } from "jotai/utils";
 
 import { userAtom } from "../../atoms";
 import { AvailableEntities } from "../../types";
-import { fetchFunction, getSearchParams } from "../../utils";
+import { fetchFunction, getSearchParams, urlFunction } from "../../utils";
 
 export type useReadProps<F> = {
   id: string;
@@ -23,5 +23,15 @@ export function useRead<F>(
     queryFn: () =>
       fetchFunction<F>({ method: "GET", model, id, searchParams, userReset: reset, urlSuffix: options?.urlSuffix || "" }),
     enabled: !!(options?.enabled ?? true),
+  });
+}
+
+export function useImage(id: string, options?: Pick<UseQueryOptions, "enabled"> & { urlSuffix?: string }) {
+  const reset = useResetAtom(userAtom);
+  return useQuery<string>({
+    queryKey: ["files", id],
+    queryFn: () => urlFunction({ id, userReset: reset, urlSuffix: options?.urlSuffix || "" }),
+    enabled: !!(options?.enabled ?? true),
+    staleTime: 60 * 60 * 8 * 1000,
   });
 }
