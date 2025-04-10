@@ -30,7 +30,7 @@ export type DrawerTypes = (
     }
   | {
       type: "upload";
-      data: { types: AllowedFileTypes[]; isMultiple?: boolean; uploadType: AllowedUploadTypes };
+      data: { id: string; types: AllowedFileTypes[]; isMultiple?: boolean; uploadType: AllowedUploadTypes };
     }
 ) & { title: string };
 

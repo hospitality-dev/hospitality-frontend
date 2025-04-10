@@ -2,7 +2,7 @@ import { useMutation, UseMutationOptions, useQueryClient } from "@tanstack/react
 import { useResetAtom } from "jotai/utils";
 
 import { userAtom } from "../../atoms";
-import { AvailableEntities } from "../../types";
+import { AllowedUploadTypes, AvailableEntities } from "../../types";
 import { fetchFunction, uploadFunction } from "../../utils";
 
 export function useCreate<F>(
@@ -48,13 +48,13 @@ export function useAddInventoryProducts() {
   });
 }
 
-export function useUploadFiles() {
+export function useUploadFiles({ uploadType }: { uploadType: AllowedUploadTypes }) {
   const userReset = useResetAtom(userAtom);
   // const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: { value: FormData }) => {
-      return uploadFunction({ payload: payload.value, userReset });
+    mutationFn: (payload: { id: string; value: FormData }) => {
+      return uploadFunction({ payload: payload.value, userReset, urlSuffix: `${uploadType}/${payload.id}` });
     },
 
     // onSuccess: () => {

@@ -7,7 +7,7 @@ import { AllowedFileTypes } from "../../types";
 
 export function UploadDrawer({ data }: Pick<Extract<DrawerTypes, { type: "upload" }>, "data">) {
   const [files, setFiles] = useState<File[]>([]);
-  const { mutate } = useUploadFiles();
+  const { mutate } = useUploadFiles({ uploadType: data.uploadType });
   const closeDrawer = useCloseDrawer();
   return (
     <div className="flex h-full flex-col gap-y-2">
@@ -53,7 +53,7 @@ export function UploadDrawer({ data }: Pick<Extract<DrawerTypes, { type: "upload
             for (let index = 0; index < files.length; index++) {
               formData.append(files[index].name, files[index]);
             }
-            mutate({ value: formData }, { onSuccess: closeDrawer });
+            mutate({ id: data.id, value: formData }, { onSuccess: closeDrawer });
           }}
           variant="success"
         />

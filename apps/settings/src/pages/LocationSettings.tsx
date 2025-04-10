@@ -256,7 +256,12 @@ export function LocationSettings() {
               <Avatar
                 label={locationData?.title || ""}
                 onClick={() =>
-                  openDrawer("Upload location logo", { types: ["jpg", "jpeg", "png", "webp", "gif", "svg"], isMultiple: false })
+                  openDrawer("Upload location logo", {
+                    id: locationData?.id,
+                    uploadType: "location_logo",
+                    types: ["jpg", "jpeg", "png", "webp", "gif", "svg"],
+                    isMultiple: false,
+                  })
                 }
                 size={isSmallScreen ? "xl" : "md"}
               />
