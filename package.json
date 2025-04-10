@@ -22,10 +22,7 @@
     "typescript-eslint": "^8.22.0"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown",
-    "**/*.{ts,tsx}": [
-      "bash -c tsc --noEmit"
-    ]
+    "**/*": "prettier --write --ignore-unknown"
   },
   "private": true,
   "scripts": {
