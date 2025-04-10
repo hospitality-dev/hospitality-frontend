@@ -27,10 +27,10 @@ export function Collapsible({ icon, label, children, isOpen, items, variant = "p
           setIsExpanded((prev) => !prev);
         }}>
         <Title
-          hasBorder
+          hasBorder={isExpanded}
           icon={icon}
           items={[
-            ...(items || []),
+            ...(isExpanded ? items || [] : []),
             {
               id: "collapse",
               icon: Icons[isExpanded ? "arrow-up" : "arrow-down"],
