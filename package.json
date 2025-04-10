@@ -19,10 +19,14 @@
     "lint-staged": "^15.4.3",
     "prettier": "3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "tsc-files": "^1.1.4",
     "typescript-eslint": "^8.22.0"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": "prettier --write --ignore-unknown",
+    "*.{ts,tsx}": [
+      "tsc-files --noEmit"
+    ]
   },
   "private": true,
   "scripts": {
