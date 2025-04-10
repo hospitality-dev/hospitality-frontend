@@ -2,7 +2,7 @@ import { Result } from "@zxing/library";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
-import { AllowedFileTypes } from "../types";
+import { AllowedFileTypes, AllowedUploadTypes } from "../types";
 
 type SidebarState = {
   isSidebarOpen: boolean;
@@ -30,7 +30,7 @@ export type DrawerTypes = (
     }
   | {
       type: "upload";
-      data: { types: AllowedFileTypes[]; isMultiple?: boolean };
+      data: { types: AllowedFileTypes[]; isMultiple?: boolean; uploadType: AllowedUploadTypes };
     }
 ) & { title: string };
 
