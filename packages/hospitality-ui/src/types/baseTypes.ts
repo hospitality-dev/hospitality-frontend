@@ -89,7 +89,7 @@ export interface IconType {
 }
 export type AllowedInputTypes = Extract<HTMLInputTypeAttribute, "text" | "number" | "tel" | "search" | "password" | "url">;
 
-export type AllowedFileTypes = typeof AvailableFileTypes;
+export type AllowedFileTypes = (typeof AvailableFileTypes)[number];
 
 // =========REQUEST=========
 type RequestFilterOperators = "eq" | "neq" | "gt" | "gte" | "is" | "is not" | "in" | "not in" | "ilike";
