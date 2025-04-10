@@ -1,12 +1,13 @@
 import { tv } from "tailwind-variants";
 
 import { Size, Variant } from "../types/baseTypes";
+import { Image } from "./Image";
 
 type Props = {
   label?: string;
   variant?: Variant;
   size?: Size;
-  imageId?: string;
+  imageId?: string | null;
   onClick?: () => void;
 };
 
@@ -55,7 +56,7 @@ function getInitials(name: Props["label"]) {
 export function Avatar({ label, variant = "primary", size = "md", imageId, onClick }: Props) {
   return (
     <div className={classes({ variant, size, hasAction: !!onClick })} onClick={onClick}>
-      {imageId ? <img className="h-full w-full object-cover" src={imageId} /> : getInitials(label)}
+      {imageId ? <Image imageId={imageId} /> : getInitials(label)}
     </div>
   );
 }
