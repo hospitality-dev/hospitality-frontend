@@ -2,6 +2,7 @@ import { Placement } from "@floating-ui/react";
 import {
   AvailableActionsEnum,
   AvailableEntitiesEnum,
+  AvailableFileTypes,
   AvailableSearchableEntitiesEnum,
   valueof,
 } from "@hospitality/hospitality-ui/src";
@@ -87,6 +88,8 @@ export interface IconType {
   thickness?: IconThickness;
 }
 export type AllowedInputTypes = Extract<HTMLInputTypeAttribute, "text" | "number" | "tel" | "search" | "password" | "url">;
+
+export type AllowedFileTypes = typeof AvailableFileTypes;
 
 // =========REQUEST=========
 type RequestFilterOperators = "eq" | "neq" | "gt" | "gte" | "is" | "is not" | "in" | "not in" | "ilike";
