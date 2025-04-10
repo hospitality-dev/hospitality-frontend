@@ -54,6 +54,7 @@ export const Icons = {
   menu: "ph:dots-three-circle-thin" as const,
   mobile_phone: "ph:device-mobile-camera" as const,
   modules: "oui:index-mapping" as const,
+  mov: "bi:file-earmark-slides" as const,
   mp3: "bi:filetype-mp3" as const,
   mp4: "bi:filetype-mp4" as const,
   office_address: "fluent:building-20-regular" as const,
