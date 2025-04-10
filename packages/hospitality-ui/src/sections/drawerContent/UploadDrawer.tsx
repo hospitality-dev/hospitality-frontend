@@ -2,43 +2,61 @@ import { useState } from "react";
 
 import { DrawerTypes } from "../../atoms";
 import { Button, FileDisplay, Upload } from "../../components";
-import { useUploadFiles } from "../../hooks";
+import { useCloseDrawer, useUploadFiles } from "../../hooks";
 import { AllowedFileTypes } from "../../types";
 
 export function UploadDrawer({ data }: Pick<Extract<DrawerTypes, { type: "upload" }>, "data">) {
-  const [files, setFiles] = useState(new FormData());
+  const [files, setFiles] = useState<File[]>([]);
   const { mutate } = useUploadFiles();
+  const closeDrawer = useCloseDrawer();
   return (
     <div className="flex h-full flex-col gap-y-2">
       <Upload
         isMultiple={data?.isMultiple}
         label=""
         onChange={(e) => {
-          const newForm = new FormData();
-          files.entries().forEach(([key, value]) => {
-            newForm.append(key, value);
-          });
-
-          Array.from(e.target.files || []).forEach((file) => {
-            newForm.append(file.name, file);
-          });
-          setFiles(newForm);
+          if (e.target.files?.length) {
+            const temp: File[] = [...files];
+            Array.from(e.target.files || []).forEach((file) => {
+              temp.push(file);
+            });
+            setFiles(temp);
+          }
         }}
         types={data?.types || []}
       />
       <div className="flex flex-col gap-y-2">
-        {files.keys().map((f) => (
+        {files.map((f, index) => (
           <FileDisplay
-            key={f}
-            label={f}
+            key={f.name}
+            label={f.name}
             onDelete={() => {}}
-            onRename={() => {}}
-            type={f.split(".").at(-1) as AllowedFileTypes}
+            onRename={(newName) => {
+              setFiles((prev) =>
+                prev.map((file, i) => {
+                  if (index === i) {
+                    return new File([file], newName, { type: file.type });
+                  }
+                  return file;
+                })
+              );
+            }}
+            type={f.type.split("/").at(-1) as AllowedFileTypes}
           />
         ))}
       </div>
       <div className="mt-auto">
-        <Button label="Upload" onClick={() => mutate({ value: files })} variant="success" />
+        <Button
+          label="Upload"
+          onClick={() => {
+            const formData = new FormData();
+            for (let index = 0; index < files.length; index++) {
+              formData.append(files[index].name, files[index]);
+            }
+            mutate({ value: formData }, { onSuccess: closeDrawer });
+          }}
+          variant="success"
+        />
       </div>
     </div>
   );
