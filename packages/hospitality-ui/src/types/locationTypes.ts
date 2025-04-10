@@ -6,6 +6,7 @@ export const LocationsSchema = object({
   id: string().uuid().nonempty(),
   title: string().nonempty(),
   ownerId: string().uuid().nonempty(),
+  imageId: string().uuid().nullish(),
   companyId: string().uuid().nonempty(),
   contacts: ContactSchema.array().default([]),
 });
