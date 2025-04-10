@@ -3,7 +3,7 @@ import { useResetAtom } from "jotai/utils";
 
 import { userAtom } from "../../atoms";
 import { AvailableEntities } from "../../types";
-import { fetchFunction } from "../../utils";
+import { fetchFunction, uploadFunction } from "../../utils";
 
 export function useCreate<F>(
   model: AvailableEntities,
@@ -45,5 +45,21 @@ export function useAddInventoryProducts() {
       queryClient.invalidateQueries({ queryKey: ["locations_products"] });
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
+  });
+}
+
+export function useUploadFiles() {
+  const userReset = useResetAtom(userAtom);
+  // const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: { value: FormData }) => {
+      return uploadFunction({ payload: payload.value, userReset });
+    },
+
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries({ queryKey: ["locations_products"] });
+    //   queryClient.invalidateQueries({ queryKey: ["products"] });
+    // },
   });
 }
