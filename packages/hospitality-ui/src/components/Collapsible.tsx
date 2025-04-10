@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useLayoutEffect, useState } from "react";
 
 import { Icons } from "../enums";
 import { ActionType, availableIcons, Size, Variant } from "../types";
@@ -16,6 +16,10 @@ type Props = {
 
 export function Collapsible({ icon, label, children, isOpen, items, variant = "primary", size = "md" }: Props) {
   const [isExpanded, setIsExpanded] = useState(!!isOpen);
+
+  useLayoutEffect(() => {
+    if (isOpen !== undefined) setIsExpanded(isOpen);
+  }, [isOpen]);
 
   return (
     <details open={isExpanded}>

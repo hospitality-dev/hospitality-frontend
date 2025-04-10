@@ -15,12 +15,14 @@ import {
   getSentenceCase,
   Icons,
   Input,
+  LocationsMutatorSchema,
   LocationsMutatorType,
   LocationsType,
   ReactFormExtendedApi,
   Title,
   urlValidation,
   useAuth,
+  useDrawer,
   useForm,
   useList,
   useRead,
@@ -212,6 +214,7 @@ function ContactDisplay({
 export function LocationSettings() {
   const auth = useAuth();
   const { isSmallScreen } = useScreenSize();
+  const { openDrawer } = useDrawer("upload");
   const {
     data: locationData,
     isLoading,
@@ -238,18 +241,23 @@ export function LocationSettings() {
       contacts: locationContacts || [],
     },
     validators: {
-      // onSubmit: LocationsMutatorSchema,
+      onSubmit: LocationsMutatorSchema,
     },
     onSubmit: update,
   });
   if (!isSuccess) return null;
+
   return (
     <Form handleSubmit={form.handleSubmit}>
       <div className="flex h-full flex-col justify-between gap-y-2">
         <div className="flex flex-col gap-y-2">
           <div className="flex items-end gap-x-2">
             <div>
-              <Avatar label={locationData?.title || ""} size={isSmallScreen ? "xl" : "md"} />
+              <Avatar
+                label={locationData?.title || ""}
+                onClick={() => openDrawer("Upload location logo")}
+                size={isSmallScreen ? "xl" : "md"}
+              />
             </div>
             <form.Field
               children={(field) => (
@@ -269,11 +277,10 @@ export function LocationSettings() {
               children={(field) => (
                 <>
                   <Title hasBorder label="Contacts" size="xl" variant="primary" />
-
                   <Card hasNoShadow isFullWidth variant="secondary">
                     <Collapsible
                       icon={Icons.office_address}
-                      isOpen
+                      isOpen={!!field.state.value.length}
                       items={[
                         {
                           id: "1",
@@ -314,7 +321,7 @@ export function LocationSettings() {
                   <Card hasNoShadow isFullWidth variant="secondary">
                     <Collapsible
                       icon={Icons.phone}
-                      isOpen
+                      isOpen={!!field.state.value.length}
                       items={[
                         {
                           id: "1",
@@ -355,7 +362,7 @@ export function LocationSettings() {
                   <Card hasNoShadow isFullWidth variant="secondary">
                     <Collapsible
                       icon={Icons.email}
-                      isOpen
+                      isOpen={!!field.state.value.length}
                       items={[
                         {
                           id: "1",
@@ -375,36 +382,28 @@ export function LocationSettings() {
                       ]}
                       label="Emails">
                       <div className="flex flex-col gap-y-2">
-                        <form.Field
-                          children={(field) =>
-                            field.state.value.length
-                              ? field.state.value.map((contact, i) => {
-                                  if (contact.contactType.includes("email"))
-                                    return (
-                                      <ContactDisplay
-                                        key={i}
-                                        contact={contact}
-                                        form={form}
-                                        index={i}
-                                        isDisabled={isLoading}
-                                        onDelete={() => field.removeValue(i)}
-                                        type="email"
-                                      />
-                                    );
-                                  return null;
-                                })
-                              : null
-                          }
-                          mode="array"
-                          name="contacts"
-                        />
+                        {field.state.value.map((contact, i) => {
+                          if (contact.contactType.includes("email"))
+                            return (
+                              <ContactDisplay
+                                key={i}
+                                contact={contact}
+                                form={form}
+                                index={i}
+                                isDisabled={isLoading}
+                                onDelete={() => field.removeValue(i)}
+                                type="email"
+                              />
+                            );
+                          return null;
+                        })}
                       </div>
                     </Collapsible>
                   </Card>
                   <Card hasNoShadow isFullWidth variant="secondary">
                     <Collapsible
                       icon={Icons.website}
-                      isOpen
+                      isOpen={!!field.state.value.length}
                       items={[
                         {
                           id: "1",
@@ -424,36 +423,28 @@ export function LocationSettings() {
                       ]}
                       label="Websites">
                       <div className="flex flex-col gap-y-2">
-                        <form.Field
-                          children={(field) =>
-                            field.state.value.length
-                              ? field.state.value.map((contact, i) => {
-                                  if (contact.contactType.includes("website"))
-                                    return (
-                                      <ContactDisplay
-                                        key={i}
-                                        contact={contact}
-                                        form={form}
-                                        index={i}
-                                        isDisabled={isLoading}
-                                        onDelete={() => field.removeValue(i)}
-                                        type="websites"
-                                      />
-                                    );
-                                  return null;
-                                })
-                              : null
-                          }
-                          mode="array"
-                          name="contacts"
-                        />
+                        {field.state.value.map((contact, i) => {
+                          if (contact.contactType.includes("website"))
+                            return (
+                              <ContactDisplay
+                                key={i}
+                                contact={contact}
+                                form={form}
+                                index={i}
+                                isDisabled={isLoading}
+                                onDelete={() => field.removeValue(i)}
+                                type="websites"
+                              />
+                            );
+                          return null;
+                        })}
                       </div>
                     </Collapsible>
                   </Card>
                   <Card hasNoShadow isFullWidth variant="secondary">
                     <Collapsible
                       icon={Icons.info}
-                      isOpen
+                      isOpen={!!field.state.value.length}
                       items={[
                         {
                           id: "1",
@@ -473,36 +464,28 @@ export function LocationSettings() {
                       ]}
                       label="Other">
                       <div className="flex flex-col gap-y-2">
-                        <form.Field
-                          children={(field) =>
-                            field.state.value.length
-                              ? field.state.value.map((contact, i) => {
-                                  if (
-                                    contact.contactType === "whatsapp" ||
-                                    contact.contactType === "linkedin" ||
-                                    contact.contactType === "twitter" ||
-                                    contact.contactType === "facebook" ||
-                                    contact.contactType === "instagram" ||
-                                    contact.contactType === "slack"
-                                  )
-                                    return (
-                                      <ContactDisplay
-                                        key={i}
-                                        contact={contact}
-                                        form={form}
-                                        index={i}
-                                        isDisabled={isLoading}
-                                        onDelete={() => field.removeValue(i)}
-                                        type="other"
-                                      />
-                                    );
-                                  return null;
-                                })
-                              : null
-                          }
-                          mode="array"
-                          name="contacts"
-                        />
+                        {field.state.value.map((contact, i) => {
+                          if (
+                            contact.contactType === "whatsapp" ||
+                            contact.contactType === "linkedin" ||
+                            contact.contactType === "twitter" ||
+                            contact.contactType === "facebook" ||
+                            contact.contactType === "instagram" ||
+                            contact.contactType === "slack"
+                          )
+                            return (
+                              <ContactDisplay
+                                key={i}
+                                contact={contact}
+                                form={form}
+                                index={i}
+                                isDisabled={isLoading}
+                                onDelete={() => field.removeValue(i)}
+                                type="other"
+                              />
+                            );
+                          return null;
+                        })}
                       </div>
                     </Collapsible>
                   </Card>
