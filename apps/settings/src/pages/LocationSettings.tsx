@@ -254,6 +254,7 @@ export function LocationSettings() {
           <div className="flex items-end gap-x-2">
             <div>
               <Avatar
+                imageId={locationData?.imageId}
                 label={locationData?.title || ""}
                 onClick={() =>
                   openDrawer("Upload location logo", {
