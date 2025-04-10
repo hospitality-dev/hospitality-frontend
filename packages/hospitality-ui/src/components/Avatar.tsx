@@ -7,6 +7,7 @@ type Props = {
   variant?: Variant;
   size?: Size;
   imageId?: string;
+  onClick?: () => void;
 };
 
 const classes = tv({
@@ -26,6 +27,10 @@ const classes = tv({
       md: "h-12 w-12 text-xl",
       lg: "h-13 w-13 text-2xl",
       xl: "h-14 w-14 text-3xl",
+    },
+    hasAction: {
+      true: "cursor-pointer",
+      false: "cursor-default",
     },
   },
 });
@@ -47,10 +52,10 @@ function getInitials(name: Props["label"]) {
   return initials;
 }
 
-export function Avatar({ label, variant = "primary", size = "md", imageId }: Props) {
+export function Avatar({ label, variant = "primary", size = "md", imageId, onClick }: Props) {
   return (
-    <div className={classes({ variant, size })}>
-      {imageId ? <img className="h-full w-full object-cover" src={imageId} /> : getInitials(label)}
+    <div className={classes({ variant, size, hasAction: !!onClick })}>
+      {imageId ? <img className="h-full w-full object-cover" onClick={onClick} src={imageId} /> : getInitials(label)}
     </div>
   );
 }
