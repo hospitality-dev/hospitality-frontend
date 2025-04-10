@@ -30,7 +30,7 @@ import {
   useUpdate,
 } from "@hospitality/hospitality-ui";
 
-type EntityType = Pick<LocationsType, "id" | "title" | "contacts">;
+type EntityType = Pick<LocationsType, "id" | "title" | "imageId">;
 function getBaseContact(contactType: ContactTypes): ContactType {
   return {
     id: crypto.randomUUID(),
@@ -223,7 +223,7 @@ export function LocationSettings() {
     {
       model: "locations",
       id: auth.user?.locationId || "",
-      fields: ["id", "title"],
+      fields: ["id", "title", "imageId"],
     },
     { enabled: !!auth.user?.locationId }
   );

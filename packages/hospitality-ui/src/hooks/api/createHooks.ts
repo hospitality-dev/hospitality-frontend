@@ -1,5 +1,6 @@
 import { useMutation, UseMutationOptions, useQueryClient } from "@tanstack/react-query";
 import { useResetAtom } from "jotai/utils";
+import kebabCase from "lodash.kebabcase";
 
 import { userAtom } from "../../atoms";
 import { AllowedUploadTypes, AvailableEntities } from "../../types";
@@ -48,18 +49,24 @@ export function useAddInventoryProducts() {
   });
 }
 
-export function useUploadFiles({ uploadType }: { uploadType: AllowedUploadTypes }) {
+export function useUploadFiles(
+  { uploadType }: { uploadType: AllowedUploadTypes },
+  opts?: { invalidateModels?: AvailableEntities[] }
+) {
   const userReset = useResetAtom(userAtom);
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (payload: { id: string; value: FormData }) => {
-      return uploadFunction({ payload: payload.value, userReset, urlSuffix: `${uploadType}/${payload.id}` });
+      return uploadFunction({ payload: payload.value, userReset, urlSuffix: `${kebabCase(uploadType)}/${payload.id}` });
     },
 
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries({ queryKey: ["locations_products"] });
-    //   queryClient.invalidateQueries({ queryKey: ["products"] });
-    // },
+    onSuccess: () => {
+      if (opts?.invalidateModels?.length) {
+        for (let index = 0; index < opts.invalidateModels.length; index++) {
+          queryClient.invalidateQueries({ predicate: (q) => q.queryKey?.[0] === opts?.invalidateModels?.[index] });
+        }
+      }
+    },
   });
 }
