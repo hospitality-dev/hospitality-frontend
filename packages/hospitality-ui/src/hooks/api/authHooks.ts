@@ -9,6 +9,7 @@ import { locationAtom, userAtom } from "../../atoms";
 import { loginResponseSchema } from "../../schemas";
 import { LocationsType, LoginParamsType, LoginResponseType, ResponseType } from "../../types";
 import { authFetchFunction } from "../../utils";
+import { useList } from "./listHooks";
 import { useRead } from "./readHooks";
 
 export function useLogin() {
@@ -100,4 +101,10 @@ export function useSessionLocation() {
   }
 
   return { changeLocation };
+}
+export function useUserLocations() {
+  return useList<Pick<LocationsType, "id" | "title">>(
+    { model: "locations", fields: ["id", "title"] },
+    { staleTime: 8 * 60 * 60 * 1000 }
+  );
 }
