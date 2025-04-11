@@ -5,6 +5,7 @@ export const RolesSchema = object({
   title: string().nonempty(),
   isDefault: boolean(),
   companyId: string().uuid().nullable(),
+  imageId: string().uuid().nullish(),
 });
 
 export const UsersSchema = object({
@@ -18,6 +19,8 @@ export const UsersSchema = object({
   dateOfEmployment: date().nullish(),
   dateOfTermination: date().nullish(),
   isVerified: boolean().nullish(),
+  imageId: string().uuid().nullish(),
+  roleId: string().uuid(),
 });
 export const UsersInitializerSchema = object({
   firstName: string().nonempty("First name cannot be empty."),
@@ -27,21 +30,21 @@ export const UsersInitializerSchema = object({
   password2: string()
     .min(8, "Must be at least 8 characters long and match the password.")
     .nonempty("Password confirm cannot be empty."),
-  email: string().email("This email is not valid.").nullish(),
-  phone: string().nullish(),
   dateOfBirth: date().nullish(),
   dateOfEmployment: date().nullish(),
   roleId: string().uuid("User must have a role selected"),
+  imageId: string().uuid().nullish(),
 });
 
 export const UsersMutatorSchema = object({
+  id: string().uuid(),
   firstName: string().nonempty("First name cannot be empty.").optional(),
   lastName: string().nonempty("Last name cannot be empty.").optional(),
   username: string().nonempty("Username cannot be empty").min(6, "Username must have at least 6 characters").optional(),
-  email: string().email("This email is not valid.").nullish(),
-  phone: string().nullish(),
+  roleId: string().uuid().optional(),
   dateOfBirth: date().nullish(),
   dateOfEmployment: date().nullish(),
+  imageId: string().uuid().nullish(),
 });
 
 export type RolesType = zodInfer<typeof RolesSchema>;
