@@ -1,5 +1,7 @@
 import { boolean, date, infer as zodInfer, object, string } from "zod";
 
+import { ContactSchema } from "./contactTypes";
+
 export const RolesSchema = object({
   id: string().uuid().nonempty(),
   title: string().nonempty(),
@@ -45,6 +47,7 @@ export const UsersMutatorSchema = object({
   dateOfBirth: date().nullish(),
   dateOfEmployment: date().nullish(),
   imageId: string().uuid().nullish(),
+  contacts: ContactSchema.array(),
 });
 
 export type RolesType = zodInfer<typeof RolesSchema>;

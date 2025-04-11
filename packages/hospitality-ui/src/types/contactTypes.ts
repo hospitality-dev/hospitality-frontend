@@ -41,6 +41,8 @@ export const ContactTypesSchema = enum_(
   { message: "Invalid value of contact type" }
 );
 
+export const ContactGroupTypeSchema = enum_(["address", "phone", "email", "website", "other"]);
+
 export const ContactSchema = object({
   id: string().uuid().nonempty(),
   title: string().nullable(),
@@ -61,3 +63,4 @@ export const ContactSchema = object({
 
 export type ContactTypes = zodInfer<typeof ContactTypesSchema>;
 export type ContactType = zodInfer<typeof ContactSchema>;
+export type ContactGroupType = zodInfer<typeof ContactGroupTypeSchema>;
