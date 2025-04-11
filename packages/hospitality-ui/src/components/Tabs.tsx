@@ -25,15 +25,16 @@ const tabContainer = tv({
 
 const tabClasses = tv({
   slots: {
-    tab: "pointer-events-none relative flex min-w-fit cursor-pointer justify-center py-1 text-lg font-medium transition-colors select-none after:absolute after:bottom-0 after:left-0 after:z-10 after:h-0.5 after:w-full",
+    tab: "pointer-events-none relative flex min-w-fit cursor-pointer justify-center py-1 text-lg transition-colors select-none after:absolute after:bottom-0 after:left-0 after:z-10 after:h-0.5 after:w-full",
     linkClasses: "pointer-events-auto px-4 active:text-gray-500",
   },
   variants: {
     isActive: {
       true: {
-        tab: "after:bg-info",
+        tab: "after:bg-info font-semibold",
+        linkClasses: "hover:text-black",
       },
-      false: { tab: "hover:after:bg-info-highlight border-transparent" },
+      false: { tab: "hover:after:bg-info-highlight border-transparent", linkClasses: "hover:text-gray-500" },
     },
     isDisabled: {
       true: {
