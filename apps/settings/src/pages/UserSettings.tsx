@@ -257,7 +257,7 @@ export function UserSettings() {
                 <div className="flex items-end gap-x-2">
                   <div>
                     <Avatar
-                      // imageId={locationData?.imageId}
+                      imageId={userData?.imageId}
                       label={formattedUser?.title || ""}
                       onClick={() =>
                         openDrawer("Change user avatar", {
@@ -268,6 +268,7 @@ export function UserSettings() {
                         })
                       }
                       size={isSmallScreen ? "xl" : "md"}
+                      type="user_avatar"
                     />
                   </div>
                   <Input
