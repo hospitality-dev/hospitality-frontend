@@ -5,14 +5,16 @@ import {
   Button,
   Card,
   Collapsible,
+  ContactGroupType,
   ContactSchema,
   ContactType,
-  ContactTypes,
   emailValidation,
   Form,
   formatDisplayItem,
   formatErrorsForHelperText,
+  getBaseContact,
   getSentenceCase,
+  groupByContacts,
   Icons,
   Input,
   LocationsMutatorSchema,
@@ -31,16 +33,6 @@ import {
 } from "@hospitality/hospitality-ui";
 
 type EntityType = Pick<LocationsType, "id" | "title" | "imageId">;
-function getBaseContact(contactType: ContactTypes): ContactType {
-  return {
-    id: crypto.randomUUID(),
-    title: getSentenceCase(contactType),
-    prefix: null,
-    value: "",
-    contactType,
-    isPublic: false,
-  };
-}
 
 function ContactDisplay({
   contact,
@@ -54,7 +46,7 @@ function ContactDisplay({
   form: ReactFormExtendedApi<LocationsMutatorType>;
   index: number;
   isDisabled?: boolean;
-  type: "address" | "phone" | "email" | "websites" | "other";
+  type: ContactGroupType;
   onDelete: () => void;
 }) {
   return (
@@ -247,6 +239,8 @@ export function LocationSettings() {
   });
   if (!isSuccess) return null;
 
+  const groupedContactsByType = groupByContacts(locationContacts || []);
+
   return (
     <Form handleSubmit={form.handleSubmit}>
       <div className="flex h-full flex-col justify-between gap-y-2">
@@ -288,7 +282,7 @@ export function LocationSettings() {
                   <Card hasNoShadow isFullWidth variant="secondary">
                     <Collapsible
                       icon={Icons.office_address}
-                      isOpen={!!field.state.value.length}
+                      isOpen={!!groupedContactsByType?.address?.length}
                       items={[
                         {
                           id: "1",
@@ -329,7 +323,7 @@ export function LocationSettings() {
                   <Card hasNoShadow isFullWidth variant="secondary">
                     <Collapsible
                       icon={Icons.phone}
-                      isOpen={!!field.state.value.length}
+                      isOpen={!!groupedContactsByType?.phone?.length}
                       items={[
                         {
                           id: "1",
@@ -349,7 +343,7 @@ export function LocationSettings() {
                       ]}
                       label="Phones">
                       <div className="flex flex-col gap-y-2">
-                        {field.state.value.map((contact, i) => {
+                        {(field.state.value || []).map((contact, i) => {
                           if (contact.contactType.includes("phone") || contact.contactType === "fax")
                             return (
                               <ContactDisplay
@@ -370,7 +364,7 @@ export function LocationSettings() {
                   <Card hasNoShadow isFullWidth variant="secondary">
                     <Collapsible
                       icon={Icons.email}
-                      isOpen={!!field.state.value.length}
+                      isOpen={!!groupedContactsByType?.email?.length}
                       items={[
                         {
                           id: "1",
@@ -390,7 +384,7 @@ export function LocationSettings() {
                       ]}
                       label="Emails">
                       <div className="flex flex-col gap-y-2">
-                        {field.state.value.map((contact, i) => {
+                        {(field.state.value || []).map((contact, i) => {
                           if (contact.contactType.includes("email"))
                             return (
                               <ContactDisplay
@@ -411,7 +405,7 @@ export function LocationSettings() {
                   <Card hasNoShadow isFullWidth variant="secondary">
                     <Collapsible
                       icon={Icons.website}
-                      isOpen={!!field.state.value.length}
+                      isOpen={!!groupedContactsByType?.website?.length}
                       items={[
                         {
                           id: "1",
@@ -431,7 +425,7 @@ export function LocationSettings() {
                       ]}
                       label="Websites">
                       <div className="flex flex-col gap-y-2">
-                        {field.state.value.map((contact, i) => {
+                        {(field.state.value || []).map((contact, i) => {
                           if (contact.contactType.includes("website"))
                             return (
                               <ContactDisplay
@@ -441,7 +435,7 @@ export function LocationSettings() {
                                 index={i}
                                 isDisabled={isLoading}
                                 onDelete={() => field.removeValue(i)}
-                                type="websites"
+                                type="website"
                               />
                             );
                           return null;
@@ -452,7 +446,7 @@ export function LocationSettings() {
                   <Card hasNoShadow isFullWidth variant="secondary">
                     <Collapsible
                       icon={Icons.info}
-                      isOpen={!!field.state.value.length}
+                      isOpen={!!field.state.value?.length}
                       items={[
                         {
                           id: "1",
@@ -472,7 +466,7 @@ export function LocationSettings() {
                       ]}
                       label="Other">
                       <div className="flex flex-col gap-y-2">
-                        {field.state.value.map((contact, i) => {
+                        {(field.state.value || []).map((contact, i) => {
                           if (
                             contact.contactType === "whatsapp" ||
                             contact.contactType === "linkedin" ||
