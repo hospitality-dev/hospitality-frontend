@@ -88,7 +88,7 @@ export function Sidebar({ sections = [] }: Props) {
     <div className={base()}>
       <ul className={rootList()}>
         <li className={`flex h-16 flex-nowrap items-center gap-x-4 px-4 ${isLg ? "" : "justify-center"}`}>
-          <Avatar imageId={locationData?.imageId} label={locationData?.title || ""} />
+          <Avatar imageId={locationData?.imageId} label={locationData?.title || ""} type="location_logo" />
           {isLg ? <h2 className="text-2xl font-bold">{locationData?.title || ""}</h2> : null}
         </li>
         <ul className={moduleItemsList()}>
