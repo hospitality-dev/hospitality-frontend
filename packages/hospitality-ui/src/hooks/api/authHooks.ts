@@ -7,8 +7,9 @@ import { useLayoutEffect } from "react";
 
 import { locationAtom, userAtom } from "../../atoms";
 import { loginResponseSchema } from "../../schemas";
-import { LoginParamsType, LoginResponseType, ResponseType } from "../../types";
+import { LocationsType, LoginParamsType, LoginResponseType, ResponseType } from "../../types";
 import { authFetchFunction } from "../../utils";
+import { useRead } from "./readHooks";
 
 export function useLogin() {
   const setUser = useSetAtom(userAtom);
@@ -59,20 +60,28 @@ export function useAuth() {
     staleTime: 5 * 60 * 1000,
   });
 
+  const locationRes = useRead<LocationsType>(
+    { id: res?.data?.user?.locationId || "", model: "locations", fields: ["id", "title", "companyId"] },
+    { enabled: !!res?.data?.user?.locationId }
+  );
+
   useLayoutEffect(() => {
     if (!user && !!res?.data?.user) {
       const validation = loginResponseSchema.safeParse(res.data);
       if (validation.success) {
         setUser(validation.data);
-        const location = validation.data.locations.find((loc) => loc.locationId === validation.data.user.locationId);
-        if (location) setLocation(location);
+        setLocation({
+          id: validation.data.user.locationId,
+          title: validation.data.user.locationTitle,
+          companyId: validation.data.user.companyId,
+        });
       } else {
         console.error(validation);
       }
     }
-  }, [user, res?.data]);
+  }, [user, res?.data, locationRes]);
 
-  return { user: user?.user, locations: user?.locations || [], reset };
+  return { user: user?.user, reset };
 }
 export function useSessionLocation() {
   const setUser = useSetAtom(userAtom);

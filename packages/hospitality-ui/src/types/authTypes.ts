@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { userPermissionsSchema } from "../schemas";
 import { LocationsType } from "./locationTypes";
-import { RolesType, UsersType } from "./userTypes";
+import { UsersType } from "./userTypes";
 
 export type LoginParamsType = {
   username: string;
@@ -10,14 +10,7 @@ export type LoginParamsType = {
 };
 
 export type UserPermissionsType = z.infer<typeof userPermissionsSchema>;
-export type AuthLocationType = {
-  locationId: LocationsType["id"];
-  locationTitle: LocationsType["title"];
-  roleId: RolesType["id"];
-  role: RolesType["title"];
-  companyId: LocationsType["companyId"];
-  imageId: string | null;
-};
+
 export type LoginResponseType = {
   user: Pick<UsersType, "id" | "firstName" | "lastName" | "username" | "phone" | "email"> & {
     locationId: string | null;
@@ -27,8 +20,9 @@ export type LoginResponseType = {
     permissions: UserPermissionsType;
     companyId: string | null;
   };
-  locations: AuthLocationType[];
 };
+
+export type AuthLocationType = Pick<LocationsType, "id" | "title" | "companyId">;
 
 export type AuthContextType = {
   auth: LoginResponseType | null;

@@ -14,20 +14,11 @@ export const userPermissionsSchema = record(zodAvailableEntities, record(zodAvai
 
 export const loginResponseSchema = object({
   user: UsersSchema.pick({ id: true, firstName: true, lastName: true, username: true, phone: true, email: true }).extend({
-    locationId: string().uuid().nullable(),
-    roleId: string().uuid().nullable(),
-    role: string().nullable(),
-    locationTitle: string().nullable(),
-    companyId: string().uuid().nullable(),
-
-    permissions: userPermissionsSchema,
-  }),
-  locations: object({
     locationId: string().uuid(),
     roleId: string().uuid(),
     role: string(),
     locationTitle: string(),
     companyId: string().uuid(),
-    imageId: string().uuid().nullable(),
-  }).array(),
+    permissions: userPermissionsSchema,
+  }),
 });

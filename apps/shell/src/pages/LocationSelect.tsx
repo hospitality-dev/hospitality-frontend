@@ -1,8 +1,10 @@
-import { Button, Card, getSentenceCase, Icons, useAuth, useSessionLocation } from "@hospitality/hospitality-ui";
+import { Button, Card, Icons, LocationsType, useAuth, useList, useSessionLocation } from "@hospitality/hospitality-ui";
 
 export function LocationSelect() {
   const auth = useAuth();
   const { changeLocation } = useSessionLocation();
+  const { data } = useList<Pick<LocationsType, "id" | "title">>({ model: "locations", fields: ["id", "title"] });
+
   return (
     <div className="flex h-screen w-screen items-center justify-center overflow-hidden bg-gray-200">
       <div className="w-96">
@@ -17,14 +19,14 @@ export function LocationSelect() {
               </h3>
             </div>
             <ul className="flex w-full flex-col gap-y-2">
-              {(auth?.locations || []).map((location) => {
+              {(data || []).map((location) => {
                 return (
-                  <li key={location.locationId} className="flex w-full">
+                  <li key={location.id} className="flex w-full">
                     <Button
                       icon={Icons["arrow-right"]}
                       isOutline
-                      label={`${location.locationTitle} (${getSentenceCase(location.role)})`}
-                      onClick={() => changeLocation(location.locationId)}
+                      label={location.title}
+                      onClick={() => changeLocation(location.id)}
                       size="xl"
                       variant="info"
                     />
