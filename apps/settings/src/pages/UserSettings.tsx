@@ -53,7 +53,7 @@ function ContactDisplay({
   onDelete: () => void;
 }) {
   return (
-    <div className="flex w-full flex-col items-end px-1.5 pt-1.5">
+    <div className="mt-2 flex w-full flex-col items-end">
       <form.Field
         children={(subfield) => (
           <Title
@@ -74,7 +74,7 @@ function ContactDisplay({
         )}
         name={`contacts[${index}].title`}
       />
-      <div className="flex w-full flex-col pt-2 lg:flex-row lg:gap-2">
+      <div className="mt-2 flex w-full flex-col gap-2 lg:flex-row">
         <form.Field
           children={(subfield) => (
             <Input

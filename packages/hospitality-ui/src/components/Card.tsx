@@ -11,7 +11,7 @@ type Props = {
 };
 
 const classes = tv({
-  base: "cursor-pointer overflow-hidden rounded border-3 border-transparent bg-white shadow-sm transition-shadow hover:shadow-md",
+  base: "cursor-pointer overflow-hidden rounded border border-transparent bg-white p-2 shadow-sm transition-shadow hover:shadow-md",
   variants: {
     isFullWidth: {
       true: "w-full",
@@ -21,8 +21,8 @@ const classes = tv({
       true: "shadow-none hover:shadow-none",
     },
     variant: {
-      primary: "bg-white",
-      secondary: "bg-gray-100",
+      primary: "border-primary bg-white",
+      secondary: "border-secondary bg-gray-100",
       info: "border-3 border-blue-500",
       success: "border-3 border-green-500",
       warning: "border-3 border-orange-500",
