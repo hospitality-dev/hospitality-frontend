@@ -41,7 +41,7 @@ const classes = tv({
   },
 });
 
-export function Title({ label, variant = "info", size = "md", hasBorder, icon, items }: Props) {
+export function Title({ label, variant = "primary", size = "md", hasBorder, icon, items }: Props) {
   const { base, actionsContainer, actionButtonContainer } = classes({ variant, size, hasBorder });
   return (
     <h3 className={base()}>
