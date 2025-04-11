@@ -1,4 +1,5 @@
 import { useForm } from "@tanstack/react-form";
+import { useQuery } from "@tanstack/react-query";
 
 import { Button, Form, Input, Select } from "../../components";
 import { useAuth, useCloseDrawer, useCreate, useList } from "../../hooks";
@@ -11,10 +12,10 @@ import {
   UsersInitializerType,
   UsersType,
 } from "../../types";
-import { formatErrorsForHelperText, formatForOptions, getUserInfo } from "../../utils";
+import { formatErrorsForHelperText, formatForOptions, getUserInfo, RolesQuery } from "../../utils";
 
 export function AddNewUser() {
-  const { data: roles } = useList<RolesType>({ model: "roles", fields: ["id", "title", "isDefault", "companyId"] });
+  const { data: roles } = useQuery<RolesType[]>(RolesQuery);
   const closeDrawer = useCloseDrawer();
   const { mutate: create } = useCreate<UsersInitializerType>("users", {
     onSuccess: closeDrawer,
