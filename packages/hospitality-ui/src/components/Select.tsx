@@ -60,7 +60,7 @@ const classes = tv({
       xl: { labelClasses: "text-xl", base: "h-10" },
     },
 
-    isDisabled: { true: "border-secondary cursor-not-allowed text-gray-400" },
+    isDisabled: { true: "cursor-not-allowed text-gray-400" },
     hasNoBorder: { true: "border-0 outline-0 outline-none" },
   },
 });
@@ -81,9 +81,10 @@ export function Select<OT>({
 
   const { refs, floatingStyles, context } = useFloating<HTMLElement>({
     placement: "bottom-start",
-    open: isOpen,
-    onOpenChange: setIsOpen,
+    open: isDisabled ? false : isOpen,
+    onOpenChange: isDisabled ? () => {} : setIsOpen,
     whileElementsMounted: autoUpdate,
+
     middleware: [
       offset(5),
       flip({ padding: 10 }),
@@ -144,7 +145,7 @@ export function Select<OT>({
           </div>
         </div>
       </div>
-      {isOpen ? (
+      {isOpen && !isDisabled && options.length ? (
         <FloatingFocusManager context={context} modal={false}>
           <div ref={refs.setFloating} className={optionsContainer()} style={floatingStyles} {...getFloatingProps()}>
             {options.map((opt, i) => (
