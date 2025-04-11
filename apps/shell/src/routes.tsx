@@ -117,6 +117,10 @@ const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => 
   import("@hospitality/settings").then((d) => d.SettingsLayoutRoute)
 );
 
+const settingsUsers = createRoute({
+  getParentRoute: () => settingsRootRoute,
+  path: "user",
+}).lazy(() => import("@hospitality/settings").then((d) => d.SettingsUsersRoute));
 const settingsLocation = createRoute({
   getParentRoute: () => settingsRootRoute,
   path: "location",
@@ -141,7 +145,7 @@ const routeTree = rootRoute.addChildren([
   mainLayout.addChildren([
     employeeManagementRoute,
     inventoryCategoryRoute.addChildren([productInventoryRoute]),
-    settingsRootRoute.addChildren([settingsLocation, settingsProducts]),
+    settingsRootRoute.addChildren([settingsUsers, settingsLocation, settingsProducts]),
   ]),
   loginRoute,
   locationSelectRoute,
