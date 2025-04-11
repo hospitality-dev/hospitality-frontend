@@ -306,7 +306,7 @@ export function UserSettings() {
           name="roleId"
         />
       </div>
-      <div className="flex flex-col gap-y-2">
+      <div className="flex flex-col gap-y-4">
         {isLoadingContacts ? null : (
           <form.Field
             children={(field) => (
