@@ -249,9 +249,6 @@ export function UserSettings() {
   return (
     <Form handleSubmit={form.handleSubmit}>
       <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
-        <div className="md:col-span-3">
-          <Title hasBorder icon={Icons.user_details} label="Personal details" size="xl" />
-        </div>
         <form.Field
           children={(field) => (
             <div className="flex gap-x-2">
