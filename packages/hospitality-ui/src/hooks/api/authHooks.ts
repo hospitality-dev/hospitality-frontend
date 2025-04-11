@@ -55,7 +55,7 @@ export function useAuth() {
   const setLocation = useSetAtom(locationAtom);
   const reset = useResetAtom(userAtom);
   const res = useQuery<LoginResponseType>({
-    queryKey: ["users", userId],
+    queryKey: ["users", userId, "auth"],
     queryFn: () => authFetchFunction<LoginResponseType>({ method: "GET", userReset: reset, route: "session" }),
     staleTime: 5 * 60 * 1000,
   });
