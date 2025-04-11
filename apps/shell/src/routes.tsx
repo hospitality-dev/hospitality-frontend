@@ -8,6 +8,7 @@ import {
   LoginResponseType,
   ProductCategoriesQuery,
   productCategoryFields,
+  QueryClient,
 } from "@hospitality/hospitality-ui";
 import {
   LocationsAvailableProductsSettingsType,
@@ -16,9 +17,17 @@ import {
 import { createRootRouteWithContext, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { queryClient } from "./App";
 import { Layout } from "./components";
 import { LocationSelect, Login } from "./pages";
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 3 * 60 * 1000, // expressed in ms, equal to 3 mins
+    },
+  },
+});
 
 const rootRoute = createRootRouteWithContext<AuthContextType>()({
   beforeLoad: async (c) => {
