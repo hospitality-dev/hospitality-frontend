@@ -1,9 +1,9 @@
-import { Button, Card, Icons, LocationsType, useAuth, useList, useSessionLocation } from "@hospitality/hospitality-ui";
+import { Button, Card, Icons, useAuth, useSessionLocation, useUserLocations } from "@hospitality/hospitality-ui";
 
 export function LocationSelect() {
   const auth = useAuth();
   const { changeLocation } = useSessionLocation();
-  const { data } = useList<Pick<LocationsType, "id" | "title">>({ model: "locations", fields: ["id", "title"] });
+  const { data } = useUserLocations();
 
   return (
     <div className="flex h-screen w-screen items-center justify-center overflow-hidden bg-gray-200">

@@ -10,7 +10,6 @@ import { loginResponseSchema } from "../../schemas";
 import { LocationsType, LoginParamsType, LoginResponseType, ResponseType } from "../../types";
 import { authFetchFunction } from "../../utils";
 import { useList } from "./listHooks";
-import { useRead } from "./readHooks";
 
 export function useLogin() {
   const setUser = useSetAtom(userAtom);
@@ -61,26 +60,20 @@ export function useAuth() {
     staleTime: 5 * 60 * 1000,
   });
 
-  const locationRes = useRead<LocationsType>(
-    { id: res?.data?.user?.locationId || "", model: "locations", fields: ["id", "title", "companyId"] },
-    { enabled: !!res?.data?.user?.locationId }
-  );
+  const { data: locations } = useUserLocations();
 
   useLayoutEffect(() => {
     if (!user && !!res?.data?.user) {
       const validation = loginResponseSchema.safeParse(res.data);
       if (validation.success) {
         setUser(validation.data);
-        setLocation({
-          id: validation.data.user.locationId,
-          title: validation.data.user.locationTitle,
-          companyId: validation.data.user.companyId,
-        });
+        const location = locations?.find((loc) => loc.id === validation.data.user.locationId);
+        if (location) setLocation(location);
       } else {
         console.error(validation);
       }
     }
-  }, [user, res?.data, locationRes]);
+  }, [user, res?.data]);
 
   return { user: user?.user, reset };
 }
@@ -103,8 +96,8 @@ export function useSessionLocation() {
   return { changeLocation };
 }
 export function useUserLocations() {
-  return useList<Pick<LocationsType, "id" | "title">>(
-    { model: "locations", fields: ["id", "title"] },
+  return useList<Pick<LocationsType, "id" | "title" | "companyId">>(
+    { model: "locations", fields: ["id", "title", "companyId"] },
     { staleTime: 8 * 60 * 60 * 1000 }
   );
 }

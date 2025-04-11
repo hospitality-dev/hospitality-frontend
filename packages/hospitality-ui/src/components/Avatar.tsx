@@ -12,7 +12,7 @@ type Props = {
 };
 
 const classes = tv({
-  base: "bg-secondary flex aspect-square cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 font-medium text-white shadow select-none",
+  base: "bg-secondary flex aspect-square items-center justify-center overflow-hidden rounded-full border-2 font-medium text-white shadow select-none",
   variants: {
     variant: {
       primary: "border-transparent",
