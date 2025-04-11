@@ -1,4 +1,5 @@
 export * from "./auth";
+export * from "./entities";
 export * from "./format";
 export * from "./inputMasks";
 export * from "./inputValidators";
