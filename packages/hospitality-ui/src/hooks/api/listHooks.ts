@@ -14,7 +14,10 @@ export type useListProps<F> = {
 
 export function useList<F>(
   { model, fields, filters, placeholderData = [] }: useListProps<F>,
-  options?: Pick<UseQueryOptions<F>, "enabled" | "placeholderData"> & { urlSuffix?: string; searchParams?: string[][] }
+  options?: Pick<UseQueryOptions<F[]>, "enabled" | "placeholderData" | "staleTime"> & {
+    urlSuffix?: string;
+    searchParams?: string[][];
+  }
 ) {
   const reset = useResetAtom(userAtom);
   const searchParams = getSearchParams<useListProps<F>["fields"], RequestFilters<F>>(fields, filters);
@@ -37,5 +40,6 @@ export function useList<F>(
       }),
     placeholderData,
     enabled: !!(options?.enabled ?? true),
+    staleTime: options?.staleTime,
   });
 }
