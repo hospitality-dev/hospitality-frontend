@@ -99,7 +99,7 @@ export function Sidebar({ sections = [] }: Props) {
               )}
         </ul>
         <li className={settingsButton()}>
-          <SidebarLink icon={Icons.settings} title="Settings" to="/settings/location" />
+          <SidebarLink icon={Icons.settings} title="Settings" to="/settings/user" />
         </li>
       </ul>
     </div>
