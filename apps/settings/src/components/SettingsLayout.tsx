@@ -11,7 +11,7 @@ export function SettingsLayout() {
   return (
     <div className="flex h-full flex-col gap-y-2 overflow-hidden">
       <Tabs active={location.href.split("/").at(-1) || tabs[0]?.id} isNavControlled setActive={() => {}} tabs={tabs} />
-      <div className="h-full max-h-full overflow-y-auto">
+      <div className="h-full max-h-full overflow-y-auto py-4">
         <Outlet />
       </div>
     </div>

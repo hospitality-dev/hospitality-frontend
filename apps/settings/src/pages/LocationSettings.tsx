@@ -243,7 +243,7 @@ export function LocationSettings() {
 
   return (
     <Form handleSubmit={form.handleSubmit}>
-      <div className="flex h-full flex-col justify-between gap-y-2 py-4">
+      <div className="flex h-full flex-col justify-between gap-y-2">
         <div className="flex flex-col gap-y-4">
           <div className="flex items-end gap-x-2">
             <div>
