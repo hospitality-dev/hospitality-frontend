@@ -82,7 +82,7 @@ export const Icons = {
   txt: "bi:filetype-txt" as const,
   upload: "ph:upload" as const,
   user: "ph:user" as const,
-  user_details: "identification-card" as const,
+  user_details: "ph:identification-card" as const,
   warehouse_address: "material-symbols:warehouse-outline-rounded" as const,
   wav: "bi:filetype-wav" as const,
   webm: "bi:file-earmark-slides",
