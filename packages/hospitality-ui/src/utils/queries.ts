@@ -1,3 +1,4 @@
+import { RolesType } from "../types";
 import {
   LocationsAvailableProductsSettingsType,
   LocationsAvailableProductsType,
@@ -6,6 +7,7 @@ import {
 import { fetchFunction, getSearchParams } from "./request";
 export const locationsAvailableProductsFields: (keyof LocationsAvailableProductsType)[] = ["productId"];
 export const productCategoryFields: (keyof ProductsCategoriesType)[] = ["id", "title", "companyId", "parentId", "isDefault"];
+export const rolesFields: (keyof RolesType)[] = ["id", "title", "isDefault", "companyId"];
 
 export const LocationsAvailableProductsQuery = {
   queryKey: ["locations_available_products"],
@@ -33,4 +35,17 @@ export const ProductCategoriesQuery = {
       urlSuffix: "list",
     }),
   staleTime: 5 * 60 * 1000,
+};
+
+export const RolesQuery = {
+  queryKey: ["roles", "list"],
+  queryFn: () =>
+    fetchFunction<RolesType[]>({
+      method: "GET",
+      userReset: () => {},
+      searchParams: getSearchParams<typeof rolesFields, RolesType>(rolesFields),
+      model: "roles",
+      urlSuffix: "list",
+    }),
+  staleTime: Infinity,
 };

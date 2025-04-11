@@ -9,6 +9,8 @@ import {
   ProductCategoriesQuery,
   productCategoryFields,
   QueryClient,
+  RolesQuery,
+  RolesType,
 } from "@hospitality/hospitality-ui";
 import {
   LocationsAvailableProductsSettingsType,
@@ -120,6 +122,11 @@ const settingsRootRoute = createRoute({ path: "settings", getParentRoute: () => 
 const settingsUsers = createRoute({
   getParentRoute: () => settingsRootRoute,
   path: "user",
+  loader: async () => {
+    return {
+      roles: await queryClient.ensureQueryData<RolesType[]>(RolesQuery),
+    };
+  },
 }).lazy(() => import("@hospitality/settings").then((d) => d.SettingsUsersRoute));
 const settingsLocation = createRoute({
   getParentRoute: () => settingsRootRoute,
