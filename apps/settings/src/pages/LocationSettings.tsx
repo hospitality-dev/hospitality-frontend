@@ -259,6 +259,7 @@ export function LocationSettings() {
                   })
                 }
                 size={isSmallScreen ? "xl" : "md"}
+                type="location_logo"
               />
             </div>
             <form.Field
