@@ -79,7 +79,7 @@ function ContactDisplay({
           children={(subfield) => (
             <Input
               helperText="Customize the title of the address."
-              label="Address display title"
+              label={getSentenceCase(`${type} display title`)}
               name={subfield.name}
               onChange={(e) => subfield.handleChange(e.target.value)}
               value={subfield.state.value || ""}
