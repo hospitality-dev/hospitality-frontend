@@ -19,7 +19,7 @@ export function useRead<F>(
   const searchParams = getSearchParams<useReadProps<F>["fields"], F>(fields);
 
   return useQuery<F>({
-    queryKey: [model, id],
+    queryKey: [model, "list", fields, options?.urlSuffix || ""].filter(Boolean),
     queryFn: () =>
       fetchFunction<F>({ method: "GET", model, id, searchParams, userReset: reset, urlSuffix: options?.urlSuffix || "" }),
     enabled: !!(options?.enabled ?? true),
