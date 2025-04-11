@@ -36,7 +36,7 @@ const classes = tv({
   slots: {
     container: "flex h-fit w-full min-w-fit flex-col",
     labelClasses: "font-small font-light text-gray-900",
-    selectBox: "relative flex w-full items-center bg-white",
+    selectBox: "relative flex w-full items-center rounded-md bg-white",
     base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center gap-x-1 rounded-md border px-1 shadow-sm outline-0",
     icon: "text-primary ml-auto pt-0.5",
     optionsContainer:
@@ -53,21 +53,21 @@ const classes = tv({
       error: "border-error",
     },
     size: {
-      xs: { labelClasses: "text-xs", base: "h-6" },
-      sm: { labelClasses: "text-sm", base: "h-7" },
-      md: { base: "h-8 min-h-8 text-lg" },
+      xs: { labelClasses: "text-[10px]", base: "h-6" },
+      sm: { labelClasses: "text-xs", base: "h-7" },
+      md: { labelClasses: "text-sm", base: "h-8 min-h-8" },
       lg: { labelClasses: "text-lg", base: "h-9" },
       xl: { labelClasses: "text-xl", base: "h-10" },
     },
 
-    isDisabled: { true: "cursor-not-allowed text-gray-400" },
+    isDisabled: { true: "border-secondary cursor-not-allowed text-gray-400" },
     hasNoBorder: { true: "border-0 outline-0 outline-none" },
   },
 });
 
 export function Select<OT>({
   label,
-  variant = "info",
+  variant = "primary",
   size = "md",
   // isMultiple = false,
   isDisabled = false,
