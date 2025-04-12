@@ -1,4 +1,6 @@
+import { ValidationError } from "@tanstack/react-form";
 import { useState } from "react";
+import { ZodIssue } from "zod";
 
 import { useSearch } from "../hooks/api/searchHooks";
 import { useDebounce } from "../hooks/ui/useDebounce";
@@ -13,9 +15,19 @@ type Props = {
   value: string | null;
   helperText?: string;
   variant?: Variant;
+  errors?: ValidationError[] | ZodIssue[];
 };
 
-export function AddressSearch({ label = "Address", onChange, isDisabled, value, isAutofocused, helperText, variant }: Props) {
+export function AddressSearch({
+  label = "Address",
+  onChange,
+  isDisabled,
+  value,
+  isAutofocused,
+  helperText,
+  variant,
+  errors,
+}: Props) {
   const [searchQuery, setQuery] = useState("");
   const debouncedValue = useDebounce<typeof searchQuery>(searchQuery);
   const { data = [], isFetched } = useSearch<AddressesType>(
@@ -26,6 +38,7 @@ export function AddressSearch({ label = "Address", onChange, isDisabled, value, 
   return (
     <Autocomplete
       displayTitle={value}
+      errors={errors}
       helperText={helperText}
       isAutofocused={isAutofocused}
       isDisabled={isDisabled}

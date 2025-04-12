@@ -1,11 +1,13 @@
 import { MaskitoOptions } from "@maskito/core";
 import { useMaskito } from "@maskito/react";
+import { ValidationError } from "@tanstack/react-form";
 import { ChangeEvent, FocusEventHandler, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 import { tv } from "tailwind-variants";
+import { ZodIssue } from "zod";
 
 import { countriesPhoneCodes } from "../enums";
 import { AllowedInputTypes, availableIcons, OptionType, Size, Variant } from "../types/baseTypes";
-import { defaultMask, numbersOnlyMask, phoneMask, websiteMask } from "../utils";
+import { defaultMask, formatErrorsForHelperText, numbersOnlyMask, phoneMask, websiteMask } from "../utils";
 import { Button } from "./Button";
 import { Select } from "./Select";
 
@@ -30,6 +32,7 @@ type Props<OT> = {
     icon: availableIcons;
     tooltip?: string;
   };
+  errors?: ValidationError[] | ZodIssue[];
 };
 
 const masks: Record<AllowedInputTypes, MaskitoOptions> = {
@@ -48,7 +51,7 @@ const classes = tv({
       "flex w-full cursor-pointer flex-nowrap items-center justify-between overflow-hidden rounded-md border bg-white px-2 text-gray-900 shadow-sm outline-0",
     inputClasses: "flex-1 pr-2 focus-within:outline-0 focus:outline-0",
     labelClasses: "font-small text-gray-900",
-    helperTextClasses: "text-sm",
+    helperTextClasses: "h-3.5 text-sm",
     selectClasses: "",
   },
   variants: {
@@ -120,10 +123,11 @@ export function Input({
   onBlur,
   type = "text",
   action,
+  errors,
 }: Props<(typeof countriesPhoneCodes)[number]["additionalData"]>) {
   const inputRef = useMaskito({ options: masks[type] });
   const { inputClasses, inputContainer, container, labelClasses, helperTextClasses, selectClasses } = classes({
-    variant,
+    variant: errors?.length ? "error" : variant,
     size,
     isDisabled,
     type,
@@ -166,7 +170,7 @@ export function Input({
           </span>
         ) : null}
       </div>
-      {helperText ? <p className={helperTextClasses()}>{helperText}</p> : null}
+      <p className={helperTextClasses()}>{errors ? formatErrorsForHelperText(errors || []) : helperText}</p>
     </div>
   );
 }

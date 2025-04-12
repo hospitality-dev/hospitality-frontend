@@ -12,11 +12,14 @@ import {
   useRole,
 } from "@floating-ui/react";
 import { Icon } from "@iconify/react";
+import { ValidationError } from "@tanstack/react-form";
 import { useRef, useState } from "react";
 import { tv } from "tailwind-variants";
+import { ZodIssue } from "zod";
 
 import { Icons } from "../enums";
 import { availableIcons, OptionType, Size, Variant } from "../types/baseTypes";
+import { formatErrorsForHelperText } from "../utils";
 import { OptionItem } from "./OptionItem";
 
 type Props<OT> = {
@@ -30,6 +33,7 @@ type Props<OT> = {
   icon?: availableIcons;
   options: OptionType<OT>[];
   onChange: (item: OptionType<OT> | null) => void;
+  errors?: ValidationError[] | ZodIssue[];
 };
 
 const classes = tv({
@@ -41,6 +45,7 @@ const classes = tv({
     icon: "text-primary ml-auto pt-0.5",
     optionsContainer:
       "z-[61] divide-y divide-gray-300 overflow-y-auto rounded-md border border-gray-400 bg-white shadow-lg outline-0",
+    helperTextClasses: "h-3.5 text-sm",
   },
 
   variants: {
@@ -74,6 +79,7 @@ export function Select<OT>({
   hasNoBorder,
   onChange,
   options = [],
+  errors,
   value,
 }: Props<OT>) {
   const [isOpen, setIsOpen] = useState(false);
@@ -117,8 +123,8 @@ export function Select<OT>({
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([dismiss, role, listNav, click]);
 
   const selectedItem = options.find((opt) => opt?.value === value);
-  const { base, container, labelClasses, icon, selectBox, optionsContainer } = classes({
-    variant,
+  const { base, container, labelClasses, icon, selectBox, optionsContainer, helperTextClasses } = classes({
+    variant: errors?.length ? "error" : variant,
     size,
     isDisabled: isDisabled || !options.length,
     hasNoBorder,
@@ -145,6 +151,8 @@ export function Select<OT>({
           </div>
         </div>
       </div>
+      <p className={helperTextClasses()}>{formatErrorsForHelperText(errors || [])}</p>
+
       {isOpen && !isDisabled && options.length ? (
         <FloatingFocusManager context={context} modal={false}>
           <div ref={refs.setFloating} className={optionsContainer()} style={floatingStyles} {...getFloatingProps()}>

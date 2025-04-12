@@ -5,7 +5,7 @@ import { drawerAtom } from "../../atoms";
 import { Button, Form, Input } from "../../components";
 import { useCreate } from "../../hooks";
 import { ProductsCategoriesInitalizerSchema, ProductsCategoriesInitalizerType } from "../../types/productTypes";
-import { formatErrorsForHelperText, getSentenceCase } from "../../utils";
+import { getSentenceCase } from "../../utils";
 
 export function ProductsCategoriesDrawer() {
   const resetDrawer = useResetAtom(drawerAtom);
@@ -31,7 +31,7 @@ export function ProductsCategoriesDrawer() {
           <form.Field
             children={(field) => (
               <Input
-                helperText={formatErrorsForHelperText(field.state.meta.errors)}
+                errors={field.state.meta.errors}
                 isAutofocused
                 label={getSentenceCase(field.name)}
                 name={field.name}

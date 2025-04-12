@@ -128,7 +128,7 @@ function ContactDisplay({
                     <form.Field
                       children={(subfield) => (
                         <Input
-                          helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+                          errors={subfield.state.meta.errors}
                           isDisabled={isDisabled}
                           label={getSentenceCase(contact.contactType)}
                           name={subfield.name}
@@ -152,7 +152,7 @@ function ContactDisplay({
                 <form.Field
                   children={(subfield) => (
                     <Input
-                      helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+                      errors={subfield.state.meta.errors}
                       isDisabled={isDisabled}
                       label={getSentenceCase(contact.contactType)}
                       name={subfield.name}
@@ -174,7 +174,7 @@ function ContactDisplay({
               <form.Field
                 children={(subfield) => (
                   <Input
-                    helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+                    errors={subfield.state.meta.errors}
                     isDisabled={isDisabled}
                     label={getSentenceCase(contact.contactType)}
                     name={subfield.name}
@@ -272,6 +272,7 @@ export function UserSettings() {
                     />
                   </div>
                   <Input
+                    errors={field.state.meta.errors}
                     isDisabled={isLoading}
                     label="First name"
                     name={field.name}
@@ -285,6 +286,7 @@ export function UserSettings() {
             <form.Field
               children={(field) => (
                 <Input
+                  errors={field.state.meta.errors}
                   isDisabled={isLoading}
                   label="Last name"
                   name={field.name}
@@ -297,6 +299,7 @@ export function UserSettings() {
             <form.Field
               children={(field) => (
                 <Select
+                  errors={field.state.meta.errors}
                   isDisabled
                   label="Role"
                   onChange={(e) => field.handleChange(e?.value)}
@@ -534,7 +537,11 @@ export function UserSettings() {
           </div>
         </div>
         <div className="md:col-span-2">
-          <Button icon={Icons.save} label="Save" onClick={undefined} size="lg" variant="success" />
+          <form.Subscribe<[boolean]>
+            children={(sub) => (
+              <Button icon={Icons.save} isDisabled={sub[0]} label="Save" onClick={undefined} size="lg" variant="success" />
+            )}
+            selector={(state) => [state.isPristine && state.isFormValid]}></form.Subscribe>
         </div>
       </div>
     </Form>

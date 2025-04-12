@@ -11,7 +11,6 @@ import {
   emailValidation,
   Form,
   formatDisplayItem,
-  formatErrorsForHelperText,
   getBaseContact,
   getSentenceCase,
   groupByContacts,
@@ -89,10 +88,8 @@ function ContactDisplay({
             if (type === "address")
               return (
                 <AddressSearch
-                  helperText={
-                    formatErrorsForHelperText(subfield.state.meta.errors) ||
-                    "Enter the full address e.g. Jurija Gagarina 25 / Ugrinovacka 17 Zemun"
-                  }
+                  errors={subfield.state.meta.errors}
+                  helperText="Enter the full address e.g. Jurija Gagarina 25 / Ugrinovacka 17 Zemun"
                   isAutofocused
                   isDisabled={isDisabled}
                   label="Address"
@@ -125,7 +122,7 @@ function ContactDisplay({
                     <form.Field
                       children={(subfield) => (
                         <Input
-                          helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+                          errors={subfield.state.meta.errors}
                           isDisabled={isDisabled}
                           label={getSentenceCase(contact.contactType)}
                           name={subfield.name}
@@ -149,7 +146,7 @@ function ContactDisplay({
                 <form.Field
                   children={(subfield) => (
                     <Input
-                      helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+                      errors={subfield.state.meta.errors}
                       isDisabled={isDisabled}
                       label={getSentenceCase(contact.contactType)}
                       name={subfield.name}
@@ -171,7 +168,7 @@ function ContactDisplay({
               <form.Field
                 children={(subfield) => (
                   <Input
-                    helperText={formatErrorsForHelperText(subfield.state.meta.errors)}
+                    errors={subfield.state.meta.errors}
                     isDisabled={isDisabled}
                     label={getSentenceCase(contact.contactType)}
                     name={subfield.name}

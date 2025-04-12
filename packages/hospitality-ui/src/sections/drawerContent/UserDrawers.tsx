@@ -12,7 +12,7 @@ import {
   UsersInitializerType,
   UsersType,
 } from "../../types";
-import { formatErrorsForHelperText, formatForOptions, getUserInfo, RolesQuery } from "../../utils";
+import { formatForOptions, getUserInfo, RolesQuery } from "../../utils";
 
 export function AddNewUser() {
   const { data: roles } = useQuery<RolesType[]>(RolesQuery);
@@ -35,7 +35,7 @@ export function AddNewUser() {
         <form.Field
           children={(field) => (
             <Input
-              helperText={formatErrorsForHelperText(field.state.meta.errors)}
+              errors={field.state.meta.errors}
               label="First name"
               name={field.name}
               onChange={(e) => field.handleChange(e.target.value)}
@@ -47,7 +47,7 @@ export function AddNewUser() {
         <form.Field
           children={(field) => (
             <Input
-              helperText={formatErrorsForHelperText(field.state.meta.errors)}
+              errors={field.state.meta.errors}
               label="Last name"
               name={field.name}
               onChange={(e) => field.handleChange(e.target.value)}
@@ -60,7 +60,8 @@ export function AddNewUser() {
           <form.Field
             children={(field) => (
               <Input
-                helperText={formatErrorsForHelperText(field.state.meta.errors) || "Must be at least 6 characters long"}
+                errors={field.state.meta.errors}
+                helperText={"Must be at least 6 characters long"}
                 label="Username"
                 name={field.name}
                 onChange={(e) => field.handleChange(e.target.value)}
@@ -75,7 +76,8 @@ export function AddNewUser() {
           <form.Field
             children={(field) => (
               <Input
-                helperText={formatErrorsForHelperText(field.state.meta.errors) || "Must be at least 8 characters long."}
+                errors={field.state.meta.errors}
+                helperText={"Must be at least 8 characters long."}
                 label="Password"
                 name={field.name}
                 onChange={(e) => field.handleChange(e.target.value)}
@@ -90,7 +92,8 @@ export function AddNewUser() {
           <form.Field
             children={(field) => (
               <Input
-                helperText={formatErrorsForHelperText(field.state.meta.errors) || "Must be at least 8 characters long."}
+                errors={field.state.meta.errors}
+                helperText={"Must be at least 8 characters long."}
                 label="Password confirm"
                 name={field.name}
                 onChange={(e) => field.handleChange(e.target.value)}
@@ -105,7 +108,7 @@ export function AddNewUser() {
           <form.Field
             children={(field) => (
               <Select
-                // helperText={formatErrorsForHelperText(field.state.meta.errors) || "Must be at least 6 characters long"}
+                errors={field.state.meta.errors}
                 label="Role"
                 onChange={(e) => {
                   if (e) field.handleChange(e.value);
@@ -179,7 +182,7 @@ export function AddUserFromLocation() {
           <form.Field
             children={(field) => (
               <Select
-                // helperText={formatErrorsForHelperText(field.state.meta.errors) || "Must be at least 6 characters long"}
+                errors={field.state.meta.errors}
                 label="User"
                 onChange={(e) => {
                   if (e) field.handleChange(e.value);
@@ -195,7 +198,7 @@ export function AddUserFromLocation() {
           <form.Field
             children={(field) => (
               <Select
-                // helperText={formatErrorsForHelperText(field.state.meta.errors) || "Must be at least 6 characters long"}
+                errors={field.state.meta.errors}
                 label="Role"
                 onChange={(e) => {
                   if (e) field.handleChange(e.value);

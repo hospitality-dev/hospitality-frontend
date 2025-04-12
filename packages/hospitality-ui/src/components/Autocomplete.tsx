@@ -11,7 +11,9 @@ import {
   useListNavigation,
   useRole,
 } from "@floating-ui/react";
+import { ValidationError } from "@tanstack/react-form";
 import { useEffect, useRef, useState } from "react";
+import { ZodIssue } from "zod";
 
 import { OptionType, Size, Variant } from "../types";
 import { formatDisplayItem } from "../utils";
@@ -33,6 +35,7 @@ type Props<OT> = {
   isLoading?: boolean;
   isDisabled?: boolean;
   isAutofocused?: boolean;
+  errors?: ValidationError[] | ZodIssue[];
 };
 
 export function Autocomplete<OT>({
@@ -49,6 +52,7 @@ export function Autocomplete<OT>({
   isAutofocused,
   helperText,
   displayTitle,
+  errors,
 }: Props<OT>) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -107,6 +111,7 @@ export function Autocomplete<OT>({
         })}
         className="h-fit w-full">
         <Input
+          errors={errors}
           helperText={helperText}
           isAutofocused={isAutofocused}
           isDisabled={isDisabled}

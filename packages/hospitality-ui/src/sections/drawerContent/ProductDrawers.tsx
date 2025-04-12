@@ -21,7 +21,7 @@ import {
   ProductsInitalizerType,
   ProductsType,
 } from "../../types/productTypes";
-import { formatErrorsForHelperText, formatForOptions, getSentenceCase } from "../../utils";
+import { formatForOptions, getSentenceCase } from "../../utils";
 
 // * For creating a product definition
 export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "create_products" }>, "data">) {
@@ -61,7 +61,7 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
           <form.Field
             children={(field) => (
               <Input
-                helperText={formatErrorsForHelperText(field.state.meta.errors)}
+                errors={field.state.meta.errors}
                 isAutofocused
                 label={getSentenceCase(field.name)}
                 name={field.name}
@@ -108,7 +108,7 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
                         }
                       : undefined
                   }
-                  helperText={formatErrorsForHelperText(field.state.meta.errors)}
+                  errors={field.state.meta.errors}
                   label={getSentenceCase(field.name)}
                   name={field.name}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -203,7 +203,7 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
               <div>
                 {data.id || data.barcode ? (
                   <Input
-                    helperText={formatErrorsForHelperText(field.state.meta.errors)}
+                    errors={field.state.meta.errors}
                     isDisabled
                     label="Product"
                     name={field.name}
@@ -232,7 +232,7 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
           <form.Field
             children={(field) => (
               <Input
-                helperText={formatErrorsForHelperText(field.state.meta.errors)}
+                errors={field.state.meta.errors}
                 isDisabled={isLoading || isLoadingProduct}
                 label="Amount"
                 name={field.name}
