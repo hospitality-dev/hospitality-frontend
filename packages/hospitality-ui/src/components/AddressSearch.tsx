@@ -1,5 +1,5 @@
 import { ValidationError } from "@tanstack/react-form";
-import { useState } from "react";
+import { FocusEventHandler, useState } from "react";
 import { ZodIssue } from "zod";
 
 import { useSearch } from "../hooks/api/searchHooks";
@@ -15,6 +15,7 @@ type Props = {
   value: string | null;
   helperText?: string;
   variant?: Variant;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
   errors?: ValidationError[] | ZodIssue[];
 };
 
@@ -27,6 +28,7 @@ export function AddressSearch({
   helperText,
   variant,
   errors,
+  onBlur,
 }: Props) {
   const [searchQuery, setQuery] = useState("");
   const debouncedValue = useDebounce<typeof searchQuery>(searchQuery);
@@ -44,6 +46,7 @@ export function AddressSearch({
       isDisabled={isDisabled}
       isSearch
       label={label}
+      onBlur={onBlur}
       onChange={onChange}
       onQueryChange={(value) => setQuery(value)}
       options={

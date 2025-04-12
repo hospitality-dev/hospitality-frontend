@@ -7,13 +7,14 @@ import {
   useClick,
   useDismiss,
   useFloating,
+  useFocus,
   useInteractions,
   useListNavigation,
   useRole,
 } from "@floating-ui/react";
 import { Icon } from "@iconify/react";
 import { ValidationError } from "@tanstack/react-form";
-import { useRef, useState } from "react";
+import { FocusEventHandler, useRef, useState } from "react";
 import { tv } from "tailwind-variants";
 import { ZodIssue } from "zod";
 
@@ -34,6 +35,7 @@ type Props<OT> = {
   icon?: availableIcons;
   options: OptionType<OT>[];
   onChange: (item: OptionType<OT> | null) => void;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
   errors?: ValidationError[] | ZodIssue[];
 };
 
@@ -87,6 +89,7 @@ export function Select<OT>({
   options = [],
   errors,
   value,
+  onBlur,
   hasNoHelperText,
 }: Props<OT>) {
   const [isOpen, setIsOpen] = useState(false);
@@ -97,7 +100,6 @@ export function Select<OT>({
     open: isDisabled ? false : isOpen,
     onOpenChange: isDisabled ? () => {} : setIsOpen,
     whileElementsMounted: autoUpdate,
-
     middleware: [
       offset(5),
       flip({ padding: 10 }),
@@ -118,6 +120,7 @@ export function Select<OT>({
   const click = useClick(context, { event: "mousedown" });
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: "listbox" });
+  const focus = useFocus(context);
   const listNav = useListNavigation(context, {
     listRef,
     activeIndex,
@@ -127,7 +130,7 @@ export function Select<OT>({
     loop: true,
   });
 
-  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([dismiss, role, listNav, click]);
+  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([focus, dismiss, role, listNav, click]);
 
   const selectedItem = options.find((opt) => opt?.value === value);
   const { base, container, labelClasses, icon, selectBox, optionsContainer, helperTextClasses } = classes({
@@ -138,7 +141,7 @@ export function Select<OT>({
     hasNoHelperText,
   });
   return (
-    <div className={container()}>
+    <div className={container()} onBlur={onBlur}>
       <p className={labelClasses()}>{label ? <label>{label}</label> : null}</p>
       <div className={selectBox()}>
         <div

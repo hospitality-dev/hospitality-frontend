@@ -7,12 +7,13 @@ import {
   size as floatingSize,
   useDismiss,
   useFloating,
+  useFocus,
   useInteractions,
   useListNavigation,
   useRole,
 } from "@floating-ui/react";
 import { ValidationError } from "@tanstack/react-form";
-import { useEffect, useRef, useState } from "react";
+import { FocusEventHandler, useEffect, useRef, useState } from "react";
 import { ZodIssue } from "zod";
 
 import { OptionType, Size, Variant } from "../types";
@@ -30,6 +31,7 @@ type Props<OT> = {
   helperText?: string;
   onQueryChange: (value: string) => void;
   onChange: (item: OptionType<OT> | null) => void;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
   options: OptionType<OT>[];
   isSearch?: boolean;
   isLoading?: boolean;
@@ -52,6 +54,7 @@ export function Autocomplete<OT>({
   isAutofocused,
   helperText,
   displayTitle,
+  onBlur,
   errors,
 }: Props<OT>) {
   const [open, setOpen] = useState(false);
@@ -90,8 +93,9 @@ export function Autocomplete<OT>({
     virtual: true,
     loop: true,
   });
+  const focus = useFocus(context);
 
-  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([role, dismiss, listNav]);
+  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([focus, role, dismiss, listNav]);
   const items = isSearch ? options : options.filter((item) => item.label.toLowerCase().includes(query.toLowerCase()));
   const displayItem = items.find((el) => el?.value === value);
 
@@ -117,6 +121,7 @@ export function Autocomplete<OT>({
           isDisabled={isDisabled}
           label={label}
           name="search"
+          onBlur={onBlur}
           onChange={(e) => onQueryChange(e.target.value)}
           onKeyDown={(e) => {
             if ((e.key === "Backspace" || e.key === "Delete") && value) {
