@@ -5,7 +5,7 @@ import { tv } from "tailwind-variants";
 import { sidebarStateAtom } from "../atoms";
 import { Icons } from "../enums";
 import { useAuth, useRead, useScreenSize } from "../hooks";
-import { availableIcons, LocationsType } from "../types";
+import { AvailableIcons, LocationsType } from "../types";
 import { Avatar } from "./Avatar";
 import { Icon } from "./Icon";
 import { Link } from "./Link";
@@ -13,7 +13,7 @@ import { Link } from "./Link";
 type SidebarSectionType = {
   title: string;
   links: {
-    icon: availableIcons;
+    icon: AvailableIcons;
     title: string;
     to: AnyRoute["to"];
   }[];

@@ -32,7 +32,7 @@ function ActionButton({ data }: { data: Entity }) {
             onClick: () =>
               openManageInventoryDrawer("Add products", { type: "add_products", id: data.id, categoryId: data.categoryId }),
             title: "Add amount",
-            icon: Icons["add-item"],
+            icon: Icons.addItem,
           },
           {
             id: "remove_amount",
@@ -44,7 +44,7 @@ function ActionButton({ data }: { data: Entity }) {
                 maxAmount: data.count,
               }),
             title: "Remove amount",
-            icon: Icons["remove-item"],
+            icon: Icons.removeItem,
           },
         ]}
         onClick={undefined}
@@ -101,7 +101,7 @@ export function ProductInventory() {
             {
               id: "1",
               title: "Add amount",
-              icon: Icons["add-item"],
+              icon: Icons.addItem,
               onClick: () => openDrawer("Add products", { type: "add_products", categoryId: active }),
             },
             {
@@ -118,7 +118,7 @@ export function ProductInventory() {
                 );
               },
             },
-            { id: "remove_by_barcode", title: "Remove (Barcode)", icon: Icons["barcode-remove"] },
+            { id: "remove_by_barcode", title: "Remove (Barcode)", icon: Icons.bardcodeRemove },
           ]}
           label="Manage"
           onClick={undefined}

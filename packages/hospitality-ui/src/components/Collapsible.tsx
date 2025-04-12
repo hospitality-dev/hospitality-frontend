@@ -1,12 +1,12 @@
 import { ReactNode, useLayoutEffect, useState } from "react";
 
 import { Icons } from "../enums";
-import { ActionType, availableIcons, Size, Variant } from "../types";
+import { ActionType, AvailableIcons, Size, Variant } from "../types";
 import { Title } from "./Title";
 
 type Props = {
   label: string;
-  icon?: availableIcons;
+  icon?: AvailableIcons;
   children: ReactNode;
   isOpen?: boolean;
   variant?: Variant;
@@ -37,7 +37,7 @@ export function Collapsible({ icon, label, children, isOpen, items, variant = "p
             ...(isExpanded ? items || [] : []),
             {
               id: "collapse",
-              icon: Icons[isExpanded ? "arrow-up" : "arrow-down"],
+              icon: Icons[isExpanded ? "arrowUp" : "arrowDown"],
               onClick: (e) => {
                 e.preventDefault();
                 e.stopPropagation();

@@ -23,7 +23,7 @@ export function LocationSelect() {
                 return (
                   <li key={location.id} className="flex w-full">
                     <Button
-                      icon={Icons["arrow-right"]}
+                      icon={Icons.arrowRight}
                       isOutline
                       label={location.title}
                       onClick={() => changeLocation(location.id)}

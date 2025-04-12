@@ -33,7 +33,7 @@ function ActionsButton({ row }: { row: Row<EntityType> }) {
             {
               id: "remove_user_from_location",
               title: "Remove from location",
-              icon: Icons["remove-user"],
+              icon: Icons.removeUser,
               isHidden: !auth.user?.permissions?.locations_users?.delete || row.original.role.title === "owner",
               onClick: () => mutate(row.original.id),
             },
@@ -93,13 +93,13 @@ export function EmployeeManagement() {
             {
               id: "1",
               title: "Add new user",
-              icon: Icons["add-user"],
+              icon: Icons.addUser,
               onClick: () => openAddNewUserDrawer("Add new user to location"),
             },
             {
               id: "2",
               title: "Add from other location",
-              icon: Icons["location-user"],
+              icon: Icons.locationUser,
               onClick: () => openAddUserFromLocation("Add user from other location"),
             },
           ]}

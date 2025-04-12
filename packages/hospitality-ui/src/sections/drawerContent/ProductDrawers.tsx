@@ -264,7 +264,7 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
             children={(p) => {
               return (
                 <Button
-                  icon={data.type === "add_products" ? Icons["add-item"] : Icons["remove-item"]}
+                  icon={data.type === "add_products" ? Icons.addItem : Icons.removeItem}
                   isDisabled={!p[0] || isLoading || isLoadingProduct}
                   label={data.type === "add_products" ? "Add" : "Remove"}
                   onClick={undefined}

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
-import { availableIcons, Size, Variant } from "../types";
+import { AvailableIcons, Size, Variant } from "../types";
 import { Button } from "./Button";
 import { Title } from "./Title";
 
@@ -21,7 +21,7 @@ type Props<T> = {
   action?: {
     onClick: () => void;
     label: string;
-    icon?: availableIcons;
+    icon?: AvailableIcons;
     variant?: Variant;
     size?: Size;
   };
@@ -131,7 +131,7 @@ export function Table<T>({
               <div>
                 <Button
                   hasNoBorder
-                  icon={isOpen ? Icons["arrow-up"] : Icons["arrow-down"]}
+                  icon={isOpen ? Icons.arrowUp : Icons.arrowDown}
                   isOutline
                   label=""
                   onClick={() => {

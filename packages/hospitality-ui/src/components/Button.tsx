@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { MouseEventHandler } from "react";
 import { tv } from "tailwind-variants";
 
-import { availableIcons, DropdownItemType, Size, Variant } from "../types/baseTypes";
+import { AvailableIcons, DropdownItemType, Size, Variant } from "../types/baseTypes";
 import { Dropdown } from "./Dropdown";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
   size?: Size;
   isOutline?: boolean;
   isDisabled?: boolean;
-  icon?: availableIcons;
+  icon?: AvailableIcons;
   hasNoBorder?: boolean;
   className?: string;
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;

@@ -36,7 +36,7 @@ export function Navbar() {
                   {
                     id: "change_location",
                     title: "Change location",
-                    icon: Icons["location-change"],
+                    icon: Icons.locationChange,
                     isHidden: (locations?.length || 0) < 2,
                     onClick: () => navigate({ to: "/location-select" }),
                   },

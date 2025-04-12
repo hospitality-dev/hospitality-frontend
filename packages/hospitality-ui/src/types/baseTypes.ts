@@ -20,7 +20,7 @@ export type Variant = "primary" | "secondary" | "info" | "success" | "warning" |
 
 export type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
-export type availableIcons = valueof<typeof Icons>;
+export type AvailableIcons = valueof<typeof Icons>;
 export type IconThickness = "thin" | "light" | "regular" | "bold" | "fill";
 
 export type PositionType = (
@@ -52,7 +52,7 @@ export type DropdownItemType = {
   allowedPlacements?: PositionType;
   title?: string;
   child?: ReactNode;
-  icon?: availableIcons;
+  icon?: AvailableIcons;
   image?: string;
   iconColor?: string;
   iconThickness?: IconThickness;
@@ -71,7 +71,7 @@ export type ActionType = {
   variant?: Variant;
   size?: Size;
   isDisabled?: boolean;
-  icon?: availableIcons;
+  icon?: AvailableIcons;
   className?: string;
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
   items?: DropdownItemType[];
@@ -79,7 +79,7 @@ export type ActionType = {
 };
 
 export interface IconType {
-  icon: availableIcons;
+  icon: AvailableIcons;
   fontSize?: number;
   color?: string;
   hFlip?: boolean;

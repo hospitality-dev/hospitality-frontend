@@ -335,7 +335,7 @@ export function UserSettings() {
                     <Title hasBorder label="Contacts" size="xl" variant="primary" />
                     <Card hasNoShadow isFullWidth variant="secondary">
                       <Collapsible
-                        icon={Icons.office_address}
+                        icon={Icons.officeAddress}
                         isOpen={!!groupedContactsByType?.address?.length}
                         items={[
                           {

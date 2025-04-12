@@ -6,7 +6,7 @@ import { tv } from "tailwind-variants";
 import { ZodIssue } from "zod";
 
 import { countriesPhoneCodes } from "../enums";
-import { AllowedInputTypes, availableIcons, OptionType, Size, Variant } from "../types/baseTypes";
+import { AllowedInputTypes, AvailableIcons, OptionType, Size, Variant } from "../types/baseTypes";
 import { defaultMask, formatErrorsForHelperText, numbersOnlyMask, phoneMask, websiteMask } from "../utils";
 import { Button } from "./Button";
 import { Select } from "./Select";
@@ -30,7 +30,7 @@ type Props<OT> = {
   inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
   action?: {
     onClick: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void;
-    icon: availableIcons;
+    icon: AvailableIcons;
     tooltip?: string;
   };
   errors?: ValidationError[] | ZodIssue[];

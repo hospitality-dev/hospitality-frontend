@@ -19,7 +19,7 @@ import { tv } from "tailwind-variants";
 import { ZodIssue } from "zod";
 
 import { Icons } from "../enums";
-import { availableIcons, OptionType, Size, Variant } from "../types/baseTypes";
+import { AvailableIcons, OptionType, Size, Variant } from "../types/baseTypes";
 import { formatErrorsForHelperText } from "../utils";
 import { OptionItem } from "./OptionItem";
 
@@ -32,7 +32,7 @@ type Props<OT> = {
   hasNoHelperText?: boolean;
   variant?: Variant;
   size?: Size;
-  icon?: availableIcons;
+  icon?: AvailableIcons;
   options: OptionType<OT>[];
   onChange: (item: OptionType<OT> | null) => void;
   onBlur?: FocusEventHandler<HTMLInputElement>;
@@ -158,7 +158,7 @@ export function Select<OT>({
           ) : null}
           {!options?.length ? "No options" : selectedItem?.label || "Select one"}
           <div className={icon()}>
-            <Icon icon={Icons["arrow-down"]} />
+            <Icon icon={Icons.arrowDown} />
           </div>
         </div>
       </div>

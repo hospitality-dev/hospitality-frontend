@@ -3,6 +3,7 @@ import {
   AvailableContactTypes,
   Avatar,
   Button,
+  camelCaseContactType,
   Card,
   Collapsible,
   ContactGroupType,
@@ -54,7 +55,7 @@ function ContactDisplay({
         children={(subfield) => (
           <Title
             hasBorder
-            icon={Icons[contact.contactType]}
+            icon={Icons[camelCaseContactType(contact.contactType)]}
             items={[
               {
                 id: "delete",
@@ -293,7 +294,7 @@ export function LocationSettings() {
                   <Title hasBorder label="Contacts" size="xl" variant="primary" />
                   <Card hasNoShadow isFullWidth variant="secondary">
                     <Collapsible
-                      icon={Icons.office_address}
+                      icon={Icons.officeAddress}
                       isOpen={!!groupedContactsByType?.address?.length}
                       items={[
                         {
@@ -304,7 +305,7 @@ export function LocationSettings() {
                           allowedPlacements: ["left-start"] as const,
                           onClick: () => {},
                           items: AvailableContactTypes.address.professional.map((addr) => ({
-                            icon: Icons[addr],
+                            icon: Icons[camelCaseContactType(addr)],
                             allowedPlacements: ["left-start"] as const,
                             id: addr,
                             title: getSentenceCase(addr),
@@ -345,7 +346,7 @@ export function LocationSettings() {
                           allowedPlacements: ["left-start"] as const,
                           onClick: () => {},
                           items: AvailableContactTypes.phone.professional.map((phone) => ({
-                            icon: Icons[phone],
+                            icon: Icons[camelCaseContactType(phone)],
                             allowedPlacements: ["left-start"],
                             id: phone,
                             title: getSentenceCase(phone),
@@ -386,7 +387,7 @@ export function LocationSettings() {
                           allowedPlacements: ["left-start"] as const,
                           onClick: () => {},
                           items: AvailableContactTypes.email.professional.map((email) => ({
-                            icon: Icons[email],
+                            icon: Icons[camelCaseContactType(email)],
                             allowedPlacements: ["left-start"],
                             id: email,
                             title: getSentenceCase(email),
@@ -427,7 +428,7 @@ export function LocationSettings() {
                           allowedPlacements: ["left-start"] as const,
                           onClick: () => {},
                           items: AvailableContactTypes.website.professional.map((other) => ({
-                            icon: Icons[other],
+                            icon: Icons[camelCaseContactType(other)],
                             allowedPlacements: ["left-start"],
                             id: other,
                             title: getSentenceCase(other),

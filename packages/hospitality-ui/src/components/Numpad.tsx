@@ -15,7 +15,7 @@ export function Numpad({ onClick }: Props) {
         </div>
       ))}
       <div className="col-span-1 flex aspect-square max-w-full items-center justify-center">
-        <Button className="h-full w-full text-6xl" icon={Icons["arrow-right"]} onClick={() => onClick("delete")} size="xl" />
+        <Button className="h-full w-full text-6xl" icon={Icons.arrowRight} onClick={() => onClick("delete")} size="xl" />
       </div>
       <div className="col-span-1 flex aspect-square max-w-full items-center justify-center">
         <Button className="h-full w-full text-6xl" label={"0"} onClick={() => onClick("0")} size="xl" />

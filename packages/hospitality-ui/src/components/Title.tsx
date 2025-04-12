@@ -1,12 +1,12 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { tv } from "tailwind-variants";
 
-import { ActionType, availableIcons, Size, Variant } from "../types";
+import { ActionType, AvailableIcons, Size, Variant } from "../types";
 import { Button } from "./Button";
 
 type Props = {
   label: string;
-  icon?: availableIcons;
+  icon?: AvailableIcons;
   variant?: Variant;
   size?: Size;
   hasBorder?: boolean;

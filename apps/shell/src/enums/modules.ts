@@ -1,6 +1,6 @@
-import { availableIcons, Icons } from "@hospitality/hospitality-ui";
+import { AvailableIcons, Icons } from "@hospitality/hospitality-ui";
 
-export const Modules: { id: string; title: string; icon: availableIcons }[] = [
+export const Modules: { id: string; title: string; icon: AvailableIcons }[] = [
   {
     id: "booking" as const,
     title: "Booking",
