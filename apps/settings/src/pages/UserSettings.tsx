@@ -268,7 +268,7 @@ export function UserSettings() {
           <div className="grid grid-cols-1 items-end gap-2 md:grid-cols-3">
             <form.Field
               children={(field) => (
-                <div className="flex items-end gap-x-2">
+                <div className="flex items-center gap-x-1.5">
                   <div>
                     <Avatar
                       imageId={userData?.imageId}
@@ -281,7 +281,7 @@ export function UserSettings() {
                           isMultiple: false,
                         })
                       }
-                      size={isSmallScreen ? "xl" : "md"}
+                      size={isSmallScreen ? "lg" : "md"}
                       type="user_avatar"
                     />
                   </div>
