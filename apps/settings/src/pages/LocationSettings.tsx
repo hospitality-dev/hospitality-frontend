@@ -77,6 +77,7 @@ function ContactDisplay({
               helperText="Customize the title of the address."
               label={getSentenceCase(`${type} display title`)}
               name={subfield.name}
+              onBlur={subfield.handleBlur}
               onChange={(e) => subfield.handleChange(e.target.value)}
               value={subfield.state.value || ""}
             />
@@ -93,6 +94,7 @@ function ContactDisplay({
                   isAutofocused
                   isDisabled={isDisabled}
                   label="Address"
+                  onBlur={subfield.handleBlur}
                   onChange={(value) => {
                     if (value) {
                       subfield.handleChange(formatDisplayItem(value));
@@ -117,27 +119,38 @@ function ContactDisplay({
               );
             if (type === "phone")
               return (
-                <form.Subscribe<ContactType["prefix"]> selector={(s) => s.values.contacts[index].prefix}>
-                  {(prefix) => (
-                    <form.Field
-                      children={(subfield) => (
-                        <Input
-                          errors={subfield.state.meta.errors}
-                          isDisabled={isDisabled}
-                          label={getSentenceCase(contact.contactType)}
-                          name={subfield.name}
-                          onChange={(e) => subfield.handleChange(e.target.value)}
-                          onSelectChange={(item) =>
-                            form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null)
-                          }
-                          selectValue={(prefix || "")?.toString()}
-                          type="tel"
-                          value={subfield.state.value}
-                          variant={subfield.state.meta.errors.length ? "error" : "primary"}
-                        />
-                      )}
-                      name={`contacts[${index}].value`}
-                    />
+                <form.Subscribe<{
+                  prefix: ContactType["prefix"];
+                }>
+                  selector={(s) => ({
+                    prefix: s.values.contacts[index].prefix,
+                  })}>
+                  {(prefixState) => (
+                    <>
+                      <form.Field
+                        children={(subfield) => (
+                          <Input
+                            errors={
+                              subfield.state.meta.errors.at(0)
+                                ? [subfield.state.meta.errors.at(0)?.toString().replaceAll(".,", ".")]
+                                : undefined
+                            }
+                            isDisabled={isDisabled}
+                            label={getSentenceCase(contact.contactType)}
+                            name={subfield.name}
+                            onBlur={subfield.handleBlur}
+                            onChange={(e) => subfield.handleChange(e.target.value)}
+                            onSelectChange={(item) =>
+                              form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null)
+                            }
+                            selectValue={(prefixState.prefix || "")?.toString()}
+                            type="tel"
+                            value={subfield.state.value}
+                          />
+                        )}
+                        name={`contacts[${index}].value`}
+                      />
+                    </>
                   )}
                 </form.Subscribe>
               );
@@ -265,6 +278,7 @@ export function LocationSettings() {
                   isDisabled={isLoading}
                   label="Title"
                   name={field.name}
+                  onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   value={field.state.value || ""}
                 />

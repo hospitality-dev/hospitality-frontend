@@ -41,7 +41,7 @@ export function formatAddressesForOptions(
 }
 
 export function formatErrorsForHelperText(errors: ValidationError[] | ZodIssue[]) {
-  return errors.join("\n ");
+  return errors.join(" | ");
 }
 
 export function formatDisplayItem<OT>(item: OptionType<OT>): string {

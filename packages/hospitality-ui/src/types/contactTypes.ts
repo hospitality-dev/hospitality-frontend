@@ -1,4 +1,4 @@
-import { boolean, enum as enum_, infer as zodInfer, number, object, string } from "zod";
+import { boolean, enum as enum_, infer as zodInfer, number, object, string, ZodIssueCode } from "zod";
 
 export const ContactTypesSchema = enum_(
   [
@@ -59,6 +59,14 @@ export const ContactSchema = object({
   boundingBox: number().array().nullish(),
   isPublic: boolean().default(false).nullish(),
   contactType: ContactTypesSchema,
+}).superRefine((arg, ctx) => {
+  if ((arg.contactType.includes("phone") || arg.contactType === "fax") && !arg.prefix) {
+    ctx.addIssue({
+      path: ["value"],
+      code: ZodIssueCode.custom,
+      message: " | Prefix must be selected.",
+    });
+  }
 });
 
 export type ContactTypes = zodInfer<typeof ContactTypesSchema>;

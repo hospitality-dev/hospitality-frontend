@@ -125,28 +125,38 @@ function ContactDisplay({
               );
             if (type === "phone")
               return (
-                <form.Subscribe<ContactType["prefix"]> selector={(s) => s.values.contacts[index].prefix}>
-                  {(prefix) => (
-                    <form.Field
-                      children={(subfield) => (
-                        <Input
-                          errors={subfield.state.meta.errors}
-                          isDisabled={isDisabled}
-                          label={getSentenceCase(contact.contactType)}
-                          name={subfield.name}
-                          onBlur={subfield.handleBlur}
-                          onChange={(e) => subfield.handleChange(e.target.value)}
-                          onSelectChange={(item) =>
-                            form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null)
-                          }
-                          selectValue={(prefix || "")?.toString()}
-                          type="tel"
-                          value={subfield.state.value}
-                          variant={subfield.state.meta.errors.length ? "error" : "primary"}
-                        />
-                      )}
-                      name={`contacts[${index}].value`}
-                    />
+                <form.Subscribe<{
+                  prefix: ContactType["prefix"];
+                }>
+                  selector={(s) => ({
+                    prefix: s.values.contacts[index].prefix,
+                  })}>
+                  {(prefixState) => (
+                    <>
+                      <form.Field
+                        children={(subfield) => (
+                          <Input
+                            errors={
+                              subfield.state.meta.errors.at(0)
+                                ? [subfield.state.meta.errors.at(0)?.toString().replaceAll(".,", ".")]
+                                : undefined
+                            }
+                            isDisabled={isDisabled}
+                            label={getSentenceCase(contact.contactType)}
+                            name={subfield.name}
+                            onBlur={subfield.handleBlur}
+                            onChange={(e) => subfield.handleChange(e.target.value)}
+                            onSelectChange={(item) =>
+                              form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null)
+                            }
+                            selectValue={(prefixState.prefix || "")?.toString()}
+                            type="tel"
+                            value={subfield.state.value}
+                          />
+                        )}
+                        name={`contacts[${index}].value`}
+                      />
+                    </>
                   )}
                 </form.Subscribe>
               );
@@ -555,7 +565,7 @@ export function UserSettings() {
                 variant="success"
               />
             )}
-            selector={(state) => ({ isDisabled: state.isPristine || !state.isFormValid })}
+            selector={(state) => ({ isDisabled: !state.canSubmit })}
           />
         </div>
       </div>
