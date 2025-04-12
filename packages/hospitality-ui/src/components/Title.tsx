@@ -15,7 +15,7 @@ type Props = {
 
 const classes = tv({
   slots: {
-    base: "flex w-full flex-1 items-center gap-x-1 uppercase select-none",
+    base: "flex w-full flex-1 items-center gap-x-1 border-b uppercase select-none",
     actionsContainer: "ml-auto flex items-center gap-x-1",
     actionButtonContainer: "h-7 w-7",
   },
@@ -36,7 +36,7 @@ const classes = tv({
       xl: "text-xl [&>svg]:text-2xl",
     },
     hasBorder: {
-      true: "border-b",
+      false: "border-transparent",
     },
   },
 });
