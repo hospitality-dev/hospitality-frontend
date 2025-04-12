@@ -141,7 +141,6 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
 // * For adding a product from a location's inventory
 export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { type: "manage_product_inventory" }>, "data">) {
   const resetDrawer = useResetAtom(drawerAtom);
-  const { isLg } = useScreenSize();
   const { data: product, isLoading: isLoadingProduct } = useRead<ProductsType>(
     { id: `${data.barcode ? "barcode/" : ""}${data.barcode || data.id}`, model: "products", fields: ["id", "title"] },
     { enabled: !!(data.barcode || data.id) }
@@ -238,7 +237,7 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
             name="amount"
           />
         </div>
-        <div className={`relative ${isLg ? "bottom-8" : "bottom-24"}`}>
+        <div className="mt-auto md:col-span-2">
           <form.Subscribe<[boolean, boolean]>
             children={(p) => {
               return (
