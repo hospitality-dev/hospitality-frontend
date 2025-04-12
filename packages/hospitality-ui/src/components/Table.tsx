@@ -29,7 +29,7 @@ type Props<T> = {
 
 const classes = tv({
   slots: {
-    container: "overflow-x-auto rounded-md border border-gray-300 bg-gray-100 px-2",
+    container: "overflow-x-auto rounded-md border border-gray-300 bg-gray-100",
     tableContainer: "transition-[height]",
     tableClasses: "min-w-full overflow-auto",
     thead: "border-b border-gray-300 text-left text-gray-500",
