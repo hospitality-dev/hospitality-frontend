@@ -81,6 +81,7 @@ function ContactDisplay({
               helperText="Customize the title of the address."
               label={getSentenceCase(`${type} display title`)}
               name={subfield.name}
+              onBlur={subfield.handleBlur}
               onChange={(e) => subfield.handleChange(e.target.value)}
               value={subfield.state.value || ""}
             />
@@ -99,6 +100,7 @@ function ContactDisplay({
                   isAutofocused
                   isDisabled={isDisabled}
                   label="Address"
+                  onBlur={subfield.handleBlur}
                   onChange={(value) => {
                     if (value) {
                       subfield.handleChange(formatDisplayItem(value));
@@ -132,6 +134,7 @@ function ContactDisplay({
                           isDisabled={isDisabled}
                           label={getSentenceCase(contact.contactType)}
                           name={subfield.name}
+                          onBlur={subfield.handleBlur}
                           onChange={(e) => subfield.handleChange(e.target.value)}
                           onSelectChange={(item) =>
                             form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null)
@@ -194,7 +197,7 @@ function ContactDisplay({
           }}
           name={`contacts[${index}].value`}
           validators={{
-            onSubmit: () => {
+            onBlur: () => {
               const res = ContactSchema.safeParse(contact);
               if (res.success) return null;
               return res.error.errors.map((e) => e.message).join("\n");
@@ -241,6 +244,7 @@ export function UserSettings() {
     },
     validators: {
       onSubmit: UsersMutatorSchema,
+      onChange: UsersMutatorSchema,
     },
     onSubmit: update,
   });
@@ -276,6 +280,7 @@ export function UserSettings() {
                     isDisabled={isLoading}
                     label="First name"
                     name={field.name}
+                    onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     value={field.state.value || ""}
                   />
@@ -290,6 +295,7 @@ export function UserSettings() {
                   isDisabled={isLoading}
                   label="Last name"
                   name={field.name}
+                  onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   value={field.state.value || ""}
                 />
@@ -302,6 +308,7 @@ export function UserSettings() {
                   errors={field.state.meta.errors}
                   isDisabled
                   label="Role"
+                  onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e?.value)}
                   options={formatForOptions(rolesData)}
                   value={field.state.value || ""}
@@ -537,11 +544,19 @@ export function UserSettings() {
           </div>
         </div>
         <div className="md:col-span-2">
-          <form.Subscribe<[boolean]>
+          <form.Subscribe<{ isDisabled: boolean }>
             children={(sub) => (
-              <Button icon={Icons.save} isDisabled={sub[0]} label="Save" onClick={undefined} size="lg" variant="success" />
+              <Button
+                icon={Icons.save}
+                isDisabled={sub.isDisabled}
+                label="Save"
+                onClick={undefined}
+                size="lg"
+                variant="success"
+              />
             )}
-            selector={(state) => [state.isPristine && state.isFormValid]}></form.Subscribe>
+            selector={(state) => ({ isDisabled: state.isPristine || !state.isFormValid })}
+          />
         </div>
       </div>
     </Form>
