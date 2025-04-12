@@ -63,6 +63,7 @@ export const Icons = {
   personalPhone: "fluent:phone-person-24-regular" as const,
   phone: "ph:phone" as const,
   png: "bi:filetype-png" as const,
+  qrCode: "clarity:qr-code-line" as const,
   rar: "bi:file-earmark-file-zip",
   removeItem: "mdi:basket-minus-outline" as const,
   removeUser: "ph:user-minus" as const,
