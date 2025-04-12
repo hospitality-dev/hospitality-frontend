@@ -33,7 +33,7 @@ export const Icons = {
   folder: "ph:folder" as const,
   generalInquiryPhone: "material-symbols:perm-phone-msg-outline" as const,
   gif: "bi:filetype-gif",
-  homeAddress: "fa6-solid:house-chimney" as const,
+  homeAddress: "bi:house" as const,
   homePhone: "tabler:device-landline-phone" as const,
   headquartersAddress: "fluent:building-home-20-regular" as const,
   hrEmail: "fluent:mail-shield-20-regular" as const,
