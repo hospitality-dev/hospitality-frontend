@@ -1,7 +1,7 @@
 import { MaskitoOptions } from "@maskito/core";
 import { useMaskito } from "@maskito/react";
 import { ValidationError } from "@tanstack/react-form";
-import { ChangeEvent, FocusEventHandler, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
+import { ChangeEvent, FocusEventHandler, HTMLAttributes, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 import { tv } from "tailwind-variants";
 import { ZodIssue } from "zod";
 
@@ -27,6 +27,7 @@ type Props<OT> = {
   size?: Size;
   placeholder?: string;
   type?: AllowedInputTypes;
+  inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
   action?: {
     onClick: (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void;
     icon: availableIcons;
@@ -122,8 +123,9 @@ export function Input({
   onKeyDown,
   onBlur,
   type = "text",
-  action,
+  inputMode = "text",
   errors,
+  action,
 }: Props<(typeof countriesPhoneCodes)[number]["additionalData"]>) {
   const inputRef = useMaskito({ options: masks[type] });
   const { inputClasses, inputContainer, container, labelClasses, helperTextClasses, selectClasses } = classes({
@@ -157,6 +159,7 @@ export function Input({
           autoFocus={isAutofocused}
           className={inputClasses()}
           disabled={isDisabled}
+          inputMode={inputMode}
           name={name}
           onBlur={onBlur}
           onInput={onChange}
