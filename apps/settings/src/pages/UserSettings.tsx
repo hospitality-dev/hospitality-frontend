@@ -6,12 +6,10 @@ import {
   camelCaseContactType,
   Card,
   Collapsible,
-  ContactSchema,
   ContactType,
   emailValidation,
   Form,
   formatDisplayItem,
-  formatErrorsForHelperText,
   formatForOptions,
   getBaseContact,
   getSentenceCase,
@@ -79,6 +77,7 @@ function ContactDisplay({
         <form.Field
           children={(subfield) => (
             <Input
+              errors={subfield.state.meta.errors}
               helperText="Customize the title of the address."
               label={getSentenceCase(`${type} display title`)}
               name={subfield.name}
@@ -94,10 +93,8 @@ function ContactDisplay({
             if (type === "address")
               return (
                 <AddressSearch
-                  helperText={
-                    formatErrorsForHelperText(subfield.state.meta.errors) ||
-                    "Enter the full address e.g. Jurija Gagarina 25 / Ugrinovacka 17 Zemun"
-                  }
+                  errors={subfield.state.meta.errors}
+                  helperText="Enter the full address e.g. Jurija Gagarina 25 / Ugrinovacka 17 Zemun"
                   isAutofocused
                   isDisabled={isDisabled}
                   label="Address"
@@ -121,7 +118,6 @@ function ContactDisplay({
                     }
                   }}
                   value={subfield.state.value}
-                  variant={subfield.state.meta.errors.length ? "error" : "primary"}
                 />
               );
             if (type === "phone")
@@ -137,11 +133,7 @@ function ContactDisplay({
                       <form.Field
                         children={(subfield) => (
                           <Input
-                            errors={
-                              subfield.state.meta.errors.at(0)
-                                ? [subfield.state.meta.errors.at(0)?.toString().replaceAll(".,", ".")]
-                                : undefined
-                            }
+                            errors={subfield.state.meta.errors}
                             isDisabled={isDisabled}
                             label={getSentenceCase(contact.contactType)}
                             name={subfield.name}
@@ -174,7 +166,6 @@ function ContactDisplay({
                       onChange={(e) => subfield.handleChange(e.target.value)}
                       type="text"
                       value={subfield.state.value}
-                      variant={subfield.state.meta.errors.length ? "error" : "primary"}
                     />
                   )}
                   name={`contacts[${index}].value`}
@@ -196,7 +187,6 @@ function ContactDisplay({
                     onChange={(e) => subfield.handleChange(e.target.value)}
                     type="url"
                     value={subfield.state.value}
-                    variant={subfield.state.meta.errors.length ? "error" : "primary"}
                   />
                 )}
                 name={`contacts[${index}].value`}
@@ -207,13 +197,6 @@ function ContactDisplay({
             );
           }}
           name={`contacts[${index}].value`}
-          validators={{
-            onBlur: () => {
-              const res = ContactSchema.safeParse(contact);
-              if (res.success) return null;
-              return res.error.errors.map((e) => e.message).join("\n");
-            },
-          }}
         />
       </div>
     </div>
@@ -346,7 +329,7 @@ export function UserSettings() {
                             variant: "info",
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
-                            items: AvailableContactTypes.address.professional.map((addr) => ({
+                            items: AvailableContactTypes.address.personal.map((addr) => ({
                               icon: Icons[camelCaseContactType(addr)],
                               allowedPlacements: ["left-start"] as const,
                               id: addr,
@@ -387,7 +370,7 @@ export function UserSettings() {
                             variant: "info",
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
-                            items: AvailableContactTypes.phone.professional.map((phone) => ({
+                            items: AvailableContactTypes.phone.personal.map((phone) => ({
                               icon: Icons[camelCaseContactType(phone)],
                               allowedPlacements: ["left-start"],
                               id: phone,
@@ -428,7 +411,7 @@ export function UserSettings() {
                             variant: "info",
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
-                            items: AvailableContactTypes.email.professional.map((email) => ({
+                            items: AvailableContactTypes.email.personal.map((email) => ({
                               icon: Icons[camelCaseContactType(email)],
                               allowedPlacements: ["left-start"],
                               id: email,
@@ -469,7 +452,7 @@ export function UserSettings() {
                             variant: "info",
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
-                            items: AvailableContactTypes.website.professional.map((other) => ({
+                            items: AvailableContactTypes.website.personal.map((other) => ({
                               icon: Icons[camelCaseContactType(other)],
                               allowedPlacements: ["left-start"],
                               id: other,
@@ -510,7 +493,7 @@ export function UserSettings() {
                             variant: "info",
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
-                            items: AvailableContactTypes.other.professional.map((other) => ({
+                            items: AvailableContactTypes.other.personal.map((other) => ({
                               icon: Icons[other],
                               allowedPlacements: ["left-start"],
                               id: other,
