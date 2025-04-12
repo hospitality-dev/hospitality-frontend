@@ -47,7 +47,7 @@ const classes = tv({
     },
     isOutline: { true: "border-2 bg-transparent text-black", false: "" },
     isDisabled: {
-      true: "bg-disabled cursor-not-allowed text-gray-200 shadow-none transition-none",
+      true: "bg-disabled active:bg-disabled hover:bg-disabled cursor-not-allowed text-gray-200 shadow-none transition-none active:scale-100 active:text-gray-200",
     },
     hasNoBorder: { true: "border-0 shadow-none hover:bg-transparent active:bg-transparent", false: "" },
     hasIconOnly: {
