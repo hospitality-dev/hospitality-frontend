@@ -2,36 +2,12 @@ import { OptionType } from "../types";
 
 export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
   {
-    value: "297",
-    label: "Aruba (+297)",
-    additionalData: {
-      iso3: "ABW",
-    },
-    id: "ABW",
-  },
-  {
     value: "93",
     label: "Afghanistan (+93)",
     additionalData: {
       iso3: "AFG",
     },
     id: "AFG",
-  },
-  {
-    value: "244",
-    label: "Angola (+244)",
-    additionalData: {
-      iso3: "AGO",
-    },
-    id: "AGO",
-  },
-  {
-    value: "1-264",
-    label: "Anguilla (+1-264)",
-    additionalData: {
-      iso3: "AIA",
-    },
-    id: "AIA",
   },
   {
     value: "358-18",
@@ -50,6 +26,22 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "ALB",
   },
   {
+    value: "213",
+    label: "Algeria (+213)",
+    additionalData: {
+      iso3: "DZA",
+    },
+    id: "DZA",
+  },
+  {
+    value: "1-684",
+    label: "American Samoa (+1-684)",
+    additionalData: {
+      iso3: "ASM",
+    },
+    id: "ASM",
+  },
+  {
     value: "376",
     label: "Andorra (+376)",
     additionalData: {
@@ -58,12 +50,28 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "AND",
   },
   {
-    value: "971",
-    label: "United Arab Emirates (+971)",
+    value: "244",
+    label: "Angola (+244)",
     additionalData: {
-      iso3: "ARE",
+      iso3: "AGO",
     },
-    id: "ARE",
+    id: "AGO",
+  },
+  {
+    value: "1-264",
+    label: "Anguilla (+1-264)",
+    additionalData: {
+      iso3: "AIA",
+    },
+    id: "AIA",
+  },
+  {
+    value: "1-268",
+    label: "Antigua and Barbuda (+1-268)",
+    additionalData: {
+      iso3: "ATG",
+    },
+    id: "ATG",
   },
   {
     value: "54",
@@ -82,20 +90,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "ARM",
   },
   {
-    value: "1-684",
-    label: "American Samoa (+1-684)",
+    value: "297",
+    label: "Aruba (+297)",
     additionalData: {
-      iso3: "ASM",
+      iso3: "ABW",
     },
-    id: "ASM",
-  },
-  {
-    value: "1-268",
-    label: "Antigua and Barbuda (+1-268)",
-    additionalData: {
-      iso3: "ATG",
-    },
-    id: "ATG",
+    id: "ABW",
   },
   {
     value: "61",
@@ -122,52 +122,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "AZE",
   },
   {
-    value: "257",
-    label: "Burundi (+257)",
+    value: "1-242",
+    label: "Bahamas (+1-242)",
     additionalData: {
-      iso3: "BDI",
+      iso3: "BHS",
     },
-    id: "BDI",
-  },
-  {
-    value: "32",
-    label: "Belgium (+32)",
-    additionalData: {
-      iso3: "BEL",
-    },
-    id: "BEL",
-  },
-  {
-    value: "229",
-    label: "Benin (+229)",
-    additionalData: {
-      iso3: "BEN",
-    },
-    id: "BEN",
-  },
-  {
-    value: "226",
-    label: "Burkina Faso (+226)",
-    additionalData: {
-      iso3: "BFA",
-    },
-    id: "BFA",
-  },
-  {
-    value: "880",
-    label: "Bangladesh (+880)",
-    additionalData: {
-      iso3: "BGD",
-    },
-    id: "BGD",
-  },
-  {
-    value: "359",
-    label: "Bulgaria (+359)",
-    additionalData: {
-      iso3: "BGR",
-    },
-    id: "BGR",
+    id: "BHS",
   },
   {
     value: "973",
@@ -178,68 +138,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "BHR",
   },
   {
-    value: "1-242",
-    label: "Bahamas (+1-242)",
+    value: "880",
+    label: "Bangladesh (+880)",
     additionalData: {
-      iso3: "BHS",
+      iso3: "BGD",
     },
-    id: "BHS",
-  },
-  {
-    value: "387",
-    label: "Bosnia and Herzegovina (+387)",
-    additionalData: {
-      iso3: "BIH",
-    },
-    id: "BIH",
-  },
-  {
-    value: "590",
-    label: "Saint Barthelemy (+590)",
-    additionalData: {
-      iso3: "BLM",
-    },
-    id: "BLM",
-  },
-  {
-    value: "375",
-    label: "Belarus (+375)",
-    additionalData: {
-      iso3: "BLR",
-    },
-    id: "BLR",
-  },
-  {
-    value: "501",
-    label: "Belize (+501)",
-    additionalData: {
-      iso3: "BLZ",
-    },
-    id: "BLZ",
-  },
-  {
-    value: "1-441",
-    label: "Bermuda (+1-441)",
-    additionalData: {
-      iso3: "BMU",
-    },
-    id: "BMU",
-  },
-  {
-    value: "591",
-    label: "Bolivia (+591)",
-    additionalData: {
-      iso3: "BOL",
-    },
-    id: "BOL",
-  },
-  {
-    value: "55",
-    label: "Brazil (+55)",
-    additionalData: {
-      iso3: "BRA",
-    },
-    id: "BRA",
+    id: "BGD",
   },
   {
     value: "1-246",
@@ -250,12 +154,44 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "BRB",
   },
   {
-    value: "673",
-    label: "Brunei (+673)",
+    value: "375",
+    label: "Belarus (+375)",
     additionalData: {
-      iso3: "BRN",
+      iso3: "BLR",
     },
-    id: "BRN",
+    id: "BLR",
+  },
+  {
+    value: "32",
+    label: "Belgium (+32)",
+    additionalData: {
+      iso3: "BEL",
+    },
+    id: "BEL",
+  },
+  {
+    value: "501",
+    label: "Belize (+501)",
+    additionalData: {
+      iso3: "BLZ",
+    },
+    id: "BLZ",
+  },
+  {
+    value: "229",
+    label: "Benin (+229)",
+    additionalData: {
+      iso3: "BEN",
+    },
+    id: "BEN",
+  },
+  {
+    value: "1-441",
+    label: "Bermuda (+1-441)",
+    additionalData: {
+      iso3: "BMU",
+    },
+    id: "BMU",
   },
   {
     value: "975",
@@ -266,6 +202,22 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "BTN",
   },
   {
+    value: "591",
+    label: "Bolivia (+591)",
+    additionalData: {
+      iso3: "BOL",
+    },
+    id: "BOL",
+  },
+  {
+    value: "387",
+    label: "Bosnia and Herzegovina (+387)",
+    additionalData: {
+      iso3: "BIH",
+    },
+    id: "BIH",
+  },
+  {
     value: "267",
     label: "Botswana (+267)",
     additionalData: {
@@ -274,12 +226,76 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "BWA",
   },
   {
-    value: "236",
-    label: "Central African Republic (+236)",
+    value: "55",
+    label: "Brazil (+55)",
     additionalData: {
-      iso3: "CAF",
+      iso3: "BRA",
     },
-    id: "CAF",
+    id: "BRA",
+  },
+  {
+    value: "246",
+    label: "British Indian Ocean Territory (+246)",
+    additionalData: {
+      iso3: "IOT",
+    },
+    id: "IOT",
+  },
+  {
+    value: "1-284",
+    label: "British Virgin Islands (+1-284)",
+    additionalData: {
+      iso3: "VGB",
+    },
+    id: "VGB",
+  },
+  {
+    value: "673",
+    label: "Brunei (+673)",
+    additionalData: {
+      iso3: "BRN",
+    },
+    id: "BRN",
+  },
+  {
+    value: "359",
+    label: "Bulgaria (+359)",
+    additionalData: {
+      iso3: "BGR",
+    },
+    id: "BGR",
+  },
+  {
+    value: "226",
+    label: "Burkina Faso (+226)",
+    additionalData: {
+      iso3: "BFA",
+    },
+    id: "BFA",
+  },
+  {
+    value: "257",
+    label: "Burundi (+257)",
+    additionalData: {
+      iso3: "BDI",
+    },
+    id: "BDI",
+  },
+  {
+    value: "855",
+    label: "Cambodia (+855)",
+    additionalData: {
+      iso3: "KHM",
+    },
+    id: "KHM",
+  },
+  {
+    value: "237",
+    label: "Cameroon (+237)",
+    additionalData: {
+      iso3: "CMR",
+    },
+    id: "CMR",
   },
   {
     value: "1",
@@ -290,20 +306,36 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "CAN",
   },
   {
-    value: "61",
-    label: "Cocos Islands (+61)",
+    value: "238",
+    label: "Cape Verde (+238)",
     additionalData: {
-      iso3: "CCK",
+      iso3: "CPV",
     },
-    id: "CCK",
+    id: "CPV",
   },
   {
-    value: "41",
-    label: "Switzerland (+41)",
+    value: "1-345",
+    label: "Cayman Islands (+1-345)",
     additionalData: {
-      iso3: "CHE",
+      iso3: "CYM",
     },
-    id: "CHE",
+    id: "CYM",
+  },
+  {
+    value: "236",
+    label: "Central African Republic (+236)",
+    additionalData: {
+      iso3: "CAF",
+    },
+    id: "CAF",
+  },
+  {
+    value: "235",
+    label: "Chad (+235)",
+    additionalData: {
+      iso3: "TCD",
+    },
+    id: "TCD",
   },
   {
     value: "56",
@@ -322,44 +354,20 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "CHN",
   },
   {
-    value: "225",
-    label: "Ivory Coast (+225)",
+    value: "61",
+    label: "Christmas Island (+61)",
     additionalData: {
-      iso3: "CIV",
+      iso3: "CXR",
     },
-    id: "CIV",
+    id: "CXR",
   },
   {
-    value: "237",
-    label: "Cameroon (+237)",
+    value: "61",
+    label: "Cocos Islands (+61)",
     additionalData: {
-      iso3: "CMR",
+      iso3: "CCK",
     },
-    id: "CMR",
-  },
-  {
-    value: "243",
-    label: "Democratic Republic of the Congo (+243)",
-    additionalData: {
-      iso3: "COD",
-    },
-    id: "COD",
-  },
-  {
-    value: "242",
-    label: "Republic of the Congo (+242)",
-    additionalData: {
-      iso3: "COG",
-    },
-    id: "COG",
-  },
-  {
-    value: "682",
-    label: "Cook Islands (+682)",
-    additionalData: {
-      iso3: "COK",
-    },
-    id: "COK",
+    id: "CCK",
   },
   {
     value: "57",
@@ -378,12 +386,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "COM",
   },
   {
-    value: "238",
-    label: "Cape Verde (+238)",
+    value: "682",
+    label: "Cook Islands (+682)",
     additionalData: {
-      iso3: "CPV",
+      iso3: "COK",
     },
-    id: "CPV",
+    id: "COK",
   },
   {
     value: "506",
@@ -392,6 +400,14 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
       iso3: "CRI",
     },
     id: "CRI",
+  },
+  {
+    value: "385",
+    label: "Croatia (+385)",
+    additionalData: {
+      iso3: "HRV",
+    },
+    id: "HRV",
   },
   {
     value: "53",
@@ -410,22 +426,6 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "CUW",
   },
   {
-    value: "61",
-    label: "Christmas Island (+61)",
-    additionalData: {
-      iso3: "CXR",
-    },
-    id: "CXR",
-  },
-  {
-    value: "1-345",
-    label: "Cayman Islands (+1-345)",
-    additionalData: {
-      iso3: "CYM",
-    },
-    id: "CYM",
-  },
-  {
     value: "357",
     label: "Cyprus (+357)",
     additionalData: {
@@ -442,12 +442,20 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "CZE",
   },
   {
-    value: "49",
-    label: "Germany (+49)",
+    value: "243",
+    label: "Democratic Republic of the Congo (+243)",
     additionalData: {
-      iso3: "DEU",
+      iso3: "COD",
     },
-    id: "DEU",
+    id: "COD",
+  },
+  {
+    value: "45",
+    label: "Denmark (+45)",
+    additionalData: {
+      iso3: "DNK",
+    },
+    id: "DNK",
   },
   {
     value: "253",
@@ -466,14 +474,6 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "DMA",
   },
   {
-    value: "45",
-    label: "Denmark (+45)",
-    additionalData: {
-      iso3: "DNK",
-    },
-    id: "DNK",
-  },
-  {
     value: "1-809 and 1-829",
     label: "Dominican Republic (+1-809 and 1-829)",
     additionalData: {
@@ -482,12 +482,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "DOM",
   },
   {
-    value: "213",
-    label: "Algeria (+213)",
+    value: "670",
+    label: "East Timor (+670)",
     additionalData: {
-      iso3: "DZA",
+      iso3: "TLS",
     },
-    id: "DZA",
+    id: "TLS",
   },
   {
     value: "593",
@@ -506,28 +506,28 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "EGY",
   },
   {
+    value: "503",
+    label: "El Salvador (+503)",
+    additionalData: {
+      iso3: "SLV",
+    },
+    id: "SLV",
+  },
+  {
+    value: "240",
+    label: "Equatorial Guinea (+240)",
+    additionalData: {
+      iso3: "GNQ",
+    },
+    id: "GNQ",
+  },
+  {
     value: "291",
     label: "Eritrea (+291)",
     additionalData: {
       iso3: "ERI",
     },
     id: "ERI",
-  },
-  {
-    value: "212",
-    label: "Western Sahara (+212)",
-    additionalData: {
-      iso3: "ESH",
-    },
-    id: "ESH",
-  },
-  {
-    value: "34",
-    label: "Spain (+34)",
-    additionalData: {
-      iso3: "ESP",
-    },
-    id: "ESP",
   },
   {
     value: "372",
@@ -546,36 +546,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "ETH",
   },
   {
-    value: "358",
-    label: "Finland (+358)",
-    additionalData: {
-      iso3: "FIN",
-    },
-    id: "FIN",
-  },
-  {
-    value: "679",
-    label: "Fiji (+679)",
-    additionalData: {
-      iso3: "FJI",
-    },
-    id: "FJI",
-  },
-  {
     value: "500",
     label: "Falkland Islands (+500)",
     additionalData: {
       iso3: "FLK",
     },
     id: "FLK",
-  },
-  {
-    value: "33",
-    label: "France (+33)",
-    additionalData: {
-      iso3: "FRA",
-    },
-    id: "FRA",
   },
   {
     value: "298",
@@ -586,12 +562,44 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "FRO",
   },
   {
-    value: "691",
-    label: "Micronesia (+691)",
+    value: "679",
+    label: "Fiji (+679)",
     additionalData: {
-      iso3: "FSM",
+      iso3: "FJI",
     },
-    id: "FSM",
+    id: "FJI",
+  },
+  {
+    value: "358",
+    label: "Finland (+358)",
+    additionalData: {
+      iso3: "FIN",
+    },
+    id: "FIN",
+  },
+  {
+    value: "33",
+    label: "France (+33)",
+    additionalData: {
+      iso3: "FRA",
+    },
+    id: "FRA",
+  },
+  {
+    value: "594",
+    label: "French Guiana (+594)",
+    additionalData: {
+      iso3: "GUF",
+    },
+    id: "GUF",
+  },
+  {
+    value: "689",
+    label: "French Polynesia (+689)",
+    additionalData: {
+      iso3: "PYF",
+    },
+    id: "PYF",
   },
   {
     value: "241",
@@ -602,12 +610,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "GAB",
   },
   {
-    value: "44",
-    label: "United Kingdom (+44)",
+    value: "220",
+    label: "Gambia (+220)",
     additionalData: {
-      iso3: "GBR",
+      iso3: "GMB",
     },
-    id: "GBR",
+    id: "GMB",
   },
   {
     value: "995",
@@ -618,12 +626,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "GEO",
   },
   {
-    value: "44-1481",
-    label: "Guernsey (+44-1481)",
+    value: "49",
+    label: "Germany (+49)",
     additionalData: {
-      iso3: "GGY",
+      iso3: "DEU",
     },
-    id: "GGY",
+    id: "DEU",
   },
   {
     value: "233",
@@ -642,60 +650,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "GIB",
   },
   {
-    value: "224",
-    label: "Guinea (+224)",
-    additionalData: {
-      iso3: "GIN",
-    },
-    id: "GIN",
-  },
-  {
-    value: "590",
-    label: "Guadeloupe (+590)",
-    additionalData: {
-      iso3: "GLP",
-    },
-    id: "GLP",
-  },
-  {
-    value: "220",
-    label: "Gambia (+220)",
-    additionalData: {
-      iso3: "GMB",
-    },
-    id: "GMB",
-  },
-  {
-    value: "245",
-    label: "Guinea-Bissau (+245)",
-    additionalData: {
-      iso3: "GNB",
-    },
-    id: "GNB",
-  },
-  {
-    value: "240",
-    label: "Equatorial Guinea (+240)",
-    additionalData: {
-      iso3: "GNQ",
-    },
-    id: "GNQ",
-  },
-  {
     value: "30",
     label: "Greece (+30)",
     additionalData: {
       iso3: "GRC",
     },
     id: "GRC",
-  },
-  {
-    value: "1-473",
-    label: "Grenada (+1-473)",
-    additionalData: {
-      iso3: "GRD",
-    },
-    id: "GRD",
   },
   {
     value: "299",
@@ -706,20 +666,20 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "GRL",
   },
   {
-    value: "502",
-    label: "Guatemala (+502)",
+    value: "1-473",
+    label: "Grenada (+1-473)",
     additionalData: {
-      iso3: "GTM",
+      iso3: "GRD",
     },
-    id: "GTM",
+    id: "GRD",
   },
   {
-    value: "594",
-    label: "French Guiana (+594)",
+    value: "590",
+    label: "Guadeloupe (+590)",
     additionalData: {
-      iso3: "GUF",
+      iso3: "GLP",
     },
-    id: "GUF",
+    id: "GLP",
   },
   {
     value: "1-671",
@@ -730,37 +690,44 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "GUM",
   },
   {
+    value: "502",
+    label: "Guatemala (+502)",
+    additionalData: {
+      iso3: "GTM",
+    },
+    id: "GTM",
+  },
+  {
+    value: "44-1481",
+    label: "Guernsey (+44-1481)",
+    additionalData: {
+      iso3: "GGY",
+    },
+    id: "GGY",
+  },
+  {
+    value: "224",
+    label: "Guinea (+224)",
+    additionalData: {
+      iso3: "GIN",
+    },
+    id: "GIN",
+  },
+  {
+    value: "245",
+    label: "Guinea-Bissau (+245)",
+    additionalData: {
+      iso3: "GNB",
+    },
+    id: "GNB",
+  },
+  {
     value: "592",
     label: "Guyana (+592)",
     additionalData: {
       iso3: "GUY",
     },
     id: "GUY",
-  },
-  {
-    value: "852",
-    label: "Hong Kong (+852)",
-    additionalData: {
-      iso3: "HKG",
-    },
-    id: "HKG",
-  },
-
-  {
-    value: "504",
-    label: "Honduras (+504)",
-    additionalData: {
-      iso3: "HND",
-    },
-    id: "HND",
-  },
-  {
-    value: "385",
-    label: "Croatia (+385)",
-    additionalData: {
-      iso3: "HRV",
-    },
-    id: "HRV",
   },
   {
     value: "509",
@@ -771,6 +738,22 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "HTI",
   },
   {
+    value: "504",
+    label: "Honduras (+504)",
+    additionalData: {
+      iso3: "HND",
+    },
+    id: "HND",
+  },
+  {
+    value: "852",
+    label: "Hong Kong (+852)",
+    additionalData: {
+      iso3: "HKG",
+    },
+    id: "HKG",
+  },
+  {
     value: "36",
     label: "Hungary (+36)",
     additionalData: {
@@ -779,20 +762,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "HUN",
   },
   {
-    value: "62",
-    label: "Indonesia (+62)",
+    value: "354",
+    label: "Iceland (+354)",
     additionalData: {
-      iso3: "IDN",
+      iso3: "ISL",
     },
-    id: "IDN",
-  },
-  {
-    value: "44-1624",
-    label: "Isle of Man (+44-1624)",
-    additionalData: {
-      iso3: "IMN",
-    },
-    id: "IMN",
+    id: "ISL",
   },
   {
     value: "91",
@@ -803,20 +778,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "IND",
   },
   {
-    value: "246",
-    label: "British Indian Ocean Territory (+246)",
+    value: "62",
+    label: "Indonesia (+62)",
     additionalData: {
-      iso3: "IOT",
+      iso3: "IDN",
     },
-    id: "IOT",
-  },
-  {
-    value: "353",
-    label: "Ireland (+353)",
-    additionalData: {
-      iso3: "IRL",
-    },
-    id: "IRL",
+    id: "IDN",
   },
   {
     value: "98",
@@ -835,12 +802,20 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "IRQ",
   },
   {
-    value: "354",
-    label: "Iceland (+354)",
+    value: "353",
+    label: "Ireland (+353)",
     additionalData: {
-      iso3: "ISL",
+      iso3: "IRL",
     },
-    id: "ISL",
+    id: "IRL",
+  },
+  {
+    value: "44-1624",
+    label: "Isle of Man (+44-1624)",
+    additionalData: {
+      iso3: "IMN",
+    },
+    id: "IMN",
   },
   {
     value: "972",
@@ -859,12 +834,28 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "ITA",
   },
   {
+    value: "225",
+    label: "Ivory Coast (+225)",
+    additionalData: {
+      iso3: "CIV",
+    },
+    id: "CIV",
+  },
+  {
     value: "1-876",
     label: "Jamaica (+1-876)",
     additionalData: {
       iso3: "JAM",
     },
     id: "JAM",
+  },
+  {
+    value: "81",
+    label: "Japan (+81)",
+    additionalData: {
+      iso3: "JPN",
+    },
+    id: "JPN",
   },
   {
     value: "44-1534",
@@ -883,14 +874,6 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "JOR",
   },
   {
-    value: "81",
-    label: "Japan (+81)",
-    additionalData: {
-      iso3: "JPN",
-    },
-    id: "JPN",
-  },
-  {
     value: "7",
     label: "Kazakhstan (+7)",
     additionalData: {
@@ -907,44 +890,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "KEN",
   },
   {
-    value: "996",
-    label: "Kyrgyzstan (+996)",
-    additionalData: {
-      iso3: "KGZ",
-    },
-    id: "KGZ",
-  },
-  {
-    value: "855",
-    label: "Cambodia (+855)",
-    additionalData: {
-      iso3: "KHM",
-    },
-    id: "KHM",
-  },
-  {
     value: "686",
     label: "Kiribati (+686)",
     additionalData: {
       iso3: "KIR",
     },
     id: "KIR",
-  },
-  {
-    value: "1-869",
-    label: "Saint Kitts and Nevis (+1-869)",
-    additionalData: {
-      iso3: "KNA",
-    },
-    id: "KNA",
-  },
-  {
-    value: "82",
-    label: "South Korea (+82)",
-    additionalData: {
-      iso3: "KOR",
-    },
-    id: "KOR",
   },
   {
     value: "965",
@@ -955,6 +906,14 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "KWT",
   },
   {
+    value: "996",
+    label: "Kyrgyzstan (+996)",
+    additionalData: {
+      iso3: "KGZ",
+    },
+    id: "KGZ",
+  },
+  {
     value: "856",
     label: "Laos (+856)",
     additionalData: {
@@ -963,12 +922,28 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "LAO",
   },
   {
+    value: "371",
+    label: "Latvia (+371)",
+    additionalData: {
+      iso3: "LVA",
+    },
+    id: "LVA",
+  },
+  {
     value: "961",
     label: "Lebanon (+961)",
     additionalData: {
       iso3: "LBN",
     },
     id: "LBN",
+  },
+  {
+    value: "266",
+    label: "Lesotho (+266)",
+    additionalData: {
+      iso3: "LSO",
+    },
+    id: "LSO",
   },
   {
     value: "231",
@@ -987,36 +962,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "LBY",
   },
   {
-    value: "1-758",
-    label: "Saint Lucia (+1-758)",
-    additionalData: {
-      iso3: "LCA",
-    },
-    id: "LCA",
-  },
-  {
     value: "423",
     label: "Liechtenstein (+423)",
     additionalData: {
       iso3: "LIE",
     },
     id: "LIE",
-  },
-  {
-    value: "94",
-    label: "Sri Lanka (+94)",
-    additionalData: {
-      iso3: "LKA",
-    },
-    id: "LKA",
-  },
-  {
-    value: "266",
-    label: "Lesotho (+266)",
-    additionalData: {
-      iso3: "LSO",
-    },
-    id: "LSO",
   },
   {
     value: "370",
@@ -1035,77 +986,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "LUX",
   },
   {
-    value: "371",
-    label: "Latvia (+371)",
-    additionalData: {
-      iso3: "LVA",
-    },
-    id: "LVA",
-  },
-  {
     value: "853",
     label: "Macao (+853)",
     additionalData: {
       iso3: "MAC",
     },
     id: "MAC",
-  },
-  {
-    value: "590",
-    label: "Saint Martin (+590)",
-    additionalData: {
-      iso3: "MAF",
-    },
-    id: "MAF",
-  },
-  {
-    value: "212",
-    label: "Morocco (+212)",
-    additionalData: {
-      iso3: "MAR",
-    },
-    id: "MAR",
-  },
-
-  {
-    value: "373",
-    label: "Moldova (+373)",
-    additionalData: {
-      iso3: "MDA",
-    },
-    id: "MDA",
-  },
-  {
-    value: "261",
-    label: "Madagascar (+261)",
-    additionalData: {
-      iso3: "MDG",
-    },
-    id: "MDG",
-  },
-  {
-    value: "960",
-    label: "Maldives (+960)",
-    additionalData: {
-      iso3: "MDV",
-    },
-    id: "MDV",
-  },
-  {
-    value: "52",
-    label: "Mexico (+52)",
-    additionalData: {
-      iso3: "MEX",
-    },
-    id: "MEX",
-  },
-  {
-    value: "692",
-    label: "Marshall Islands (+692)",
-    additionalData: {
-      iso3: "MHL",
-    },
-    id: "MHL",
   },
   {
     value: "389",
@@ -1116,92 +1002,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "MKD",
   },
   {
-    value: "223",
-    label: "Mali (+223)",
+    value: "261",
+    label: "Madagascar (+261)",
     additionalData: {
-      iso3: "MLI",
+      iso3: "MDG",
     },
-    id: "MLI",
-  },
-  {
-    value: "356",
-    label: "Malta (+356)",
-    additionalData: {
-      iso3: "MLT",
-    },
-    id: "MLT",
-  },
-  {
-    value: "95",
-    label: "Myanmar (+95)",
-    additionalData: {
-      iso3: "MMR",
-    },
-    id: "MMR",
-  },
-  {
-    value: "382",
-    label: "Montenegro (+382)",
-    additionalData: {
-      iso3: "MNE",
-    },
-    id: "MNE",
-  },
-  {
-    value: "976",
-    label: "Mongolia (+976)",
-    additionalData: {
-      iso3: "MNG",
-    },
-    id: "MNG",
-  },
-  {
-    value: "1-670",
-    label: "Northern Mariana Islands (+1-670)",
-    additionalData: {
-      iso3: "MNP",
-    },
-    id: "MNP",
-  },
-  {
-    value: "258",
-    label: "Mozambique (+258)",
-    additionalData: {
-      iso3: "MOZ",
-    },
-    id: "MOZ",
-  },
-  {
-    value: "222",
-    label: "Mauritania (+222)",
-    additionalData: {
-      iso3: "MRT",
-    },
-    id: "MRT",
-  },
-  {
-    value: "1-664",
-    label: "Montserrat (+1-664)",
-    additionalData: {
-      iso3: "MSR",
-    },
-    id: "MSR",
-  },
-  {
-    value: "596",
-    label: "Martinique (+596)",
-    additionalData: {
-      iso3: "MTQ",
-    },
-    id: "MTQ",
-  },
-  {
-    value: "230",
-    label: "Mauritius (+230)",
-    additionalData: {
-      iso3: "MUS",
-    },
-    id: "MUS",
+    id: "MDG",
   },
   {
     value: "265",
@@ -1220,12 +1026,140 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "MYS",
   },
   {
+    value: "960",
+    label: "Maldives (+960)",
+    additionalData: {
+      iso3: "MDV",
+    },
+    id: "MDV",
+  },
+  {
+    value: "223",
+    label: "Mali (+223)",
+    additionalData: {
+      iso3: "MLI",
+    },
+    id: "MLI",
+  },
+  {
+    value: "356",
+    label: "Malta (+356)",
+    additionalData: {
+      iso3: "MLT",
+    },
+    id: "MLT",
+  },
+  {
+    value: "692",
+    label: "Marshall Islands (+692)",
+    additionalData: {
+      iso3: "MHL",
+    },
+    id: "MHL",
+  },
+  {
+    value: "596",
+    label: "Martinique (+596)",
+    additionalData: {
+      iso3: "MTQ",
+    },
+    id: "MTQ",
+  },
+  {
+    value: "222",
+    label: "Mauritania (+222)",
+    additionalData: {
+      iso3: "MRT",
+    },
+    id: "MRT",
+  },
+  {
+    value: "230",
+    label: "Mauritius (+230)",
+    additionalData: {
+      iso3: "MUS",
+    },
+    id: "MUS",
+  },
+  {
     value: "262",
     label: "Mayotte (+262)",
     additionalData: {
       iso3: "MYT",
     },
     id: "MYT",
+  },
+  {
+    value: "52",
+    label: "Mexico (+52)",
+    additionalData: {
+      iso3: "MEX",
+    },
+    id: "MEX",
+  },
+  {
+    value: "691",
+    label: "Micronesia (+691)",
+    additionalData: {
+      iso3: "FSM",
+    },
+    id: "FSM",
+  },
+  {
+    value: "373",
+    label: "Moldova (+373)",
+    additionalData: {
+      iso3: "MDA",
+    },
+    id: "MDA",
+  },
+  {
+    value: "976",
+    label: "Mongolia (+976)",
+    additionalData: {
+      iso3: "MNG",
+    },
+    id: "MNG",
+  },
+  {
+    value: "382",
+    label: "Montenegro (+382)",
+    additionalData: {
+      iso3: "MNE",
+    },
+    id: "MNE",
+  },
+  {
+    value: "1-664",
+    label: "Montserrat (+1-664)",
+    additionalData: {
+      iso3: "MSR",
+    },
+    id: "MSR",
+  },
+  {
+    value: "212",
+    label: "Morocco (+212)",
+    additionalData: {
+      iso3: "MAR",
+    },
+    id: "MAR",
+  },
+  {
+    value: "258",
+    label: "Mozambique (+258)",
+    additionalData: {
+      iso3: "MOZ",
+    },
+    id: "MOZ",
+  },
+  {
+    value: "95",
+    label: "Myanmar (+95)",
+    additionalData: {
+      iso3: "MMR",
+    },
+    id: "MMR",
   },
   {
     value: "264",
@@ -1236,68 +1170,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "NAM",
   },
   {
-    value: "687",
-    label: "New Caledonia (+687)",
+    value: "674",
+    label: "Nauru (+674)",
     additionalData: {
-      iso3: "NCL",
+      iso3: "NRU",
     },
-    id: "NCL",
-  },
-  {
-    value: "227",
-    label: "Niger (+227)",
-    additionalData: {
-      iso3: "NER",
-    },
-    id: "NER",
-  },
-  {
-    value: "672",
-    label: "Norfolk Island (+672)",
-    additionalData: {
-      iso3: "NFK",
-    },
-    id: "NFK",
-  },
-  {
-    value: "234",
-    label: "Nigeria (+234)",
-    additionalData: {
-      iso3: "NGA",
-    },
-    id: "NGA",
-  },
-  {
-    value: "505",
-    label: "Nicaragua (+505)",
-    additionalData: {
-      iso3: "NIC",
-    },
-    id: "NIC",
-  },
-  {
-    value: "683",
-    label: "Niue (+683)",
-    additionalData: {
-      iso3: "NIU",
-    },
-    id: "NIU",
-  },
-  {
-    value: "31",
-    label: "Netherlands (+31)",
-    additionalData: {
-      iso3: "NLD",
-    },
-    id: "NLD",
-  },
-  {
-    value: "47",
-    label: "Norway (+47)",
-    additionalData: {
-      iso3: "NOR",
-    },
-    id: "NOR",
+    id: "NRU",
   },
   {
     value: "977",
@@ -1308,12 +1186,20 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "NPL",
   },
   {
-    value: "674",
-    label: "Nauru (+674)",
+    value: "31",
+    label: "Netherlands (+31)",
     additionalData: {
-      iso3: "NRU",
+      iso3: "NLD",
     },
-    id: "NRU",
+    id: "NLD",
+  },
+  {
+    value: "687",
+    label: "New Caledonia (+687)",
+    additionalData: {
+      iso3: "NCL",
+    },
+    id: "NCL",
   },
   {
     value: "64",
@@ -1322,6 +1208,70 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
       iso3: "NZL",
     },
     id: "NZL",
+  },
+  {
+    value: "505",
+    label: "Nicaragua (+505)",
+    additionalData: {
+      iso3: "NIC",
+    },
+    id: "NIC",
+  },
+  {
+    value: "227",
+    label: "Niger (+227)",
+    additionalData: {
+      iso3: "NER",
+    },
+    id: "NER",
+  },
+  {
+    value: "234",
+    label: "Nigeria (+234)",
+    additionalData: {
+      iso3: "NGA",
+    },
+    id: "NGA",
+  },
+  {
+    value: "683",
+    label: "Niue (+683)",
+    additionalData: {
+      iso3: "NIU",
+    },
+    id: "NIU",
+  },
+  {
+    value: "672",
+    label: "Norfolk Island (+672)",
+    additionalData: {
+      iso3: "NFK",
+    },
+    id: "NFK",
+  },
+  {
+    value: "850",
+    label: "North Korea (+850)",
+    additionalData: {
+      iso3: "PRK",
+    },
+    id: "PRK",
+  },
+  {
+    value: "1-670",
+    label: "Northern Mariana Islands (+1-670)",
+    additionalData: {
+      iso3: "MNP",
+    },
+    id: "MNP",
+  },
+  {
+    value: "47",
+    label: "Norway (+47)",
+    additionalData: {
+      iso3: "NOR",
+    },
+    id: "NOR",
   },
   {
     value: "968",
@@ -1340,6 +1290,22 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "PAK",
   },
   {
+    value: "680",
+    label: "Palau (+680)",
+    additionalData: {
+      iso3: "PLW",
+    },
+    id: "PLW",
+  },
+  {
+    value: "970",
+    label: "Palestinian Territory (+970)",
+    additionalData: {
+      iso3: "PSE",
+    },
+    id: "PSE",
+  },
+  {
     value: "507",
     label: "Panama (+507)",
     additionalData: {
@@ -1348,12 +1314,20 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "PAN",
   },
   {
-    value: "870",
-    label: "Pitcairn (+870)",
+    value: "675",
+    label: "Papua New Guinea (+675)",
     additionalData: {
-      iso3: "PCN",
+      iso3: "PNG",
     },
-    id: "PCN",
+    id: "PNG",
+  },
+  {
+    value: "595",
+    label: "Paraguay (+595)",
+    additionalData: {
+      iso3: "PRY",
+    },
+    id: "PRY",
   },
   {
     value: "51",
@@ -1372,20 +1346,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "PHL",
   },
   {
-    value: "680",
-    label: "Palau (+680)",
+    value: "870",
+    label: "Pitcairn (+870)",
     additionalData: {
-      iso3: "PLW",
+      iso3: "PCN",
     },
-    id: "PLW",
-  },
-  {
-    value: "675",
-    label: "Papua New Guinea (+675)",
-    additionalData: {
-      iso3: "PNG",
-    },
-    id: "PNG",
+    id: "PCN",
   },
   {
     value: "48",
@@ -1396,22 +1362,6 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "POL",
   },
   {
-    value: "1-787 and 1-939",
-    label: "Puerto Rico (+1-787 and 1-939)",
-    additionalData: {
-      iso3: "PRI",
-    },
-    id: "PRI",
-  },
-  {
-    value: "850",
-    label: "North Korea (+850)",
-    additionalData: {
-      iso3: "PRK",
-    },
-    id: "PRK",
-  },
-  {
     value: "351",
     label: "Portugal (+351)",
     additionalData: {
@@ -1420,28 +1370,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "PRT",
   },
   {
-    value: "595",
-    label: "Paraguay (+595)",
+    value: "1-787 and 1-939",
+    label: "Puerto Rico (+1-787 and 1-939)",
     additionalData: {
-      iso3: "PRY",
+      iso3: "PRI",
     },
-    id: "PRY",
-  },
-  {
-    value: "970",
-    label: "Palestinian Territory (+970)",
-    additionalData: {
-      iso3: "PSE",
-    },
-    id: "PSE",
-  },
-  {
-    value: "689",
-    label: "French Polynesia (+689)",
-    additionalData: {
-      iso3: "PYF",
-    },
-    id: "PYF",
+    id: "PRI",
   },
   {
     value: "974",
@@ -1450,6 +1384,14 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
       iso3: "QAT",
     },
     id: "QAT",
+  },
+  {
+    value: "242",
+    label: "Republic of the Congo (+242)",
+    additionalData: {
+      iso3: "COG",
+    },
+    id: "COG",
   },
   {
     value: "262",
@@ -1484,38 +1426,13 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "RWA",
   },
   {
-    value: "966",
-    label: "Saudi Arabia (+966)",
+    value: "590",
+    label: "Saint Barthelemy (+590)",
     additionalData: {
-      iso3: "SAU",
+      iso3: "BLM",
     },
-    id: "SAU",
+    id: "BLM",
   },
-  {
-    value: "249",
-    label: "Sudan (+249)",
-    additionalData: {
-      iso3: "SDN",
-    },
-    id: "SDN",
-  },
-  {
-    value: "221",
-    label: "Senegal (+221)",
-    additionalData: {
-      iso3: "SEN",
-    },
-    id: "SEN",
-  },
-  {
-    value: "65",
-    label: "Singapore (+65)",
-    additionalData: {
-      iso3: "SGP",
-    },
-    id: "SGP",
-  },
-
   {
     value: "290",
     label: "Saint Helena (+290)",
@@ -1525,52 +1442,28 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "SHN",
   },
   {
-    value: "47",
-    label: "Svalbard and Jan Mayen (+47)",
+    value: "1-869",
+    label: "Saint Kitts and Nevis (+1-869)",
     additionalData: {
-      iso3: "SJM",
+      iso3: "KNA",
     },
-    id: "SJM",
+    id: "KNA",
   },
   {
-    value: "677",
-    label: "Solomon Islands (+677)",
+    value: "1-758",
+    label: "Saint Lucia (+1-758)",
     additionalData: {
-      iso3: "SLB",
+      iso3: "LCA",
     },
-    id: "SLB",
+    id: "LCA",
   },
   {
-    value: "232",
-    label: "Sierra Leone (+232)",
+    value: "590",
+    label: "Saint Martin (+590)",
     additionalData: {
-      iso3: "SLE",
+      iso3: "MAF",
     },
-    id: "SLE",
-  },
-  {
-    value: "503",
-    label: "El Salvador (+503)",
-    additionalData: {
-      iso3: "SLV",
-    },
-    id: "SLV",
-  },
-  {
-    value: "378",
-    label: "San Marino (+378)",
-    additionalData: {
-      iso3: "SMR",
-    },
-    id: "SMR",
-  },
-  {
-    value: "252",
-    label: "Somalia (+252)",
-    additionalData: {
-      iso3: "SOM",
-    },
-    id: "SOM",
+    id: "MAF",
   },
   {
     value: "508",
@@ -1581,20 +1474,28 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "SPM",
   },
   {
-    value: "381",
-    label: "Serbia (+381)",
+    value: "1-784",
+    label: "Saint Vincent and the Grenadines (+1-784)",
     additionalData: {
-      iso3: "SRB",
+      iso3: "VCT",
     },
-    id: "SRB",
+    id: "VCT",
   },
   {
-    value: "211",
-    label: "South Sudan (+211)",
+    value: "685",
+    label: "Samoa (+685)",
     additionalData: {
-      iso3: "SSD",
+      iso3: "WSM",
     },
-    id: "SSD",
+    id: "WSM",
+  },
+  {
+    value: "378",
+    label: "San Marino (+378)",
+    additionalData: {
+      iso3: "SMR",
+    },
+    id: "SMR",
   },
   {
     value: "239",
@@ -1605,12 +1506,60 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "STP",
   },
   {
-    value: "597",
-    label: "Suriname (+597)",
+    value: "966",
+    label: "Saudi Arabia (+966)",
     additionalData: {
-      iso3: "SUR",
+      iso3: "SAU",
     },
-    id: "SUR",
+    id: "SAU",
+  },
+  {
+    value: "221",
+    label: "Senegal (+221)",
+    additionalData: {
+      iso3: "SEN",
+    },
+    id: "SEN",
+  },
+  {
+    value: "381",
+    label: "Serbia (+381)",
+    additionalData: {
+      iso3: "SRB",
+    },
+    id: "SRB",
+  },
+  {
+    value: "248",
+    label: "Seychelles (+248)",
+    additionalData: {
+      iso3: "SYC",
+    },
+    id: "SYC",
+  },
+  {
+    value: "232",
+    label: "Sierra Leone (+232)",
+    additionalData: {
+      iso3: "SLE",
+    },
+    id: "SLE",
+  },
+  {
+    value: "65",
+    label: "Singapore (+65)",
+    additionalData: {
+      iso3: "SGP",
+    },
+    id: "SGP",
+  },
+  {
+    value: "599",
+    label: "Sint Maarten (+599)",
+    additionalData: {
+      iso3: "SXM",
+    },
+    id: "SXM",
   },
   {
     value: "421",
@@ -1629,12 +1578,84 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "SVN",
   },
   {
-    value: "46",
-    label: "Sweden (+46)",
+    value: "677",
+    label: "Solomon Islands (+677)",
     additionalData: {
-      iso3: "SWE",
+      iso3: "SLB",
     },
-    id: "SWE",
+    id: "SLB",
+  },
+  {
+    value: "252",
+    label: "Somalia (+252)",
+    additionalData: {
+      iso3: "SOM",
+    },
+    id: "SOM",
+  },
+  {
+    value: "27",
+    label: "South Africa (+27)",
+    additionalData: {
+      iso3: "ZAF",
+    },
+    id: "ZAF",
+  },
+  {
+    value: "82",
+    label: "South Korea (+82)",
+    additionalData: {
+      iso3: "KOR",
+    },
+    id: "KOR",
+  },
+  {
+    value: "211",
+    label: "South Sudan (+211)",
+    additionalData: {
+      iso3: "SSD",
+    },
+    id: "SSD",
+  },
+  {
+    value: "34",
+    label: "Spain (+34)",
+    additionalData: {
+      iso3: "ESP",
+    },
+    id: "ESP",
+  },
+  {
+    value: "94",
+    label: "Sri Lanka (+94)",
+    additionalData: {
+      iso3: "LKA",
+    },
+    id: "LKA",
+  },
+  {
+    value: "249",
+    label: "Sudan (+249)",
+    additionalData: {
+      iso3: "SDN",
+    },
+    id: "SDN",
+  },
+  {
+    value: "597",
+    label: "Suriname (+597)",
+    additionalData: {
+      iso3: "SUR",
+    },
+    id: "SUR",
+  },
+  {
+    value: "47",
+    label: "Svalbard and Jan Mayen (+47)",
+    additionalData: {
+      iso3: "SJM",
+    },
+    id: "SJM",
   },
   {
     value: "268",
@@ -1645,20 +1666,20 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "SWZ",
   },
   {
-    value: "599",
-    label: "Sint Maarten (+599)",
+    value: "46",
+    label: "Sweden (+46)",
     additionalData: {
-      iso3: "SXM",
+      iso3: "SWE",
     },
-    id: "SXM",
+    id: "SWE",
   },
   {
-    value: "248",
-    label: "Seychelles (+248)",
+    value: "41",
+    label: "Switzerland (+41)",
     additionalData: {
-      iso3: "SYC",
+      iso3: "CHE",
     },
-    id: "SYC",
+    id: "CHE",
   },
   {
     value: "963",
@@ -1669,36 +1690,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "SYR",
   },
   {
-    value: "1-649",
-    label: "Turks and Caicos Islands (+1-649)",
+    value: "886",
+    label: "Taiwan (+886)",
     additionalData: {
-      iso3: "TCA",
+      iso3: "TWN",
     },
-    id: "TCA",
-  },
-  {
-    value: "235",
-    label: "Chad (+235)",
-    additionalData: {
-      iso3: "TCD",
-    },
-    id: "TCD",
-  },
-  {
-    value: "228",
-    label: "Togo (+228)",
-    additionalData: {
-      iso3: "TGO",
-    },
-    id: "TGO",
-  },
-  {
-    value: "66",
-    label: "Thailand (+66)",
-    additionalData: {
-      iso3: "THA",
-    },
-    id: "THA",
+    id: "TWN",
   },
   {
     value: "992",
@@ -1709,28 +1706,36 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "TJK",
   },
   {
+    value: "255",
+    label: "Tanzania (+255)",
+    additionalData: {
+      iso3: "TZA",
+    },
+    id: "TZA",
+  },
+  {
+    value: "66",
+    label: "Thailand (+66)",
+    additionalData: {
+      iso3: "THA",
+    },
+    id: "THA",
+  },
+  {
+    value: "228",
+    label: "Togo (+228)",
+    additionalData: {
+      iso3: "TGO",
+    },
+    id: "TGO",
+  },
+  {
     value: "690",
     label: "Tokelau (+690)",
     additionalData: {
       iso3: "TKL",
     },
     id: "TKL",
-  },
-  {
-    value: "993",
-    label: "Turkmenistan (+993)",
-    additionalData: {
-      iso3: "TKM",
-    },
-    id: "TKM",
-  },
-  {
-    value: "670",
-    label: "East Timor (+670)",
-    additionalData: {
-      iso3: "TLS",
-    },
-    id: "TLS",
   },
   {
     value: "676",
@@ -1765,6 +1770,22 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "TUR",
   },
   {
+    value: "993",
+    label: "Turkmenistan (+993)",
+    additionalData: {
+      iso3: "TKM",
+    },
+    id: "TKM",
+  },
+  {
+    value: "1-649",
+    label: "Turks and Caicos Islands (+1-649)",
+    additionalData: {
+      iso3: "TCA",
+    },
+    id: "TCA",
+  },
+  {
     value: "688",
     label: "Tuvalu (+688)",
     additionalData: {
@@ -1773,20 +1794,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "TUV",
   },
   {
-    value: "886",
-    label: "Taiwan (+886)",
+    value: "1-340",
+    label: "U.S. Virgin Islands (+1-340)",
     additionalData: {
-      iso3: "TWN",
+      iso3: "VIR",
     },
-    id: "TWN",
-  },
-  {
-    value: "255",
-    label: "Tanzania (+255)",
-    additionalData: {
-      iso3: "TZA",
-    },
-    id: "TZA",
+    id: "VIR",
   },
   {
     value: "256",
@@ -1805,6 +1818,30 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "UKR",
   },
   {
+    value: "971",
+    label: "United Arab Emirates (+971)",
+    additionalData: {
+      iso3: "ARE",
+    },
+    id: "ARE",
+  },
+  {
+    value: "44",
+    label: "United Kingdom (+44)",
+    additionalData: {
+      iso3: "GBR",
+    },
+    id: "GBR",
+  },
+  {
+    value: "1",
+    label: "United States (+1)",
+    additionalData: {
+      iso3: "USA",
+    },
+    id: "USA",
+  },
+  {
     value: "1",
     label: "United States Minor Outlying Islands (+1)",
     additionalData: {
@@ -1821,68 +1858,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "URY",
   },
   {
-    value: "1",
-    label: "United States (+1)",
-    additionalData: {
-      iso3: "USA",
-    },
-    id: "USA",
-  },
-  {
     value: "998",
     label: "Uzbekistan (+998)",
     additionalData: {
       iso3: "UZB",
     },
     id: "UZB",
-  },
-  {
-    value: "379",
-    label: "Vatican (+379)",
-    additionalData: {
-      iso3: "VAT",
-    },
-    id: "VAT",
-  },
-  {
-    value: "1-784",
-    label: "Saint Vincent and the Grenadines (+1-784)",
-    additionalData: {
-      iso3: "VCT",
-    },
-    id: "VCT",
-  },
-  {
-    value: "58",
-    label: "Venezuela (+58)",
-    additionalData: {
-      iso3: "VEN",
-    },
-    id: "VEN",
-  },
-  {
-    value: "1-284",
-    label: "British Virgin Islands (+1-284)",
-    additionalData: {
-      iso3: "VGB",
-    },
-    id: "VGB",
-  },
-  {
-    value: "1-340",
-    label: "U.S. Virgin Islands (+1-340)",
-    additionalData: {
-      iso3: "VIR",
-    },
-    id: "VIR",
-  },
-  {
-    value: "84",
-    label: "Vietnam (+84)",
-    additionalData: {
-      iso3: "VNM",
-    },
-    id: "VNM",
   },
   {
     value: "678",
@@ -1893,6 +1874,30 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "VUT",
   },
   {
+    value: "379",
+    label: "Vatican (+379)",
+    additionalData: {
+      iso3: "VAT",
+    },
+    id: "VAT",
+  },
+  {
+    value: "58",
+    label: "Venezuela (+58)",
+    additionalData: {
+      iso3: "VEN",
+    },
+    id: "VEN",
+  },
+  {
+    value: "84",
+    label: "Vietnam (+84)",
+    additionalData: {
+      iso3: "VNM",
+    },
+    id: "VNM",
+  },
+  {
     value: "681",
     label: "Wallis and Futuna (+681)",
     additionalData: {
@@ -1901,12 +1906,12 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
     id: "WLF",
   },
   {
-    value: "685",
-    label: "Samoa (+685)",
+    value: "212",
+    label: "Western Sahara (+212)",
     additionalData: {
-      iso3: "WSM",
+      iso3: "ESH",
     },
-    id: "WSM",
+    id: "ESH",
   },
   {
     value: "967",
@@ -1915,14 +1920,6 @@ export const countriesPhoneCodes: OptionType<Record<"iso3", string>>[] = [
       iso3: "YEM",
     },
     id: "YEM",
-  },
-  {
-    value: "27",
-    label: "South Africa (+27)",
-    additionalData: {
-      iso3: "ZAF",
-    },
-    id: "ZAF",
   },
   {
     value: "260",
