@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { number, object, string } from "zod";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
-import { Button, Form, Input, Numpad, Select, Spinner } from "../../components";
+import { Button, Form, Input, Select, Spinner } from "../../components";
 import { Icons } from "../../enums";
 import {
   useAddInventoryProducts,
@@ -116,16 +116,6 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
                   value={field.state.value || ""}
                   variant={field.state.meta.errors.length ? "error" : "primary"}
                 />
-                {!isLg ? (
-                  <Numpad
-                    onClick={(button) => {
-                      if (button === "clear" || (button === "delete" && !field.state.value?.length)) field.handleChange("");
-                      else if (button === "delete" && field.state.value?.length)
-                        field.handleChange(field.state.value.slice(0, field.state.value.length - 1));
-                      else field.handleChange(`${field.state.value}${button}`);
-                    }}
-                  />
-                ) : null}
               </div>
             )}
             name="barcode"
