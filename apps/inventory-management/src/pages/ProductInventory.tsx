@@ -6,6 +6,7 @@ import {
   ProductsWithCountType,
   Table,
   Tabs,
+  urlFunction,
   useBarcodeScanner,
   useDrawer,
   useList,
@@ -48,16 +49,15 @@ function ActionButton({ data }: { data: Entity }) {
           },
           {
             id: "2",
-            title: "Generate QR code",
+            title: "Print QR codes",
             icon: Icons.qrCode,
-            onClick: () => {
-              // setOnResult((result) =>
-              //   openDrawer("Add products", {
-              //     type: "add_products",
-              //     categoryId: active,
-              //     barcode: result.getText(),
-              //   })
-              // );
+            onClick: async () => {
+              const link = await urlFunction({
+                id: data.id,
+                userReset: () => {},
+                urlSuffix: "product-qr-code",
+              });
+              window.open(link, "_blank");
             },
           },
         ]}
