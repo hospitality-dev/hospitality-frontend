@@ -46,6 +46,20 @@ function ActionButton({ data }: { data: Entity }) {
             title: "Remove amount",
             icon: Icons.removeItem,
           },
+          {
+            id: "2",
+            title: "Generate QR code",
+            icon: Icons.qrCode,
+            onClick: () => {
+              // setOnResult((result) =>
+              //   openDrawer("Add products", {
+              //     type: "add_products",
+              //     categoryId: active,
+              //     barcode: result.getText(),
+              //   })
+              // );
+            },
+          },
         ]}
         onClick={undefined}
         size="xl"
