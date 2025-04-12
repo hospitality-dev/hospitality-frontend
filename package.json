@@ -24,9 +24,11 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
-    "*.{ts,tsx}": [
-      "tsc-files --noEmit"
-    ]
+    "apps/shell/src/**/*.{ts, tsx}": "tsc --noEmit",
+    "apps/settings/src/**/*.{ts, tsx}": "tsc --noEmit",
+    "apps/inventory-management/src/**/*.{ts, tsx}": "tsc --noEmit",
+    "apps/employee-management/src/**/*.{ts, tsx}": "tsc --noEmit",
+    "packages/hospitality-ui/src/**/*.{ts, tsx}": "tsc --noEmit"
   },
   "private": true,
   "scripts": {
