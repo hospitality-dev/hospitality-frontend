@@ -145,6 +145,7 @@ export function Input({
             <Select
               hasNoBorder
               hasNoHelperText
+              hasSearch
               onChange={(item) => {
                 if (onSelectChange) onSelectChange(item);
               }}
