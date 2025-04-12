@@ -142,6 +142,7 @@ export function Input({
           <div className={selectClasses()}>
             <Select
               hasNoBorder
+              hasNoHelperText
               onChange={(item) => {
                 if (onSelectChange) onSelectChange(item);
               }}

@@ -28,6 +28,7 @@ type Props<OT> = {
   isMultiple?: boolean;
   isDisabled?: boolean;
   hasNoBorder?: boolean;
+  hasNoHelperText?: boolean;
   variant?: Variant;
   size?: Size;
   icon?: availableIcons;
@@ -67,6 +68,11 @@ const classes = tv({
 
     isDisabled: { true: "cursor-not-allowed text-gray-400" },
     hasNoBorder: { true: "border-0 outline-0 outline-none" },
+    hasNoHelperText: {
+      true: {
+        helperTextClasses: "hidden",
+      },
+    },
   },
 });
 
@@ -81,6 +87,7 @@ export function Select<OT>({
   options = [],
   errors,
   value,
+  hasNoHelperText,
 }: Props<OT>) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -128,6 +135,7 @@ export function Select<OT>({
     size,
     isDisabled: isDisabled || !options.length,
     hasNoBorder,
+    hasNoHelperText,
   });
   return (
     <div className={container()}>
