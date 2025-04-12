@@ -167,6 +167,26 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
             onSuccess: resetDrawer,
           }),
     validators: {
+      onBlur:
+        data.type === "add_products"
+          ? object({
+              amount: number().min(1).max(100, "Cannot add more than 100 items."),
+              id: string().uuid(),
+            })
+          : object({
+              id: string().uuid(),
+              amount: number().min(1).max(data.maxAmount, "Cannot remove more than available items."),
+            }),
+      onChange:
+        data.type === "add_products"
+          ? object({
+              amount: number().min(1).max(100, "Cannot add more than 100 items."),
+              id: string().uuid(),
+            })
+          : object({
+              id: string().uuid(),
+              amount: number().min(1).max(data.maxAmount, "Cannot remove more than available items."),
+            }),
       onSubmit:
         data.type === "add_products"
           ? object({
@@ -200,6 +220,7 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
                     isDisabled
                     label="Product"
                     name={field.name}
+                    onBlur={field.handleBlur}
                     onChange={() => {}}
                     value={product?.title}
                     variant="secondary"
@@ -208,12 +229,12 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
                   <Select
                     isDisabled={isLoading || isLoadingProduct}
                     label="Product"
+                    onBlur={field.handleBlur}
                     onChange={(e) => {
                       if (e?.value) field.handleChange(e?.value);
                     }}
                     options={formatForOptions(products)}
                     value={field.state.value as string}
-                    variant={field.state.meta.errors.length ? "error" : "primary"}
                   />
                 )}
                 {field.state.meta.errors.toString()}
@@ -226,12 +247,13 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
             children={(field) => (
               <Input
                 errors={field.state.meta.errors}
+                inputMode="numeric"
                 isDisabled={isLoading || isLoadingProduct}
                 label="Amount"
                 name={field.name}
+                onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(Number(e.target.value))}
                 value={field.state.value}
-                variant={field.state.meta.errors.length ? "error" : "primary"}
               />
             )}
             name="amount"
@@ -242,8 +264,9 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
             children={(p) => {
               return (
                 <Button
+                  icon={data.type === "add_products" ? Icons["add-item"] : Icons["remove-item"]}
                   isDisabled={!p[0] || isLoading || isLoadingProduct}
-                  label="Create"
+                  label={data.type === "add_products" ? "Add" : "Remove"}
                   onClick={undefined}
                   variant="success"
                 />
