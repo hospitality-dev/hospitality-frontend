@@ -1,10 +1,11 @@
 import {
   autoUpdate,
   flip,
+  FloatingFocusManager,
+  FloatingPortal,
   offset,
   size as floatingSize,
   useClick,
-  useDismiss,
   useFloating,
   useFocus,
   useInteractions,
@@ -13,13 +14,15 @@ import {
 } from "@floating-ui/react";
 import { Icon } from "@iconify/react";
 import { ValidationError } from "@tanstack/react-form";
-import { FocusEventHandler, useLayoutEffect, useRef, useState } from "react";
+import { FocusEventHandler, useRef, useState } from "react";
 import { tv } from "tailwind-variants";
 import { ZodIssue } from "zod";
 
 import { Icons } from "../enums";
+import { useDebounce } from "../hooks/ui/useDebounce";
 import { AvailableIcons, OptionType, Size, Variant } from "../types/baseTypes";
 import { formatErrorsForHelperText } from "../utils";
+import { Input } from "./Input";
 import { OptionItem } from "./OptionItem";
 
 type Props<OT> = {
@@ -29,6 +32,7 @@ type Props<OT> = {
   isDisabled?: boolean;
   hasNoBorder?: boolean;
   hasNoHelperText?: boolean;
+  hasSearch?: boolean;
   variant?: Variant;
   size?: Size;
   icon?: AvailableIcons;
@@ -46,7 +50,9 @@ const classes = tv({
     base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center gap-x-1 rounded-md border px-1 shadow-sm outline-0",
     icon: "text-primary ml-auto pt-0.5",
     optionsContainer:
-      "z-[61] divide-y divide-gray-300 overflow-y-auto rounded-md border border-gray-400 bg-white shadow-lg outline-0",
+      "z-[61] h-fit overflow-y-auto rounded-md border border-gray-400 bg-white shadow-lg outline-0 [&>:has(label)>div]:border-0 [&>div>:has(label)>div]:rounded-none [&>div>:has(label)>div]:shadow-none [&>div>:has(label)>p]:hidden",
+    searchContainer: "sticky top-0",
+    optionsList: "max-h-full divide-y divide-gray-300 overflow-y-auto",
     selectedItemLabel: "select-none",
     helperTextClasses: "h-3.5 text-sm",
   },
@@ -85,6 +91,7 @@ export function Select<OT>({
   // isMultiple = false,
   isDisabled = false,
   hasNoBorder,
+  hasSearch,
   onChange,
   options = [],
   errors,
@@ -94,12 +101,15 @@ export function Select<OT>({
 }: Props<OT>) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(
+    value ? options.findIndex((opt) => opt.value === value) : null
+  );
+  const [filter, setFilter] = useState("");
   const { refs, floatingStyles, context } = useFloating<HTMLElement>({
     placement: "bottom-start",
     open: isDisabled ? false : isOpen,
     onOpenChange: isDisabled ? () => {} : setIsOpen,
+    strategy: "fixed",
     whileElementsMounted: autoUpdate,
     middleware: [
       offset(5),
@@ -119,7 +129,6 @@ export function Select<OT>({
   const listRef = useRef<Array<HTMLElement | null>>([]);
 
   const click = useClick(context, { event: "mousedown" });
-  const dismiss = useDismiss(context, { escapeKey: true, outsidePress: true });
   const role = useRole(context, { role: "listbox" });
   const focus = useFocus(context);
   const listNav = useListNavigation(context, {
@@ -134,9 +143,20 @@ export function Select<OT>({
   });
   const selectedItem = selectedIndex !== null ? options[selectedIndex] : null;
 
-  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([focus, dismiss, role, listNav, click]);
+  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([focus, role, listNav, click]);
 
-  const { base, container, labelClasses, icon, selectBox, optionsContainer, helperTextClasses, selectedItemLabel } = classes({
+  const {
+    base,
+    container,
+    labelClasses,
+    icon,
+    selectBox,
+    optionsContainer,
+    searchContainer,
+    optionsList,
+    helperTextClasses,
+    selectedItemLabel,
+  } = classes({
     variant: errors?.length ? "error" : variant,
     size,
     isDisabled: isDisabled || !options.length,
@@ -144,14 +164,7 @@ export function Select<OT>({
     hasNoHelperText,
   });
 
-  useLayoutEffect(() => {
-    if (value && selectedIndex === null) {
-      const idx = options.findIndex((opt) => opt?.value === value);
-      if (idx !== undefined && idx > -1) {
-        setSelectedIndex(idx);
-      }
-    }
-  }, [value]);
+  const filteredItems = useDebounce(options.filter((opt) => opt.label.toLowerCase().includes(filter.toLowerCase())));
 
   return (
     <div className={container()} onBlur={onBlur}>
@@ -178,41 +191,71 @@ export function Select<OT>({
       <p className={helperTextClasses()}>{formatErrorsForHelperText(errors || [])}</p>
 
       {isOpen && !isDisabled && options.length ? (
-        <div ref={refs.setFloating} className={optionsContainer()} style={floatingStyles} {...getFloatingProps()}>
-          {options.map((opt, i) => (
-            <div
-              key={opt.id || opt.value}
-              ref={(node) => {
-                listRef.current[i] = node;
-              }}
-              aria-selected={i === activeIndex}
-              role="option"
-              tabIndex={i === activeIndex ? 0 : -1}
-              {...getItemProps({
-                onKeyDown: (e) => {
-                  if (e.key === "Enter" && !isDisabled && !opt.isDisabled && activeIndex !== null) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onChange(options[activeIndex]);
-                    setSelectedIndex(activeIndex);
-                    setIsOpen(false);
-                  }
-                },
-                className: "outline-0 outline-none",
-              })}>
-              <OptionItem
-                isActive={i === activeIndex}
-                isSelected={selectedIndex === i}
-                item={opt}
-                onChange={(item) => {
-                  onChange(item);
-                  setSelectedIndex(activeIndex);
-                  setIsOpen(false);
-                }}
-              />
+        <FloatingPortal>
+          <FloatingFocusManager context={context} modal={false}>
+            <div ref={refs.setFloating} className={optionsContainer()} style={floatingStyles} {...getFloatingProps()}>
+              {hasSearch ? (
+                <div className={searchContainer()}>
+                  <Input
+                    isAutofocused
+                    label=""
+                    name="filter"
+                    onChange={(e) => setFilter(e.target.value)}
+                    placeholder="Search"
+                    type="search"
+                    value={filter}
+                    variant="secondary"
+                  />
+                </div>
+              ) : null}
+              <div className={optionsList()}>
+                {filteredItems.map((opt, i) => (
+                  <div
+                    key={opt.id || opt.value}
+                    ref={(node) => {
+                      listRef.current[i] = node;
+                    }}
+                    aria-selected={i === activeIndex}
+                    role="option"
+                    tabIndex={i === activeIndex ? 0 : -1}
+                    {...getItemProps({
+                      onKeyDown: (e) => {
+                        if (e.key === "Enter" && !isDisabled && !opt.isDisabled && activeIndex !== null) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          const optIdx = options.findIndex((filteredOpt) => filteredOpt.value === opt.value);
+                          setFilter("");
+                          onChange(opt);
+                          if (optIdx > -1 && optIdx !== undefined) {
+                            setSelectedIndex(optIdx);
+                          }
+                          setIsOpen(false);
+                        }
+                      },
+                      className: "outline-0 outline-none",
+                    })}>
+                    <OptionItem
+                      isActive={i === activeIndex}
+                      isSelected={selectedIndex === i}
+                      item={opt}
+                      onChange={(item) => {
+                        const optIdx = options.findIndex((filteredOpt) => filteredOpt.value === opt.value);
+                        if (optIdx > -1 && optIdx !== undefined) {
+                          onChange(item);
+                          setSelectedIndex(optIdx);
+                          setFilter("");
+                          setIsOpen(false);
+                        }
+                        setFilter("");
+                        setIsOpen(false);
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
-        </div>
+          </FloatingFocusManager>
+        </FloatingPortal>
       ) : null}
     </div>
   );
