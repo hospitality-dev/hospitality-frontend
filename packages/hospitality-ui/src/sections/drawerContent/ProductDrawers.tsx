@@ -50,47 +50,50 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
         onSuccess: resetDrawer,
       }),
     validators: {
-      onChange: ProductsInitalizerSchema,
+      onBlur: ProductsInitalizerSchema,
       onSubmit: ProductsInitalizerSchema,
     },
   });
   return (
     <>
       <Form handleSubmit={form.handleSubmit}>
-        <div className="grid h-full grid-cols-2 content-start items-start gap-2">
+        <div className="grid h-full grid-cols-1 content-start items-start gap-2 md:grid-cols-2">
           <form.Field
             children={(field) => (
-              <Input
-                errors={field.state.meta.errors}
-                isAutofocused
-                label={getSentenceCase(field.name)}
-                name={field.name}
-                onChange={(e) => field.handleChange(e.target.value)}
-                value={field.state.value}
-                variant={field.state.meta.errors.length ? "error" : "primary"}
-              />
+              <div className="md:col-span-2">
+                <Input
+                  errors={field.state.meta.errors}
+                  isAutofocused
+                  label={getSentenceCase(field.name)}
+                  name={field.name}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  value={field.state.value}
+                />
+              </div>
             )}
             name="title"
           />
 
           <form.Field
             children={(field) => (
-              <Select
-                label="Product category"
-                onChange={(e) => {
-                  if (e) field.handleChange(e.value);
-                }}
-                options={(categories || [])?.map((cat) => ({ label: cat.title, value: cat.id }))}
-                value={field.state.value}
-                variant={field.state.meta.errors.length ? "error" : "primary"}
-              />
+              <div className="md:col-span-2">
+                <Select
+                  label="Product category"
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    if (e) field.handleChange(e.value);
+                  }}
+                  options={(categories || [])?.map((cat) => ({ label: cat.title, value: cat.id }))}
+                  value={field.state.value}
+                />
+              </div>
             )}
             name="categoryId"
           />
-
           <form.Field
             children={(field) => (
-              <div className="col-span-2 flex flex-col gap-y-4">
+              <div className="flex flex-col gap-y-4 md:col-span-2">
                 <Input
                   action={
                     !isLg
@@ -109,19 +112,20 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
                       : undefined
                   }
                   errors={field.state.meta.errors}
+                  inputMode="numeric"
                   label={getSentenceCase(field.name)}
                   name={field.name}
+                  onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  type={"number"}
+                  type="number"
                   value={field.state.value || ""}
-                  variant={field.state.meta.errors.length ? "error" : "primary"}
                 />
               </div>
             )}
             name="barcode"
           />
         </div>
-        <div className={`relative ${isLg ? "bottom-8" : "bottom-24"}`}>
+        <div className="mt-auto md:col-span-2">
           <form.Subscribe<[boolean, boolean]>
             children={(p) => {
               return <Button isDisabled={!p[0]} label="Create" onClick={undefined} variant="success" />;
