@@ -1,7 +1,6 @@
 import {
   autoUpdate,
   flip,
-  FloatingFocusManager,
   offset,
   size as floatingSize,
   useClick,
@@ -14,7 +13,7 @@ import {
 } from "@floating-ui/react";
 import { Icon } from "@iconify/react";
 import { ValidationError } from "@tanstack/react-form";
-import { FocusEventHandler, useRef, useState } from "react";
+import { FocusEventHandler, useLayoutEffect, useRef, useState } from "react";
 import { tv } from "tailwind-variants";
 import { ZodIssue } from "zod";
 
@@ -48,6 +47,7 @@ const classes = tv({
     icon: "text-primary ml-auto pt-0.5",
     optionsContainer:
       "z-[61] divide-y divide-gray-300 overflow-y-auto rounded-md border border-gray-400 bg-white shadow-lg outline-0",
+    selectedItemLabel: "select-none",
     helperTextClasses: "h-3.5 text-sm",
   },
 
@@ -94,6 +94,7 @@ export function Select<OT>({
 }: Props<OT>) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const { refs, floatingStyles, context } = useFloating<HTMLElement>({
     placement: "bottom-start",
@@ -118,28 +119,40 @@ export function Select<OT>({
   const listRef = useRef<Array<HTMLElement | null>>([]);
 
   const click = useClick(context, { event: "mousedown" });
-  const dismiss = useDismiss(context);
+  const dismiss = useDismiss(context, { escapeKey: true, outsidePress: true });
   const role = useRole(context, { role: "listbox" });
   const focus = useFocus(context);
   const listNav = useListNavigation(context, {
     listRef,
     activeIndex,
+    selectedIndex,
     onNavigate: setActiveIndex,
-    virtual: true,
+    scrollItemIntoView: true,
+    focusItemOnOpen: true,
     // This is a large list, allow looping.
     loop: true,
   });
+  const selectedItem = selectedIndex !== null ? options[selectedIndex] : null;
 
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([focus, dismiss, role, listNav, click]);
 
-  const selectedItem = options.find((opt) => opt?.value === value);
-  const { base, container, labelClasses, icon, selectBox, optionsContainer, helperTextClasses } = classes({
+  const { base, container, labelClasses, icon, selectBox, optionsContainer, helperTextClasses, selectedItemLabel } = classes({
     variant: errors?.length ? "error" : variant,
     size,
     isDisabled: isDisabled || !options.length,
     hasNoBorder,
     hasNoHelperText,
   });
+
+  useLayoutEffect(() => {
+    if (value && selectedIndex === null) {
+      const idx = options.findIndex((opt) => opt?.value === value);
+      if (idx !== undefined && idx > -1) {
+        setSelectedIndex(idx);
+      }
+    }
+  }, [value]);
+
   return (
     <div className={container()} onBlur={onBlur}>
       <p className={labelClasses()}>{label ? <label>{label}</label> : null}</p>
@@ -156,7 +169,7 @@ export function Select<OT>({
           "iso3" in selectedItem.additionalData ? (
             <img src={`/flags/${selectedItem.additionalData.iso3}.svg`} />
           ) : null}
-          {!options?.length ? "No options" : selectedItem?.label || "Select one"}
+          <span className={selectedItemLabel()}>{!options?.length ? "No options" : selectedItem?.label || "Select one"}</span>
           <div className={icon()}>
             <Icon icon={Icons.arrowDown} />
           </div>
@@ -165,23 +178,41 @@ export function Select<OT>({
       <p className={helperTextClasses()}>{formatErrorsForHelperText(errors || [])}</p>
 
       {isOpen && !isDisabled && options.length ? (
-        <FloatingFocusManager context={context} modal={false}>
-          <div ref={refs.setFloating} className={optionsContainer()} style={floatingStyles} {...getFloatingProps()}>
-            {options.map((opt, i) => (
-              <div
-                key={opt.id || opt.value}
-                ref={(node) => {
-                  listRef.current[i] = node;
+        <div ref={refs.setFloating} className={optionsContainer()} style={floatingStyles} {...getFloatingProps()}>
+          {options.map((opt, i) => (
+            <div
+              key={opt.id || opt.value}
+              ref={(node) => {
+                listRef.current[i] = node;
+              }}
+              aria-selected={i === activeIndex}
+              role="option"
+              tabIndex={i === activeIndex ? 0 : -1}
+              {...getItemProps({
+                onKeyDown: (e) => {
+                  if (e.key === "Enter" && !isDisabled && !opt.isDisabled && activeIndex !== null) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onChange(options[activeIndex]);
+                    setSelectedIndex(activeIndex);
+                    setIsOpen(false);
+                  }
+                },
+                className: "outline-0 outline-none",
+              })}>
+              <OptionItem
+                isActive={i === activeIndex}
+                isSelected={selectedIndex === i}
+                item={opt}
+                onChange={(item) => {
+                  onChange(item);
+                  setSelectedIndex(activeIndex);
+                  setIsOpen(false);
                 }}
-                aria-selected={i === activeIndex}
-                role="option"
-                tabIndex={i === activeIndex ? 0 : -1}
-                {...getItemProps({ className: "outline-0 outline-none" })}>
-                <OptionItem isActive={i === activeIndex} isSelected={opt?.value === value} item={opt} onChange={onChange} />
-              </div>
-            ))}
-          </div>
-        </FloatingFocusManager>
+              />
+            </div>
+          ))}
+        </div>
       ) : null}
     </div>
   );
