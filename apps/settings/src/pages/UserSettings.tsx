@@ -3,6 +3,7 @@ import {
   AvailableContactTypes,
   Avatar,
   Button,
+  camelCaseContactType,
   Card,
   Collapsible,
   ContactSchema,
@@ -58,7 +59,7 @@ function ContactDisplay({
         children={(subfield) => (
           <Title
             hasBorder
-            icon={Icons[contact.contactType]}
+            icon={Icons[camelCaseContactType(contact.contactType)]}
             items={[
               {
                 id: "delete",
@@ -346,7 +347,7 @@ export function UserSettings() {
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
                             items: AvailableContactTypes.address.professional.map((addr) => ({
-                              icon: Icons[addr],
+                              icon: Icons[camelCaseContactType(addr)],
                               allowedPlacements: ["left-start"] as const,
                               id: addr,
                               title: getSentenceCase(addr),
@@ -387,7 +388,7 @@ export function UserSettings() {
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
                             items: AvailableContactTypes.phone.professional.map((phone) => ({
-                              icon: Icons[phone],
+                              icon: Icons[camelCaseContactType(phone)],
                               allowedPlacements: ["left-start"],
                               id: phone,
                               title: getSentenceCase(phone),
@@ -428,7 +429,7 @@ export function UserSettings() {
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
                             items: AvailableContactTypes.email.professional.map((email) => ({
-                              icon: Icons[email],
+                              icon: Icons[camelCaseContactType(email)],
                               allowedPlacements: ["left-start"],
                               id: email,
                               title: getSentenceCase(email),
@@ -469,7 +470,7 @@ export function UserSettings() {
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
                             items: AvailableContactTypes.website.professional.map((other) => ({
-                              icon: Icons[other],
+                              icon: Icons[camelCaseContactType(other)],
                               allowedPlacements: ["left-start"],
                               id: other,
                               title: getSentenceCase(other),

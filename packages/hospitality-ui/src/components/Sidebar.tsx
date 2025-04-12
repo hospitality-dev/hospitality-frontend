@@ -65,7 +65,7 @@ function SidebarSection({ title, links }: SidebarSectionType) {
         <div className="flex items-center gap-x-2">
           {isLg ? <span className="pt-0.5 capitalize select-none">{title}</span> : null}
         </div>
-        <Icon fontSize={24} icon={Icons[sidebarState.isModulesOpen ? "arrow-up" : "arrow-down"]} />
+        <Icon fontSize={24} icon={Icons[sidebarState.isModulesOpen ? "arrowUp" : "arrowDown"]} />
       </h3>
       <div className={`flex-col gap-y-1 ${sidebarState.isModulesOpen ? "flex" : "hidden"} overflow-hidden transition-[height]`}>
         {links.map((link) => (
