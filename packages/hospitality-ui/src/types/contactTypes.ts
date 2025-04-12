@@ -64,7 +64,7 @@ export const ContactSchema = object({
     ctx.addIssue({
       path: ["value"],
       code: ZodIssueCode.custom,
-      message: " | Prefix must be selected.",
+      message: "Prefix must be selected.",
     });
   }
 });
