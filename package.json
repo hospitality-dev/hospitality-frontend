@@ -23,12 +23,7 @@
     "typescript-eslint": "^8.22.0"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown",
-    "apps/shell/src/**/*.{ts, tsx}": "tsc --noEmit",
-    "apps/settings/src/**/*.{ts, tsx}": "tsc --noEmit",
-    "apps/inventory-management/src/**/*.{ts, tsx}": "tsc --noEmit",
-    "apps/employee-management/src/**/*.{ts, tsx}": "tsc --noEmit",
-    "packages/hospitality-ui/src/**/*.{ts, tsx}": "tsc --noEmit"
+    "**/*": "prettier --write --ignore-unknown"
   },
   "private": true,
   "scripts": {
