@@ -1,14 +1,15 @@
 import { ReactNode } from "@tanstack/react-router";
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { useState } from "react";
+import { ColumnDef, flexRender, getCoreRowModel, getExpandedRowModel, useReactTable } from "@tanstack/react-table";
+import { Fragment, useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
 import { AvailableIcons, Size, Variant } from "../types";
 import { Button } from "./Button";
+import { ExpandedRow } from "./ExpandedRow";
 import { Title } from "./Title";
 
-type Props<T> = {
+type Props<T = { id?: string } & Record<string, unknown>> = {
   columns: ColumnDef<T, ReactNode>[];
   data: T[];
   title?: string;
@@ -25,6 +26,7 @@ type Props<T> = {
     variant?: Variant;
     size?: Size;
   };
+  type?: "product_grouped_by_expiration_date" | null;
 };
 
 const classes = tv({
@@ -76,7 +78,7 @@ function TableSkeleton({ tr, td }: { tr: string; td: string }) {
     </>
   );
 }
-export function Table<T>({
+export function Table<T = { id?: string } & Record<string, unknown>>({
   columns = [],
   data,
   title,
@@ -87,11 +89,13 @@ export function Table<T>({
   onExpand,
   isLoading,
   hasNoHeader,
-}: Props<T>) {
+  type,
+}: Props<T & { id?: string } & Record<string, unknown>>) {
   const table = useReactTable({
     columns,
     data,
     getCoreRowModel: getCoreRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
   });
   const [isOpen, setIsOpen] = useState(isInitialOpen);
   const headers = table.getFlatHeaders();
@@ -172,16 +176,23 @@ export function Table<T>({
             {isLoading && isOpen ? <TableSkeleton td={td()} tr={tr()} /> : null}
             {!isLoading && isOpen && data.length
               ? table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} className={tr()}>
-                    {row.getVisibleCells().map((cell) => (
-                      <td
-                        key={cell.id}
-                        className={td({ isCentered: cell.column.columnDef.meta?.isCentered })}
-                        style={{ maxWidth: cell.column.columnDef.maxSize }}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
-                    ))}
-                  </tr>
+                  <Fragment key={row.id}>
+                    <tr className={tr()}>
+                      {row.getVisibleCells().map((cell) => (
+                        <td
+                          key={cell.id}
+                          className={td({ isCentered: cell.column.columnDef.meta?.isCentered })}
+                          style={{ maxWidth: cell.column.columnDef.maxSize }}>
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                      ))}
+                    </tr>
+                    {row.original.id ? (
+                      <div className="bg-gray-300 p-2">
+                        <ExpandedRow id={row.original.id} type={type} />
+                      </div>
+                    ) : null}
+                  </Fragment>
                 ))
               : null}
           </tbody>
