@@ -1,4 +1,5 @@
 import { ValidationError } from "@tanstack/react-form";
+import { format, parse, parseISO } from "date-fns";
 import camelCase from "lodash.camelcase";
 import { ZodIssue } from "zod";
 
@@ -72,4 +73,13 @@ export function getUserInfo(user?: Pick<UsersType, "id" | "firstName" | "lastNam
 
 export function camelCaseContactType(type: ContactTypes) {
   return camelCase(type) as keyof typeof Icons;
+}
+
+export function formatStringToISO(value: string) {
+  const date = parse(value, "dd.MM.yyyy", new Date());
+  return date.toISOString();
+}
+
+export function formatISOToString(value: string) {
+  return format(parseISO(value), "dd.MM.yyyy");
 }
