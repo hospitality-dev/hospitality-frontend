@@ -1,7 +1,7 @@
 import { string } from "zod";
 
 import { AvailableDomains } from "../enums";
-import { formatErrorsForHelperText } from "./transform";
+import { formatErrorsForHelperText } from "./format";
 
 export function emailValidation(f: { value: unknown }): string | undefined {
   const res = string().email("Please enter a valid email.").safeParse(f.value);
