@@ -49,7 +49,7 @@ const classes = tv({
     },
     isCollapsible: {
       true: {
-        container: "py-2",
+        container: "p-2",
       },
     },
     isLoading: {
