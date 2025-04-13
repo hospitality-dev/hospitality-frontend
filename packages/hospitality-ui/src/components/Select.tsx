@@ -160,7 +160,8 @@ export function Select({
   const filteredItems = filter
     ? options.filter(
         (opt) =>
-          opt.label.toLowerCase().includes(filter.toLowerCase()) || opt.additionalData?.phonecode?.toString().includes(filter)
+          opt.label.toLowerCase().includes(filter.toLowerCase()) ||
+          opt.additionalData?.phonecode?.toString().includes(filter.replace("+", ""))
       )
     : options;
 
