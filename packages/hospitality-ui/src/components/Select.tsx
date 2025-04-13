@@ -105,7 +105,6 @@ export function Select({
     placement: "bottom-start",
     open: isDisabled ? false : isOpen,
     onOpenChange: isDisabled ? () => {} : setIsOpen,
-    strategy: "fixed",
     whileElementsMounted: autoUpdate,
     middleware: [
       offset(5),
@@ -113,7 +112,6 @@ export function Select({
       floatingSize({
         apply({ rects, elements, availableHeight }) {
           Object.assign(elements.floating.style, {
-            height: `${availableHeight}px`,
             maxHeight: `${availableHeight}px`,
             minWidth: `${rects.reference.width}px`,
           });
@@ -122,7 +120,6 @@ export function Select({
       }),
     ],
   });
-
   const listRef = useRef<Array<HTMLElement | null>>([]);
   const searchRef = useRef<HTMLDivElement | null>(null);
 
