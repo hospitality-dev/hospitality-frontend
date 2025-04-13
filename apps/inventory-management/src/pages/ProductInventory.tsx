@@ -17,7 +17,7 @@ import {
 type Entity = Pick<ProductsWithCountType & { count: number }, "id" | "title" | "categoryId" | "count">;
 const columnHelper = createColumnHelper<Entity>();
 
-function ActionButton({ data }: { data: Entity }) {
+function ActionButton({ data, setExpanded }: { data: Entity; setExpanded: (expanded: boolean) => void }) {
   const { openDrawer: openManageInventoryDrawer } = useDrawer("manage_product_inventory");
 
   return (
@@ -60,6 +60,7 @@ function ActionButton({ data }: { data: Entity }) {
               window.open(link, "_blank");
             },
           },
+          { id: "group_expiry", title: "Show grouped by expiry", onClick: () => setExpanded(true) },
         ]}
         onClick={undefined}
         size="xl"
@@ -79,7 +80,7 @@ const columns = [
   columnHelper.display({
     id: "actions",
     header: "Actions",
-    cell: ({ row }) => <ActionButton data={row?.original} />,
+    cell: ({ row }) => <ActionButton data={row?.original} setExpanded={row.toggleExpanded} />,
     meta: {
       isCentered: true,
     },
@@ -100,6 +101,7 @@ export function ProductInventory() {
     { model: "products", fields: ["id", "title", "categoryId"] },
     { enabled: !!active, urlSuffix: `category/${active}/active` }
   );
+
   return (
     <div className="flex flex-col gap-y-2">
       <Tabs
@@ -139,7 +141,7 @@ export function ProductInventory() {
           variant="info"
         />
       </div>
-      <Table columns={columns} data={products || []} isLoading={isPending} />
+      <Table columns={columns} data={products || []} isLoading={isPending} type="product_grouped_by_expiration_date" />
     </div>
   );
 }
