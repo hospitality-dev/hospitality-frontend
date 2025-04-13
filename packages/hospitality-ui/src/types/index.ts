@@ -6,3 +6,4 @@ export * from "./locationTypes";
 export * from "./productTypes";
 export * from "./userTypes";
 export * from "./utilityTypes";
+export * from "./worldTypes";
