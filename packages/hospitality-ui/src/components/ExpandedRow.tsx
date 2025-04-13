@@ -25,8 +25,12 @@ const groupedByExpirationDateColumns = [
     },
   }),
   groupedByExpirationDateColHelper.accessor("count", {
-    header: "Count",
+    header: () => <span className="text-center">Count</span>,
     cell: (info) => <span className="font-light">{info.getValue()}</span>,
+    maxSize: 100,
+    meta: {
+      isCentered: true,
+    },
   }),
 ];
 
