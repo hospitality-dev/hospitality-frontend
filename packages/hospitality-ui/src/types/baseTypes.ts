@@ -89,10 +89,9 @@ export interface IconType {
   className?: string;
   thickness?: IconThickness;
 }
-export type AllowedInputTypes = Extract<
-  HTMLInputTypeAttribute,
-  "text" | "number" | "tel" | "search" | "password" | "url" | "datetime-local"
->;
+export type AllowedInputTypes =
+  | Extract<HTMLInputTypeAttribute, "text" | "number" | "tel" | "search" | "password" | "url" | "date">
+  | "datetime";
 
 export type AllowedFileTypes = (typeof AvailableFileTypes)[number];
 
