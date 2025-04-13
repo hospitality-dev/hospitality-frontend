@@ -65,6 +65,7 @@ export const LocationsAvailableProductsSchema = object({
   id: string().uuid().nonempty(),
   locationId: string().uuid().nonempty(),
   productId: string().uuid().nonempty(),
+  expirationDate: string(),
 });
 
 export const LocationsAvailableProductsInitalizerSchema = object({
@@ -105,6 +106,11 @@ export const LocationsAvailableProductsMutatorSchema = object({
       return date.toISOString();
     }),
 });
+
+export const LocationsProductsGroupedByExpirationSchema = object({
+  expirationDate: string().nullish(),
+  count: number(),
+});
 // #endregion LOCATIONS_AVAILABLE_PRODUCTS
 
 // #region LOCATIONS_PRODUCTS
@@ -141,3 +147,4 @@ export type LocationsProductsMutatorType = zodInfer<typeof LocationsAvailablePro
 
 export type LocationsAvailableProductsSettingsType = zodInfer<typeof LocationsAvailableProductsSettingsSchema>;
 export type ProductsWithCountType = zodInfer<typeof ProductsWithCountSchema>;
+export type LocationsProductsGroupedByExpirationType = zodInfer<typeof LocationsProductsGroupedByExpirationSchema>;
