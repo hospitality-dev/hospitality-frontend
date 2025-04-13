@@ -37,10 +37,19 @@ const classes = tv({
     thead: "border-b border-gray-300 text-left text-gray-500",
     th: "flex-1 p-2 text-sm font-light uppercase select-none",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300",
-    tr: "flex w-full items-center rounded has-[td]:hover:bg-gray-200",
+    tr: "flex w-full items-center rounded",
     td: "flex h-10 flex-1 items-center px-2",
+    expandedRowContainer: "bg-gray-300 p-2",
   },
   variants: {
+    variant: {
+      primary: { tr: "border-primary" },
+      secondary: { tr: "border-secondary" },
+      info: { tr: "border-info" },
+      success: { tr: "border-success" },
+      warning: { tr: "border-warning" },
+      error: { tr: "border-error border-2" },
+    },
     isOpen: {
       true: {
         tableContainer: "overflow-hidden",
@@ -78,7 +87,7 @@ function TableSkeleton({ tr, td }: { tr: string; td: string }) {
     </>
   );
 }
-export function Table<T = { id?: string } & Record<string, unknown>>({
+export function Table<T = { id?: string; variant?: Variant } & Record<string, unknown>>({
   columns = [],
   data,
   title,
@@ -90,7 +99,7 @@ export function Table<T = { id?: string } & Record<string, unknown>>({
   isLoading,
   hasNoHeader,
   type,
-}: Props<T & { id?: string } & Record<string, unknown>>) {
+}: Props<T & { id?: string; variant?: Variant } & Record<string, unknown>>) {
   const table = useReactTable({
     columns,
     data,
@@ -99,7 +108,11 @@ export function Table<T = { id?: string } & Record<string, unknown>>({
   });
   const [isOpen, setIsOpen] = useState(isInitialOpen);
   const headers = table.getFlatHeaders();
-  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({ isOpen, isLoading, isCollapsible });
+  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td, expandedRowContainer } = classes({
+    isOpen,
+    isLoading,
+    isCollapsible,
+  });
 
   return (
     <div className={container()}>
@@ -177,7 +190,7 @@ export function Table<T = { id?: string } & Record<string, unknown>>({
             {!isLoading && isOpen && data.length
               ? table.getRowModel().rows.map((row) => (
                   <Fragment key={row.id}>
-                    <tr className={tr()}>
+                    <tr className={tr({ variant: row.original.variant })}>
                       {row.getVisibleCells().map((cell) => (
                         <td
                           key={cell.id}
@@ -187,8 +200,8 @@ export function Table<T = { id?: string } & Record<string, unknown>>({
                         </td>
                       ))}
                     </tr>
-                    {row.original.id ? (
-                      <div className="bg-gray-300 p-2">
+                    {row.getIsExpanded() && row.original.id ? (
+                      <div className={expandedRowContainer()}>
                         <ExpandedRow id={row.original.id} type={type} />
                       </div>
                     ) : null}
