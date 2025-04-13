@@ -9,6 +9,7 @@ import { useList } from "../hooks";
 import { AllowedInputTypes, AvailableIcons, OptionType, Size, Variant } from "../types/baseTypes";
 import { CountriesType } from "../types/worldTypes";
 import {
+  dateTimeMask,
   defaultMask,
   formatErrorsForHelperText,
   formatPhoneForOptions,
@@ -51,6 +52,7 @@ const masks: Record<AllowedInputTypes, MaskitoOptions> = {
   password: defaultMask,
   tel: phoneMask,
   url: websiteMask,
+  "datetime-local": dateTimeMask,
 };
 
 const classes = tv({
@@ -110,6 +112,7 @@ const classes = tv({
       search: "",
       email: "",
       url: "",
+      "datetime-local": "",
     },
     isDisabled: { true: { inputClasses: "cursor-not-allowed" } },
   },

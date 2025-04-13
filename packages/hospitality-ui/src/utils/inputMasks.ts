@@ -1,5 +1,10 @@
 import { MaskitoOptions } from "@maskito/core";
-import { maskitoAddOnFocusPlugin, maskitoPrefixPostprocessorGenerator, maskitoRemoveOnBlurPlugin } from "@maskito/kit";
+import {
+  maskitoAddOnFocusPlugin,
+  maskitoDateTimeOptionsGenerator,
+  maskitoPrefixPostprocessorGenerator,
+  maskitoRemoveOnBlurPlugin,
+} from "@maskito/kit";
 
 export const defaultMask: MaskitoOptions = {
   mask: /[^]/,
@@ -15,3 +20,10 @@ export const websiteMask: MaskitoOptions = {
   postprocessors: [maskitoPrefixPostprocessorGenerator("https://")],
   plugins: [maskitoAddOnFocusPlugin("https://"), maskitoRemoveOnBlurPlugin("https://")],
 };
+export const dateTimeMask: MaskitoOptions = maskitoDateTimeOptionsGenerator({
+  dateMode: "dd/mm/yyyy",
+  timeMode: "HH:MM",
+  dateSeparator: ".",
+  dateTimeSeparator: " | ",
+  timeStep: 5,
+});
