@@ -49,7 +49,7 @@ const classes = tv({
     base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center gap-x-1 rounded-md border px-1 shadow-sm outline-0",
     icon: "text-primary ml-auto pt-0.5",
     optionsContainer:
-      "[&>:has(label)>div>div]:focus-within:border-primary-highlight relative z-[61] overflow-y-auto rounded-md border border-gray-400 bg-white shadow-lg outline-0 [&>:has(label)>div]:border-0 [&>div>:has(label)>div]:rounded-none [&>div>:has(label)>div]:shadow-none [&>div>:has(label)>p]:hidden",
+      "[&>:has(label)>div>div]:focus-within:border-primary-highlight relative z-[61] divide-y divide-gray-300 overflow-y-auto rounded-md border border-gray-400 bg-white shadow-lg outline-0 [&>:has(label)>div]:border-0 [&>div>:has(label)>div]:rounded-none [&>div>:has(label)>div]:shadow-none [&>div>:has(label)>p]:hidden",
     searchContainer: "sticky top-0 max-h-fit",
     selectedItemLabel: "select-none",
     helperTextClasses: "h-3.5 text-sm",
@@ -137,7 +137,6 @@ export function Select({
     loop: true,
   });
   const selectedItem = options.find((opt) => opt.value === value);
-
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role, listNav, click]);
 
   const {
@@ -158,7 +157,12 @@ export function Select({
     hasNoHelperText,
   });
 
-  const filteredItems = filter ? options.filter((opt) => opt.label.toLowerCase().includes(filter.toLowerCase())) : options;
+  const filteredItems = filter
+    ? options.filter(
+        (opt) =>
+          opt.label.toLowerCase().includes(filter.toLowerCase()) || opt.additionalData?.phonecode?.toString().includes(filter)
+      )
+    : options;
 
   useEffect(() => {
     if (isOpen && hasSearch && searchRef?.current) {
@@ -220,7 +224,7 @@ export function Select({
                     listRef.current[i] = node;
                   }}
                   aria-selected={i === activeIndex}
-                  className="outline-0 outline-none"
+                  className="border-r border-r-gray-300 outline-0 outline-none nth-[2]:border-t-0"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !isDisabled && !opt.isDisabled && activeIndex !== null) {
                       e.preventDefault();
