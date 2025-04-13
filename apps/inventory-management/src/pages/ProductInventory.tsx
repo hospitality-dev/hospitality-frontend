@@ -18,7 +18,15 @@ import {
 type Entity = Pick<ProductsWithCountType, "id" | "title" | "categoryId" | "count" | "hasAboutToExpire">;
 const columnHelper = createColumnHelper<Entity>();
 
-function ActionButton({ data, setExpanded }: { data: Entity; setExpanded: (expanded: boolean) => void }) {
+function ActionButton({
+  data,
+  isExpanded,
+  setExpanded,
+}: {
+  data: Entity;
+  isExpanded: boolean;
+  setExpanded: (expanded: boolean) => void;
+}) {
   const { openDrawer: openManageInventoryDrawer } = useDrawer("manage_product_inventory");
 
   return (
@@ -61,7 +69,12 @@ function ActionButton({ data, setExpanded }: { data: Entity; setExpanded: (expan
               window.open(link, "_blank");
             },
           },
-          { id: "group_expiry", title: "Show grouped by expiry", onClick: () => setExpanded(true) },
+          {
+            id: "group_expiry",
+            icon: Icons.expiry,
+            title: isExpanded ? "Hide expiry" : "Show expiry",
+            onClick: () => setExpanded(!isExpanded),
+          },
         ]}
         onClick={undefined}
         size="xl"
@@ -92,7 +105,7 @@ const columns = [
   columnHelper.display({
     id: "actions",
     header: "Actions",
-    cell: ({ row }) => <ActionButton data={row?.original} setExpanded={row.toggleExpanded} />,
+    cell: ({ row }) => <ActionButton data={row?.original} isExpanded={row.getIsExpanded()} setExpanded={row.toggleExpanded} />,
     meta: {
       isCentered: true,
     },
