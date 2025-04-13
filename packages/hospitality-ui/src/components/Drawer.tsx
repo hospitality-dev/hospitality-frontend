@@ -40,7 +40,7 @@ export function Drawer({ children }: Props) {
   const { isMd } = useScreenSize();
   const [renderContent, setRenderContent] = useState(false);
   const ref = useClickOutside(() => {
-    if (drawer.closeOnOutsideClick !== false) {
+    if (drawer.closeOnOutsideClick) {
       setDrawer((prev) => ({ ...prev, isOpen: false }));
     }
   });
