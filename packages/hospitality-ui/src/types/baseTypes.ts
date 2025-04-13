@@ -38,7 +38,7 @@ export type PositionType = (
   | "bottom-end"
 )[];
 
-export type OptionType<T> = {
+export type OptionType = {
   id: string;
   label: string;
   description?: string;
@@ -46,7 +46,7 @@ export type OptionType<T> = {
   isDisabled?: boolean;
   image?: string;
   icon?: string;
-  additionalData?: T;
+  additionalData?: Record<string, string | string[] | number | number[] | null>;
 };
 
 export type DropdownItemType = {

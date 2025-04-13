@@ -20,7 +20,7 @@ const classes = tv({
   },
 });
 
-export function OptionItem<OT = null>({
+export function OptionItem({
   isActive,
   isSelected,
   item,
@@ -28,8 +28,8 @@ export function OptionItem<OT = null>({
 }: {
   isActive?: boolean;
   isSelected?: boolean;
-  item: OptionType<OT>;
-  onChange: (item: OptionType<OT>) => void;
+  item: OptionType;
+  onChange: (item: OptionType) => void;
 }) {
   const { base, label } = classes({ isSelected, isActive, isDisabled: !!item?.isDisabled });
   return (

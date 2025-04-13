@@ -24,7 +24,7 @@ import { formatErrorsForHelperText } from "../utils";
 import { Input } from "./Input";
 import { OptionItem } from "./OptionItem";
 
-type Props<OT> = {
+type Props = {
   label?: string;
   value: string | string[] | undefined | null;
   isMultiple?: boolean;
@@ -35,8 +35,8 @@ type Props<OT> = {
   variant?: Variant;
   size?: Size;
   icon?: AvailableIcons;
-  options: OptionType<OT>[];
-  onChange: (item: OptionType<OT> | null) => void;
+  options: OptionType[];
+  onChange: (item: OptionType | null) => void;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   errors?: ValidationError[] | ZodIssue[];
 };
@@ -82,7 +82,7 @@ const classes = tv({
   },
 });
 
-export function Select<OT>({
+export function Select({
   label,
   variant = "primary",
   size = "md",
@@ -96,7 +96,7 @@ export function Select<OT>({
   value,
   onBlur,
   hasNoHelperText,
-}: Props<OT>) {
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -187,7 +187,8 @@ export function Select<OT>({
             {options.length && !value ? "Select one" : null}
             {options.length && value ? (
               <span className="flex items-center gap-x-0.5">
-                <img className="h-5" src={selectedItem?.image} /> {selectedItem?.label}
+                <img className="h-5" src={selectedItem?.image} />
+                {selectedItem?.additionalData?.selectedLabel || selectedItem?.label || ""}
               </span>
             ) : null}
           </span>

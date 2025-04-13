@@ -3,14 +3,11 @@ import camelCase from "lodash.camelcase";
 import { ZodIssue } from "zod";
 
 import { Icons } from "../enums";
-import { AddressesType, ContactType, ContactTypes, OptionType, UsersType } from "../types";
+import { AddressesType, ContactTypes, OptionType, UsersType } from "../types";
 import { CountriesType } from "../types/worldTypes";
 import { getSentenceCase } from "./transform";
 
-export function formatForOptions<T extends { id: string; title: string }>(
-  data?: T[],
-  isSentenceCase?: boolean
-): OptionType<null>[] {
+export function formatForOptions<T extends { id: string; title: string }>(data?: T[], isSentenceCase?: boolean): OptionType[] {
   if (!data) return [];
   return data.map((item) => ({
     id: item.id,
@@ -18,9 +15,7 @@ export function formatForOptions<T extends { id: string; title: string }>(
     value: item.id,
   }));
 }
-export function formatAddressesForOptions(
-  data: AddressesType[]
-): OptionType<Pick<ContactType, "latitude" | "longitude" | "boundingBox" | "placeId">>[] {
+export function formatAddressesForOptions(data: AddressesType[]): OptionType[] {
   if (!data) return [];
   return data.map((item) => {
     const label = `${item.address.road} ${item.address.houseNumber}`.trim();
@@ -40,14 +35,14 @@ export function formatAddressesForOptions(
   });
 }
 
-export function formatPhoneForOptions(data?: CountriesType[], isSentenceCase?: boolean): OptionType<{ phonecode: string }>[] {
+export function formatPhoneForOptions(data?: CountriesType[], isSentenceCase?: boolean): OptionType[] {
   if (!data) return [];
   return data.map((item) => ({
     id: item.id,
-    label: isSentenceCase === true || isSentenceCase === undefined ? getSentenceCase(item.title) : item.title,
+    label: (isSentenceCase === true || isSentenceCase === undefined ? getSentenceCase(item.title) : item.title).trim(),
     value: item.iso3,
     image: `/flags/${item.iso3}.svg`,
-    additionalData: { phonecode: item.phonecode },
+    additionalData: { phonecode: item.phonecode, selectedLabel: `+${item.phonecode}` },
   }));
 }
 
@@ -57,7 +52,7 @@ export function formatErrorsForHelperText(errors: ValidationError[] | ZodIssue[]
   return Array.from(new Set(errors.map(String))).join(" | ");
 }
 
-export function formatDisplayItem<OT>(item: OptionType<OT>): string {
+export function formatDisplayItem(item: OptionType): string {
   return `${item.label}${item.description ? ` | ${item.description}` : ""}`.trim();
 }
 

@@ -21,7 +21,7 @@ import { formatDisplayItem } from "../utils";
 import { Input } from "./Input";
 import { OptionItem } from "./OptionItem";
 
-type Props<OT> = {
+type Props = {
   label: string;
   query: string;
   value?: string;
@@ -30,9 +30,9 @@ type Props<OT> = {
   size?: Size;
   helperText?: string;
   onQueryChange: (value: string) => void;
-  onChange: (item: OptionType<OT> | null) => void;
+  onChange: (item: OptionType | null) => void;
   onBlur?: FocusEventHandler<HTMLInputElement>;
-  options: OptionType<OT>[];
+  options: OptionType[];
   isSearch?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
@@ -40,7 +40,7 @@ type Props<OT> = {
   errors?: ValidationError[] | ZodIssue[];
 };
 
-export function Autocomplete<OT>({
+export function Autocomplete({
   label,
   variant = "primary",
   size = "md",
@@ -56,7 +56,7 @@ export function Autocomplete<OT>({
   displayTitle,
   onBlur,
   errors,
-}: Props<OT>) {
+}: Props) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 

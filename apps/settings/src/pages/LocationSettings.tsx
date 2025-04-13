@@ -104,8 +104,8 @@ function ContactDisplay({
                         form.setFieldValue(`contacts[${index}].longitude`, Number(value.additionalData?.longitude || 0));
                       if (value.additionalData?.latitude)
                         form.setFieldValue(`contacts[${index}].latitude`, Number(value.additionalData?.latitude || 0));
-                      if (value.additionalData?.boundingBox)
-                        form.setFieldValue(`contacts[${index}].boundingBox`, value.additionalData?.boundingBox);
+                      if (Array.isArray(value.additionalData?.boundingBox))
+                        form.setFieldValue(`contacts[${index}].boundingBox`, value.additionalData?.boundingBox as number[]);
                     } else {
                       subfield.handleChange("");
                       form.setFieldValue(`contacts[${index}].placeId`, null);
@@ -140,7 +140,9 @@ function ContactDisplay({
                             onBlur={subfield.handleBlur}
                             onChange={(e) => subfield.handleChange(e.target.value)}
                             onSelectChange={(item) => {
-                              form.setFieldValue(`contacts[${index}].prefix`, item?.additionalData?.phonecode);
+                              if (typeof item?.additionalData?.phonecode === "string") {
+                                form.setFieldValue(`contacts[${index}].prefix`, item?.additionalData?.phonecode);
+                              }
                               form.setFieldValue(`contacts[${index}].iso3`, item?.value || null);
                             }}
                             selectValue={(prefixState.iso3 || "")?.toString()}

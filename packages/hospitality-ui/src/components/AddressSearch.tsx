@@ -4,14 +4,14 @@ import { ZodIssue } from "zod";
 
 import { useSearch } from "../hooks/api/searchHooks";
 import { useDebounce } from "../hooks/ui/useDebounce";
-import { AddressesType, ContactType, OptionType, Variant } from "../types";
+import { AddressesType, OptionType, Variant } from "../types";
 import { formatAddressesForOptions } from "../utils";
 import { Autocomplete } from "./Autocomplete";
 type Props = {
   label?: string;
   isDisabled?: boolean;
   isAutofocused?: boolean;
-  onChange: (item: OptionType<Pick<ContactType, "latitude" | "longitude" | "boundingBox" | "placeId">> | null) => void;
+  onChange: (item: OptionType | null) => void;
   value: string | null;
   helperText?: string;
   variant?: Variant;
