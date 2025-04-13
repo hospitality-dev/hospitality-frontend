@@ -99,9 +99,7 @@ export function Select<OT>({
 }: Props<OT>) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(
-    value ? options.findIndex((opt) => opt.value === value) : null
-  );
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [filter, setFilter] = useState("");
   const { refs, floatingStyles, context } = useFloating<HTMLElement>({
     placement: "bottom-start",
@@ -141,7 +139,7 @@ export function Select<OT>({
     // This is a large list, allow looping.
     loop: true,
   });
-  const selectedItem = selectedIndex !== null ? options[selectedIndex] : null;
+  const selectedItem = options.find((opt) => opt.value === value);
 
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role, listNav, click]);
 
@@ -162,13 +160,8 @@ export function Select<OT>({
     hasNoBorder,
     hasNoHelperText,
   });
-  const isPhoneSelect =
-    selectedItem?.additionalData && typeof selectedItem.additionalData === "object" && "iso3" in selectedItem.additionalData;
-  const filteredItems = options.filter(
-    (opt) =>
-      (isPhoneSelect ? opt.value.includes(filter.toLowerCase()) : false) ||
-      opt.label.toLowerCase().includes(filter.toLowerCase())
-  );
+
+  const filteredItems = filter ? options.filter((opt) => opt.label.toLowerCase().includes(filter.toLowerCase())) : options;
 
   useEffect(() => {
     if (isOpen && hasSearch && searchRef?.current) {
@@ -189,12 +182,15 @@ export function Select<OT>({
           className={base()}
           tabIndex={0}
           {...getReferenceProps()}>
-          {selectedItem?.additionalData &&
-          typeof selectedItem.additionalData === "object" &&
-          "iso3" in selectedItem.additionalData ? (
-            <img src={`/flags/${selectedItem.additionalData.iso3}.svg`} />
-          ) : null}
-          <span className={selectedItemLabel()}>{!options?.length ? "No options" : selectedItem?.label || "Select one"}</span>
+          <span className={selectedItemLabel()}>
+            {!options?.length ? "No options" : null}
+            {options.length && !value ? "Select one" : null}
+            {options.length && value ? (
+              <span className="flex items-center gap-x-0.5">
+                <img className="h-5" src={selectedItem?.image} /> {selectedItem?.label}
+              </span>
+            ) : null}
+          </span>
           <div className={icon()}>
             <Icon icon={Icons.arrowDown} />
           </div>
@@ -221,7 +217,7 @@ export function Select<OT>({
               ) : null}
               {filteredItems.map((opt, i) => (
                 <div
-                  key={opt.id || opt.value}
+                  key={opt.id}
                   ref={(node) => {
                     listRef.current[i] = node;
                   }}
@@ -231,18 +227,7 @@ export function Select<OT>({
                     if (e.key === "Enter" && !isDisabled && !opt.isDisabled && activeIndex !== null) {
                       e.preventDefault();
                       e.stopPropagation();
-                      const optIdx = options.findIndex(
-                        (filteredOpt) =>
-                          filteredOpt.value === opt.value &&
-                          (!!filteredOpt.additionalData &&
-                          typeof filteredOpt.additionalData === "object" &&
-                          "iso3" in filteredOpt.additionalData &&
-                          !!opt.additionalData &&
-                          typeof opt.additionalData === "object" &&
-                          "iso3" in opt.additionalData
-                            ? filteredOpt.additionalData.iso3 === opt.additionalData.iso3
-                            : true)
-                      );
+                      const optIdx = options.findIndex((filteredOpt) => filteredOpt.id === opt.id);
                       setFilter("");
                       onChange(opt);
                       if (optIdx > -1 && optIdx !== undefined) {
@@ -258,7 +243,7 @@ export function Select<OT>({
                     isSelected={selectedIndex === i}
                     item={opt}
                     onChange={(item) => {
-                      const optIdx = options.findIndex((filteredOpt) => filteredOpt.value === opt.value);
+                      const optIdx = options.findIndex((filteredOpt) => filteredOpt.id === opt.id);
                       if (optIdx > -1 && optIdx !== undefined) {
                         onChange(item);
                         setSelectedIndex(optIdx);

@@ -142,10 +142,10 @@ function ContactDisplay({
                             onBlur={subfield.handleBlur}
                             onChange={(e) => subfield.handleChange(e.target.value)}
                             onSelectChange={(item) => {
-                              form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null);
+                              form.setFieldValue(`contacts[${index}].prefix`, item?.additionalData?.phonecode);
                               form.setFieldValue(`contacts[${index}].iso3`, item?.value || null);
                             }}
-                            selectValue={(prefixState.prefix || "")?.toString()}
+                            selectValue={(prefixState.iso3 || "")?.toString()}
                             type="tel"
                             value={subfield.state.value}
                           />

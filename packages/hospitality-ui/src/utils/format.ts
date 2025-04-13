@@ -40,16 +40,14 @@ export function formatAddressesForOptions(
   });
 }
 
-export function formatPhoneForOptions(data?: CountriesType[], isSentenceCase?: boolean): OptionType<{ iso3: string }>[] {
+export function formatPhoneForOptions(data?: CountriesType[], isSentenceCase?: boolean): OptionType<{ phonecode: string }>[] {
   if (!data) return [];
   return data.map((item) => ({
     id: item.id,
     label: isSentenceCase === true || isSentenceCase === undefined ? getSentenceCase(item.title) : item.title,
-    value: item.id,
+    value: item.iso3,
     image: `/flags/${item.iso3}.svg`,
-    additionalData: {
-      iso3: item.iso3,
-    },
+    additionalData: { phonecode: item.phonecode },
   }));
 }
 

@@ -27,7 +27,7 @@ type Props = {
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   selectValue?: string | null;
-  onSelectChange?: (item: OptionType<null> | null) => void;
+  onSelectChange?: (item: OptionType<Pick<CountriesType, "phonecode">> | null) => void;
   helperText?: string;
   isDisabled?: boolean;
   isAutofocused?: boolean;
@@ -132,10 +132,15 @@ function TelephoneSelect({ selectValue, onSelectChange }: Pick<Props, "onSelectC
             id: item?.id,
             value: item?.value,
             label: item?.label,
-            image: item?.additionalData?.iso3 ? `flags/${item.additionalData.iso3}.svg` : undefined,
+            image: item?.image,
+            additionalData: item?.additionalData
+              ? {
+                  phonecode: item?.additionalData?.phonecode,
+                }
+              : undefined,
           });
       }}
-      options={formatPhoneForOptions(data)}
+      options={formatPhoneForOptions(data, false)}
       value={selectValue}
     />
   );

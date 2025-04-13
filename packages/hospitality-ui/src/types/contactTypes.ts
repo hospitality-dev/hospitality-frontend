@@ -52,7 +52,7 @@ export const ContactSchema = object({
       if (arg === null || arg === undefined) return arg;
       return Number(arg);
     }),
-  prefix: number().nullish(),
+  prefix: string().nullish(),
   value: string().nonempty("Contact value cannot be empty."),
   latitude: number().nullish(),
   longitude: number().nullish(),

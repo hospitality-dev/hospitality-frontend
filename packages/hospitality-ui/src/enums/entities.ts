@@ -13,6 +13,7 @@ export const AvailableEntitiesEnum = [
   "contacts",
   "files",
   "resources",
+  "countries",
   "unknown",
 ] as const;
 

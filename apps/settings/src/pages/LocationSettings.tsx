@@ -122,29 +122,28 @@ function ContactDisplay({
               return (
                 <form.Subscribe<{
                   prefix: ContactType["prefix"];
+                  iso3: ContactType["iso3"];
                 }>
                   selector={(s) => ({
                     prefix: s.values.contacts[index].prefix,
+                    iso3: s.values.contacts[index].iso3,
                   })}>
                   {(prefixState) => (
                     <>
                       <form.Field
                         children={(subfield) => (
                           <Input
-                            errors={
-                              subfield.state.meta.errors.at(0)
-                                ? [subfield.state.meta.errors.at(0)?.toString().replaceAll(".,", ".")]
-                                : undefined
-                            }
+                            errors={subfield.state.meta.errors}
                             isDisabled={isDisabled}
                             label={getSentenceCase(contact.contactType)}
                             name={subfield.name}
                             onBlur={subfield.handleBlur}
                             onChange={(e) => subfield.handleChange(e.target.value)}
-                            onSelectChange={(item) =>
-                              form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null)
-                            }
-                            selectValue={(prefixState.prefix || "")?.toString()}
+                            onSelectChange={(item) => {
+                              form.setFieldValue(`contacts[${index}].prefix`, item?.additionalData?.phonecode);
+                              form.setFieldValue(`contacts[${index}].iso3`, item?.value || null);
+                            }}
+                            selectValue={(prefixState.iso3 || "")?.toString()}
                             type="tel"
                             value={subfield.state.value}
                           />
