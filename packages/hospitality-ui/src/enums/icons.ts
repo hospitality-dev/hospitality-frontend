@@ -25,6 +25,7 @@ export const Icons = {
   docx: "bi:filetype-docx" as const,
   employee: "mdi:user-badge-outline" as const,
   email: "entypo:email" as const,
+  expiry: "fluent:clipboard-clock-24-regular" as const,
   eye: "ph:eye-light" as const,
   eyeSlash: "ph:eye-slash-light" as const,
   fax: "icons8:fax" as const,
