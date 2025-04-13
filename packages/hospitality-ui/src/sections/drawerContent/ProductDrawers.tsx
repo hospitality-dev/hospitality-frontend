@@ -16,7 +16,6 @@ import {
   useScreenSize,
 } from "../../hooks";
 import {
-  LocationsAvailableProductsMutatorSchema,
   ProductsCategoriesType,
   ProductsInitalizerSchema,
   ProductsInitalizerType,
@@ -162,12 +161,9 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
     },
     onSubmit: (payload) =>
       data.type === "add_products"
-        ? addProducts(
-            { value: LocationsAvailableProductsMutatorSchema.parse(payload.value) },
-            {
-              onSuccess: resetDrawer,
-            }
-          )
+        ? addProducts(payload, {
+            onSuccess: resetDrawer,
+          })
         : removeProducts(payload, {
             onSuccess: resetDrawer,
           }),

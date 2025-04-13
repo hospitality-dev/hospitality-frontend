@@ -4,7 +4,7 @@ import kebabCase from "lodash.kebabcase";
 
 import { userAtom } from "../../atoms";
 import { AllowedUploadTypes, AvailableEntities } from "../../types";
-import { fetchFunction, uploadFunction } from "../../utils";
+import { fetchFunction, formatStringToISO, uploadFunction } from "../../utils";
 
 export function useCreate<F>(
   model: AvailableEntities,
@@ -38,8 +38,14 @@ export function useAddInventoryProducts() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: { value: { id?: string; barcode?: string; amount: number } }) => {
-      return fetchFunction({ method: "POST", payload: JSON.stringify(payload.value), model: "locations_products", userReset });
+    mutationFn: (payload: { value: { id?: string; barcode?: string; amount: number; expirationDate?: string | null } }) => {
+      const formattedExpirationDate = payload.value.expirationDate ? formatStringToISO(payload.value.expirationDate) : null;
+      return fetchFunction({
+        method: "POST",
+        payload: JSON.stringify({ ...payload.value, expirationDate: formattedExpirationDate }),
+        model: "locations_products",
+        userReset,
+      });
     },
 
     onSuccess: () => {
