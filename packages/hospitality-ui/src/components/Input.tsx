@@ -5,13 +5,21 @@ import { ChangeEvent, FocusEventHandler, HTMLAttributes, KeyboardEvent, MouseEve
 import { tv } from "tailwind-variants";
 import { ZodIssue } from "zod";
 
-import { countriesPhoneCodes } from "../enums";
+import { useList } from "../hooks";
 import { AllowedInputTypes, AvailableIcons, OptionType, Size, Variant } from "../types/baseTypes";
-import { defaultMask, formatErrorsForHelperText, numbersOnlyMask, phoneMask, websiteMask } from "../utils";
+import { CountriesType } from "../types/worldTypes";
+import {
+  defaultMask,
+  formatErrorsForHelperText,
+  formatPhoneForOptions,
+  numbersOnlyMask,
+  phoneMask,
+  websiteMask,
+} from "../utils";
 import { Button } from "./Button";
 import { Select } from "./Select";
 
-type Props<OT> = {
+type Props = {
   label?: string;
   name: string;
   value: string | number | undefined;
@@ -19,7 +27,7 @@ type Props<OT> = {
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   selectValue?: string | null;
-  onSelectChange?: (item: OptionType<OT> | null) => void;
+  onSelectChange?: (item: OptionType<null> | null) => void;
   helperText?: string;
   isDisabled?: boolean;
   isAutofocused?: boolean;
@@ -107,6 +115,32 @@ const classes = tv({
   },
 });
 
+function TelephoneSelect({ selectValue, onSelectChange }: Pick<Props, "onSelectChange" | "selectValue">) {
+  const { data } = useList<CountriesType>(
+    { model: "resources", fields: ["id", "title", "iso3", "phonecode"] },
+    { urlSuffix: "countries", staleTime: Infinity }
+  );
+
+  return (
+    <Select
+      hasNoBorder
+      hasNoHelperText
+      hasSearch
+      onChange={(item) => {
+        if (onSelectChange && item)
+          onSelectChange({
+            id: item?.id,
+            value: item?.value,
+            label: item?.label,
+            image: item?.additionalData?.iso3 ? `flags/${item.additionalData.iso3}.svg` : undefined,
+          });
+      }}
+      options={formatPhoneForOptions(data)}
+      value={selectValue}
+    />
+  );
+}
+
 export function Input({
   label,
   name,
@@ -126,7 +160,7 @@ export function Input({
   inputMode = "text",
   errors,
   action,
-}: Props<(typeof countriesPhoneCodes)[number]["additionalData"]>) {
+}: Props) {
   const inputRef = useMaskito({ options: masks[type] });
   const { inputClasses, inputContainer, container, labelClasses, helperTextClasses, selectClasses } = classes({
     variant: errors?.length ? "error" : variant,
@@ -142,16 +176,7 @@ export function Input({
       <div className={inputContainer()}>
         {type === "tel" ? (
           <div className={selectClasses()}>
-            <Select
-              hasNoBorder
-              hasNoHelperText
-              hasSearch
-              onChange={(item) => {
-                if (onSelectChange) onSelectChange(item);
-              }}
-              options={countriesPhoneCodes}
-              value={selectValue}
-            />
+            <TelephoneSelect onSelectChange={onSelectChange} selectValue={selectValue} />
           </div>
         ) : null}
         <input
