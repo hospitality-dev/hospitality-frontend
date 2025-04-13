@@ -39,7 +39,7 @@ export function formatPhoneForOptions(data?: CountriesType[], isSentenceCase?: b
   if (!data) return [];
   return data.map((item) => ({
     id: item.id,
-    label: (isSentenceCase === true || isSentenceCase === undefined ? getSentenceCase(item.title) : item.title).trim(),
+    label: `${(isSentenceCase === true || isSentenceCase === undefined ? getSentenceCase(item.title) : item.title).trim()} (+${item.phonecode})`,
     value: item.iso3,
     image: `/flags/${item.iso3}.svg`,
     additionalData: { phonecode: item.phonecode, selectedLabel: `+${item.phonecode}` },
