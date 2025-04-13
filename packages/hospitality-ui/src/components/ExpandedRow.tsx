@@ -15,10 +15,10 @@ const groupedByExpirationDateColumns = [
       return (
         <span className={`font-medium ${differenceInDays && differenceInDays <= 7 ? "text-error" : ""}`}>
           {value ? (
-            <div className="flex items-center gap-x-1">
+            <span className="flex items-center gap-x-1">
               <span>{formatISOToString(value)}</span>
               <span>({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})</span>
-            </div>
+            </span>
           ) : null}
         </span>
       );
