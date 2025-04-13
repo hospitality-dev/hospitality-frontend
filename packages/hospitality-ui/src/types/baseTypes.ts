@@ -39,11 +39,13 @@ export type PositionType = (
 )[];
 
 export type OptionType<T> = {
-  id?: string;
+  id: string;
   label: string;
   description?: string;
   value: string;
   isDisabled?: boolean;
+  image?: string;
+  icon?: string;
   additionalData?: T;
 };
 
