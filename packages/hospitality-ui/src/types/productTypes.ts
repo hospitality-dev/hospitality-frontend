@@ -72,7 +72,38 @@ export const LocationsAvailableProductsInitalizerSchema = object({
 });
 
 export const LocationsAvailableProductsMutatorSchema = object({
-  productId: string().uuid().nonempty("Product must be selected."),
+  id: string().uuid().nonempty("Product must be selected."),
+  amount: number().min(1, "Cannot be 0"),
+  expirationDate: string()
+    .nullish()
+    .superRefine((arg, ctx) => {
+      if (!arg) return arg;
+      const [d, m] = arg.split(".");
+      const day = Number(d);
+      if (day > 31 || day < 1) {
+        ctx.addIssue({ code: "custom", message: "Day is invalid." });
+      }
+      // JS date months are 0-11 (0 is January, etc.)
+      const month = Number(m) - 1;
+      if (month > 11 || month < 0) {
+        ctx.addIssue({ code: "custom", message: "Month is invalid." });
+      }
+    })
+    .transform((arg) => {
+      if (!arg) return arg;
+      const date = new Date();
+
+      const [d, m, y] = arg.split(".");
+      const day = Number(d);
+      // JS date months are 0-11 (0 is January, etc.)
+      const month = Number(m) - 1;
+      const year = Number(y);
+      date.setUTCDate(day);
+      date.setUTCMonth(month);
+      date.setUTCFullYear(year);
+      date.setHours(0, 0, 0, 0);
+      return date.toISOString();
+    }),
 });
 // #endregion LOCATIONS_AVAILABLE_PRODUCTS
 

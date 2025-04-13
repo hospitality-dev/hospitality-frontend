@@ -16,6 +16,7 @@ import {
   useScreenSize,
 } from "../../hooks";
 import {
+  LocationsAvailableProductsMutatorSchema,
   ProductsCategoriesType,
   ProductsInitalizerSchema,
   ProductsInitalizerType,
@@ -138,7 +139,7 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
   );
 }
 
-// * For adding a product from a location's inventory
+// * For adding or removing a product to/from a location's inventory
 export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { type: "manage_product_inventory" }>, "data">) {
   const resetDrawer = useResetAtom(drawerAtom);
   const { data: product, isLoading: isLoadingProduct } = useRead<ProductsType>(
@@ -157,45 +158,31 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
     defaultValues: {
       id: data.id || "",
       amount: 0,
+      expirationDate: null,
     },
     onSubmit: (payload) =>
       data.type === "add_products"
-        ? addProducts(payload, {
-            onSuccess: resetDrawer,
-          })
+        ? addProducts(
+            { value: LocationsAvailableProductsMutatorSchema.parse(payload.value) },
+            {
+              onSuccess: resetDrawer,
+            }
+          )
         : removeProducts(payload, {
             onSuccess: resetDrawer,
           }),
     validators: {
-      onBlur:
-        data.type === "add_products"
-          ? object({
-              amount: number().min(1).max(100, "Cannot add more than 100 items."),
-              id: string().uuid(),
-            })
-          : object({
-              id: string().uuid(),
-              amount: number().min(1).max(data.maxAmount, "Cannot remove more than available items."),
-            }),
-      onChange:
-        data.type === "add_products"
-          ? object({
-              amount: number().min(1).max(100, "Cannot add more than 100 items."),
-              id: string().uuid(),
-            })
-          : object({
-              id: string().uuid(),
-              amount: number().min(1).max(data.maxAmount, "Cannot remove more than available items."),
-            }),
       onSubmit:
         data.type === "add_products"
           ? object({
               amount: number().min(1).max(100, "Cannot add more than 100 items."),
               id: string().uuid(),
+              expirationDate: string().nullish(),
             })
           : object({
               id: string().uuid(),
               amount: number().min(1).max(data.maxAmount, "Cannot remove more than available items."),
+              expirationDate: string().nullish(),
             }),
     },
   });
@@ -242,22 +229,38 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
             )}
             name="id"
           />
-
-          <form.Field
-            children={(field) => (
-              <Input
-                errors={field.state.meta.errors}
-                inputMode="numeric"
-                isDisabled={isLoading || isLoadingProduct}
-                label="Amount"
-                name={field.name}
-                onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(Number(e.target.value))}
-                value={field.state.value}
-              />
-            )}
-            name="amount"
-          />
+          <div className="flex items-center gap-2 md:flex-col">
+            <form.Field
+              children={(field) => (
+                <Input
+                  errors={field.state.meta.errors}
+                  inputMode="numeric"
+                  isDisabled={isLoading || isLoadingProduct}
+                  label="Amount"
+                  name={field.name}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(Number(e.target.value))}
+                  value={field.state.value}
+                />
+              )}
+              name="amount"
+            />
+            <form.Field
+              children={(field) => (
+                <Input
+                  errors={field.state.meta.errors}
+                  isDisabled={isLoading || isLoadingProduct}
+                  label="Expiration date (optional)"
+                  name={field.name}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  type="date"
+                  value={field.state.value || ""}
+                />
+              )}
+              name="expirationDate"
+            />
+          </div>
         </div>
         <div className="mt-auto md:col-span-2">
           <form.Subscribe<[boolean, boolean]>
