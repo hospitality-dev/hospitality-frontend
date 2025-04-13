@@ -58,9 +58,10 @@ export const ContactSchema = object({
   longitude: number().nullish(),
   boundingBox: number().array().nullish(),
   isPublic: boolean().default(false).nullish(),
+  iso3: string().nullish(),
   contactType: ContactTypesSchema,
 }).superRefine((arg, ctx) => {
-  if ((arg.contactType.includes("phone") || arg.contactType === "fax") && !arg.prefix) {
+  if ((arg.contactType.includes("phone") || arg.contactType === "fax") && (!arg.prefix || !arg.iso3)) {
     ctx.addIssue({
       path: ["value"],
       code: ZodIssueCode.custom,
