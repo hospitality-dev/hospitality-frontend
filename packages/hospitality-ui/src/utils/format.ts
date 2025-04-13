@@ -83,3 +83,8 @@ export function formatStringToISO(value: string) {
 export function formatISOToString(value: string) {
   return format(parseISO(value), "dd. MMMM yyyy.");
 }
+
+export function getDayCountString(days: number) {
+  if (days === 1) return `${days} day`;
+  return `${days} days`;
+}
