@@ -51,7 +51,14 @@ export function AddressSearch({
       onQueryChange={(value) => setQuery(value)}
       options={
         isFetched && !data.length
-          ? [{ label: "No results", value: "NO_RESULTS", isDisabled: true }]
+          ? [
+              {
+                id: "no_results",
+                label: "No results",
+                value: "NO_RESULTS",
+                isDisabled: true,
+              },
+            ]
           : formatAddressesForOptions(data).toSorted((a, b) => {
               if (a < b) return -1;
               if (a > b) return 1;

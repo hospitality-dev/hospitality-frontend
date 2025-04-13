@@ -84,7 +84,7 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
                   onChange={(e) => {
                     if (e) field.handleChange(e.value);
                   }}
-                  options={(categories || [])?.map((cat) => ({ label: cat.title, value: cat.id }))}
+                  options={formatForOptions(categories)}
                   value={field.state.value}
                 />
               </div>

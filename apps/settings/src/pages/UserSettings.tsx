@@ -124,9 +124,11 @@ function ContactDisplay({
               return (
                 <form.Subscribe<{
                   prefix: ContactType["prefix"];
+                  iso3: ContactType["iso3"];
                 }>
                   selector={(s) => ({
                     prefix: s.values.contacts[index].prefix,
+                    iso3: s.values.contacts[index].iso3,
                   })}>
                   {(prefixState) => (
                     <>
@@ -139,9 +141,10 @@ function ContactDisplay({
                             name={subfield.name}
                             onBlur={subfield.handleBlur}
                             onChange={(e) => subfield.handleChange(e.target.value)}
-                            onSelectChange={(item) =>
-                              form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null)
-                            }
+                            onSelectChange={(item) => {
+                              form.setFieldValue(`contacts[${index}].prefix`, item?.value ? Number(item?.value) : null);
+                              form.setFieldValue(`contacts[${index}].iso3`, item?.value || null);
+                            }}
                             selectValue={(prefixState.prefix || "")?.toString()}
                             type="tel"
                             value={subfield.state.value}
@@ -207,7 +210,7 @@ export function UserSettings() {
   const auth = useAuth();
   const { isSmallScreen } = useScreenSize();
   const { openDrawer } = useDrawer("upload");
-  const { mutate: update } = useUpdate<UsersMutatorType>("users");
+  const { mutate: update } = useUpdate<UsersMutatorType>("users", { refetchModels: ["contacts"] });
   const { roles } = useLoaderData({ from: "/settings/user" });
   const { data: rolesData } = useQuery({ ...RolesQuery, placeholderData: roles });
   const {
@@ -224,7 +227,7 @@ export function UserSettings() {
   );
 
   const { data: userContacts, isLoading: isLoadingContacts } = useList<ContactType>(
-    { model: "contacts", fields: ["id", "value", "title", "prefix", "contactType", "placeId"] },
+    { model: "contacts", fields: ["id", "value", "title", "prefix", "contactType", "placeId", "iso3"] },
     { urlSuffix: `user/${userData?.id}`, enabled: isSuccess && !!userData?.id }
   );
 
