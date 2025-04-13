@@ -43,14 +43,7 @@ export function OptionItem<OT = null>({
       }}
       role="option">
       <div className={label()}>
-        <span>
-          {!!item?.additionalData &&
-          typeof item?.additionalData === "object" &&
-          "iso3" in item.additionalData &&
-          item?.additionalData?.iso3 ? (
-            <img className="w-5" src={`/flags/${item?.additionalData?.iso3}.svg`} />
-          ) : null}
-        </span>
+        <span>{item.image ? <img className="w-5" src={item.image} /> : null}</span>
         <span>{item.label}</span>
       </div>
       {item.description ? <span className="text-sm">{item.description}</span> : null}
