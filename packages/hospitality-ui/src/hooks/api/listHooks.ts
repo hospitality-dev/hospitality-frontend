@@ -12,9 +12,9 @@ export type useListProps<F> = {
   placeholderData?: F[];
 };
 
-export function useList<F>(
+export function useList<F, O = F>(
   { model, fields, filters, placeholderData = [] }: useListProps<F>,
-  options?: Pick<UseQueryOptions<F[]>, "enabled" | "placeholderData" | "staleTime"> & {
+  options?: Pick<UseQueryOptions<F[], Error, O[]>, "enabled" | "placeholderData" | "staleTime" | "select"> & {
     urlSuffix?: string;
     searchParams?: string[][];
   }
@@ -28,7 +28,7 @@ export function useList<F>(
     }
   }
 
-  return useQuery<F[]>({
+  return useQuery<F[], Error, O[]>({
     queryKey: [model, "list", fields, filters, options?.urlSuffix || ""].filter(Boolean),
     queryFn: () =>
       fetchFunction<F[]>({
@@ -41,5 +41,6 @@ export function useList<F>(
     placeholderData,
     enabled: !!(options?.enabled ?? true),
     staleTime: options?.staleTime,
+    select: options?.select,
   });
 }
