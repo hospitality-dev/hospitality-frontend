@@ -37,7 +37,7 @@ export const ProductsMutatorSchema = object({
   imageId: string().uuid().nullable(),
 });
 
-export const ProductsWithCountSchema = ProductsSchema.extend({ count: number() });
+export const ProductsWithCountSchema = ProductsSchema.extend({ count: number(), hasAboutToExpire: boolean() });
 // #endregion PRODUCTS
 
 // #region PRODUCTS_CATEGORIES

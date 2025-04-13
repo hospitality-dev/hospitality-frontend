@@ -1,17 +1,27 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { useList } from "../hooks";
-import { LocationsProductsGroupedByExpirationType } from "../types";
-import { formatISOToString } from "../utils";
+import { LocationsProductsGroupedByExpirationType, Variant } from "../types";
+import { checkIsBefore, formatISOToString, getDayCountString, getDayDifferenceFromNow } from "../utils";
 import { Table } from "./Table";
 
-const groupedByExpirationDateColHelper = createColumnHelper<LocationsProductsGroupedByExpirationType>();
+const groupedByExpirationDateColHelper = createColumnHelper<LocationsProductsGroupedByExpirationType & { variant?: Variant }>();
 const groupedByExpirationDateColumns = [
   groupedByExpirationDateColHelper.accessor("expirationDate", {
     header: "Expiration date",
     cell: (info) => {
       const value = info.getValue();
-      return <span className="font-medium">{value ? formatISOToString(value) : ""}</span>;
+      const differenceInDays = getDayDifferenceFromNow(value);
+      return (
+        <span className={`font-medium ${differenceInDays && differenceInDays <= 7 ? "text-error" : ""}`}>
+          {value ? (
+            <div className="flex items-center gap-x-1">
+              <span>{formatISOToString(value)}</span>
+              <span>({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})</span>
+            </div>
+          ) : null}
+        </span>
+      );
     },
   }),
   groupedByExpirationDateColHelper.accessor("count", {
@@ -26,9 +36,13 @@ export function ExpandedProductGroupedByExpirationDate({ productId }: { productI
     { urlSuffix: `${productId}/grouped/expiration-date`, enabled: !!productId }
   );
   return (
-    <div className="">
-      <Table columns={groupedByExpirationDateColumns} data={data || []} />
-    </div>
+    <Table
+      columns={groupedByExpirationDateColumns}
+      data={(data || []).map((item) => ({
+        ...item,
+        variant: item.expirationDate && checkIsBefore({ date: item.expirationDate, days: 7 }) ? "error" : "primary",
+      }))}
+    />
   );
 }
 

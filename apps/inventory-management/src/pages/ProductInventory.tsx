@@ -1,6 +1,7 @@
 import {
   Button,
   createColumnHelper,
+  Icon,
   Icons,
   ProductCategoriesQuery,
   ProductsWithCountType,
@@ -14,7 +15,7 @@ import {
   useQuery,
 } from "@hospitality/hospitality-ui";
 
-type Entity = Pick<ProductsWithCountType & { count: number }, "id" | "title" | "categoryId" | "count">;
+type Entity = Pick<ProductsWithCountType, "id" | "title" | "categoryId" | "count" | "hasAboutToExpire">;
 const columnHelper = createColumnHelper<Entity>();
 
 function ActionButton({ data, setExpanded }: { data: Entity; setExpanded: (expanded: boolean) => void }) {
@@ -71,7 +72,18 @@ function ActionButton({ data, setExpanded }: { data: Entity; setExpanded: (expan
 }
 
 const columns = [
-  columnHelper.accessor("count", { header: "Amount", cell: (info) => info.getValue(), maxSize: 100 }),
+  columnHelper.accessor("count", {
+    header: "Amount",
+    cell: (info) => (
+      <div className="flex items-center gap-x-2">
+        <div className="text-error">
+          <Icon fontSize={24} icon={Icons.warning} />
+        </div>
+        {info.getValue()}
+      </div>
+    ),
+    maxSize: 100,
+  }),
   columnHelper.accessor("title", {
     header: "Title",
     cell: (info) => <span className="font-semibold">{info.getValue()}</span>,
