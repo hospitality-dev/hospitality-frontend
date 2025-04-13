@@ -84,6 +84,7 @@ export const Icons = {
   user: "ph:user" as const,
   userDetails: "ph:identification-card" as const,
   warehouseAddress: "material-symbols:warehouse-outline-rounded" as const,
+  warning: "ph:warning-circle",
   wav: "bi:filetype-wav" as const,
   webm: "bi:file-earmark-slides",
   webp: "bi:file-earmark-image",
