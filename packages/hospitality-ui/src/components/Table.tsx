@@ -190,7 +190,7 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
             {!isLoading && isOpen && data.length
               ? table.getRowModel().rows.map((row) => (
                   <Fragment key={row.id}>
-                    <tr className={tr({ variant: row.original.variant })}>
+                    <tr className={tr()}>
                       {row.getVisibleCells().map((cell) => (
                         <td
                           key={cell.id}
