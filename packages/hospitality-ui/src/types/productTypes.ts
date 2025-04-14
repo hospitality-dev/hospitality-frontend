@@ -108,6 +108,7 @@ export const LocationsAvailableProductsMutatorSchema = object({
 });
 
 export const LocationsProductsGroupedByExpirationSchema = object({
+  productId: string().uuid(),
   expirationDate: string().nullish(),
   count: number(),
 });
