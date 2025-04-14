@@ -1,11 +1,40 @@
-import { createColumnHelper } from "@tanstack/react-table";
+import { createColumnHelper, Row } from "@tanstack/react-table";
 
+import { Icons } from "../enums";
 import { useList } from "../hooks";
-import { LocationsProductsGroupedByExpirationType, Variant } from "../types";
-import { checkIsBefore, formatISOToString, getDayCountString, getDayDifferenceFromNow } from "../utils";
+import { LocationsProductsGroupedByExpirationType } from "../types";
+import { formatISOToString, getDayCountString, getDayDifferenceFromNow, urlFunction } from "../utils";
+import { Button } from "./Button";
 import { Table } from "./Table";
 
-const groupedByExpirationDateColHelper = createColumnHelper<LocationsProductsGroupedByExpirationType & { variant?: Variant }>();
+function GroupedByExpiractionActions({
+  row,
+}: {
+  row: Row<{
+    productId: string;
+    count: number;
+    expirationDate?: string | null | undefined;
+  }>;
+}) {
+  return (
+    <span className="font-light">
+      <Button
+        hasNoBorder
+        icon={Icons.qrCode}
+        isOutline
+        onClick={async () => {
+          const link = await urlFunction({
+            id: row.original.productId,
+            userReset: () => {},
+            urlSuffix: "product-qr-code",
+          });
+          window.open(link, "_blank");
+        }}
+      />
+    </span>
+  );
+}
+const groupedByExpirationDateColHelper = createColumnHelper<LocationsProductsGroupedByExpirationType>();
 const groupedByExpirationDateColumns = [
   groupedByExpirationDateColHelper.accessor("expirationDate", {
     header: "Expiration date",
@@ -13,7 +42,7 @@ const groupedByExpirationDateColumns = [
       const value = info.getValue();
       const differenceInDays = getDayDifferenceFromNow(value);
       return (
-        <span className={`font-medium ${differenceInDays && differenceInDays <= 7 ? "text-error" : ""}`}>
+        <span className={`font-medium ${differenceInDays !== null && differenceInDays <= 7 ? "text-error" : ""}`}>
           {value ? (
             <span className="flex items-center gap-x-1">
               <span>{formatISOToString(value)}</span>
@@ -32,6 +61,15 @@ const groupedByExpirationDateColumns = [
       isCentered: true,
     },
   }),
+  groupedByExpirationDateColHelper.display({
+    id: "actions",
+    header: () => <span className="text-center">Actions</span>,
+    cell: GroupedByExpiractionActions,
+    maxSize: 100,
+    meta: {
+      isCentered: true,
+    },
+  }),
 ];
 
 export function ExpandedProductGroupedByExpirationDate({ productId }: { productId?: string }) {
@@ -39,15 +77,7 @@ export function ExpandedProductGroupedByExpirationDate({ productId }: { productI
     { model: "locations_products", fields: ["expirationDate", "count"] },
     { urlSuffix: `${productId}/grouped/expiration-date`, enabled: !!productId }
   );
-  return (
-    <Table
-      columns={groupedByExpirationDateColumns}
-      data={(data || []).map((item) => ({
-        ...item,
-        variant: item.expirationDate && checkIsBefore({ date: item.expirationDate, days: 7 }) ? "error" : "primary",
-      }))}
-    />
-  );
+  return <Table columns={groupedByExpirationDateColumns} data={data || []} />;
 }
 
 export function ExpandedRow({ id, type }: { id: string; type: "product_grouped_by_expiration_date" | null | undefined }) {
