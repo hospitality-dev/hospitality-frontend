@@ -84,7 +84,9 @@ export function formatISOToString(value: string) {
   return format(parseISO(value), "dd. MMMM yyyy.");
 }
 
+// days are a float
 export function getDayCountString(days: number) {
-  if (days === 1) return `${days} day`;
-  return `${days} days`;
+  if (days > -1 && days <= 0) return "Today";
+  if (days > 0 && days <= 1) return "Tomorrow";
+  return `${Math.ceil(days)} days`;
 }
