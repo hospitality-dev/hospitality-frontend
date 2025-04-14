@@ -26,7 +26,9 @@ function GroupedByExpiractionActions({
           const link = await urlFunction({
             id: row.original.productId,
             userReset: () => {},
-            urlSuffix: "product-qr-code",
+            method: "POST",
+            payload: JSON.stringify({ expirationDate: row.original.expirationDate }),
+            urlSuffix: "expiration-products-qr-code",
           });
           window.open(link, "_blank");
         }}
