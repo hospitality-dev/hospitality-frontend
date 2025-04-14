@@ -163,43 +163,43 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
       <div
         className={tableContainer()}
         style={{ height: (isCollapsible && isOpen) || !isCollapsible ? "calc-size(auto, size)" : 0 }}>
-        <table className={tableClasses()}>
+        <div className={tableClasses()}>
           {hasNoHeader ? null : (
-            <thead className={thead()}>
+            <div className={thead()}>
               {headers.length ? (
-                <tr className={tr()}>
+                <div className={tr()}>
                   {headers.map((header) => (
-                    <th
+                    <div
                       key={header.id}
                       className={th({ isCentered: header.column.columnDef.meta?.isCentered })}
                       style={{ maxWidth: header.column.columnDef.maxSize }}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
-                    </th>
+                    </div>
                   ))}
-                </tr>
+                </div>
               ) : null}
-            </thead>
+            </div>
           )}
-          <tbody className={tbody()}>
+          <div className={tbody()}>
             {!isLoading && !data.length ? (
-              <tr className={tr()}>
-                <td>ALERT HERE</td>
-              </tr>
+              <div className={tr()}>
+                <div>ALERT HERE</div>
+              </div>
             ) : null}
             {isLoading && isOpen ? <TableSkeleton td={td()} tr={tr()} /> : null}
             {!isLoading && isOpen && data.length
               ? table.getRowModel().rows.map((row) => (
                   <Fragment key={row.id}>
-                    <tr className={tr()}>
+                    <div className={tr()}>
                       {row.getVisibleCells().map((cell) => (
-                        <td
+                        <div
                           key={cell.id}
                           className={td({ isCentered: cell.column.columnDef.meta?.isCentered })}
                           style={{ maxWidth: cell.column.columnDef.maxSize }}>
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </td>
+                        </div>
                       ))}
-                    </tr>
+                    </div>
                     {row.getIsExpanded() && row.original.id ? (
                       <div className={expandedRowContainer()}>
                         <ExpandedRow id={row.original.id} type={type} />
@@ -208,8 +208,8 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
                   </Fragment>
                 ))
               : null}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     </div>
   );
