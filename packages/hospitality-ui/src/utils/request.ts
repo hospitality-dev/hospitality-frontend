@@ -134,15 +134,26 @@ export async function urlFunction({
   id,
   urlSuffix,
   userReset,
+  payload,
+  method = "GET",
 }: {
   id: string;
   urlSuffix?: string;
   userReset: () => void;
+  payload?: string;
+  method?: "GET" | "POST";
 }): Promise<string> {
   const result = await ky(`url/${id}${urlSuffix ? `/${urlSuffix}` : ""}`, {
-    method: "GET",
+    method,
+    body: payload,
     throwHttpErrors: true,
     prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
+    headers:
+      method === "POST"
+        ? {
+            "Content-Type": "application/json",
+          }
+        : undefined,
     credentials: "include",
     hooks: {
       afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
