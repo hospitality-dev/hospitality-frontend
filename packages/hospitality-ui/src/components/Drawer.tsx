@@ -14,7 +14,7 @@ type Props = {
 
 const DrawerClasses = tv({
   slots: {
-    base: "pointer-events-auto absolute top-0 right-0 z-[60] h-full max-h-full border-l border-gray-400 bg-gray-200 px-4 pb-4 shadow-md transition-all duration-500 ease-in-out",
+    base: "pointer-events-auto absolute top-0 right-0 z-[60] h-full max-h-full border-l border-gray-400 bg-gray-100 px-4 pb-4 shadow-md transition-all duration-500 ease-in-out",
     title:
       "font-merriweather mb-4 flex h-16 max-h-[4rem] flex-nowrap items-center justify-between border-b border-gray-400 text-center text-2xl text-gray-900",
   },
