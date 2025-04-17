@@ -83,9 +83,11 @@ const columns = [
             onClick={() => info.row.toggleExpanded(!info.row.getIsExpanded())}
           />
         </div>
-        <div className="text-error">
-          <Icon fontSize={24} icon={Icons.warning} />
-        </div>
+        {info.row.original.hasAboutToExpire ? (
+          <div className="text-error">
+            <Icon fontSize={24} icon={Icons.warning} />
+          </div>
+        ) : null}
         {info.getValue()}
       </div>
     ),
