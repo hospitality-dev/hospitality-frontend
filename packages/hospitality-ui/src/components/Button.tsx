@@ -56,6 +56,16 @@ const classes = tv({
   },
   compoundVariants: [
     {
+      isOutline: true,
+      isDisabled: true,
+      class: "hover:text-gray-900 active:text-gray-900",
+    },
+    {
+      isOutline: true,
+      isDisabled: true,
+      class: "bg-transparent",
+    },
+    {
       variant: "primary",
       isOutline: true,
       hasNoBorder: false,
