@@ -35,6 +35,7 @@ export const Icons = {
   file: "bi:file-earmark",
   folder: "ph:folder" as const,
   generalInquiryPhone: "material-symbols:perm-phone-msg-outline" as const,
+  generateReport: "mdi:graph-box-plus-outline" as const,
   gif: "bi:filetype-gif",
   homeAddress: "bi:house" as const,
   homePhone: "tabler:device-landline-phone" as const,

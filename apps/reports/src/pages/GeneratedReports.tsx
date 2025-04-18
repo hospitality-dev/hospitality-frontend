@@ -94,10 +94,11 @@ export function GeneratedReports() {
           icon={Icons.createReport}
           items={[
             {
-              id: "1",
-              title: "Inventory report",
-              icon: Icons.inventory,
-              onClick: generateReport,
+              id: "generate",
+              title: "Generate",
+              icon: Icons.generateReport,
+              allowedPlacements: ["left"],
+              subItems: [{ id: "inventory_report", title: "Inventory report", icon: Icons.inventory, onClick: generateReport }],
             },
           ]}
           label="Manage"
