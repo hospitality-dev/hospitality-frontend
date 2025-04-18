@@ -101,3 +101,13 @@ export function useUserLocations() {
     { staleTime: 8 * 60 * 60 * 1000 }
   );
 }
+export function useLogout() {
+  const resetUser = useResetAtom(userAtom);
+  const resetLocation = useResetAtom(locationAtom);
+
+  return function logout() {
+    resetLocation();
+    resetUser();
+    redirect({ to: "/" });
+  };
+}
