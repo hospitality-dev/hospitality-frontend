@@ -8,6 +8,7 @@ import {
   FloatingTree,
   offset,
   safePolygon,
+  size as floatingSize,
   useClick,
   useDismiss,
   useFloating,
@@ -111,7 +112,15 @@ function DropdownComponent({
     nodeId,
     open: isOpen,
     onOpenChange: setIsOpen,
-    middleware: [offset({ mainAxis: isNested ? 8 : 4, alignmentAxis: 0 }), autoPlacement({ allowedPlacements })],
+    middleware: [
+      offset({ mainAxis: isNested ? 8 : 4, alignmentAxis: 0 }),
+      autoPlacement({ allowedPlacements }),
+      floatingSize({
+        apply({ elements }) {
+          elements.floating.style.minWidth = `${elements.reference.getBoundingClientRect().width}px`;
+        },
+      }),
+    ],
     whileElementsMounted: autoUpdate,
   });
 
