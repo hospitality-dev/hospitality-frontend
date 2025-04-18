@@ -80,6 +80,30 @@
         "vite": "^6.1.0",
       },
     },
+    "apps/reports": {
+      "name": "@hospitality/reports",
+      "version": "0.0.0",
+      "dependencies": {
+        "@hospitality/hospitality-ui": "workspace:*",
+        "@tailwindcss/vite": "^4.0.17",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "tailwindcss": "^4.0.17",
+      },
+      "devDependencies": {
+        "@eslint/js": "^9.19.0",
+        "@types/react": "^18.0.0",
+        "@types/react-dom": "^18.0.0",
+        "@vitejs/plugin-react": "^4.3.4",
+        "eslint": "^9.19.0",
+        "eslint-plugin-react-hooks": "^5.0.0",
+        "eslint-plugin-react-refresh": "^0.4.18",
+        "globals": "^15.14.0",
+        "typescript": "~5.7.2",
+        "typescript-eslint": "^8.22.0",
+        "vite": "^6.1.0",
+      },
+    },
     "apps/settings": {
       "name": "@hospitality/settings",
       "version": "0.0.0",
@@ -297,6 +321,8 @@
     "@hospitality/hospitality-ui": ["@hospitality/hospitality-ui@workspace:packages/hospitality-ui"],
 
     "@hospitality/inventory-management": ["@hospitality/inventory-management@workspace:apps/inventory-management"],
+
+    "@hospitality/reports": ["@hospitality/reports@workspace:apps/reports"],
 
     "@hospitality/settings": ["@hospitality/settings@workspace:apps/settings"],
 
