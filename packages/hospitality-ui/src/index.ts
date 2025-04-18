@@ -7,7 +7,6 @@ export * from "./schemas";
 export * from "./sections/drawerContent";
 export * from "./types";
 export * from "./utils";
-export { Icon } from "@iconify/react";
 export { type FieldApi, type ReactFormExtendedApi, type UpdaterFn, useForm, type ValidationError } from "@tanstack/react-form";
 export { QueryClient, QueryClientProvider, queryOptions, type UseMutateFunction, useQuery } from "@tanstack/react-query";
 export { ReactQueryDevtools } from "@tanstack/react-query-devtools";

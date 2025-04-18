@@ -2,12 +2,14 @@ import {
   Button,
   createColumnHelper,
   FilesType,
+  Icon,
   Icons,
   Table,
   urlFunction,
   useList,
   useLogout,
 } from "@hospitality/hospitality-ui";
+
 const columnHelper = createColumnHelper<FilesType>();
 
 function ActionButton() {
@@ -37,7 +39,12 @@ function ActionButton() {
 const columns = [
   columnHelper.accessor("title", {
     header: "Title",
-    cell: (info) => <span className="font-semibold">{info.getValue()}</span>,
+    cell: (info) => (
+      <span className="flex items-center gap-x-1 font-semibold">
+        <Icon fontSize={24} icon={Icons[info.row.original.type]} />
+        <span>{info.getValue()}</span>
+      </span>
+    ),
   }),
 
   columnHelper.display({
