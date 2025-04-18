@@ -137,13 +137,13 @@ export async function urlFunction({
   payload,
   method = "GET",
 }: {
-  id: string;
+  id?: string;
   urlSuffix?: string;
   userReset: () => void;
   payload?: string;
   method?: "GET" | "POST";
 }): Promise<string> {
-  const result = await ky(`url/${id}${urlSuffix ? `/${urlSuffix}` : ""}`, {
+  const result = await ky(`url${id ? `/${id}` : ""}${urlSuffix ? `/${urlSuffix}` : ""}`, {
     method,
     body: payload,
     throwHttpErrors: true,
