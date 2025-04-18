@@ -2,6 +2,7 @@ export * from "./addressTypes";
 export * from "./authTypes";
 export * from "./baseTypes";
 export * from "./contactTypes";
+export * from "./fileTypes";
 export * from "./locationTypes";
 export * from "./productTypes";
 export * from "./userTypes";

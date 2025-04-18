@@ -24,6 +24,7 @@ export const Icons = {
   delete: "ph:trash" as const,
   doc: "bi:filetype-doc" as const,
   docx: "bi:filetype-docx" as const,
+  download: "ph:download" as const,
   employee: "mdi:user-badge-outline" as const,
   email: "entypo:email" as const,
   expiry: "fluent:clipboard-clock-24-regular" as const,
