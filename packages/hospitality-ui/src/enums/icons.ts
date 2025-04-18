@@ -67,6 +67,7 @@ export const Icons = {
   phone: "ph:phone" as const,
   png: "bi:filetype-png" as const,
   qrCode: "clarity:qr-code-line" as const,
+  qrCodes: "clarity:qr-code-line" as const,
   rar: "bi:file-earmark-file-zip",
   removeItem: "mdi:basket-minus-outline" as const,
   removeUser: "ph:user-minus" as const,
@@ -84,6 +85,7 @@ export const Icons = {
   svg: "bi:filetype-svg" as const,
   twitter: "ph:twitter-logo" as const,
   txt: "bi:filetype-txt" as const,
+  unknown: "lineicons:file-question" as const,
   upload: "ph:upload" as const,
   user: "ph:user" as const,
   userDetails: "ph:identification-card" as const,
@@ -101,3 +103,42 @@ export const Icons = {
   xlsx: "bi:filetype-xlsx" as const,
   zip: "bi:file-earmark-file-zip",
 };
+
+export type ContactTypeIcons = Pick<
+  typeof Icons,
+  | "workEmail"
+  | "personalEmail"
+  | "supportEmail"
+  | "billingEmail"
+  | "workPhone"
+  | "personalPhone"
+  | "mobilePhone"
+  | "fax"
+  | "homePhone"
+  | "whatsapp"
+  | "slack"
+  | "workAddress"
+  | "homeAddress"
+  | "billingAddress"
+  | "shippingAddress"
+  | "website"
+  | "linkedin"
+  | "twitter"
+  | "facebook"
+  | "instagram"
+  | "salesEmail"
+  | "marketingEmail"
+  | "hrEmail"
+  | "contactEmail"
+  | "salesPhone"
+  | "supportPhone"
+  | "customerServicePhone"
+  | "generalInquiryPhone"
+  | "officeAddress"
+  | "headquartersAddress"
+  | "warehouseAddress"
+  | "companyWebsite"
+  | "supportWebsite"
+>;
+
+export type FileCategoryIcons = Pick<typeof Icons, "report" | "qrCode" | "unknown">;
