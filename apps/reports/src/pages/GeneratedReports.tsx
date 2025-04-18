@@ -8,6 +8,7 @@ import {
   Icon,
   Icons,
   Table,
+  urlFunction,
   useGenerateReport,
   useList,
 } from "@hospitality/hospitality-ui";
@@ -24,7 +25,16 @@ function ActionButton(info: CellContext<FilesType, unknown>) {
         isOutline
         items={[
           {
-            id: "add_amount",
+            id: "view_report",
+            onClick: async () => {
+              const url = await urlFunction({ id: info.row.original.id, urlPrefix: "reports", userReset: () => {} });
+              if (url) window.open(url);
+            },
+            title: "View",
+            icon: Icons.eye,
+          },
+          {
+            id: "download_report",
             onClick: () => downloadFunction({ id: info.row.original.id, userReset: () => {} }),
             title: "Download",
             icon: Icons.download,

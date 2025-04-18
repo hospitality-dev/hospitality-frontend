@@ -137,18 +137,20 @@ export async function uploadFunction<DataType>({
 
 export async function urlFunction({
   id,
+  urlPrefix,
   urlSuffix,
   userReset,
   payload,
   method = "GET",
 }: {
   id?: string;
+  urlPrefix?: string;
   urlSuffix?: string;
   userReset: () => void;
   payload?: string;
   method?: "GET" | "POST";
 }): Promise<string> {
-  const result = await ky(`url${id ? `/${id}` : ""}${urlSuffix ? `/${urlSuffix}` : ""}`, {
+  const result = await ky(`url${urlPrefix ? `/${urlPrefix}` : ""}${id ? `/${id}` : ""}${urlSuffix ? `/${urlSuffix}` : ""}`, {
     method,
     body: payload,
     throwHttpErrors: true,
