@@ -1,18 +1,20 @@
 import {
   Button,
+  CellContext,
   createColumnHelper,
+  downloadFunction,
   FilesType,
+  formatFromUTC,
   Icon,
   Icons,
   Table,
-  urlFunction,
+  useGenerateReport,
   useList,
-  useLogout,
 } from "@hospitality/hospitality-ui";
 
 const columnHelper = createColumnHelper<FilesType>();
 
-function ActionButton() {
+function ActionButton(info: CellContext<FilesType, unknown>) {
   return (
     <div className="w-8">
       <Button
@@ -23,7 +25,7 @@ function ActionButton() {
         items={[
           {
             id: "add_amount",
-            onClick: () => {},
+            onClick: () => downloadFunction({ id: info.row.original.id, userReset: () => {} }),
             title: "Download",
             icon: Icons.download,
           },
@@ -46,6 +48,14 @@ const columns = [
       </span>
     ),
   }),
+  columnHelper.accessor("createdAt", {
+    header: "Date of creation",
+    cell: (info) => (
+      <span className="flex items-center gap-x-1">
+        <span>{formatFromUTC(info.getValue())}</span>
+      </span>
+    ),
+  }),
 
   columnHelper.display({
     id: "actions",
@@ -61,10 +71,10 @@ const columns = [
 ];
 
 export function GeneratedReports() {
-  const logout = useLogout();
+  const { mutate: generateReport } = useGenerateReport();
   const { data: reports = [], isPending } = useList<FilesType>(
-    { model: "files", fields: ["id", "title", "type"] },
-    { urlSuffix: "report" }
+    { model: "files", fields: ["id", "title", "type", "createdAt"] },
+    { urlSuffix: "reports" }
   );
   return (
     <div className="flex flex-col gap-y-2 pt-2">
@@ -77,7 +87,7 @@ export function GeneratedReports() {
               id: "1",
               title: "Inventory report",
               icon: Icons.inventory,
-              onClick: () => urlFunction({ userReset: logout, urlSuffix: "inventory-report", method: "GET" }),
+              onClick: generateReport,
             },
           ]}
           label="Manage"

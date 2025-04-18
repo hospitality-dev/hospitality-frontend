@@ -4,7 +4,7 @@ import kebabCase from "lodash.kebabcase";
 
 import { userAtom } from "../../atoms";
 import { AllowedUploadTypes, AvailableEntities } from "../../types";
-import { fetchFunction, formatStringToISO, uploadFunction } from "../../utils";
+import { fetchFunction, formatStringToISO, uploadFunction, urlFunction } from "../../utils";
 
 export function useCreate<F>(
   model: AvailableEntities,
@@ -72,6 +72,30 @@ export function useUploadFiles(
         for (let index = 0; index < opts.invalidateModels.length; index++) {
           queryClient.invalidateQueries({ predicate: (q) => q.queryKey?.[0] === opts?.invalidateModels?.[index] });
         }
+      }
+    },
+  });
+}
+
+export function useGenerateReport(options?: { invalidateModels?: AvailableEntities[] } & UseMutationOptions<unknown, unknown>) {
+  const userReset = useResetAtom(userAtom);
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => {
+      return urlFunction({ method: "GET", userReset, urlSuffix: "inventory-report" });
+    },
+    onError: options?.onError,
+    onSettled: options?.onSettled,
+    onSuccess: (...props) => {
+      queryClient.invalidateQueries({ queryKey: ["files"] });
+      if (options?.invalidateModels?.length) {
+        for (let index = 0; index < options.invalidateModels.length; index++) {
+          queryClient.invalidateQueries({ predicate: (q) => q.queryKey?.[0] === options?.invalidateModels?.[index] });
+        }
+      }
+      if (options?.onSuccess) {
+        options?.onSuccess(...props);
       }
     },
   });
