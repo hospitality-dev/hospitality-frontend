@@ -27,10 +27,11 @@ export const FileTypesEnum = enum_([
   "unknown",
 ]);
 
-export const FilesCategoriesEnum = enum_(["report", "qr_codes", "unknown"]);
+export const FilesCategoriesEnum = enum_(["reports", "images", "qr_codes", "unknown"]);
 
 export const FilesSchema = object({
   id: string().uuid().nonempty(),
+  createdAt: string().datetime().nonempty(),
   title: string().nonempty(),
   ownerId: string().uuid().nonempty(),
   locationId: string().uuid().nullish(),

@@ -51,7 +51,7 @@ function ActionButton({ data }: { data: Entity }) {
           {
             id: "2",
             title: "Print QR codes",
-            icon: Icons.qrCode,
+            icon: Icons.qrCodes,
             onClick: async () => {
               const link = await urlFunction({
                 id: data.id,

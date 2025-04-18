@@ -20,7 +20,7 @@ function GroupedByExpiractionActions({
     <span className="font-light">
       <Button
         hasNoBorder
-        icon={Icons.qrCode}
+        icon={Icons.qrCodes}
         isOutline
         onClick={async () => {
           const link = await urlFunction({

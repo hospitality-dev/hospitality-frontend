@@ -20,6 +20,6 @@ export const Modules: { id: string; title: string; icon: AvailableIcons }[] = [
   {
     id: "reports/dashboard" as const,
     title: "Reports",
-    icon: Icons.report,
+    icon: Icons.reports,
   },
 ];
