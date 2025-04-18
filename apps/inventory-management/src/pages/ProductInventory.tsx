@@ -1,13 +1,13 @@
 import {
   Button,
   createColumnHelper,
+  fetchFunction,
   Icon,
   Icons,
   ProductCategoriesQuery,
   ProductsWithCountType,
   Table,
   Tabs,
-  urlFunction,
   useBarcodeScanner,
   useDrawer,
   useList,
@@ -53,12 +53,13 @@ function ActionButton({ data }: { data: Entity }) {
             title: "Print QR codes",
             icon: Icons.qrCodes,
             onClick: async () => {
-              const link = await urlFunction({
-                id: data.id,
+              const link = await fetchFunction<string>({
+                model: "files",
+
                 userReset: () => {},
-                urlSuffix: "product-qr-code",
+                urlSuffix: `generate/products/qr-codes/${data.id}`,
               });
-              window.open(link, "_blank");
+              if (link) window.open(link, "_blank");
             },
           },
         ]}

@@ -3,7 +3,7 @@ import { useResetAtom } from "jotai/utils";
 import kebabCase from "lodash.kebabcase";
 
 import { userAtom } from "../../atoms";
-import { AllowedUploadTypes, AvailableEntities } from "../../types";
+import { AllowedUploadTypes, AvailableEntities, FilesCategories } from "../../types";
 import { fetchFunction, formatStringToISO, uploadFunction } from "../../utils";
 
 export function useCreate<F>(
@@ -77,15 +77,22 @@ export function useUploadFiles(
   });
 }
 
-export function useGenerateReport(options?: { invalidateModels?: AvailableEntities[] } & UseMutationOptions<unknown, unknown>) {
+export function useGenerateFile(
+  { type, id }: { type: FilesCategories; id?: string },
+  options?: { invalidateModels?: AvailableEntities[] } & UseMutationOptions<unknown, unknown>
+) {
   const userReset = useResetAtom(userAtom);
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async () => {
-      const url = await fetchFunction<string>({ method: "GET", model: "files", userReset, urlSuffix: "generate/reports" });
+      const url = await fetchFunction<string>({
+        method: "GET",
+        model: "files",
+        userReset,
+        urlSuffix: `generate/${kebabCase(type)}${id ? `/${id}` : ""}`,
+      });
       if (url) window.open(url);
-
       return null;
     },
     onError: options?.onError,

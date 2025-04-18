@@ -9,7 +9,7 @@ import {
   Icons,
   Table,
   urlFunction,
-  useGenerateReport,
+  useGenerateFile,
   useList,
 } from "@hospitality/hospitality-ui";
 
@@ -81,7 +81,7 @@ const columns = [
 ];
 
 export function GeneratedReports() {
-  const { mutate: generateReport } = useGenerateReport();
+  const { mutate: generateReport } = useGenerateFile({ type: "reports" });
   const { data: reports = [], isPending } = useList<FilesType>(
     { model: "files", fields: ["id", "title", "type", "createdAt"] },
     { urlSuffix: "reports" }
