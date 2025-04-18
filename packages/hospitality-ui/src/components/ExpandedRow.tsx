@@ -21,6 +21,7 @@ function GroupedByExpiractionActions({
       <Button
         hasNoBorder
         icon={Icons.qrCodes}
+        isDisabled
         isOutline
         onClick={async () => {
           const link = await urlFunction({
