@@ -35,8 +35,8 @@ export const FilesSchema = object({
   ownerId: string().uuid().nonempty(),
   locationId: string().uuid().nullish(),
   companyId: string().uuid().nonempty(),
-  type: string(),
-  category: string(),
+  type: FileTypesEnum,
+  category: FilesCategoriesEnum,
 });
 export type FilesType = zodInfer<typeof FilesSchema>;
 export type FileTypes = zodInfer<typeof FileTypesEnum>;
