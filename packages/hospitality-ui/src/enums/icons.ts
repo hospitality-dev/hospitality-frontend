@@ -18,6 +18,7 @@ export const Icons = {
   close: "ph:x" as const,
   companyWebsite: "hugeicons:job-link" as const,
   contactEmail: "fluent:person-mail-48-filled" as const,
+  createReport: "bi:clipboard2-plus" as const,
   csv: "bi:filetype-csv" as const,
   customerServicePhone: "hugeicons:customer-service" as const,
   delete: "ph:trash" as const,
