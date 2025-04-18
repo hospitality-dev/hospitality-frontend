@@ -3,7 +3,7 @@ import { format, parse, parseISO } from "date-fns";
 import camelCase from "lodash.camelcase";
 import { ZodIssue } from "zod";
 
-import { Icons } from "../enums";
+import { ContactTypeIcons } from "../enums";
 import { AddressesType, ContactTypes, OptionType, UsersType } from "../types";
 import { CountriesType } from "../types/worldTypes";
 import { getSentenceCase } from "./transform";
@@ -71,8 +71,8 @@ export function getUserInfo(user?: Pick<UsersType, "id" | "firstName" | "lastNam
   };
 }
 
-export function camelCaseContactType(type: ContactTypes) {
-  return camelCase(type) as keyof typeof Icons;
+export function camelCaseContactType(type: ContactTypes): keyof ContactTypeIcons {
+  return camelCase(type) as keyof ContactTypeIcons;
 }
 
 export function formatStringToISO(value: string) {
