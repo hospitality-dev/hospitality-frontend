@@ -140,5 +140,3 @@ export type ContactTypeIcons = Pick<
   | "companyWebsite"
   | "supportWebsite"
 >;
-
-export type FileCategoryIcons = Pick<typeof Icons, "report" | "qrCode" | "unknown">;
