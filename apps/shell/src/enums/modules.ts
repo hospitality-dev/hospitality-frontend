@@ -17,4 +17,9 @@ export const Modules: { id: string; title: string; icon: AvailableIcons }[] = [
     title: "Suppliers",
     icon: Icons.supplier,
   },
+  {
+    id: "reports" as const,
+    title: "Reports",
+    icon: Icons.report,
+  },
 ];

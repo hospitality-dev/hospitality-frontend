@@ -68,6 +68,7 @@ export const Icons = {
   rar: "bi:file-earmark-file-zip",
   removeItem: "mdi:basket-minus-outline" as const,
   removeUser: "ph:user-minus" as const,
+  report: "ph:chart-line" as const,
   salesEmail: "tabler:mail-dollar" as const,
   salesPhone: "ph:phone-incoming" as const,
   save: "ph:floppy-disk" as const,
