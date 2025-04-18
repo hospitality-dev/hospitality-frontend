@@ -83,7 +83,7 @@ const columns = [
             onClick={() => info.row.toggleExpanded(!info.row.getIsExpanded())}
           />
         </div>
-        {info.row.original.hasAboutToExpire ? (
+        {info.row.original.hasAboutToExpire && info.row.original.count ? (
           <div className="text-error">
             <Icon fontSize={24} icon={Icons.warning} />
           </div>
