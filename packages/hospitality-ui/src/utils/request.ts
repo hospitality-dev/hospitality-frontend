@@ -161,3 +161,20 @@ export async function urlFunction({
   });
   return result.text();
 }
+
+export async function downloadFunction({ id }: { id: string; userReset: () => void }) {
+  const blob = await ky(`files/download/${id}`, {
+    method: "GET",
+    throwHttpErrors: true,
+    prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1/`,
+    credentials: "include",
+  }).blob();
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "Inventory Report.pdf";
+  a.click();
+  URL.revokeObjectURL(url);
+  a.remove();
+}
