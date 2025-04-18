@@ -1,4 +1,4 @@
-import { addDays, differenceInMilliseconds, isBefore, parseISO } from "date-fns";
+import { addDays, differenceInMilliseconds, format, isBefore, parseISO } from "date-fns";
 
 const msInDay = 1000 * 60 * 60 * 24;
 export function checkIsBefore({ date, days }: { date?: string | null; days: number }): boolean | null {
@@ -15,4 +15,9 @@ export function getDayDifferenceFromNow(date?: string | null): number | null {
   const now = new Date();
   const input = parseISO(date);
   return differenceInMilliseconds(input, now) / msInDay;
+}
+
+export function formatFromUTC(date: string, dateTimeFormat?: string) {
+  const parsedDate = parseISO(date);
+  return format(parsedDate, dateTimeFormat || "dd.MM.yyyy.");
 }
