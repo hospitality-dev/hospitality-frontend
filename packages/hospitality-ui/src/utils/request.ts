@@ -3,7 +3,7 @@ import kebabcase from "lodash.kebabcase";
 import snakecase from "lodash.snakecase";
 
 import { AvailableEntities, AvailableSearchableEntities, ResponseType } from "../types";
-import { formatDataResponseHook } from "./response";
+import { handleUnauthenticated } from "./response";
 
 export function getSearchParams<F, T>(fields: F, filters?: T) {
   const searchParams = new URLSearchParams();
@@ -49,11 +49,16 @@ export async function fetchFunction<DataType>({
     credentials: "include",
     body: payload,
     hooks: {
-      afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
+      afterResponse: [(_, __, res) => handleUnauthenticated(_, __, res, userReset)],
     },
-  }).json<ResponseType<DataType>>();
-
-  return result?.data;
+  });
+  const contentType = result.headers.get("content-type");
+  if (contentType === "application/json") {
+    return (await result.json<ResponseType<DataType>>())?.data;
+  } else if (contentType === "text/plain") {
+    return result.text() as DataType;
+  }
+  return {} as DataType;
 }
 
 export async function authFetchFunction<DataType>({
@@ -71,7 +76,7 @@ export async function authFetchFunction<DataType>({
       prefixUrl: `${import.meta.env.VITE_SERVER_URL}/auth`,
       credentials: "include",
       hooks: {
-        afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
+        afterResponse: [(_, __, res) => handleUnauthenticated(_, __, res, userReset)],
       },
     }).json<ResponseType<DataType>>();
     return result?.data;
@@ -99,7 +104,7 @@ export async function searchFunction<DataType>({
       prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
       credentials: "include",
       hooks: {
-        afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
+        afterResponse: [(_, __, res) => handleUnauthenticated(_, __, res, userReset)],
       },
     })
     .json<ResponseType<DataType>>();
@@ -123,7 +128,7 @@ export async function uploadFunction<DataType>({
     credentials: "include",
     body: payload,
     hooks: {
-      afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
+      afterResponse: [(_, __, res) => handleUnauthenticated(_, __, res, userReset)],
     },
   }).json<ResponseType<DataType>>();
 
@@ -156,7 +161,7 @@ export async function urlFunction({
         : undefined,
     credentials: "include",
     hooks: {
-      afterResponse: [(_, __, res) => formatDataResponseHook(_, __, res, userReset)],
+      afterResponse: [(_, __, res) => handleUnauthenticated(_, __, res, userReset)],
     },
   });
   return result.text();

@@ -4,7 +4,7 @@ import kebabCase from "lodash.kebabcase";
 
 import { userAtom } from "../../atoms";
 import { AllowedUploadTypes, AvailableEntities } from "../../types";
-import { fetchFunction, formatStringToISO, uploadFunction, urlFunction } from "../../utils";
+import { fetchFunction, formatStringToISO, uploadFunction } from "../../utils";
 
 export function useCreate<F>(
   model: AvailableEntities,
@@ -82,21 +82,13 @@ export function useGenerateReport(options?: { invalidateModels?: AvailableEntiti
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => {
-      return urlFunction({ method: "GET", userReset, urlSuffix: "inventory-report" });
+    mutationFn: async () => {
+      const url = await fetchFunction<string>({ method: "GET", model: "files", userReset, urlSuffix: "generate/reports" });
+      if (url) window.open(url);
+
+      return null;
     },
     onError: options?.onError,
-    onSettled: options?.onSettled,
-    onSuccess: (...props) => {
-      queryClient.invalidateQueries({ queryKey: ["files"] });
-      if (options?.invalidateModels?.length) {
-        for (let index = 0; index < options.invalidateModels.length; index++) {
-          queryClient.invalidateQueries({ predicate: (q) => q.queryKey?.[0] === options?.invalidateModels?.[index] });
-        }
-      }
-      if (options?.onSuccess) {
-        options?.onSuccess(...props);
-      }
-    },
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ["files"] }),
   });
 }
