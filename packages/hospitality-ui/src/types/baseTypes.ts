@@ -6,7 +6,7 @@ import {
   AvailableSearchableEntitiesEnum,
   valueof,
 } from "@hospitality/hospitality-ui/src";
-import { ReactNode } from "@tanstack/react-router";
+import { AnyRoute, ReactNode } from "@tanstack/react-router";
 import { HTMLInputTypeAttribute, MouseEventHandler } from "react";
 
 import { Icons } from "../enums/icons";
@@ -103,6 +103,14 @@ export type AllowedUploadTypes =
   | "user_avatar"
   | "product_image";
 
+export type TabType = {
+  id: string;
+  title: string;
+  link?: AnyRoute["to"];
+  isNavControlled?: boolean;
+  isDisabled?: boolean;
+  isActive?: boolean;
+};
 // =========REQUEST=========
 type RequestFilterOperators = "eq" | "neq" | "gt" | "gte" | "is" | "is not" | "in" | "not in" | "ilike";
 type RequestFilterType<T> = {

@@ -1,17 +1,9 @@
-import { AnyRoute } from "@tanstack/react-router";
 import { Dispatch, SetStateAction } from "react";
 import { tv } from "tailwind-variants";
 
+import { TabType } from "../types";
 import { Link } from "./Link";
 
-type TabType = {
-  id: string;
-  title: string;
-  link?: AnyRoute["to"];
-  isNavControlled?: boolean;
-  isDisabled?: boolean;
-  isActive?: boolean;
-};
 type Props = {
   tabs: TabType[];
   active: string;
