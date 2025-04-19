@@ -39,7 +39,7 @@ export function Alert({ title, variant = "primary", size = "md", content, hasDis
           <div className="flex w-full items-center justify-between">
             <div className="flex gap-4">
               <span className="flex items-center">
-                <Icon icon={Icons.beer} />
+                <Icon icon={Icons.info} />
               </span>
               <h4 className="text-lg font-medium">{title}</h4>
             </div>
@@ -57,7 +57,7 @@ export function Alert({ title, variant = "primary", size = "md", content, hasDis
         <div className={classes({ variant, size, className: "flex w-full items-center justify-between" })}>
           <div className="flex gap-4 text-lg">
             <span className="flex items-center">
-              <Icon icon={Icons.beer} />
+              <Icon icon={Icons.info} />
             </span>
             <p>{content}</p>
           </div>
@@ -72,7 +72,7 @@ export function Alert({ title, variant = "primary", size = "md", content, hasDis
           <div className="flex w-full items-center justify-between">
             <div className="flex gap-4">
               <span className="flex items-center">
-                <Icon icon={Icons.beer} />
+                <Icon icon={Icons.info} />
               </span>
               <h4 className="text-lg font-medium">{title}</h4>
             </div>
@@ -96,7 +96,7 @@ export function Alert({ title, variant = "primary", size = "md", content, hasDis
       <div className={classes({ variant, size, className: "flex w-full items-center justify-between" })}>
         <div className="flex gap-4 text-lg">
           <span className="flex items-center">
-            <Icon icon={Icons.beer} />
+            <Icon icon={Icons.info} />
           </span>
           <p>{content}</p>
         </div>
