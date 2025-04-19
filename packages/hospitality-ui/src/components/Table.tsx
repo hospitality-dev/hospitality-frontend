@@ -1,10 +1,10 @@
 import { ReactNode } from "@tanstack/react-router";
 import { ColumnDef, flexRender, getCoreRowModel, getExpandedRowModel, useReactTable } from "@tanstack/react-table";
-import { Fragment, useState } from "react";
+import { Dispatch, Fragment, useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
-import { AvailableIcons, Size, Variant } from "../types";
+import { AvailableIcons, Size, TableActionType, Variant } from "../types";
 import { Button } from "./Button";
 import { ExpandedRow } from "./ExpandedRow";
 import { Title } from "./Title";
@@ -19,6 +19,11 @@ type Props<T = { id?: string } & Record<string, unknown>> = {
   isLoading?: boolean;
   hasNoHeader?: boolean;
   onExpand?: () => void;
+  dispatch: Dispatch<TableActionType>;
+  meta?: {
+    sort?: { field: string; type: "asc" | "desc" } | null;
+    page?: number | null;
+  };
   action?: {
     onClick: () => void;
     label: string;
@@ -35,7 +40,7 @@ const classes = tv({
     tableContainer: "transition-[height]",
     tableClasses: "min-w-full overflow-auto",
     thead: "border-b border-gray-300 text-left text-gray-500",
-    th: "flex-1 p-2 text-sm font-light uppercase select-none",
+    th: "flex flex-1 flex-nowrap items-center gap-x-2 p-2 text-sm font-light uppercase select-none",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300",
     tr: "flex w-full items-center rounded",
     td: "flex h-10 flex-1 items-center px-2",
@@ -99,12 +104,15 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
   isLoading,
   hasNoHeader,
   type,
+  meta,
+  dispatch,
 }: Props<T & { id?: string; variant?: Variant } & Record<string, unknown>>) {
   const table = useReactTable({
     columns,
     data,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
+    meta,
   });
   const [isOpen, setIsOpen] = useState(isInitialOpen);
   const headers = table.getFlatHeaders();
@@ -174,6 +182,23 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
                       className={th({ isCentered: header.column.columnDef.meta?.isCentered })}
                       style={{ maxWidth: header.column.columnDef.maxSize }}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
+                      {header.column.columnDef.meta?.isSortable && header.id ? (
+                        <div>
+                          <Button
+                            className="h-4 w-4"
+                            hasNoBorder
+                            icon={meta?.sort?.type === "desc" ? Icons.arrowDown : Icons.arrowUp}
+                            isOutline
+                            onClick={() =>
+                              dispatch({
+                                type: "SET_SORT",
+                                sort: { field: header.id, type: meta?.sort?.type === "desc" ? "asc" : "desc" },
+                              })
+                            }
+                            size="xs"
+                          />
+                        </div>
+                      ) : null}
                     </div>
                   ))}
                 </div>

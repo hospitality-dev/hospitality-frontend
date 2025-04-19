@@ -12,6 +12,7 @@ import {
   useDrawer,
   useList,
   UsersType,
+  useTable,
 } from "@hospitality/hospitality-ui";
 
 type EntityType = Pick<UsersType, "id" | "firstName" | "lastName"> & { role: Pick<RolesType, "id" | "title"> };
@@ -83,6 +84,7 @@ export function EmployeeManagement() {
     { urlSuffix: `location/${auth.user?.locationId}`, enabled: !!auth.user?.locationId }
   );
   const { openDrawer: openAddUserFromLocation } = useDrawer("add_user_from_location");
+  const [state, dispatch] = useTable();
   return (
     <div className="flex flex-col gap-y-2 overflow-hidden">
       <div className="self-end">
@@ -109,7 +111,7 @@ export function EmployeeManagement() {
         />
       </div>
       <div className="max-h-full overflow-y-auto">
-        <Table<EntityType> columns={columns} data={data} />
+        <Table<EntityType> columns={columns} data={data} dispatch={dispatch} meta={state} />
       </div>
     </div>
   );

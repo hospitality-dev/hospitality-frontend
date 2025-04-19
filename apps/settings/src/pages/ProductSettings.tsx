@@ -16,6 +16,7 @@ import {
   useLoaderData,
   UseMutateFunction,
   useQuery,
+  useTable,
 } from "@hospitality/hospitality-ui";
 import { useState } from "react";
 
@@ -72,6 +73,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const { openDrawer: openProductDrawer } = useDrawer("create_products");
+  const [state, dispatch] = useTable();
 
   // #region queries
   const { data } = useQuery(LocationsAvailableProductsQuery);
@@ -101,10 +103,12 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
         }}
         columns={columns({ create, locationId: auth.user?.locationId, locationsAvailableProducts: data || {}, deleteMutation })}
         data={query?.data || []}
+        dispatch={dispatch}
         hasNoHeader
         isCollapsible
         isInitialOpen={isOpen}
         isLoading={query.isPending}
+        meta={state}
         onExpand={() => setIsOpen(!isOpen)}
         title={title}
         titleVariant="primary"

@@ -111,6 +111,16 @@ export type TabType = {
   isDisabled?: boolean;
   isActive?: boolean;
 };
+
+export type TableStateType = {
+  page?: number | null;
+  sort?: { field: string; type: "asc" | "desc" } | null;
+};
+export type TableActionType =
+  | { type: "SET_PAGE"; page: number | null }
+  | { type: "SET_SORT"; sort: TableStateType["sort"] }
+  | { type: "RESET" };
+
 // =========REQUEST=========
 type RequestFilterOperators = "eq" | "neq" | "gt" | "gte" | "is" | "is not" | "in" | "not in" | "ilike";
 type RequestFilterType<T> = {

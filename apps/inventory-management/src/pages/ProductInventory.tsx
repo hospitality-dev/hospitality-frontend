@@ -13,6 +13,7 @@ import {
   useList,
   useParams,
   useQuery,
+  useTable,
 } from "@hospitality/hospitality-ui";
 
 type Entity = Pick<ProductsWithCountType, "id" | "title" | "categoryId" | "count" | "hasAboutToExpire">;
@@ -123,6 +124,7 @@ export function ProductInventory() {
     { model: "products", fields: ["id", "title", "categoryId"] },
     { enabled: !!active, urlSuffix: `category/${active}/active` }
   );
+  const [state, dispatch] = useTable();
 
   return (
     <div className="flex flex-col gap-y-2">
@@ -163,7 +165,14 @@ export function ProductInventory() {
           variant="info"
         />
       </div>
-      <Table columns={columns} data={products || []} isLoading={isPending} type="product_grouped_by_expiration_date" />
+      <Table
+        columns={columns}
+        data={products || []}
+        dispatch={dispatch}
+        isLoading={isPending}
+        meta={state}
+        type="product_grouped_by_expiration_date"
+      />
     </div>
   );
 }

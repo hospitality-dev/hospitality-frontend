@@ -1,7 +1,7 @@
 import { createColumnHelper, Row } from "@tanstack/react-table";
 
 import { Icons } from "../enums";
-import { useList } from "../hooks";
+import { useList, useTable } from "../hooks";
 import { LocationsProductsGroupedByExpirationType } from "../types";
 import { formatISOToString, getDayCountString, getDayDifferenceFromNow, urlFunction } from "../utils";
 import { Button } from "./Button";
@@ -80,7 +80,9 @@ export function ExpandedProductGroupedByExpirationDate({ productId }: { productI
     { model: "locations_products", fields: ["expirationDate", "count"] },
     { urlSuffix: `${productId}/grouped/expiration-date`, enabled: !!productId }
   );
-  return <Table columns={groupedByExpirationDateColumns} data={data || []} />;
+  const [state, dispatch] = useTable();
+
+  return <Table columns={groupedByExpirationDateColumns} data={data || []} dispatch={dispatch} meta={state} />;
 }
 
 export function ExpandedRow({ id, type }: { id: string; type: "product_grouped_by_expiration_date" | null | undefined }) {

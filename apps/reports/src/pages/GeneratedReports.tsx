@@ -11,6 +11,7 @@ import {
   urlFunction,
   useGenerateFile,
   useList,
+  useTable,
 } from "@hospitality/hospitality-ui";
 
 const columnHelper = createColumnHelper<FilesType>();
@@ -57,6 +58,9 @@ const columns = [
         <span>{info.getValue()}</span>
       </span>
     ),
+    meta: {
+      isSortable: true,
+    },
   }),
   columnHelper.accessor("createdAt", {
     header: "Date of creation",
@@ -86,6 +90,7 @@ export function GeneratedReports() {
     { model: "files", fields: ["id", "title", "type", "createdAt"] },
     { urlSuffix: "reports" }
   );
+  const [state, dispatch] = useTable();
   return (
     <div className="flex flex-col gap-y-2 pt-2">
       <div className="self-end">
@@ -106,7 +111,7 @@ export function GeneratedReports() {
           variant="info"
         />
       </div>
-      <Table columns={columns} data={reports || []} isLoading={isPending} />
+      <Table columns={columns} data={reports || []} dispatch={dispatch} isLoading={isPending} meta={state} />
     </div>
   );
 }
