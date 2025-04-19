@@ -4,7 +4,7 @@ import { Dispatch, Fragment, useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
-import { AvailableIcons, Size, TableActionType, Variant } from "../types";
+import { AvailableIcons, Size, TableActionType, TableStateType, Variant } from "../types";
 import { Button } from "./Button";
 import { ExpandedRow } from "./ExpandedRow";
 import { Title } from "./Title";
@@ -83,6 +83,12 @@ const classes = tv({
   },
 });
 
+function getSortIcon(sort: TableStateType["sort"], isSorted: boolean) {
+  if (!isSorted) return Icons.arrowsUpAndDown;
+  if (sort?.type === "asc") return Icons.arrowUp;
+  if (sort?.type === "desc") return Icons.arrowDown;
+  return Icons.arrowsUpAndDown;
+}
 function TableSkeleton({ tr, td }: { tr: string; td: string }) {
   return (
     <>
@@ -187,7 +193,7 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
                           <Button
                             className="h-4 w-4"
                             hasNoBorder
-                            icon={meta?.sort?.type === "desc" ? Icons.arrowDown : Icons.arrowUp}
+                            icon={getSortIcon(meta?.sort, header.id === meta?.sort?.field)}
                             isOutline
                             onClick={() =>
                               dispatch({
