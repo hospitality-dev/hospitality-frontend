@@ -6,6 +6,7 @@ export const Icons = {
   arrowLeft: "ph:caret-left" as const,
   arrowRight: "ph:caret-right" as const,
   arrowUp: "ph:caret-up" as const,
+  arrowsUpAndDown: "solar:sort-vertical-outline" as const,
   avi: "bi:file-earmark-slides",
   barcode: "ph:barcode" as const,
   bardcodeRemove: "iconoir:scan-barcode" as const,
