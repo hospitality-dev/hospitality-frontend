@@ -2,10 +2,10 @@ import ky from "ky";
 import kebabcase from "lodash.kebabcase";
 import snakecase from "lodash.snakecase";
 
-import { AvailableEntities, AvailableSearchableEntities, ResponseType } from "../types";
+import { AvailableEntities, AvailableSearchableEntities, ResponseType, TableStateType } from "../types";
 import { handleUnauthenticated } from "./response";
 
-export function getSearchParams<F, T>(fields: F, filters?: T) {
+export function getSearchParams<F, T>(fields: F, filters?: T, sort?: TableStateType["sort"]) {
   const searchParams = new URLSearchParams();
 
   if (Array.isArray(fields)) {
@@ -13,6 +13,10 @@ export function getSearchParams<F, T>(fields: F, filters?: T) {
   }
   if (filters) {
     searchParams.append("filters", JSON.stringify(filters));
+  }
+  if (sort) {
+    searchParams.append("sortField", snakecase(sort.field));
+    searchParams.append("sortType", snakecase(sort.type));
   }
 
   return searchParams;
