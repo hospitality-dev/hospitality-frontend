@@ -80,6 +80,11 @@ const classes = tv({
         td: "flex w-full justify-center",
       },
     },
+    isSorted: {
+      true: {
+        th: "text-info font-semibold",
+      },
+    },
   },
 });
 
@@ -185,7 +190,10 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
                   {headers.map((header) => (
                     <div
                       key={header.id}
-                      className={th({ isCentered: header.column.columnDef.meta?.isCentered })}
+                      className={th({
+                        isCentered: header.column.columnDef.meta?.isCentered,
+                        isSorted: header.id === meta?.sort?.field,
+                      })}
                       style={{ maxWidth: header.column.columnDef.maxSize }}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       {header.column.columnDef.meta?.isSortable && header.id ? (
@@ -195,12 +203,19 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
                             hasNoBorder
                             icon={getSortIcon(meta?.sort, header.id === meta?.sort?.field)}
                             isOutline
-                            onClick={() =>
-                              dispatch({
-                                type: "SET_SORT",
-                                sort: { field: header.id, type: meta?.sort?.type === "desc" ? "asc" : "desc" },
-                              })
-                            }
+                            onClick={() => {
+                              if (meta?.sort?.type === "asc") {
+                                dispatch({
+                                  type: "SET_SORT",
+                                  sort: null,
+                                });
+                              } else {
+                                dispatch({
+                                  type: "SET_SORT",
+                                  sort: { field: header.id, type: meta?.sort?.type === "desc" ? "asc" : "desc" },
+                                });
+                              }
+                            }}
                             size="xs"
                           />
                         </div>
