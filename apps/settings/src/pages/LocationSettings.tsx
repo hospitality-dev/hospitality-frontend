@@ -290,261 +290,263 @@ export function LocationSettings() {
 
   return (
     <Form handleSubmit={form.handleSubmit}>
-      <div className="flex h-full flex-col justify-between gap-y-2">
-        <div className="flex flex-col gap-y-4">
-          <div className="flex items-end gap-x-2">
-            <div>
-              <Avatar
-                imageId={locationData?.imageId}
-                label={locationData?.title || ""}
-                onClick={() =>
-                  openDrawer("Upload location logo", {
-                    id: locationData?.id,
-                    uploadType: "location_logo",
-                    types: ["jpg", "jpeg", "png", "webp", "gif", "svg"],
-                    isMultiple: false,
-                  })
-                }
-                size={isSmallScreen ? "xl" : "md"}
-                type="location_logo"
-              />
-            </div>
-            <form.Field
-              children={(field) => (
-                <Input
-                  isDisabled={isLoading}
-                  label="Title"
-                  name={field.name}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  value={field.state.value || ""}
-                />
-              )}
-              name="title"
+      <div className="flex h-full flex-col justify-between">
+        <div className="border-primary flex items-end gap-2 border-b">
+          <div>
+            <Avatar
+              imageId={locationData?.imageId}
+              label={locationData?.title || ""}
+              onClick={() =>
+                openDrawer("Upload location logo", {
+                  id: locationData?.id,
+                  uploadType: "location_logo",
+                  types: ["jpg", "jpeg", "png", "webp", "gif", "svg"],
+                  isMultiple: false,
+                })
+              }
+              size={isSmallScreen ? "xl" : "md"}
+              type="location_logo"
             />
           </div>
+          <form.Field
+            children={(field) => (
+              <Input
+                isDisabled={isLoading}
+                label="Title"
+                name={field.name}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+                value={field.state.value || ""}
+              />
+            )}
+            name="title"
+          />
+        </div>
+        <div className="mt-2 flex flex-col gap-y-4 overflow-y-auto">
           {isLoadingContacts ? null : (
-            <form.Field
-              children={(field) => (
-                <>
-                  <Title hasBorder label="Contacts" size="xl" variant="primary" />
-                  <Card hasNoShadow isFullWidth variant="secondary">
-                    <Collapsible
-                      icon={Icons.officeAddress}
-                      isOpen={!!groupedContactsByType?.address?.length}
-                      items={[
-                        {
-                          id: "1",
-                          label: "Add",
-                          icon: Icons.add,
-                          variant: "info",
-                          allowedPlacements: ["left-start"] as const,
-                          onClick: () => {},
-                          items: AvailableContactTypes.address.professional.map((addr) => ({
-                            icon: Icons[camelCaseContactType(addr)],
+            <div className="flex flex-col gap-y-4">
+              <form.Field
+                children={(field) => (
+                  <>
+                    <Title hasBorder label="Contacts" size="xl" variant="primary" />
+                    <Card hasNoShadow isFullWidth variant="secondary">
+                      <Collapsible
+                        icon={Icons.officeAddress}
+                        isOpen={!!groupedContactsByType?.address?.length}
+                        items={[
+                          {
+                            id: "1",
+                            label: "Add",
+                            icon: Icons.add,
+                            variant: "info",
                             allowedPlacements: ["left-start"] as const,
-                            id: addr,
-                            title: getSentenceCase(addr),
-                            onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(addr)),
-                          })),
-                        },
-                      ]}
-                      label="Addresses">
-                      <div className="flex flex-col gap-y-2">
-                        {(field.state.value || []).map((contact, i) => {
-                          if (contact.contactType.includes("address"))
-                            return (
-                              <ContactDisplay
-                                key={i}
-                                contact={contact}
-                                form={form}
-                                index={i}
-                                isDisabled={isLoading}
-                                onDelete={() => field.removeValue(i)}
-                                type="address"
-                              />
-                            );
-                          return null;
-                        })}
-                      </div>
-                    </Collapsible>
-                  </Card>
-                  <Card hasNoShadow isFullWidth variant="secondary">
-                    <Collapsible
-                      icon={Icons.phone}
-                      isOpen={!!groupedContactsByType?.phone?.length}
-                      items={[
-                        {
-                          id: "1",
-                          label: "Add",
-                          icon: Icons.add,
-                          variant: "info",
-                          allowedPlacements: ["left-start"] as const,
-                          onClick: () => {},
-                          items: AvailableContactTypes.phone.professional.map((phone) => ({
-                            icon: Icons[camelCaseContactType(phone)],
-                            allowedPlacements: ["left-start"],
-                            id: phone,
-                            title: getSentenceCase(phone),
-                            onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(phone)),
-                          })),
-                        },
-                      ]}
-                      label="Phones">
-                      <div className="flex flex-col gap-y-2">
-                        {(field.state.value || []).map((contact, i) => {
-                          if (contact.contactType.includes("phone") || contact.contactType === "fax")
-                            return (
-                              <ContactDisplay
-                                key={i}
-                                contact={contact}
-                                form={form}
-                                index={i}
-                                isDisabled={isLoading}
-                                onDelete={() => field.removeValue(i)}
-                                type="phone"
-                              />
-                            );
-                          return null;
-                        })}
-                      </div>
-                    </Collapsible>
-                  </Card>
-                  <Card hasNoShadow isFullWidth variant="secondary">
-                    <Collapsible
-                      icon={Icons.email}
-                      isOpen={!!groupedContactsByType?.email?.length}
-                      items={[
-                        {
-                          id: "1",
-                          label: "Add",
-                          icon: Icons.add,
-                          variant: "info",
-                          allowedPlacements: ["left-start"] as const,
-                          onClick: () => {},
-                          items: AvailableContactTypes.email.professional.map((email) => ({
-                            icon: Icons[camelCaseContactType(email)],
-                            allowedPlacements: ["left-start"],
-                            id: email,
-                            title: getSentenceCase(email),
-                            onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(email)),
-                          })),
-                        },
-                      ]}
-                      label="Emails">
-                      <div className="flex flex-col gap-y-2">
-                        {(field.state.value || []).map((contact, i) => {
-                          if (contact.contactType.includes("email"))
-                            return (
-                              <ContactDisplay
-                                key={i}
-                                contact={contact}
-                                form={form}
-                                index={i}
-                                isDisabled={isLoading}
-                                onDelete={() => field.removeValue(i)}
-                                type="email"
-                              />
-                            );
-                          return null;
-                        })}
-                      </div>
-                    </Collapsible>
-                  </Card>
-                  <Card hasNoShadow isFullWidth variant="secondary">
-                    <Collapsible
-                      icon={Icons.website}
-                      isOpen={!!groupedContactsByType?.website?.length}
-                      items={[
-                        {
-                          id: "1",
-                          label: "Add",
-                          icon: Icons.add,
-                          variant: "info",
-                          allowedPlacements: ["left-start"] as const,
-                          onClick: () => {},
-                          items: AvailableContactTypes.website.professional.map((other) => ({
-                            icon: Icons[camelCaseContactType(other)],
-                            allowedPlacements: ["left-start"],
-                            id: other,
-                            title: getSentenceCase(other),
-                            onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other)),
-                          })),
-                        },
-                      ]}
-                      label="Websites">
-                      <div className="flex flex-col gap-y-2">
-                        {(field.state.value || []).map((contact, i) => {
-                          if (contact.contactType.includes("website"))
-                            return (
-                              <ContactDisplay
-                                key={i}
-                                contact={contact}
-                                form={form}
-                                index={i}
-                                isDisabled={isLoading}
-                                onDelete={() => field.removeValue(i)}
-                                type="websites"
-                              />
-                            );
-                          return null;
-                        })}
-                      </div>
-                    </Collapsible>
-                  </Card>
-                  <Card hasNoShadow isFullWidth variant="secondary">
-                    <Collapsible
-                      icon={Icons.info}
-                      isOpen={!!field.state.value?.length}
-                      items={[
-                        {
-                          id: "1",
-                          label: "Add",
-                          icon: Icons.add,
-                          variant: "info",
-                          allowedPlacements: ["left-start"] as const,
-                          onClick: () => {},
-                          items: AvailableContactTypes.other.professional.map((other) => ({
-                            icon: Icons[other],
-                            allowedPlacements: ["left-start"],
-                            id: other,
-                            title: getSentenceCase(other),
-                            onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other)),
-                          })),
-                        },
-                      ]}
-                      label="Other">
-                      <div className="flex flex-col gap-y-2">
-                        {(field.state.value || []).map((contact, i) => {
-                          if (
-                            contact.contactType === "whatsapp" ||
-                            contact.contactType === "linkedin" ||
-                            contact.contactType === "twitter" ||
-                            contact.contactType === "facebook" ||
-                            contact.contactType === "instagram" ||
-                            contact.contactType === "slack"
-                          )
-                            return (
-                              <ContactDisplay
-                                key={i}
-                                contact={contact}
-                                form={form}
-                                index={i}
-                                isDisabled={isLoading}
-                                onDelete={() => field.removeValue(i)}
-                                type="other"
-                              />
-                            );
-                          return null;
-                        })}
-                      </div>
-                    </Collapsible>
-                  </Card>
-                </>
-              )}
-              mode="array"
-              name="contacts"
-            />
+                            onClick: () => {},
+                            items: AvailableContactTypes.address.professional.map((addr) => ({
+                              icon: Icons[camelCaseContactType(addr)],
+                              allowedPlacements: ["left-start"] as const,
+                              id: addr,
+                              title: getSentenceCase(addr),
+                              onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(addr)),
+                            })),
+                          },
+                        ]}
+                        label="Addresses">
+                        <div className="flex flex-col gap-y-2">
+                          {(field.state.value || []).map((contact, i) => {
+                            if (contact.contactType.includes("address"))
+                              return (
+                                <ContactDisplay
+                                  key={i}
+                                  contact={contact}
+                                  form={form}
+                                  index={i}
+                                  isDisabled={isLoading}
+                                  onDelete={() => field.removeValue(i)}
+                                  type="address"
+                                />
+                              );
+                            return null;
+                          })}
+                        </div>
+                      </Collapsible>
+                    </Card>
+                    <Card hasNoShadow isFullWidth variant="secondary">
+                      <Collapsible
+                        icon={Icons.phone}
+                        isOpen={!!groupedContactsByType?.phone?.length}
+                        items={[
+                          {
+                            id: "1",
+                            label: "Add",
+                            icon: Icons.add,
+                            variant: "info",
+                            allowedPlacements: ["left-start"] as const,
+                            onClick: () => {},
+                            items: AvailableContactTypes.phone.professional.map((phone) => ({
+                              icon: Icons[camelCaseContactType(phone)],
+                              allowedPlacements: ["left-start"],
+                              id: phone,
+                              title: getSentenceCase(phone),
+                              onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(phone)),
+                            })),
+                          },
+                        ]}
+                        label="Phones">
+                        <div className="flex flex-col gap-y-2">
+                          {(field.state.value || []).map((contact, i) => {
+                            if (contact.contactType.includes("phone") || contact.contactType === "fax")
+                              return (
+                                <ContactDisplay
+                                  key={i}
+                                  contact={contact}
+                                  form={form}
+                                  index={i}
+                                  isDisabled={isLoading}
+                                  onDelete={() => field.removeValue(i)}
+                                  type="phone"
+                                />
+                              );
+                            return null;
+                          })}
+                        </div>
+                      </Collapsible>
+                    </Card>
+                    <Card hasNoShadow isFullWidth variant="secondary">
+                      <Collapsible
+                        icon={Icons.email}
+                        isOpen={!!groupedContactsByType?.email?.length}
+                        items={[
+                          {
+                            id: "1",
+                            label: "Add",
+                            icon: Icons.add,
+                            variant: "info",
+                            allowedPlacements: ["left-start"] as const,
+                            onClick: () => {},
+                            items: AvailableContactTypes.email.professional.map((email) => ({
+                              icon: Icons[camelCaseContactType(email)],
+                              allowedPlacements: ["left-start"],
+                              id: email,
+                              title: getSentenceCase(email),
+                              onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(email)),
+                            })),
+                          },
+                        ]}
+                        label="Emails">
+                        <div className="flex flex-col gap-y-2">
+                          {(field.state.value || []).map((contact, i) => {
+                            if (contact.contactType.includes("email"))
+                              return (
+                                <ContactDisplay
+                                  key={i}
+                                  contact={contact}
+                                  form={form}
+                                  index={i}
+                                  isDisabled={isLoading}
+                                  onDelete={() => field.removeValue(i)}
+                                  type="email"
+                                />
+                              );
+                            return null;
+                          })}
+                        </div>
+                      </Collapsible>
+                    </Card>
+                    <Card hasNoShadow isFullWidth variant="secondary">
+                      <Collapsible
+                        icon={Icons.website}
+                        isOpen={!!groupedContactsByType?.website?.length}
+                        items={[
+                          {
+                            id: "1",
+                            label: "Add",
+                            icon: Icons.add,
+                            variant: "info",
+                            allowedPlacements: ["left-start"] as const,
+                            onClick: () => {},
+                            items: AvailableContactTypes.website.professional.map((other) => ({
+                              icon: Icons[camelCaseContactType(other)],
+                              allowedPlacements: ["left-start"],
+                              id: other,
+                              title: getSentenceCase(other),
+                              onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other)),
+                            })),
+                          },
+                        ]}
+                        label="Websites">
+                        <div className="flex flex-col gap-y-2">
+                          {(field.state.value || []).map((contact, i) => {
+                            if (contact.contactType.includes("website"))
+                              return (
+                                <ContactDisplay
+                                  key={i}
+                                  contact={contact}
+                                  form={form}
+                                  index={i}
+                                  isDisabled={isLoading}
+                                  onDelete={() => field.removeValue(i)}
+                                  type="websites"
+                                />
+                              );
+                            return null;
+                          })}
+                        </div>
+                      </Collapsible>
+                    </Card>
+                    <Card hasNoShadow isFullWidth variant="secondary">
+                      <Collapsible
+                        icon={Icons.info}
+                        isOpen={!!field.state.value?.length}
+                        items={[
+                          {
+                            id: "1",
+                            label: "Add",
+                            icon: Icons.add,
+                            variant: "info",
+                            allowedPlacements: ["left-start"] as const,
+                            onClick: () => {},
+                            items: AvailableContactTypes.other.professional.map((other) => ({
+                              icon: Icons[other],
+                              allowedPlacements: ["left-start"],
+                              id: other,
+                              title: getSentenceCase(other),
+                              onClick: () => form.getFieldInfo("contacts").instance?.pushValue(getBaseContact(other)),
+                            })),
+                          },
+                        ]}
+                        label="Other">
+                        <div className="flex flex-col gap-y-2">
+                          {(field.state.value || []).map((contact, i) => {
+                            if (
+                              contact.contactType === "whatsapp" ||
+                              contact.contactType === "linkedin" ||
+                              contact.contactType === "twitter" ||
+                              contact.contactType === "facebook" ||
+                              contact.contactType === "instagram" ||
+                              contact.contactType === "slack"
+                            )
+                              return (
+                                <ContactDisplay
+                                  key={i}
+                                  contact={contact}
+                                  form={form}
+                                  index={i}
+                                  isDisabled={isLoading}
+                                  onDelete={() => field.removeValue(i)}
+                                  type="other"
+                                />
+                              );
+                            return null;
+                          })}
+                        </div>
+                      </Collapsible>
+                    </Card>
+                  </>
+                )}
+                mode="array"
+                name="contacts"
+              />
+            </div>
           )}
         </div>
         <div className="md:col-span-2">

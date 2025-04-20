@@ -304,70 +304,70 @@ export function UserProfile() {
   const groupedContactsByType = groupByContacts(userContacts || []);
   return (
     <Form handleSubmit={form.handleSubmit}>
-      <div className="flex h-full flex-col justify-between gap-y-2">
-        <div className="flex flex-col gap-y-4">
-          <div className="grid grid-cols-1 items-end gap-2 md:grid-cols-3">
-            <form.Field
-              children={(field) => (
-                <div className="flex items-center gap-x-1.5">
-                  <div>
-                    <Avatar
-                      imageId={userData?.imageId}
-                      label={formattedUser?.title || ""}
-                      onClick={() =>
-                        openDrawer("Change user avatar", {
-                          id: userData?.id,
-                          uploadType: "user_avatar",
-                          types: ["jpg", "jpeg", "png", "webp", "gif", "svg"],
-                          isMultiple: false,
-                        })
-                      }
-                      size={isSmallScreen ? "lg" : "md"}
-                      type="user_avatar"
-                    />
-                  </div>
-                  <Input
-                    errors={field.state.meta.errors}
-                    isDisabled={isLoading}
-                    label="First name"
-                    name={field.name}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    value={field.state.value || ""}
+      <div className="flex h-full flex-col justify-between">
+        <div className="border-primary grid grid-cols-1 items-end gap-2 border-b md:grid-cols-3">
+          <form.Field
+            children={(field) => (
+              <div className="flex items-center gap-x-1.5">
+                <div>
+                  <Avatar
+                    imageId={userData?.imageId}
+                    label={formattedUser?.title || ""}
+                    onClick={() =>
+                      openDrawer("Change user avatar", {
+                        id: userData?.id,
+                        uploadType: "user_avatar",
+                        types: ["jpg", "jpeg", "png", "webp", "gif", "svg"],
+                        isMultiple: false,
+                      })
+                    }
+                    size={isSmallScreen ? "lg" : "md"}
+                    type="user_avatar"
                   />
                 </div>
-              )}
-              name="firstName"
-            />
-            <form.Field
-              children={(field) => (
                 <Input
                   errors={field.state.meta.errors}
                   isDisabled={isLoading}
-                  label="Last name"
+                  label="First name"
                   name={field.name}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   value={field.state.value || ""}
                 />
-              )}
-              name="lastName"
-            />
-            <form.Field
-              children={(field) => (
-                <Select
-                  errors={field.state.meta.errors}
-                  isDisabled={field.state.value === DefaultRoleIds.owner || !auth.user?.permissions?.users?.update}
-                  label="Role"
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e?.value)}
-                  options={formatForOptions(rolesData)}
-                  value={field.state.value || ""}
-                />
-              )}
-              name="roleId"
-            />
-          </div>
+              </div>
+            )}
+            name="firstName"
+          />
+          <form.Field
+            children={(field) => (
+              <Input
+                errors={field.state.meta.errors}
+                isDisabled={isLoading}
+                label="Last name"
+                name={field.name}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+                value={field.state.value || ""}
+              />
+            )}
+            name="lastName"
+          />
+          <form.Field
+            children={(field) => (
+              <Select
+                errors={field.state.meta.errors}
+                isDisabled={field.state.value === DefaultRoleIds.owner || !auth.user?.permissions?.users?.update}
+                label="Role"
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e?.value)}
+                options={formatForOptions(rolesData)}
+                value={field.state.value || ""}
+              />
+            )}
+            name="roleId"
+          />
+        </div>
+        <div className="mt-2 flex flex-col gap-y-4 overflow-y-auto">
           <div className="flex flex-col gap-y-4">
             {isLoadingContacts ? null : (
               <form.Field
