@@ -208,7 +208,7 @@ function ContactDisplay({
   );
 }
 
-export function UserSettings() {
+export function UserSettings({ id }: { id?: string }) {
   const auth = useAuth();
   const { isSmallScreen } = useScreenSize();
   const { openDrawer } = useDrawer("upload");
@@ -222,10 +222,10 @@ export function UserSettings() {
   } = useRead<UsersType>(
     {
       model: "users",
-      id: auth.user?.id || "",
+      id: id || auth.user?.id || "",
       fields: ["id", "firstName", "lastName", "imageId", "dateOfBirth", "dateOfEmployment", "roleId"],
     },
-    { enabled: !!auth.user?.id }
+    { enabled: !!(id || auth.user?.id) }
   );
 
   const { data: userContacts, isLoading: isLoadingContacts } = useList<ContactType>(

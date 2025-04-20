@@ -4,7 +4,7 @@ export * from "./components";
 export * from "./enums";
 export * from "./hooks";
 export * from "./schemas";
-export * from "./sections/drawerContent";
+export * from "./sections";
 export * from "./types";
 export * from "./utils";
 export { type FieldApi, type ReactFormExtendedApi, type UpdaterFn, useForm, type ValidationError } from "@tanstack/react-form";
