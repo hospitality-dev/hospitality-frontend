@@ -24,6 +24,7 @@ export {
   RouterProvider,
   useLoaderData,
   useLocation,
+  useNavigate,
   useParams,
   useRouteContext,
 } from "@tanstack/react-router";
