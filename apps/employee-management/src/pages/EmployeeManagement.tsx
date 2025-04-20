@@ -37,7 +37,11 @@ function ActionsButton({ row }: { row: Row<EntityType> }) {
               id: "edit_profile",
               title: "Profile",
               icon: Icons.user,
-              isHidden: !(auth.user?.roleId === DefaultRoleIds.owner || auth.user?.roleId === DefaultRoleIds.manager),
+              isHidden: !(
+                auth.user?.roleId === DefaultRoleIds.owner ||
+                auth.user?.roleId === DefaultRoleIds.generalManager ||
+                auth.user?.roleId === DefaultRoleIds.locationManager
+              ),
               onClick: () => navigate({ to: "/employee-management/$userId", params: { userId: row.original.id } }),
             },
             {
