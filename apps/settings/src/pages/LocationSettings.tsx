@@ -323,6 +323,7 @@ export function LocationSettings() {
           <form.Field
             children={(field) => (
               <Input
+                errors={field.state.meta.errors}
                 isDisabled={isLoading}
                 label="Title"
                 name={field.name}
@@ -577,7 +578,19 @@ export function LocationSettings() {
           </div>
         </div>
         <div className="md:col-span-2">
-          <Button icon={Icons.save} label="Save" onClick={undefined} size="lg" variant="success" />
+          <form.Subscribe<{ isDisabled: boolean }>
+            children={(state) => (
+              <Button
+                icon={Icons.save}
+                isDisabled={state.isDisabled}
+                label="Save"
+                onClick={undefined}
+                size="lg"
+                variant="success"
+              />
+            )}
+            selector={(state) => ({ isDisabled: !state.canSubmit })}
+          />
         </div>
       </div>
     </Form>

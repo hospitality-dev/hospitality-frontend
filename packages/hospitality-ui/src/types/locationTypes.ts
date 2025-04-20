@@ -17,7 +17,7 @@ export const LocationsInitializerSchema = object({
 });
 export const LocationsMutatorSchema = object({
   id: string().uuid().nonempty("Must have id"),
-  title: string().optional(),
+  title: string().nonempty("Location title cannot be empty.").optional(),
   contacts: ContactSchema.array(),
 });
 export const LocationsUsersSchema = object({
