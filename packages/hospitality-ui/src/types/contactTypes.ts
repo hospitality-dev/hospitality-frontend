@@ -58,6 +58,7 @@ export const ContactSchema = object({
   longitude: number().nullish(),
   boundingBox: number().array().nullish(),
   isPublic: boolean().default(false).nullish(),
+  isPrimary: boolean().default(false).nullish(),
   iso3: string().nullish(),
   contactType: ContactTypesSchema,
 }).superRefine((arg, ctx) => {
