@@ -209,8 +209,9 @@ function ContactDisplay({
 }
 
 export function UserSettings() {
-  const { userId } = useParams({ from: "/employee-management/$userId" });
+  const params = useParams({ from: "/employee-management/$userId", shouldThrow: false });
   const auth = useAuth();
+
   const { isSmallScreen } = useScreenSize();
   const { openDrawer } = useDrawer("upload");
   const { mutate: update } = useUpdate<UsersMutatorType>("users", { refetchModels: ["contacts"] });
@@ -222,10 +223,10 @@ export function UserSettings() {
   } = useRead<UsersType>(
     {
       model: "users",
-      id: userId || auth.user?.id || "",
+      id: params?.userId || auth.user?.id || "",
       fields: ["id", "firstName", "lastName", "imageId", "dateOfBirth", "dateOfEmployment", "roleId"],
     },
-    { enabled: !!(userId || auth.user?.id) }
+    { enabled: !!(params?.userId || auth.user?.id) }
   );
 
   const { data: userContacts, isLoading: isLoadingContacts } = useList<ContactType>(
