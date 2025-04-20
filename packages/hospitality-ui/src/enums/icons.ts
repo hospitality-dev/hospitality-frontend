@@ -80,6 +80,7 @@ export const Icons = {
   settings: "ph:gear" as const,
   shippingAddress: "material-symbols-light:local-shipping-outline-rounded" as const,
   slack: "ph:slack-logo" as const,
+  star: "ph:star" as const,
   supplier: "ph:truck" as const,
   supportPhone: "ph:headset" as const,
   supportEmail: "fluent:chat-mail-20-regular" as const,
