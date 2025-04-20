@@ -267,7 +267,7 @@ export function LocationSettings() {
     { enabled: !!auth.user?.locationId }
   );
   const { data: locationContacts, isLoading: isLoadingContacts } = useList<ContactType>(
-    { model: "contacts", fields: ["id", "value", "title", "prefix", "contactType", "placeId"] },
+    { model: "contacts", fields: ["id", "value", "title", "prefix", "contactType", "placeId", "isPrimary", "isPublic"] },
     { urlSuffix: `location/${auth?.user?.locationId}`, enabled: isSuccess && !!auth?.user?.locationId }
   );
 

@@ -278,7 +278,10 @@ export function UserProfile() {
   );
 
   const { data: userContacts, isLoading: isLoadingContacts } = useList<ContactType>(
-    { model: "contacts", fields: ["id", "value", "title", "prefix", "contactType", "placeId", "iso3"] },
+    {
+      model: "contacts",
+      fields: ["id", "value", "title", "prefix", "contactType", "placeId", "iso3", "isPrimary", "isPublic"],
+    },
     { urlSuffix: `user/${userData?.id}`, enabled: isSuccess && !!userData?.id }
   );
 
