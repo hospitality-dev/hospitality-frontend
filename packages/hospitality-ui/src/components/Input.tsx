@@ -191,7 +191,8 @@ export function Input({
         ) : null}
         <input
           ref={inputRef}
-          autoComplete="off"
+          aria-autocomplete="none"
+          autoComplete="new-password"
           autoFocus={isAutofocused}
           className={inputClasses()}
           disabled={isDisabled}
