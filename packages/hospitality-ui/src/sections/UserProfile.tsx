@@ -37,6 +37,34 @@ import {
   useUpdate,
 } from "@hospitality/hospitality-ui";
 
+function onSetPrimary(index: number, form: ReactFormExtendedApi<UsersMutatorType>) {
+  const contacts = form.state.values.contacts;
+  const currentContact = contacts[index];
+  let key = "";
+  if (currentContact.contactType.includes("address")) {
+    key = "address";
+  } else if (currentContact.contactType.includes("phone")) {
+    key = "phone";
+  } else if (currentContact.contactType.includes("email")) {
+    key = "email";
+  } else if (currentContact.contactType.includes("website")) {
+    key = "website";
+  }
+
+  const primaryIdx = contacts.findIndex((contact) => contact.contactType.includes(key) && contact.isPrimary);
+
+  if (primaryIdx !== undefined && primaryIdx > -1) {
+    if (index === primaryIdx) {
+      form.setFieldValue(`contacts[${primaryIdx}].isPrimary`, false);
+    } else {
+      form.setFieldValue(`contacts[${primaryIdx}].isPrimary`, false);
+      form.setFieldValue(`contacts[${index}].isPrimary`, true);
+    }
+  } else {
+    form.setFieldValue(`contacts[${index}].isPrimary`, true);
+  }
+}
+
 function ContactDisplay({
   contact,
   form,
@@ -70,7 +98,7 @@ function ContactDisplay({
                     icon: Icons.star,
                     variant: "primary",
                     iconColor: contactState.isPrimary ? "gold" : undefined,
-                    onClick: () => form.setFieldValue(`contacts[${index}].isPrimary`, !contactState.isPrimary),
+                    onClick: () => onSetPrimary(index, form),
                     iconThickness: contactState.isPrimary ? "fill" : undefined,
                   },
                   {

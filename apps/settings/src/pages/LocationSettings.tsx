@@ -6,8 +6,6 @@ import {
   camelCaseContactType,
   Card,
   Collapsible,
-  ContactGroupType,
-  ContactSchema,
   ContactType,
   emailValidation,
   Form,
@@ -34,6 +32,34 @@ import {
 
 type EntityType = Pick<LocationsType, "id" | "title" | "imageId">;
 
+function onSetPrimary(index: number, form: ReactFormExtendedApi<LocationsMutatorType>) {
+  const contacts = form.state.values.contacts;
+  const currentContact = contacts[index];
+  let key = "";
+  if (currentContact.contactType.includes("address")) {
+    key = "address";
+  } else if (currentContact.contactType.includes("phone")) {
+    key = "phone";
+  } else if (currentContact.contactType.includes("email")) {
+    key = "email";
+  } else if (currentContact.contactType.includes("website")) {
+    key = "website";
+  }
+
+  const primaryIdx = contacts.findIndex((contact) => contact.contactType.includes(key) && contact.isPrimary);
+
+  if (primaryIdx !== undefined && primaryIdx > -1) {
+    if (index === primaryIdx) {
+      form.setFieldValue(`contacts[${primaryIdx}].isPrimary`, false);
+    } else {
+      form.setFieldValue(`contacts[${primaryIdx}].isPrimary`, false);
+      form.setFieldValue(`contacts[${index}].isPrimary`, true);
+    }
+  } else {
+    form.setFieldValue(`contacts[${index}].isPrimary`, true);
+  }
+}
+
 function ContactDisplay({
   contact,
   form,
@@ -46,175 +72,184 @@ function ContactDisplay({
   form: ReactFormExtendedApi<LocationsMutatorType>;
   index: number;
   isDisabled?: boolean;
-  type: ContactGroupType;
+  type: "address" | "phone" | "email" | "websites" | "other";
   onDelete: () => void;
 }) {
   return (
-    <div className="flex w-full flex-col items-end px-1.5 pt-1.5">
-      <form.Field
-        children={(subfield) => (
-          <Title
-            hasBorder
-            icon={Icons[camelCaseContactType(contact.contactType)]}
-            items={[
-              {
-                id: "delete",
-                icon: Icons.delete,
-                variant: "error",
-                onClick: onDelete,
-              },
-            ]}
-            label={subfield.state.value || getSentenceCase(contact.contactType)}
-            size="sm"
-            variant="secondary"
-          />
-        )}
-        name={`contacts[${index}].title`}
-      />
-      <div className="flex w-full flex-col pt-2 lg:flex-row lg:gap-2">
-        <form.Field
-          children={(subfield) => (
-            <Input
-              helperText="Customize the title of the address."
-              label={getSentenceCase(`${type} display title`)}
-              name={subfield.name}
-              onBlur={subfield.handleBlur}
-              onChange={(e) => subfield.handleChange(e.target.value)}
-              value={subfield.state.value || ""}
-            />
-          )}
-          name={`contacts[${index}].title`}
-        />
-        <form.Field
-          children={(subfield) => {
-            if (type === "address")
-              return (
-                <AddressSearch
-                  errors={subfield.state.meta.errors}
-                  helperText="Enter the full address e.g. Jurija Gagarina 25 / Ugrinovacka 17 Zemun"
-                  isAutofocused
-                  isDisabled={isDisabled}
-                  label="Address"
-                  onBlur={subfield.handleBlur}
-                  onChange={(value) => {
-                    if (value) {
-                      subfield.handleChange(formatDisplayItem(value));
-                      form.setFieldValue(`contacts[${index}].placeId`, Number(value.additionalData?.placeId || 0));
-                      if (value.additionalData?.longitude)
-                        form.setFieldValue(`contacts[${index}].longitude`, Number(value.additionalData?.longitude || 0));
-                      if (value.additionalData?.latitude)
-                        form.setFieldValue(`contacts[${index}].latitude`, Number(value.additionalData?.latitude || 0));
-                      if (Array.isArray(value.additionalData?.boundingBox))
-                        form.setFieldValue(`contacts[${index}].boundingBox`, value.additionalData?.boundingBox as number[]);
-                    } else {
-                      subfield.handleChange("");
-                      form.setFieldValue(`contacts[${index}].placeId`, null);
-                      form.setFieldValue(`contacts[${index}].longitude`, null);
-                      form.setFieldValue(`contacts[${index}].latitude`, null);
-                      form.setFieldValue(`contacts[${index}].boundingBox`, null);
-                    }
-                  }}
-                  value={subfield.state.value}
-                  variant={subfield.state.meta.errors.length ? "error" : "primary"}
-                />
-              );
-            if (type === "phone")
-              return (
-                <form.Subscribe<{
-                  prefix: ContactType["prefix"];
-                  iso3: ContactType["iso3"];
-                }>
-                  selector={(s) => ({
-                    prefix: s.values.contacts[index].prefix,
-                    iso3: s.values.contacts[index].iso3,
-                  })}>
-                  {(prefixState) => (
-                    <>
-                      <form.Field
-                        children={(subfield) => (
-                          <Input
-                            errors={subfield.state.meta.errors}
-                            isDisabled={isDisabled}
-                            label={getSentenceCase(contact.contactType)}
-                            name={subfield.name}
-                            onBlur={subfield.handleBlur}
-                            onChange={(e) => subfield.handleChange(e.target.value)}
-                            onSelectChange={(item) => {
-                              if (typeof item?.additionalData?.phonecode === "string") {
-                                form.setFieldValue(`contacts[${index}].prefix`, item?.additionalData?.phonecode);
-                              }
-                              form.setFieldValue(`contacts[${index}].iso3`, item?.value || null);
-                            }}
-                            selectValue={(prefixState.iso3 || "")?.toString()}
-                            type="tel"
-                            value={subfield.state.value}
-                          />
-                        )}
-                        name={`contacts[${index}].value`}
-                      />
-                    </>
-                  )}
-                </form.Subscribe>
-              );
-            if (type === "email")
-              return (
-                <form.Field
-                  children={(subfield) => (
-                    <Input
-                      errors={subfield.state.meta.errors}
-                      isDisabled={isDisabled}
-                      label={getSentenceCase(contact.contactType)}
-                      name={subfield.name}
-                      onBlur={subfield.handleBlur}
-                      onChange={(e) => subfield.handleChange(e.target.value)}
-                      type="text"
-                      value={subfield.state.value}
-                      variant={subfield.state.meta.errors.length ? "error" : "primary"}
-                    />
-                  )}
-                  name={`contacts[${index}].value`}
-                  validators={{
-                    onBlur: emailValidation,
-                  }}
-                />
-              );
-
-            return (
-              <form.Field
-                children={(subfield) => (
-                  <Input
-                    errors={subfield.state.meta.errors}
-                    isDisabled={isDisabled}
-                    label={getSentenceCase(contact.contactType)}
-                    name={subfield.name}
-                    onBlur={subfield.handleBlur}
-                    onChange={(e) => subfield.handleChange(e.target.value)}
-                    type="url"
-                    value={subfield.state.value}
-                    variant={subfield.state.meta.errors.length ? "error" : "primary"}
-                  />
-                )}
-                name={`contacts[${index}].value`}
-                validators={{
-                  onBlur: urlValidation,
-                }}
+    <form.Subscribe<{
+      isPrimary: ContactType["isPrimary"];
+      isPublic: ContactType["isPublic"];
+    }>
+      children={(contactState) => (
+        <div className="mt-2 flex w-full flex-col items-end">
+          <form.Field
+            children={(subfield) => (
+              <Title
+                hasBorder
+                icon={Icons[camelCaseContactType(contact.contactType)]}
+                items={[
+                  {
+                    id: "primary",
+                    icon: Icons.star,
+                    variant: "primary",
+                    iconColor: contactState.isPrimary ? "gold" : undefined,
+                    onClick: () => onSetPrimary(index, form),
+                    iconThickness: contactState.isPrimary ? "fill" : undefined,
+                  },
+                  {
+                    id: "delete",
+                    icon: Icons.delete,
+                    variant: "error",
+                    onClick: onDelete,
+                  },
+                ]}
+                label={subfield.state.value || getSentenceCase(contact.contactType)}
+                size="sm"
+                variant="secondary"
               />
-            );
-          }}
-          name={`contacts[${index}].value`}
-          validators={{
-            onSubmit: () => {
-              const res = ContactSchema.safeParse(contact);
-              if (res.success) return null;
-              return res.error.errors.map((e) => e.message).join("\n");
-            },
-          }}
-        />
-      </div>
-    </div>
+            )}
+            name={`contacts[${index}].title`}
+          />
+          <div className="mt-2 flex w-full flex-col gap-2 lg:flex-row">
+            <form.Field
+              children={(subfield) => (
+                <Input
+                  errors={subfield.state.meta.errors}
+                  helperText="Customize the title of the address."
+                  label={getSentenceCase(`${type} display title`)}
+                  name={subfield.name}
+                  onBlur={subfield.handleBlur}
+                  onChange={(e) => subfield.handleChange(e.target.value)}
+                  value={subfield.state.value || ""}
+                />
+              )}
+              name={`contacts[${index}].title`}
+            />
+            <form.Field
+              children={(subfield) => {
+                if (type === "address")
+                  return (
+                    <AddressSearch
+                      errors={subfield.state.meta.errors}
+                      helperText="Enter the full address e.g. Jurija Gagarina 25 / Ugrinovacka 17 Zemun"
+                      isAutofocused
+                      isDisabled={isDisabled}
+                      label="Address"
+                      onBlur={subfield.handleBlur}
+                      onChange={(value) => {
+                        if (value) {
+                          subfield.handleChange(formatDisplayItem(value));
+                          form.setFieldValue(`contacts[${index}].placeId`, Number(value.additionalData?.placeId || 0));
+                          if (value.additionalData?.longitude)
+                            form.setFieldValue(`contacts[${index}].longitude`, Number(value.additionalData?.longitude || 0));
+                          if (value.additionalData?.latitude)
+                            form.setFieldValue(`contacts[${index}].latitude`, Number(value.additionalData?.latitude || 0));
+                          if (Array.isArray(value.additionalData?.boundingBox))
+                            form.setFieldValue(`contacts[${index}].boundingBox`, value.additionalData?.boundingBox as number[]);
+                        } else {
+                          subfield.handleChange("");
+                          form.setFieldValue(`contacts[${index}].placeId`, null);
+                          form.setFieldValue(`contacts[${index}].longitude`, null);
+                          form.setFieldValue(`contacts[${index}].latitude`, null);
+                          form.setFieldValue(`contacts[${index}].boundingBox`, null);
+                        }
+                      }}
+                      value={subfield.state.value}
+                    />
+                  );
+                if (type === "phone")
+                  return (
+                    <form.Subscribe<{
+                      prefix: ContactType["prefix"];
+                      iso3: ContactType["iso3"];
+                    }>
+                      selector={(s) => ({
+                        prefix: s.values.contacts[index].prefix,
+                        iso3: s.values.contacts[index].iso3,
+                      })}>
+                      {(prefixState) => (
+                        <>
+                          <form.Field
+                            children={(subfield) => (
+                              <Input
+                                errors={subfield.state.meta.errors}
+                                isDisabled={isDisabled}
+                                label={getSentenceCase(contact.contactType)}
+                                name={subfield.name}
+                                onBlur={subfield.handleBlur}
+                                onChange={(e) => subfield.handleChange(e.target.value)}
+                                onSelectChange={(item) => {
+                                  if (typeof item?.additionalData?.phonecode === "string") {
+                                    form.setFieldValue(`contacts[${index}].prefix`, item?.additionalData?.phonecode);
+                                  }
+                                  form.setFieldValue(`contacts[${index}].iso3`, item?.value || null);
+                                }}
+                                selectValue={(prefixState.iso3 || "")?.toString()}
+                                type="tel"
+                                value={subfield.state.value}
+                              />
+                            )}
+                            name={`contacts[${index}].value`}
+                          />
+                        </>
+                      )}
+                    </form.Subscribe>
+                  );
+                if (type === "email")
+                  return (
+                    <form.Field
+                      children={(subfield) => (
+                        <Input
+                          errors={subfield.state.meta.errors}
+                          isDisabled={isDisabled}
+                          label={getSentenceCase(contact.contactType)}
+                          name={subfield.name}
+                          onBlur={subfield.handleBlur}
+                          onChange={(e) => subfield.handleChange(e.target.value)}
+                          type="text"
+                          value={subfield.state.value}
+                        />
+                      )}
+                      name={`contacts[${index}].value`}
+                      validators={{
+                        onBlur: emailValidation,
+                      }}
+                    />
+                  );
+
+                return (
+                  <form.Field
+                    children={(subfield) => (
+                      <Input
+                        errors={subfield.state.meta.errors}
+                        isDisabled={isDisabled}
+                        label={getSentenceCase(contact.contactType)}
+                        name={subfield.name}
+                        onBlur={subfield.handleBlur}
+                        onChange={(e) => subfield.handleChange(e.target.value)}
+                        type="url"
+                        value={subfield.state.value}
+                      />
+                    )}
+                    name={`contacts[${index}].value`}
+                    validators={{
+                      onBlur: urlValidation,
+                    }}
+                  />
+                );
+              }}
+              name={`contacts[${index}].value`}
+            />
+          </div>
+        </div>
+      )}
+      selector={(state) => ({
+        isPrimary: state.values.contacts[index].isPrimary,
+        isPublic: state.values.contacts[index].isPublic,
+      })}
+    />
   );
 }
-
 export function LocationSettings() {
   const auth = useAuth();
   const { isSmallScreen } = useScreenSize();
@@ -449,7 +484,7 @@ export function LocationSettings() {
                                 index={i}
                                 isDisabled={isLoading}
                                 onDelete={() => field.removeValue(i)}
-                                type="website"
+                                type="websites"
                               />
                             );
                           return null;
