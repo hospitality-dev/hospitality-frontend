@@ -7,6 +7,7 @@ import {
   Card,
   Collapsible,
   ContactType,
+  DefaultRoleIds,
   emailValidation,
   Form,
   formatDisplayItem,
@@ -208,14 +209,14 @@ function ContactDisplay({
   );
 }
 
-export function UserSettings() {
+export function UserProfile() {
   const params = useParams({ from: "/employee-management/$userId", shouldThrow: false });
   const auth = useAuth();
 
   const { isSmallScreen } = useScreenSize();
   const { openDrawer } = useDrawer("upload");
   const { mutate: update } = useUpdate<UsersMutatorType>("users", { refetchModels: ["contacts"] });
-  const { data: rolesData } = useQuery({ ...RolesQuery });
+  const { data: rolesData } = useQuery(RolesQuery);
   const {
     data: userData,
     isLoading,
@@ -306,7 +307,7 @@ export function UserSettings() {
               children={(field) => (
                 <Select
                   errors={field.state.meta.errors}
-                  isDisabled
+                  isDisabled={field.state.value === DefaultRoleIds.owner || !auth.user?.permissions?.users?.update}
                   label="Role"
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e?.value)}

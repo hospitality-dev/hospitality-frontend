@@ -1,2 +1,2 @@
 export * from "./drawerContent";
-export * from "./UserSettings";
+export * from "./UserProfile";
