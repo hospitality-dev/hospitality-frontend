@@ -4,13 +4,18 @@ import { DefaultRoleIds } from "../../enums";
 import { RolesQuery } from "../../utils";
 import { useAuth } from "../api";
 
-export function useRole() {
+export function useRole(props?: { isOwnerHidden?: boolean }) {
   const auth = useAuth();
   const { data: rolesData = [] } = useQuery(RolesQuery);
 
   const role = rolesData.find((role) => role.id === auth.user?.roleId);
 
   return {
+    roles: rolesData.map((r) => ({
+      ...r,
+      isDisabled: r.id === DefaultRoleIds.owner,
+      isHidden: props?.isOwnerHidden && r.id === DefaultRoleIds.owner,
+    })),
     isOwner:
       role?.title === "owner" &&
       role?.isDefault &&
