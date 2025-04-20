@@ -304,8 +304,8 @@ export function UserProfile() {
   const groupedContactsByType = groupByContacts(userContacts || []);
   return (
     <Form handleSubmit={form.handleSubmit}>
-      <div className="flex h-full flex-col justify-between">
-        <div className="border-primary grid grid-cols-1 items-end gap-2 border-b md:grid-cols-3">
+      <div className="flex h-full flex-col">
+        <div className="border-primary grid h-22 grid-cols-1 items-start gap-2 border-b md:grid-cols-3">
           <form.Field
             children={(field) => (
               <div className="flex items-center gap-x-1.5">
