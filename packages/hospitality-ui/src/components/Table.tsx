@@ -88,7 +88,7 @@ const classes = tv({
     },
     hasNoData: {
       true: {
-        tr: "my-1",
+        tr: "pt-1.5",
       },
     },
   },
