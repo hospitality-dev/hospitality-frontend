@@ -1,9 +1,11 @@
 import {
+  Avatar,
   Badge,
   Button,
   createColumnHelper,
   DefaultRoleIds,
   getSentenceCase,
+  getUserInfo,
   Icons,
   RolesType,
   Row,
@@ -17,7 +19,7 @@ import {
   useTable,
 } from "@hospitality/hospitality-ui";
 
-type EntityType = Pick<UsersType, "id" | "firstName" | "lastName"> & { role: Pick<RolesType, "id" | "title"> };
+type EntityType = Pick<UsersType, "id" | "firstName" | "lastName" | "imageId"> & { role: Pick<RolesType, "id" | "title"> };
 const columnHelper = createColumnHelper<EntityType>();
 
 function ActionsButton({ row }: { row: Row<EntityType> }) {
@@ -62,6 +64,15 @@ function ActionsButton({ row }: { row: Row<EntityType> }) {
 }
 
 const columns = [
+  columnHelper.accessor("imageId", {
+    header: "",
+    cell: (info) => (
+      <div>
+        <Avatar imageId={info.getValue()} label={getUserInfo(info.row.original).title} size="sm" type="user_avatar" />
+      </div>
+    ),
+    maxSize: 50,
+  }),
   columnHelper.accessor("firstName", {
     header: "First name",
     cell: (info) => <span className="font-semibold">{info.getValue()}</span>,
@@ -90,7 +101,7 @@ export function EmployeeManagement() {
   const auth = useAuth();
   const { openDrawer: openAddNewUserDrawer } = useDrawer("add_new_user");
   const { data = [] } = useList<EntityType>(
-    { model: "users", fields: ["id", "firstName", "lastName"] },
+    { model: "users", fields: ["id", "firstName", "lastName", "imageId"] },
     { urlSuffix: `location/${auth.user?.locationId}`, enabled: !!auth.user?.locationId }
   );
   const { openDrawer: openAddUserFromLocation } = useDrawer("add_user_from_location");
