@@ -36,6 +36,7 @@ export const UsersInitializerSchema = object({
   dateOfEmployment: date().nullish(),
   roleId: string().uuid("User must have a role selected"),
   imageId: string().uuid().nullish(),
+  contacts: ContactSchema.array(),
 });
 
 export const UsersMutatorSchema = object({
@@ -43,6 +44,8 @@ export const UsersMutatorSchema = object({
   firstName: string().nonempty("First name cannot be empty.").optional(),
   lastName: string().nonempty("Last name cannot be empty.").optional(),
   username: string().nonempty("Username cannot be empty").min(6, "Username must have at least 6 characters").optional(),
+  password1: string().min(8, "Must be at least 8 characters long.").optional(),
+  password2: string().min(8, "Must be at least 8 characters long and match the password.").optional(),
   roleId: string().uuid().optional(),
   dateOfBirth: date().nullish(),
   dateOfEmployment: date().nullish(),
