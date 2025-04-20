@@ -19,7 +19,7 @@ const classes = tv({
   base: "min-w-full overflow-auto transition-[height]",
   variants: {
     isOpen: {
-      true: "overflow-hidden",
+      true: "overflow-hidden pt-2.5",
       false: "h-0 overflow-hidden",
     },
   },
@@ -55,7 +55,7 @@ export function Collapsible({ icon, label, children, isOpen, isInitialOpen, item
       />
       <div className={classes({ isOpen: isExpanded })} style={{ height: isExpanded ? "calc-size(auto, size)" : 0 }}>
         <div
-          className="cursor-pointer p-0.5"
+          className="cursor-pointer"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
