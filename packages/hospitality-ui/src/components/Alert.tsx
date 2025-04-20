@@ -10,7 +10,7 @@ type Props = {
   content: ReactNode;
   title?: string;
   icon?: AvailableIcons;
-  hasDismiss?: () => void;
+  hasDismiss?: boolean;
   action?: { icon?: AvailableIcons; label?: string; variant?: Variant; size?: Size; onClick: () => void };
   variant?: Variant;
   size?: Size;
@@ -91,19 +91,15 @@ export function Alert({ title, variant = "primary", size = "md", content, hasDis
         </div>
       );
     }
-  } else {
-    return (
-      <div className={classes({ variant, size, className: "flex w-full items-center justify-between" })}>
-        <div className="flex gap-4 text-lg">
-          <span className="flex items-center">
-            <Icon icon={Icons.info} />
-          </span>
-          <p>{content}</p>
-        </div>
-        <div>
-          <Button hasNoBorder icon={Icons.close} isOutline onClick={undefined} variant={variant} />
-        </div>
-      </div>
-    );
   }
+  return (
+    <div className={classes({ variant, size, className: "flex w-full items-center justify-between" })}>
+      <div className="flex gap-4 text-lg">
+        <span className="flex items-center">
+          <Icon icon={Icons.info} />
+        </span>
+        <p>{content}</p>
+      </div>
+    </div>
+  );
 }
