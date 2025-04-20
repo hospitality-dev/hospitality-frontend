@@ -1,10 +1,10 @@
-import { Icon } from "@iconify/react";
 import { ReactNode } from "@tanstack/react-router";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
 import { AvailableIcons, Size, Variant } from "../types/baseTypes";
 import { Button } from "./Button";
+import { Icon } from "./Icon";
 
 type Props = {
   content: ReactNode;
@@ -39,7 +39,7 @@ export function Alert({ title, variant = "primary", size = "md", content, hasDis
           <div className="flex w-full items-center justify-between">
             <div className="flex gap-4">
               <span className="flex items-center">
-                <Icon icon={Icons.info} />
+                <Icon fontSize={24} icon={Icons.info} />
               </span>
               <h4 className="text-lg font-medium">{title}</h4>
             </div>
@@ -72,7 +72,7 @@ export function Alert({ title, variant = "primary", size = "md", content, hasDis
           <div className="flex w-full items-center justify-between">
             <div className="flex gap-4">
               <span className="flex items-center">
-                <Icon icon={Icons.info} />
+                <Icon fontSize={24} icon={Icons.info} />
               </span>
               <h4 className="text-lg font-medium">{title}</h4>
             </div>
@@ -96,7 +96,7 @@ export function Alert({ title, variant = "primary", size = "md", content, hasDis
     <div className={classes({ variant, size, className: "flex w-full items-center justify-between" })}>
       <div className="flex gap-4 text-lg">
         <span className="flex items-center">
-          <Icon icon={Icons.info} />
+          <Icon fontSize={24} icon={Icons.info} />
         </span>
         <p>{content}</p>
       </div>
