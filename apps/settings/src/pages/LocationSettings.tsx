@@ -291,6 +291,7 @@ export function LocationSettings() {
       contacts: locationContacts || [],
     },
     validators: {
+      onChange: LocationsMutatorSchema,
       onSubmit: LocationsMutatorSchema,
     },
     onSubmit: update,
@@ -301,8 +302,8 @@ export function LocationSettings() {
 
   return (
     <Form handleSubmit={form.handleSubmit}>
-      <div className="flex h-full flex-col">
-        <div className="border-primary flex h-22 items-start gap-2 border-b">
+      <div className="flex h-full flex-col gap-y-2">
+        <div className="border-primary flex min-h-20 items-start gap-2 border-b">
           <div>
             <Avatar
               imageId={locationData?.imageId}

@@ -307,7 +307,7 @@ export function UserProfile() {
   return (
     <Form handleSubmit={form.handleSubmit}>
       <div className="flex h-full flex-col">
-        <div className="border-primary grid h-22 grid-cols-1 items-start gap-2 border-b md:grid-cols-3">
+        <div className="border-primary grid min-h-20 grid-cols-1 items-start gap-2 border-b md:grid-cols-3">
           <form.Field
             children={(field) => (
               <div className="flex items-center gap-x-1.5">
