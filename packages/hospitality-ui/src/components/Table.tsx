@@ -5,6 +5,7 @@ import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
 import { AvailableIcons, Size, TableActionType, Variant } from "../types";
+import { Alert } from "./Alert";
 import { Button } from "./Button";
 import { ExpandedRow } from "./ExpandedRow";
 import { Title } from "./Title";
@@ -230,7 +231,7 @@ export function Table<T extends object>({
           <div className={tbody()}>
             {!isLoading && !data.length ? (
               <div className={tr()}>
-                <div>ALERT HERE</div>
+                <Alert content="Currently, there is no content." variant="info" />
               </div>
             ) : null}
             {isLoading && isOpen ? <TableSkeleton td={td()} tr={tr()} /> : null}
