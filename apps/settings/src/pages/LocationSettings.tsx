@@ -1,5 +1,6 @@
 import {
   AddressSearch,
+  Alert,
   AvailableContactTypes,
   Avatar,
   Button,
@@ -29,6 +30,7 @@ import {
   useScreenSize,
   useUpdate,
 } from "@hospitality/hospitality-ui";
+import { useStore } from "@tanstack/react-store";
 
 type EntityType = Pick<LocationsType, "id" | "title" | "imageId">;
 
@@ -293,9 +295,9 @@ export function LocationSettings() {
     },
     onSubmit: update,
   });
+  const contacts = useStore(form.store, (state) => state.values.contacts);
+  const groupedContactsByType = groupByContacts(contacts || []);
   if (!isSuccess) return null;
-
-  const groupedContactsByType = groupByContacts(locationContacts || []);
 
   return (
     <Form handleSubmit={form.handleSubmit}>
@@ -332,8 +334,8 @@ export function LocationSettings() {
           />
         </div>
         <div className="mt-2 flex flex-col gap-y-4 overflow-y-auto">
-          {isLoadingContacts ? null : (
-            <div className="flex flex-col gap-y-4">
+          <div className="flex flex-col gap-y-4">
+            {isLoadingContacts ? null : (
               <form.Field
                 children={(field) => (
                   <>
@@ -350,7 +352,7 @@ export function LocationSettings() {
                             variant: "info",
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
-                            items: AvailableContactTypes.address.professional.map((addr) => ({
+                            items: AvailableContactTypes.address.personal.map((addr) => ({
                               icon: Icons[camelCaseContactType(addr)],
                               allowedPlacements: ["left-start"] as const,
                               id: addr,
@@ -376,6 +378,9 @@ export function LocationSettings() {
                               );
                             return null;
                           })}
+                          {!groupedContactsByType.address?.length ? (
+                            <Alert content="Currently, there are no addresses." variant="info" />
+                          ) : null}
                         </div>
                       </Collapsible>
                     </Card>
@@ -391,7 +396,7 @@ export function LocationSettings() {
                             variant: "info",
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
-                            items: AvailableContactTypes.phone.professional.map((phone) => ({
+                            items: AvailableContactTypes.phone.personal.map((phone) => ({
                               icon: Icons[camelCaseContactType(phone)],
                               allowedPlacements: ["left-start"],
                               id: phone,
@@ -417,6 +422,9 @@ export function LocationSettings() {
                               );
                             return null;
                           })}
+                          {!groupedContactsByType.phone?.length ? (
+                            <Alert content="Currently, there are no phone numbers." variant="info" />
+                          ) : null}
                         </div>
                       </Collapsible>
                     </Card>
@@ -432,7 +440,7 @@ export function LocationSettings() {
                             variant: "info",
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
-                            items: AvailableContactTypes.email.professional.map((email) => ({
+                            items: AvailableContactTypes.email.personal.map((email) => ({
                               icon: Icons[camelCaseContactType(email)],
                               allowedPlacements: ["left-start"],
                               id: email,
@@ -458,6 +466,9 @@ export function LocationSettings() {
                               );
                             return null;
                           })}
+                          {!groupedContactsByType.email?.length ? (
+                            <Alert content="Currently, there are no emails." variant="info" />
+                          ) : null}
                         </div>
                       </Collapsible>
                     </Card>
@@ -473,7 +484,7 @@ export function LocationSettings() {
                             variant: "info",
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
-                            items: AvailableContactTypes.website.professional.map((other) => ({
+                            items: AvailableContactTypes.website.personal.map((other) => ({
                               icon: Icons[camelCaseContactType(other)],
                               allowedPlacements: ["left-start"],
                               id: other,
@@ -499,13 +510,16 @@ export function LocationSettings() {
                               );
                             return null;
                           })}
+                          {!groupedContactsByType.website?.length ? (
+                            <Alert content="Currently, there are no websites." variant="info" />
+                          ) : null}
                         </div>
                       </Collapsible>
                     </Card>
                     <Card hasNoShadow isFullWidth variant="secondary">
                       <Collapsible
                         icon={Icons.info}
-                        isOpen={!!field.state.value?.length}
+                        isOpen={!!groupedContactsByType?.other?.length}
                         items={[
                           {
                             id: "1",
@@ -514,7 +528,7 @@ export function LocationSettings() {
                             variant: "info",
                             allowedPlacements: ["left-start"] as const,
                             onClick: () => {},
-                            items: AvailableContactTypes.other.professional.map((other) => ({
+                            items: AvailableContactTypes.other.personal.map((other) => ({
                               icon: Icons[other],
                               allowedPlacements: ["left-start"],
                               id: other,
@@ -547,6 +561,9 @@ export function LocationSettings() {
                               );
                             return null;
                           })}
+                          {!groupedContactsByType.other?.length ? (
+                            <Alert content="Currently, there are no other contacts." variant="info" />
+                          ) : null}
                         </div>
                       </Collapsible>
                     </Card>
@@ -555,8 +572,8 @@ export function LocationSettings() {
                 mode="array"
                 name="contacts"
               />
-            </div>
-          )}
+            )}
+          </div>
         </div>
         <div className="md:col-span-2">
           <Button icon={Icons.save} label="Save" onClick={undefined} size="lg" variant="success" />

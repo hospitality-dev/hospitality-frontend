@@ -1,5 +1,6 @@
 import {
   AddressSearch,
+  Alert,
   AvailableContactTypes,
   Avatar,
   Button,
@@ -19,7 +20,6 @@ import {
   Icons,
   Input,
   ReactFormExtendedApi,
-  RolesQuery,
   Select,
   Title,
   urlValidation,
@@ -28,14 +28,15 @@ import {
   useForm,
   useList,
   useParams,
-  useQuery,
   useRead,
+  useRole,
   UsersMutatorSchema,
   UsersMutatorType,
   UsersType,
   useScreenSize,
   useUpdate,
 } from "@hospitality/hospitality-ui";
+import { useStore } from "@tanstack/react-form";
 
 function onSetPrimary(index: number, form: ReactFormExtendedApi<UsersMutatorType>) {
   const contacts = form.state.values.contacts;
@@ -65,7 +66,7 @@ function onSetPrimary(index: number, form: ReactFormExtendedApi<UsersMutatorType
   }
 }
 
-function ContactDisplay({
+function UserContactDisplay({
   contact,
   form,
   index,
@@ -263,7 +264,7 @@ export function UserProfile() {
   const { isSmallScreen } = useScreenSize();
   const { openDrawer } = useDrawer("upload");
   const { mutate: update } = useUpdate<UsersMutatorType>("users", { refetchModels: ["contacts"] });
-  const { data: rolesData } = useQuery(RolesQuery);
+  const { roles } = useRole();
   const {
     data: userData,
     isLoading,
@@ -299,9 +300,10 @@ export function UserProfile() {
     },
     onSubmit: update,
   });
+  const contacts = useStore(form.store, (state) => state.values.contacts);
   if (!isSuccess) return null;
   const formattedUser = getUserInfo(userData);
-  const groupedContactsByType = groupByContacts(userContacts || []);
+  const groupedContactsByType = groupByContacts(contacts || []);
   return (
     <Form handleSubmit={form.handleSubmit}>
       <div className="flex h-full flex-col">
@@ -360,7 +362,7 @@ export function UserProfile() {
                 label="Role"
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e?.value)}
-                options={formatForOptions(rolesData)}
+                options={formatForOptions(roles)}
                 value={field.state.value || ""}
               />
             )}
@@ -400,7 +402,7 @@ export function UserProfile() {
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("address"))
                               return (
-                                <ContactDisplay
+                                <UserContactDisplay
                                   key={i}
                                   contact={contact}
                                   form={form}
@@ -412,6 +414,9 @@ export function UserProfile() {
                               );
                             return null;
                           })}
+                          {!groupedContactsByType.address?.length ? (
+                            <Alert content="Currently, there are no addresses." variant="info" />
+                          ) : null}
                         </div>
                       </Collapsible>
                     </Card>
@@ -441,7 +446,7 @@ export function UserProfile() {
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("phone") || contact.contactType === "fax")
                               return (
-                                <ContactDisplay
+                                <UserContactDisplay
                                   key={i}
                                   contact={contact}
                                   form={form}
@@ -453,6 +458,9 @@ export function UserProfile() {
                               );
                             return null;
                           })}
+                          {!groupedContactsByType.phone?.length ? (
+                            <Alert content="Currently, there are no phone numbers." variant="info" />
+                          ) : null}
                         </div>
                       </Collapsible>
                     </Card>
@@ -482,7 +490,7 @@ export function UserProfile() {
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("email"))
                               return (
-                                <ContactDisplay
+                                <UserContactDisplay
                                   key={i}
                                   contact={contact}
                                   form={form}
@@ -494,6 +502,9 @@ export function UserProfile() {
                               );
                             return null;
                           })}
+                          {!groupedContactsByType.email?.length ? (
+                            <Alert content="Currently, there are no emails." variant="info" />
+                          ) : null}
                         </div>
                       </Collapsible>
                     </Card>
@@ -523,7 +534,7 @@ export function UserProfile() {
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("website"))
                               return (
-                                <ContactDisplay
+                                <UserContactDisplay
                                   key={i}
                                   contact={contact}
                                   form={form}
@@ -535,6 +546,9 @@ export function UserProfile() {
                               );
                             return null;
                           })}
+                          {!groupedContactsByType.website?.length ? (
+                            <Alert content="Currently, there are no websites." variant="info" />
+                          ) : null}
                         </div>
                       </Collapsible>
                     </Card>
@@ -571,7 +585,7 @@ export function UserProfile() {
                               contact.contactType === "slack"
                             )
                               return (
-                                <ContactDisplay
+                                <UserContactDisplay
                                   key={i}
                                   contact={contact}
                                   form={form}
@@ -583,6 +597,9 @@ export function UserProfile() {
                               );
                             return null;
                           })}
+                          {!groupedContactsByType.other?.length ? (
+                            <Alert content="Currently, there are no other contacts." variant="info" />
+                          ) : null}
                         </div>
                       </Collapsible>
                     </Card>
