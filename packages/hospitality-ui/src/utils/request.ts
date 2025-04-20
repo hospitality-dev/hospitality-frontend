@@ -144,6 +144,7 @@ export async function urlFunction({
   userReset,
   payload,
   method = "GET",
+  headers,
 }: {
   id?: string;
   urlPrefix?: string;
@@ -151,18 +152,14 @@ export async function urlFunction({
   userReset: () => void;
   payload?: string;
   method?: "GET" | "POST";
+  headers?: Record<string, string>;
 }): Promise<string> {
   const result = await ky(`url${urlPrefix ? `/${urlPrefix}` : ""}${id ? `/${id}` : ""}${urlSuffix ? `/${urlSuffix}` : ""}`, {
     method,
     body: payload,
     throwHttpErrors: true,
     prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
-    headers:
-      method === "POST"
-        ? {
-            "Content-Type": "application/json",
-          }
-        : undefined,
+    headers: method === "POST" ? { ...(headers || {}), "Content-Type": "application/json" } : headers || undefined,
     credentials: "include",
     hooks: {
       afterResponse: [(_, __, res) => handleUnauthenticated(_, __, res, userReset)],
