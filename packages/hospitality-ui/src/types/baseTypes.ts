@@ -74,6 +74,8 @@ export type ActionType = {
   size?: Size;
   isDisabled?: boolean;
   icon?: AvailableIcons;
+  iconColor?: string;
+  iconThickness?: IconThickness;
   className?: string;
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
   items?: DropdownItemType[];

@@ -54,6 +54,8 @@ export function Title({ label, variant = "primary", size = "md", hasBorder, icon
               allowedPlacements={item.allowedPlacements || []}
               hasNoBorder
               icon={item.icon}
+              iconColor={item.iconColor}
+              iconThickness={item.iconThickness}
               isOutline
               items={item.items || []}
               onClick={(e) => {

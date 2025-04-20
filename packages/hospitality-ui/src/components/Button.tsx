@@ -1,10 +1,10 @@
 import { Placement } from "@floating-ui/react";
-import { Icon } from "@iconify/react";
 import { MouseEventHandler } from "react";
 import { tv } from "tailwind-variants";
 
-import { AvailableIcons, DropdownItemType, Size, Variant } from "../types/baseTypes";
+import { AvailableIcons, DropdownItemType, IconThickness, Size, Variant } from "../types/baseTypes";
 import { Dropdown } from "./Dropdown";
+import { Icon } from "./Icon";
 
 type Props = {
   label?: string;
@@ -13,6 +13,8 @@ type Props = {
   isOutline?: boolean;
   isDisabled?: boolean;
   icon?: AvailableIcons;
+  iconThickness?: IconThickness;
+  iconColor?: string;
   hasNoBorder?: boolean;
   className?: string;
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
@@ -148,6 +150,8 @@ export function Button({
   isDisabled,
   hasNoBorder,
   icon,
+  iconThickness,
+  iconColor,
   onClick,
   className,
   items,
@@ -166,7 +170,7 @@ export function Button({
     <Dropdown allowedPlacements={allowedPlacements} isDisabled={!items?.length} items={items || []}>
       <button className={base({ className })} disabled={isDisabled} onClick={onClick}>
         {label ? <div className={labelClasses()}>{label}</div> : null}{" "}
-        {icon ? <Icon className={iconClasses()} icon={icon} /> : null}
+        {icon ? <Icon className={iconClasses()} color={iconColor} icon={icon} thickness={iconThickness} /> : null}
       </button>
     </Dropdown>
   );
