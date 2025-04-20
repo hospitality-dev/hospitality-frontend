@@ -60,7 +60,8 @@ export function Collapsible({ icon, label, children, isOpen, isInitialOpen, item
             e.preventDefault();
             e.stopPropagation();
             setIsExpanded((prev) => !prev);
-          }}></div>
+          }}
+        />
         {children}
       </div>
     </div>

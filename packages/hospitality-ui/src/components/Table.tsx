@@ -86,6 +86,11 @@ const classes = tv({
         th: "text-info font-semibold",
       },
     },
+    hasNoData: {
+      true: {
+        tr: "my-1",
+      },
+    },
   },
 });
 
@@ -230,7 +235,7 @@ export function Table<T extends object>({
           )}
           <div className={tbody()}>
             {!isLoading && !data.length ? (
-              <div className={tr()}>
+              <div className={tr({ hasNoData: true })}>
                 <Alert content="Currently, there is no content." variant="info" />
               </div>
             ) : null}
