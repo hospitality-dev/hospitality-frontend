@@ -99,7 +99,7 @@ export function Select({
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(options.findIndex((opt) => opt.value === value));
   const [filter, setFilter] = useState("");
   const { refs, floatingStyles, context } = useFloating<HTMLElement>({
     placement: "bottom-start",
@@ -136,7 +136,7 @@ export function Select({
     // This is a large list, allow looping.
     loop: true,
   });
-  const selectedItem = options.find((opt) => opt.value === value);
+  const selectedItemIdx = options.findIndex((opt) => opt.value === value);
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role, listNav, click]);
 
   const {
@@ -164,7 +164,6 @@ export function Select({
           opt.additionalData?.phonecode?.toString().includes(filter.replace("+", ""))
       )
     : options;
-
   useEffect(() => {
     if (isOpen && hasSearch && searchRef?.current) {
       const input = searchRef?.current?.children.item(0) as HTMLInputElement | null;
@@ -189,8 +188,8 @@ export function Select({
             {options.length && !value ? "Select one" : null}
             {options.length && value ? (
               <span className="flex items-center gap-x-0.5">
-                <img className="h-5" src={selectedItem?.image} />
-                {selectedItem?.additionalData?.selectedLabel || selectedItem?.label || ""}
+                <img className="h-5" src={options[selectedItemIdx]?.image} />
+                {options[selectedItemIdx]?.additionalData?.selectedLabel || options[selectedItemIdx]?.label || ""}
               </span>
             ) : null}
           </span>
