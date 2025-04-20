@@ -9,13 +9,14 @@ type Props = {
   icon?: AvailableIcons;
   children: ReactNode;
   isOpen?: boolean;
+  isInitialOpen?: boolean;
   variant?: Variant;
   size?: Size;
   items?: ActionType[];
 };
 
-export function Collapsible({ icon, label, children, isOpen, items, variant = "primary", size = "md" }: Props) {
-  const [isExpanded, setIsExpanded] = useState(!!isOpen);
+export function Collapsible({ icon, label, children, isOpen, isInitialOpen, items, variant = "primary", size = "md" }: Props) {
+  const [isExpanded, setIsExpanded] = useState(!!isOpen || !!isInitialOpen);
 
   useLayoutEffect(() => {
     if (isOpen !== undefined) setIsExpanded(isOpen);
