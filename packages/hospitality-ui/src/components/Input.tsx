@@ -140,6 +140,7 @@ function TelephoneSelect({ selectValue, onSelectChange }: Pick<Props, "onSelectC
             label: item?.label,
             image: item?.image,
             additionalData: {
+              phonecode: item?.additionalData?.phonecode as string,
               selectedLabel: `+${item?.additionalData?.phonecode || "0"}`,
             },
           });
