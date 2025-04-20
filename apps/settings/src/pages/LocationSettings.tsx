@@ -89,12 +89,18 @@ function ContactDisplay({
                 icon={Icons[camelCaseContactType(contact.contactType)]}
                 items={[
                   {
-                    id: "primary",
+                    id: "is_primary",
                     icon: Icons.star,
                     variant: "primary",
                     iconColor: contactState.isPrimary ? "gold" : undefined,
                     onClick: () => onSetPrimary(index, form),
                     iconThickness: contactState.isPrimary ? "fill" : undefined,
+                  },
+                  {
+                    id: "is_public",
+                    icon: contactState.isPublic ? Icons.eye : Icons.eyeSlash,
+                    variant: "primary",
+                    onClick: () => form.setFieldValue(`contacts[${index}].isPublic`, !contactState.isPublic),
                   },
                   {
                     id: "delete",
@@ -267,7 +273,10 @@ export function LocationSettings() {
     { enabled: !!auth.user?.locationId }
   );
   const { data: locationContacts, isLoading: isLoadingContacts } = useList<ContactType>(
-    { model: "contacts", fields: ["id", "value", "title", "prefix", "contactType", "placeId", "isPrimary", "isPublic"] },
+    {
+      model: "contacts",
+      fields: ["id", "value", "title", "iso3", "prefix", "contactType", "placeId", "isPrimary", "isPublic"],
+    },
     { urlSuffix: `location/${auth?.user?.locationId}`, enabled: isSuccess && !!auth?.user?.locationId }
   );
 
