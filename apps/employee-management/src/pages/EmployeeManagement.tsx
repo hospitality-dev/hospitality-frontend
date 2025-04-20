@@ -65,13 +65,16 @@ function ActionsButton({ row }: { row: Row<EntityType> }) {
 
 const columns = [
   columnHelper.accessor("imageId", {
-    header: "",
+    header: "Image",
     cell: (info) => (
       <div>
         <Avatar imageId={info.getValue()} label={getUserInfo(info.row.original).title} size="sm" type="user_avatar" />
       </div>
     ),
     maxSize: 50,
+    meta: {
+      isCentered: true,
+    },
   }),
   columnHelper.accessor("firstName", {
     header: "First name",
