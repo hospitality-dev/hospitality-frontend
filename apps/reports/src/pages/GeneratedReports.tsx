@@ -69,6 +69,9 @@ const columns = [
         <span>{formatFromUTC(info.getValue())}</span>
       </span>
     ),
+    meta: {
+      isSortable: true,
+    },
   }),
 
   columnHelper.display({
@@ -85,12 +88,12 @@ const columns = [
 ];
 
 export function GeneratedReports() {
-  const { mutate: generateReport } = useGenerateFile({ type: "reports" });
+  const [state, dispatch] = useTable<FilesType>({ sort: { field: "createdAt", type: "desc" } });
   const { data: reports = [], isPending } = useList<FilesType>(
-    { model: "files", fields: ["id", "title", "type", "createdAt"] },
+    { model: "files", sort: state.sort, fields: ["id", "title", "type", "createdAt"] },
     { urlSuffix: "reports" }
   );
-  const [state, dispatch] = useTable();
+  const { mutate: generateReport } = useGenerateFile({ type: "reports" });
   return (
     <div className="flex flex-col gap-y-2 pt-2">
       <div className="self-end">
@@ -111,7 +114,7 @@ export function GeneratedReports() {
           variant="info"
         />
       </div>
-      <Table columns={columns} data={reports || []} dispatch={dispatch} isLoading={isPending} meta={state} />
+      <Table<FilesType> columns={columns} data={reports || []} dispatch={dispatch} isLoading={isPending} meta={state} />
     </div>
   );
 }

@@ -73,7 +73,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const { openDrawer: openProductDrawer } = useDrawer("create_products");
-  const [state, dispatch] = useTable();
+  const [state, dispatch] = useTable<ProductsType>();
 
   // #region queries
   const { data } = useQuery(LocationsAvailableProductsQuery);

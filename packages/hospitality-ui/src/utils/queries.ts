@@ -14,7 +14,7 @@ export const LocationsAvailableProductsQuery = {
   queryFn: () =>
     fetchFunction<LocationsAvailableProductsSettingsType>({
       method: "GET",
-      searchParams: getSearchParams<typeof locationsAvailableProductsFields, null>(locationsAvailableProductsFields),
+      searchParams: getSearchParams<LocationsAvailableProductsSettingsType>(locationsAvailableProductsFields),
       userReset: () => {},
       model: "locations_available_products",
       // * exceptions since this is neither reading a specific entity
@@ -30,7 +30,7 @@ export const ProductCategoriesQuery = {
     fetchFunction<ProductsCategoriesType[]>({
       method: "GET",
       userReset: () => {},
-      searchParams: getSearchParams<typeof productCategoryFields, ProductsCategoriesType>(productCategoryFields),
+      searchParams: getSearchParams<ProductsCategoriesType>(productCategoryFields),
       model: "products_categories",
       urlSuffix: "list",
     }),
@@ -43,7 +43,7 @@ export const RolesQuery = {
     fetchFunction<RolesType[]>({
       method: "GET",
       userReset: () => {},
-      searchParams: getSearchParams<typeof rolesFields, RolesType>(rolesFields),
+      searchParams: getSearchParams<RolesType>(rolesFields),
       model: "roles",
       urlSuffix: "list",
     }),

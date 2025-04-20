@@ -7,9 +7,9 @@ import { fetchFunction, getSearchParams } from "../../utils";
 
 export type useListProps<F> = {
   model: AvailableEntities;
-  fields: (keyof Omit<F, "created_at" | "updated_at">)[];
+  fields: (keyof F)[];
   filters?: RequestFilters<F>;
-  sort?: TableStateType["sort"];
+  sort?: TableStateType<F>["sort"];
   placeholderData?: F[];
 };
 
@@ -21,7 +21,7 @@ export function useList<F, O = F>(
   }
 ) {
   const reset = useResetAtom(userAtom);
-  const searchParams = getSearchParams<useListProps<F>["fields"], RequestFilters<F>>(fields, filters, sort);
+  const searchParams = getSearchParams<F>(fields, filters, sort);
 
   if (options?.searchParams && options?.searchParams?.length) {
     for (let index = 0; index < options.searchParams.length; index++) {

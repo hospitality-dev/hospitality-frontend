@@ -4,12 +4,12 @@ import { Dispatch, Fragment, useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
-import { AvailableIcons, Size, TableActionType, TableStateType, Variant } from "../types";
+import { AvailableIcons, Size, TableActionType, Variant } from "../types";
 import { Button } from "./Button";
 import { ExpandedRow } from "./ExpandedRow";
 import { Title } from "./Title";
 
-type Props<T = { id?: string } & Record<string, unknown>> = {
+type Props<T> = {
   columns: ColumnDef<T, ReactNode>[];
   data: T[];
   title?: string;
@@ -19,7 +19,7 @@ type Props<T = { id?: string } & Record<string, unknown>> = {
   isLoading?: boolean;
   hasNoHeader?: boolean;
   onExpand?: () => void;
-  dispatch: Dispatch<TableActionType>;
+  dispatch: Dispatch<TableActionType<T>>;
   meta?: {
     sort?: { field: string; type: "asc" | "desc" } | null;
     page?: number | null;
@@ -88,10 +88,10 @@ const classes = tv({
   },
 });
 
-function getSortIcon(sort: TableStateType["sort"], isSorted: boolean) {
+function getSortIcon(sort: "asc" | "desc" | null | undefined, isSorted: boolean) {
   if (!isSorted) return Icons.arrowsUpAndDown;
-  if (sort?.type === "asc") return Icons.arrowUp;
-  if (sort?.type === "desc") return Icons.arrowDown;
+  if (sort === "asc") return Icons.arrowUp;
+  if (sort === "desc") return Icons.arrowDown;
   return Icons.arrowsUpAndDown;
 }
 function TableSkeleton({ tr, td }: { tr: string; td: string }) {
@@ -103,7 +103,8 @@ function TableSkeleton({ tr, td }: { tr: string; td: string }) {
     </>
   );
 }
-export function Table<T = { id?: string; variant?: Variant } & Record<string, unknown>>({
+
+export function Table<T extends object>({
   columns = [],
   data,
   title,
@@ -117,7 +118,7 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
   type,
   meta,
   dispatch,
-}: Props<T & { id?: string; variant?: Variant } & Record<string, unknown>>) {
+}: Props<T>) {
   const table = useReactTable({
     columns,
     data,
@@ -201,7 +202,7 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
                           <Button
                             className="h-4 w-4"
                             hasNoBorder
-                            icon={getSortIcon(meta?.sort, header.id === meta?.sort?.field)}
+                            icon={getSortIcon(meta?.sort?.type, header.id === meta?.sort?.field)}
                             isOutline
                             onClick={() => {
                               if (meta?.sort?.type === "asc") {
@@ -212,7 +213,7 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
                               } else {
                                 dispatch({
                                   type: "SET_SORT",
-                                  sort: { field: header.id, type: meta?.sort?.type === "desc" ? "asc" : "desc" },
+                                  sort: { field: header.id as keyof T, type: meta?.sort?.type === "desc" ? "asc" : "desc" },
                                 });
                               }
                             }}
@@ -246,9 +247,9 @@ export function Table<T = { id?: string; variant?: Variant } & Record<string, un
                         </div>
                       ))}
                     </div>
-                    {row.getIsExpanded() && row.original.id ? (
+                    {row.getIsExpanded() && "id" in row.original && typeof row.original.id === "string" && row.original.id ? (
                       <div className={expandedRowContainer()}>
-                        <ExpandedRow id={row.original.id} type={type} />
+                        <ExpandedRow id={row.original.id as string} type={type} />
                       </div>
                     ) : null}
                   </Fragment>

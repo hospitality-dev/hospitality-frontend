@@ -80,7 +80,7 @@ export function ExpandedProductGroupedByExpirationDate({ productId }: { productI
     { model: "locations_products", fields: ["expirationDate", "count"] },
     { urlSuffix: `${productId}/grouped/expiration-date`, enabled: !!productId }
   );
-  const [state, dispatch] = useTable();
+  const [state, dispatch] = useTable<LocationsProductsGroupedByExpirationType>();
 
   return <Table columns={groupedByExpirationDateColumns} data={data || []} dispatch={dispatch} meta={state} />;
 }

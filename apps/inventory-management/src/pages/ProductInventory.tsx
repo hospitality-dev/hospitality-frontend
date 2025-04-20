@@ -124,7 +124,7 @@ export function ProductInventory() {
     { model: "products", fields: ["id", "title", "categoryId"] },
     { enabled: !!active, urlSuffix: `category/${active}/active` }
   );
-  const [state, dispatch] = useTable();
+  const [state, dispatch] = useTable<ProductsWithCountType>();
 
   return (
     <div className="flex flex-col gap-y-2">

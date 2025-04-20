@@ -8,7 +8,7 @@ import { fetchFunction, getSearchParams, urlFunction } from "../../utils";
 export type useReadProps<F> = {
   id: string;
   model: AvailableEntities;
-  fields: (keyof Omit<F, "created_at" | "updated_at">)[];
+  fields: (keyof F)[];
 };
 
 export function useRead<F>(
@@ -16,7 +16,7 @@ export function useRead<F>(
   options?: Pick<UseQueryOptions<F>, "enabled" | "staleTime"> & { urlSuffix?: string }
 ) {
   const reset = useResetAtom(userAtom);
-  const searchParams = getSearchParams<useReadProps<F>["fields"], F>(fields);
+  const searchParams = getSearchParams<F>(fields);
 
   return useQuery<F>({
     queryKey: [model, "list", fields, options?.urlSuffix || ""].filter(Boolean),

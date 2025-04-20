@@ -84,7 +84,7 @@ export function EmployeeManagement() {
     { urlSuffix: `location/${auth.user?.locationId}`, enabled: !!auth.user?.locationId }
   );
   const { openDrawer: openAddUserFromLocation } = useDrawer("add_user_from_location");
-  const [state, dispatch] = useTable();
+  const [state, dispatch] = useTable<EntityType>();
   return (
     <div className="flex flex-col gap-y-2 overflow-hidden">
       <div className="self-end">

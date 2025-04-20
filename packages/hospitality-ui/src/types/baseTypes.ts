@@ -112,13 +112,13 @@ export type TabType = {
   isActive?: boolean;
 };
 
-export type TableStateType = {
+export type TableStateType<T> = {
   page?: number | null;
-  sort?: { field: string; type: "asc" | "desc" } | null;
+  sort?: { field: keyof T; type: "asc" | "desc" } | null;
 };
-export type TableActionType =
+export type TableActionType<T> =
   | { type: "SET_PAGE"; page: number | null }
-  | { type: "SET_SORT"; sort: TableStateType["sort"] }
+  | { type: "SET_SORT"; sort: { type: "asc" | "desc"; field: keyof T } | null }
   | { type: "RESET" };
 
 // =========REQUEST=========
