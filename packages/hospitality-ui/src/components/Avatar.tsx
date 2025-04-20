@@ -24,11 +24,11 @@ const classes = tv({
       error: "border-error",
     },
     size: {
-      xs: "h-10 w-10 text-base",
-      sm: "h-11 w-11 text-lg",
-      md: "h-12 w-12 text-xl",
-      lg: "h-13 w-13 text-2xl",
-      xl: "h-14 w-14 text-3xl",
+      xs: "h-8 w-8 text-base",
+      sm: "h-9 w-9 text-lg",
+      md: "h-10 w-10 text-xl",
+      lg: "h-11 w-11 text-2xl",
+      xl: "h-12 w-12 text-3xl",
     },
     hasAction: {
       true: "cursor-pointer",
