@@ -369,7 +369,7 @@ export function UserProfile() {
             name="roleId"
           />
         </div>
-        <div className="mt-2 flex flex-col gap-y-4 overflow-y-auto">
+        <div className="mt-2 flex flex-1 flex-col gap-y-4 overflow-y-auto">
           <div className="flex flex-col gap-y-4">
             {isLoadingContacts ? null : (
               <form.Field
@@ -398,7 +398,7 @@ export function UserProfile() {
                           },
                         ]}
                         label="Addresses">
-                        <div className="flex flex-col gap-y-2">
+                        <div className="flex flex-col gap-y-2 pb-1">
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("address"))
                               return (
@@ -442,7 +442,7 @@ export function UserProfile() {
                           },
                         ]}
                         label="Phones">
-                        <div className="flex flex-col gap-y-2">
+                        <div className="flex flex-col gap-y-2 pb-1">
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("phone") || contact.contactType === "fax")
                               return (
@@ -486,7 +486,7 @@ export function UserProfile() {
                           },
                         ]}
                         label="Emails">
-                        <div className="flex flex-col gap-y-2">
+                        <div className="flex flex-col gap-y-2 pb-1">
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("email"))
                               return (
@@ -530,7 +530,7 @@ export function UserProfile() {
                           },
                         ]}
                         label="Websites">
-                        <div className="flex flex-col gap-y-2">
+                        <div className="flex flex-col gap-y-2 pb-1">
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("website"))
                               return (
@@ -574,7 +574,7 @@ export function UserProfile() {
                           },
                         ]}
                         label="Other">
-                        <div className="flex flex-col gap-y-2">
+                        <div className="flex flex-col gap-y-2 pb-1">
                           {(field.state.value || []).map((contact, i) => {
                             if (
                               contact.contactType === "whatsapp" ||
@@ -611,7 +611,7 @@ export function UserProfile() {
             )}
           </div>
         </div>
-        <div className="md:col-span-2">
+        <div className="sticky bottom-0 md:col-span-2">
           <form.Subscribe<{ isDisabled: boolean }>
             children={(sub) => (
               <Button

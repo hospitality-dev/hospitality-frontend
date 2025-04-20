@@ -364,7 +364,7 @@ export function LocationSettings() {
                           },
                         ]}
                         label="Addresses">
-                        <div className="flex flex-col gap-y-2">
+                        <div className="flex flex-col gap-y-2 pb-1">
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("address"))
                               return (
@@ -408,7 +408,7 @@ export function LocationSettings() {
                           },
                         ]}
                         label="Phones">
-                        <div className="flex flex-col gap-y-2">
+                        <div className="flex flex-col gap-y-2 pb-1">
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("phone") || contact.contactType === "fax")
                               return (
@@ -452,7 +452,7 @@ export function LocationSettings() {
                           },
                         ]}
                         label="Emails">
-                        <div className="flex flex-col gap-y-2">
+                        <div className="flex flex-col gap-y-2 pb-1">
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("email"))
                               return (
@@ -496,7 +496,7 @@ export function LocationSettings() {
                           },
                         ]}
                         label="Websites">
-                        <div className="flex flex-col gap-y-2">
+                        <div className="flex flex-col gap-y-2 pb-1">
                           {(field.state.value || []).map((contact, i) => {
                             if (contact.contactType.includes("website"))
                               return (
@@ -540,7 +540,7 @@ export function LocationSettings() {
                           },
                         ]}
                         label="Other">
-                        <div className="flex flex-col gap-y-2">
+                        <div className="flex flex-col gap-y-2 pb-1">
                           {(field.state.value || []).map((contact, i) => {
                             if (
                               contact.contactType === "whatsapp" ||
@@ -577,7 +577,7 @@ export function LocationSettings() {
             )}
           </div>
         </div>
-        <div className="md:col-span-2">
+        <div className="sticky bottom-0 mt-auto md:col-span-2">
           <form.Subscribe<{ isDisabled: boolean }>
             children={(state) => (
               <Button
