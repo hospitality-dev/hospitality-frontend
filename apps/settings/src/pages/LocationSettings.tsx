@@ -345,7 +345,7 @@ export function LocationSettings() {
                     <Card hasNoShadow isFullWidth variant="secondary">
                       <Collapsible
                         icon={Icons.officeAddress}
-                        isOpen={!!groupedContactsByType?.address?.length}
+                        isInitialOpen={!!groupedContactsByType?.address?.length}
                         items={[
                           {
                             id: "1",
@@ -389,7 +389,7 @@ export function LocationSettings() {
                     <Card hasNoShadow isFullWidth variant="secondary">
                       <Collapsible
                         icon={Icons.phone}
-                        isOpen={!!groupedContactsByType?.phone?.length}
+                        isInitialOpen={!!groupedContactsByType?.phone?.length}
                         items={[
                           {
                             id: "1",
@@ -433,7 +433,7 @@ export function LocationSettings() {
                     <Card hasNoShadow isFullWidth variant="secondary">
                       <Collapsible
                         icon={Icons.email}
-                        isOpen={!!groupedContactsByType?.email?.length}
+                        isInitialOpen={!!groupedContactsByType?.email?.length}
                         items={[
                           {
                             id: "1",
@@ -477,7 +477,7 @@ export function LocationSettings() {
                     <Card hasNoShadow isFullWidth variant="secondary">
                       <Collapsible
                         icon={Icons.website}
-                        isOpen={!!groupedContactsByType?.website?.length}
+                        isInitialOpen={!!groupedContactsByType?.website?.length}
                         items={[
                           {
                             id: "1",
@@ -521,7 +521,7 @@ export function LocationSettings() {
                     <Card hasNoShadow isFullWidth variant="secondary">
                       <Collapsible
                         icon={Icons.info}
-                        isOpen={!!groupedContactsByType?.other?.length}
+                        isInitialOpen={!!groupedContactsByType?.other?.length}
                         items={[
                           {
                             id: "1",
