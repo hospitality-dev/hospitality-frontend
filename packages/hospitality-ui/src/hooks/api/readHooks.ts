@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
 import { useResetAtom } from "jotai/utils";
 
 import { userAtom } from "../../atoms";
@@ -28,10 +28,20 @@ export function useRead<F>(
 }
 
 export function useImage(id: string, options?: Pick<UseQueryOptions, "enabled"> & { urlSuffix?: string }) {
+  const queryKey = ["files", "images", id];
+  const queryClient = useQueryClient();
   const reset = useResetAtom(userAtom);
+  const hasData = !!queryClient.getQueryData<string>(queryKey);
+
   return useQuery<string>({
-    queryKey: ["files", id],
-    queryFn: () => urlFunction({ id, userReset: reset, urlSuffix: options?.urlSuffix || "" }),
+    queryKey,
+    queryFn: () =>
+      urlFunction({
+        id,
+        userReset: reset,
+        headers: hasData ? { "Cache-Control": "no-cache" } : undefined,
+        urlSuffix: options?.urlSuffix || "",
+      }),
     enabled: !!(options?.enabled ?? true),
     staleTime: 60 * 60 * 8 * 1000,
   });
