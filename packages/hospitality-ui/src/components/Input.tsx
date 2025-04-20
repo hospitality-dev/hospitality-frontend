@@ -209,7 +209,9 @@ export function Input({
           </span>
         ) : null}
       </div>
-      <p className={helperTextClasses()}>{errors ? formatErrorsForHelperText(errors || []) : helperText}</p>
+      {errors || helperText ? (
+        <p className={helperTextClasses()}>{formatErrorsForHelperText(errors || []) || helperText}</p>
+      ) : null}
     </div>
   );
 }
