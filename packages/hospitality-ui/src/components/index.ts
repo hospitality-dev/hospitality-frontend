@@ -1,4 +1,5 @@
 export * from "./AddressSearch";
+export * from "./Alert";
 export * from "./Autocomplete";
 export * from "./Avatar";
 export * from "./Badge";
