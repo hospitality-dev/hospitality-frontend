@@ -26,7 +26,7 @@ import {
   useDrawer,
   useForm,
   useList,
-  useLoaderData,
+  useParams,
   useQuery,
   useRead,
   UsersMutatorSchema,
@@ -208,13 +208,13 @@ function ContactDisplay({
   );
 }
 
-export function UserSettings({ id }: { id?: string }) {
+export function UserSettings() {
+  const { userId } = useParams({ from: "/employee-management/$userId" });
   const auth = useAuth();
   const { isSmallScreen } = useScreenSize();
   const { openDrawer } = useDrawer("upload");
   const { mutate: update } = useUpdate<UsersMutatorType>("users", { refetchModels: ["contacts"] });
-  const { roles } = useLoaderData({ from: "/settings/user" });
-  const { data: rolesData } = useQuery({ ...RolesQuery, placeholderData: roles });
+  const { data: rolesData } = useQuery({ ...RolesQuery });
   const {
     data: userData,
     isLoading,
@@ -222,10 +222,10 @@ export function UserSettings({ id }: { id?: string }) {
   } = useRead<UsersType>(
     {
       model: "users",
-      id: id || auth.user?.id || "",
+      id: userId || auth.user?.id || "",
       fields: ["id", "firstName", "lastName", "imageId", "dateOfBirth", "dateOfEmployment", "roleId"],
     },
-    { enabled: !!(id || auth.user?.id) }
+    { enabled: !!(userId || auth.user?.id) }
   );
 
   const { data: userContacts, isLoading: isLoadingContacts } = useList<ContactType>(

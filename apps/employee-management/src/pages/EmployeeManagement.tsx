@@ -2,6 +2,7 @@ import {
   Badge,
   Button,
   createColumnHelper,
+  DefaultRoleIds,
   getSentenceCase,
   Icons,
   RolesType,
@@ -11,6 +12,7 @@ import {
   useDelete,
   useDrawer,
   useList,
+  useNavigate,
   UsersType,
   useTable,
 } from "@hospitality/hospitality-ui";
@@ -20,7 +22,7 @@ const columnHelper = createColumnHelper<EntityType>();
 
 function ActionsButton({ row }: { row: Row<EntityType> }) {
   const auth = useAuth();
-
+  const navigate = useNavigate();
   const { mutate } = useDelete("locations_users", { invalidateModels: ["users"] });
   return (
     <div className="flex h-full items-center justify-end">
@@ -32,6 +34,13 @@ function ActionsButton({ row }: { row: Row<EntityType> }) {
           isOutline
           items={[
             {
+              id: "edit_profile",
+              title: "Profile",
+              icon: Icons.user,
+              isHidden: !(auth.user?.roleId === DefaultRoleIds.owner || auth.user?.roleId === DefaultRoleIds.manager),
+              onClick: () => navigate({ to: "/employee-management/$userId", params: { userId: row.original.id } }),
+            },
+            {
               id: "remove_user_from_location",
               title: "Remove from location",
               icon: Icons.removeUser,
@@ -39,7 +48,7 @@ function ActionsButton({ row }: { row: Row<EntityType> }) {
               onClick: () => mutate(row.original.id),
             },
           ]}
-          onClick={() => {}}
+          onClick={undefined}
           size="xl"
           variant="primary"
         />
@@ -62,9 +71,6 @@ const columns = [
     id: "role",
     cell: (info) => <Badge label={getSentenceCase(info.getValue().title)} variant="info" />,
     header: () => <span>Role</span>,
-    meta: {
-      isCentered: true,
-    },
   }),
   columnHelper.display({
     id: "isActive",

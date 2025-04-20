@@ -90,6 +90,10 @@ const employeeManagementRoute = createRoute({
   path: "/employee-management",
   getParentRoute: () => mainLayout,
 }).lazy(() => import("@hospitality/employee-management").then((d) => d.EmployeeManagementRoute));
+const employeeProfileRoute = createRoute({
+  path: "/employee-management/$userId",
+  getParentRoute: () => mainLayout,
+}).lazy(() => import("@hospitality/employee-management").then((d) => d.EmployeeProfileRoute));
 
 // #endregion EMPLOYEE_ROUTES
 
@@ -166,6 +170,7 @@ const settingsProducts = createRoute({
 const routeTree = rootRoute.addChildren([
   mainLayout.addChildren([
     employeeManagementRoute,
+    employeeProfileRoute,
     inventoryCategoryRoute.addChildren([productInventoryRoute]),
     settingsRootRoute.addChildren([settingsUsers, settingsLocation, settingsProducts]),
     reportsRootRoute.addChildren([reportsDashboard, reportsGeneratedReports]),
