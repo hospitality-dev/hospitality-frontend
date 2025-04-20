@@ -8,9 +8,14 @@ import { AddressesType, ContactTypes, OptionType, UsersType } from "../types";
 import { CountriesType } from "../types/worldTypes";
 import { getSentenceCase } from "./transform";
 
-export function formatForOptions<T extends { id: string; title: string }>(data?: T[], isSentenceCase?: boolean): OptionType[] {
+export function formatForOptions<T extends { id: string; title: string; isDisabled?: boolean; isHidden?: boolean }>(
+  data?: T[],
+  isSentenceCase?: boolean
+): OptionType[] {
   if (!data) return [];
   return data.map((item) => ({
+    isDisabled: item.isDisabled,
+    isHidden: item.isHidden,
     id: item.id,
     label: isSentenceCase === true || isSentenceCase === undefined ? getSentenceCase(item.title) : item.title,
     value: item.id,
