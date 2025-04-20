@@ -66,7 +66,7 @@ const columns = [
     header: "Date of creation",
     cell: (info) => (
       <span className="flex items-center gap-x-1">
-        <span>{formatFromUTC(info.getValue())}</span>
+        <span>{formatFromUTC(info.getValue(), "dd.MM.yyyy HH:MM")}</span>
       </span>
     ),
     meta: {
