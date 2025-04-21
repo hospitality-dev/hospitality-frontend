@@ -4,6 +4,7 @@ import {
   maskitoDateOptionsGenerator,
   maskitoDateTimeOptionsGenerator,
   maskitoEventHandler,
+  maskitoNumberOptionsGenerator,
   maskitoPrefixPostprocessorGenerator,
   maskitoRemoveOnBlurPlugin,
   maskitoWithPlaceholder,
@@ -11,6 +12,7 @@ import {
 
 const DATETIME_PLACEHOLDER = "DD.MM.YYYY | HH:MM";
 const DATE_PLACEHOLDER = "DD.MM.YYYY";
+
 const { removePlaceholder, plugins, ...placeholderOptions } = maskitoWithPlaceholder(DATETIME_PLACEHOLDER);
 const {
   removePlaceholder: dateRemovePlaceholder,
@@ -21,9 +23,10 @@ const {
 export const defaultMask: MaskitoOptions = {
   mask: /[^]/,
 };
-export const numbersOnlyMask: MaskitoOptions = {
-  mask: /^\d+$/,
-};
+export const numbersOnlyMask: MaskitoOptions = maskitoNumberOptionsGenerator({
+  maximumFractionDigits: 8,
+  min: 0,
+});
 export const phoneMask: MaskitoOptions = {
   mask: [/\d/, /\d/, "-", /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d?/],
 };
