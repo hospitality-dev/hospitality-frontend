@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.5",
-    "@maskito/core": "^3.5.0",
-    "@maskito/react": "^3.5.0",
+    "@maskito/core": "^3.7.1",
+    "@maskito/kit": "^3.7.1",
+    "@maskito/react": "^3.7.1",
     "@tailwindcss/vite": "^4.0.17",
     "@tanstack/react-form": "^0.42.0",
     "@tanstack/react-query": "^5.66.7",

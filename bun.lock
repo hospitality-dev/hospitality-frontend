@@ -4,7 +4,6 @@
     "": {
       "name": "hospitality",
       "dependencies": {
-        "@maskito/kit": "^3.5.0",
         "@tailwindcss/vite": "^4.1.3",
         "@vitejs/plugin-react": "^4.3.4",
         "date-fns": "^4.1.0",
@@ -159,8 +158,9 @@
       "version": "0.0.0",
       "dependencies": {
         "@floating-ui/react": "^0.27.5",
-        "@maskito/core": "^3.5.0",
-        "@maskito/react": "^3.5.0",
+        "@maskito/core": "^3.7.1",
+        "@maskito/kit": "^3.7.1",
+        "@maskito/react": "^3.7.1",
         "@tailwindcss/vite": "^4.0.17",
         "@tanstack/react-form": "^0.42.0",
         "@tanstack/react-query": "^5.66.7",
@@ -350,11 +350,11 @@
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.25", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ=="],
 
-    "@maskito/core": ["@maskito/core@3.5.0", "", {}, "sha512-zgmBjXeXc7BSBaw8jQw25dnwkFmKDvdj5rHzhEIxYhgGtnpli236F0YWPIOYzIwADjbefwDq1o7qpJfMsdDO4Q=="],
+    "@maskito/core": ["@maskito/core@3.7.1", "", {}, "sha512-q6SsL1xH9/cw4TPcNYb+QfNeziI7OshXCP+Ls9NvN4PCKtrGQwIKyHpkCSCZZaIBixcqdRzEHZnkA26pX8a7ew=="],
 
-    "@maskito/kit": ["@maskito/kit@3.5.0", "", { "peerDependencies": { "@maskito/core": "^3.5.0" } }, "sha512-QnpZsPTINgK4ScA4pMMJagoj+ufIXc/VGOP61AsQa/H/lmXII4pEZTLzpmMNUYmCEIEyjHR2DIbfEed04sktvQ=="],
+    "@maskito/kit": ["@maskito/kit@3.7.1", "", { "peerDependencies": { "@maskito/core": "^3.7.1" } }, "sha512-yUr0klgRsNtuQYOb0lINJgcrgEU4uAZRlMsiW1enscbgBXn2Zq+vfDAkRHxlLdmAvGqM4uvaIEYC8O+0u1CEag=="],
 
-    "@maskito/react": ["@maskito/react@3.5.0", "", { "peerDependencies": { "@maskito/core": "^3.5.0", "react": ">=16.8", "react-dom": ">=16.8" } }, "sha512-o3W+A5mQoSGi8vrmuJdhWUEuPsQ5ZDgUoyQtsOiNyp5YFVoImK343iR9LGy18biK9MEAQmN19jBVJSpgddiI0Q=="],
+    "@maskito/react": ["@maskito/react@3.7.1", "", { "peerDependencies": { "@maskito/core": "^3.7.1", "react": ">=16.8", "react-dom": ">=16.8" } }, "sha512-/5Y+LOXmIBSm8tuplLBGBK8pA5BKY+UCc4Mtg7+tiRTnBadtBhVg8C2+OQRTU1DYCfQ5pZLeobDYsBrVKziV/g=="],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="],
 
