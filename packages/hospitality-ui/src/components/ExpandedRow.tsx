@@ -17,7 +17,7 @@ function GroupedByExpiractionActions({
   }>;
 }) {
   return (
-    <span className="font-light">
+    <span className="pl-2 font-light">
       <Button
         hasNoBorder
         icon={Icons.qrCodes}
@@ -93,7 +93,7 @@ const groupedByExpirationDateColumns = [
   }),
   groupedByExpirationDateColHelper.display({
     id: "actions",
-    header: () => <span className="text-center">Actions</span>,
+    header: () => <span className="pl-2">Actions</span>,
     cell: GroupedByExpiractionActions,
     maxSize: 90,
     meta: {
