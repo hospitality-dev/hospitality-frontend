@@ -5,7 +5,7 @@ import { number, object, string } from "zod";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
 import { Button, Form, Input, Select, Spinner } from "../../components";
-import { Icons } from "../../enums";
+import { Icons, Units } from "../../enums";
 import {
   useAddInventoryProducts,
   useBarcodeScanner,
@@ -15,6 +15,7 @@ import {
   useRemoveProducts,
   useScreenSize,
 } from "../../hooks";
+import { VolumeUnitsType, WeightUnitsType } from "../../types";
 import {
   ProductsCategoriesType,
   ProductsInitalizerSchema,
@@ -40,7 +41,9 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
       barcode: null,
       description: null,
       weight: null,
+      weightUnit: "kg",
       volume: null,
+      volumeUnit: "l",
       subCategoryId: null,
       imageId: null,
       categoryId: data.categoryId || "",
@@ -74,7 +77,6 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
             )}
             name="title"
           />
-
           <form.Field
             children={(field) => (
               <div className="md:col-span-2">
@@ -91,6 +93,52 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
             )}
             name="categoryId"
           />
+          <form.Subscribe<{ weightUnit: WeightUnitsType | null; volumeUnit: VolumeUnitsType | null }>
+            children={(state) => (
+              <div className="flex flex-col gap-y-2 md:col-span-2">
+                <form.Field
+                  children={(field) => (
+                    <Input
+                      errors={field.state.meta.errors}
+                      inputMode="decimal"
+                      label={getSentenceCase(field.name)}
+                      name={field.name}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(Number(e.target.value))}
+                      onSelectChange={(item) => form.setFieldValue("weightUnit", (item?.value as WeightUnitsType) || null)}
+                      options={Units.weight}
+                      selectValue={state.weightUnit}
+                      step=".01"
+                      type="number"
+                      value={field.state.value?.toString() || ""}
+                    />
+                  )}
+                  name="weight"
+                />
+                <form.Field
+                  children={(field) => (
+                    <Input
+                      errors={field.state.meta.errors}
+                      inputMode="decimal"
+                      label={getSentenceCase(field.name)}
+                      name={field.name}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(Number(e.target.value))}
+                      onSelectChange={(item) => form.setFieldValue("volumeUnit", (item?.value as VolumeUnitsType) || null)}
+                      options={Units.volume}
+                      selectValue={state.volumeUnit}
+                      step=".01"
+                      type="number"
+                      value={field.state.value?.toString() || ""}
+                    />
+                  )}
+                  name="volume"
+                />
+              </div>
+            )}
+            selector={(state) => ({ weightUnit: state.values.weightUnit, volumeUnit: state.values.volumeUnit })}
+          />
+
           <form.Field
             children={(field) => (
               <div className="flex flex-col gap-y-4 md:col-span-2">

@@ -1,5 +1,7 @@
 import { boolean, infer as zodInfer, number, object, record, string, z } from "zod";
 
+import { VolumeUnitsSchema, WeightUnitsSchema } from "./worldTypes";
+
 // #region PRODUCTS
 
 export const ProductsSchema = object({
@@ -9,6 +11,8 @@ export const ProductsSchema = object({
   description: string().nullable(),
   weight: number().min(0).nullable(),
   volume: number().min(0).nullable(),
+  weightUnit: WeightUnitsSchema.nullable(),
+  volumeUnit: VolumeUnitsSchema.nullable(),
   barcode: string().max(13).nullable(),
   categoryId: string().uuid().nonempty(),
   subCategoryId: string().uuid().nullable(),
@@ -19,6 +23,8 @@ export const ProductsInitalizerSchema = object({
   title: string().nonempty("Title cannot be empty."),
   description: string().nullable(),
   weight: number().min(0).nullable(),
+  weightUnit: WeightUnitsSchema.nullable(),
+  volumeUnit: VolumeUnitsSchema.nullable(),
   volume: number().min(0).nullable(),
   barcode: string().max(13).nullable(),
   categoryId: string().uuid().nonempty("Category must be selected."),
@@ -31,6 +37,8 @@ export const ProductsMutatorSchema = object({
   description: string().nullable(),
   weight: number().min(0).nullable(),
   volume: number().min(0).nullable(),
+  weightUnit: WeightUnitsSchema.nullable(),
+  volumeUnit: VolumeUnitsSchema.nullable(),
   barcode: string().max(13).nullable(),
   categoryId: string().uuid().nonempty("Category must be selected."),
   subCategoryId: string().uuid().nullable(),
