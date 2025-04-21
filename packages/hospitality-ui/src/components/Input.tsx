@@ -14,7 +14,6 @@ import {
   defaultMask,
   formatErrorsForHelperText,
   formatPhoneForOptions,
-  numbersOnlyMask,
   phoneMask,
   websiteMask,
 } from "../utils";
@@ -44,11 +43,13 @@ type Props = {
     tooltip?: string;
   };
   errors?: ValidationError[] | ZodIssue[];
+  step?: string;
+  options?: OptionType[];
 };
 
-const masks: Record<AllowedInputTypes, MaskitoOptions> = {
-  number: numbersOnlyMask,
+const masks: Record<AllowedInputTypes, MaskitoOptions | null> = {
   text: defaultMask,
+  number: null,
   search: defaultMask,
   password: defaultMask,
   tel: phoneMask,
@@ -61,7 +62,7 @@ const classes = tv({
   slots: {
     container: "group flex h-fit w-full flex-col outline-0",
     inputContainer:
-      "flex w-full cursor-pointer flex-nowrap items-center justify-between overflow-hidden rounded-md border bg-white px-2 text-gray-900 shadow-sm outline-0",
+      "flex w-full cursor-pointer flex-nowrap items-center overflow-hidden rounded-md border bg-white px-2 text-gray-900 shadow-sm outline-0",
     inputClasses: "flex-1 pr-2 focus-within:outline-0 focus:outline-0",
     labelClasses: "font-small text-gray-900",
     helperTextClasses: "h-3.5 text-sm",
@@ -118,6 +119,12 @@ const classes = tv({
       datetime: "",
     },
     isDisabled: { true: { inputClasses: "cursor-not-allowed" } },
+    hasRightSelect: {
+      true: {
+        inputClasses: "pr-0",
+        selectClasses: "truncate",
+      },
+    },
   },
 });
 
@@ -130,7 +137,6 @@ function TelephoneSelect({ selectValue, onSelectChange }: Pick<Props, "onSelectC
   return (
     <Select
       hasNoBorder
-      hasNoHelperText
       hasSearch
       onChange={(item) => {
         if (onSelectChange && item)
@@ -170,6 +176,8 @@ export function Input({
   inputMode = "text",
   errors,
   action,
+  step = "any",
+  options,
 }: Props) {
   const inputRef = useMaskito({ options: masks[type] });
   const { inputClasses, inputContainer, container, labelClasses, helperTextClasses, selectClasses } = classes({
@@ -177,6 +185,7 @@ export function Input({
     size,
     isDisabled,
     type,
+    hasRightSelect: !!options?.length,
   });
 
   return (
@@ -202,6 +211,7 @@ export function Input({
           onInput={onChange}
           onKeyDown={onKeyDown}
           placeholder={placeholder}
+          step={step}
           type={type === "date" ? "text" : type}
           value={value}
         />
@@ -209,6 +219,18 @@ export function Input({
           <span className="top-0.5 right-2 w-fit">
             <Button hasNoBorder icon={action.icon} isOutline onClick={action.onClick} size="md" />
           </span>
+        ) : null}
+        {options?.length ? (
+          <div className={selectClasses()}>
+            <Select
+              hasNoBorder
+              onChange={(item) => {
+                if (onSelectChange) onSelectChange(item);
+              }}
+              options={options}
+              value={selectValue}
+            />
+          </div>
         ) : null}
       </div>
       {errors?.length || helperText ? (

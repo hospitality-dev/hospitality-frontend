@@ -30,12 +30,12 @@ type Props = {
   isMultiple?: boolean;
   isDisabled?: boolean;
   hasNoBorder?: boolean;
-  hasNoHelperText?: boolean;
   hasSearch?: boolean;
   variant?: Variant;
   size?: Size;
   icon?: AvailableIcons;
   options: OptionType[];
+  helperText?: string;
   onChange: (item: OptionType | null) => void;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   errors?: ValidationError[] | ZodIssue[];
@@ -43,15 +43,17 @@ type Props = {
 
 const classes = tv({
   slots: {
-    container: "flex h-fit w-full min-w-fit flex-col",
+    container: "flex h-fit w-full flex-col",
     labelClasses: "font-small font-light text-gray-900",
-    selectBox: "relative flex w-full items-center rounded-md bg-white",
+    selectBox: "relative flex w-full max-w-full items-center rounded-md bg-white",
     base: "box-content flex w-full flex-1 cursor-pointer appearance-none items-center gap-x-1 rounded-md border px-1 shadow-sm outline-0",
     icon: "text-primary ml-auto pt-0.5",
     optionsContainer:
       "[&>:has(label)>div>div]:focus-within:border-primary-highlight relative z-[61] divide-y divide-gray-300 overflow-y-auto rounded-md border border-gray-400 bg-white shadow-lg outline-0 [&>:has(label)>div]:border-0 [&>div>:has(label)>div]:rounded-none [&>div>:has(label)>div]:shadow-none [&>div>:has(label)>p]:hidden",
     searchContainer: "sticky top-0 max-h-fit",
-    selectedItemLabel: "select-none",
+    selectedItemLabel: "w-full max-w-full truncate select-none",
+    selectedItemContent: "flex w-full max-w-full items-center gap-x-0.5",
+    selectedItemImage: "h-5",
     helperTextClasses: "h-3.5 text-sm",
   },
 
@@ -73,7 +75,7 @@ const classes = tv({
     },
 
     isDisabled: { true: "cursor-not-allowed text-gray-400" },
-    hasNoBorder: { true: "border-0 outline-0 outline-none" },
+    hasNoBorder: { true: "border-0 shadow-none outline-0 outline-none" },
     hasNoHelperText: {
       true: {
         helperTextClasses: "hidden",
@@ -95,7 +97,7 @@ export function Select({
   errors,
   value,
   onBlur,
-  hasNoHelperText,
+  helperText,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -149,12 +151,14 @@ export function Select({
     searchContainer,
     helperTextClasses,
     selectedItemLabel,
+    selectedItemContent,
+    selectedItemImage,
   } = classes({
     variant: errors?.length ? "error" : variant,
     size,
     isDisabled: isDisabled || !options.length,
     hasNoBorder,
-    hasNoHelperText,
+    hasNoHelperText: !errors?.length && !helperText,
   });
 
   const filteredItems = filter
@@ -174,7 +178,11 @@ export function Select({
   }, [isOpen]);
   return (
     <div className={container()} onBlur={onBlur}>
-      <p className={labelClasses()}>{label ? <label>{label}</label> : null}</p>
+      {label ? (
+        <p className={labelClasses()}>
+          <label>{label}</label>
+        </p>
+      ) : null}
       <div className={selectBox()}>
         <div
           ref={refs.setReference}
@@ -187,10 +195,14 @@ export function Select({
             {!options?.length ? "No options" : null}
             {options.length && !value ? "Select one" : null}
             {options.length && value ? (
-              <span className="flex items-center gap-x-0.5">
-                <img className="h-5" src={options[selectedItemIdx]?.image} />
-                {options[selectedItemIdx]?.additionalData?.selectedLabel || options[selectedItemIdx]?.label || ""}
-              </span>
+              <div className={selectedItemContent()}>
+                {options[selectedItemIdx]?.image ? (
+                  <img className={selectedItemImage()} src={options[selectedItemIdx]?.image} />
+                ) : null}
+                <div className="w-full max-w-full truncate">
+                  {options[selectedItemIdx]?.additionalData?.selectedLabel || options[selectedItemIdx]?.label || ""}
+                </div>
+              </div>
             ) : null}
           </span>
           <div className={icon()}>
@@ -198,7 +210,7 @@ export function Select({
           </div>
         </div>
       </div>
-      <p className={helperTextClasses()}>{formatErrorsForHelperText(errors || [])}</p>
+      {errors?.length || helperText ? <p className={helperTextClasses()}>{formatErrorsForHelperText(errors || [])}</p> : null}
 
       {isOpen && !isDisabled && options.length ? (
         <FloatingPortal>
