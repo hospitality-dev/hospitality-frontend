@@ -119,7 +119,7 @@ export const LocationsProductsGroupedByExpirationSchema = object({
   productId: string().uuid(),
   expirationDate: string().nullish(),
   count: number(),
-});
+}).merge(ProductsSchema.pick({ weight: true, weightUnit: true, volume: true, volumeUnit: true }));
 // #endregion LOCATIONS_AVAILABLE_PRODUCTS
 
 // #region LOCATIONS_PRODUCTS

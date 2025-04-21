@@ -57,9 +57,36 @@ const groupedByExpirationDateColumns = [
     },
   }),
   groupedByExpirationDateColHelper.accessor("count", {
-    header: () => <span className="text-center">Count</span>,
+    header: "Amount",
     cell: (info) => <span className="font-light">{info.getValue()}</span>,
-    maxSize: 100,
+    maxSize: 150,
+
+    meta: {
+      isCentered: true,
+    },
+  }),
+  groupedByExpirationDateColHelper.accessor("volume", {
+    header: "Volume",
+    cell: (info) => (
+      <span className="font-light">
+        {(info.getValue() || 0) * info.row.original.count} {info.row.original.volumeUnit || ""}
+      </span>
+    ),
+    maxSize: 150,
+
+    meta: {
+      isCentered: true,
+    },
+  }),
+  groupedByExpirationDateColHelper.accessor("weight", {
+    header: "Weight",
+    cell: (info) => (
+      <span className="font-light">
+        {(info.getValue() || 0) * info.row.original.count} {info.row.original.weightUnit || ""}
+      </span>
+    ),
+    maxSize: 150,
+
     meta: {
       isCentered: true,
     },
@@ -68,7 +95,7 @@ const groupedByExpirationDateColumns = [
     id: "actions",
     header: () => <span className="text-center">Actions</span>,
     cell: GroupedByExpiractionActions,
-    maxSize: 100,
+    maxSize: 90,
     meta: {
       isCentered: true,
     },

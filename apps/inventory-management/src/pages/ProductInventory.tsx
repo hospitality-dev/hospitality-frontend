@@ -16,7 +16,10 @@ import {
   useTable,
 } from "@hospitality/hospitality-ui";
 
-type Entity = Pick<ProductsWithCountType, "id" | "title" | "categoryId" | "count" | "hasAboutToExpire">;
+type Entity = Pick<
+  ProductsWithCountType,
+  "id" | "title" | "categoryId" | "count" | "hasAboutToExpire" | "volume" | "volumeUnit" | "weight" | "weightUnit"
+>;
 const columnHelper = createColumnHelper<Entity>();
 
 function ActionButton({ data }: { data: Entity }) {
@@ -73,8 +76,8 @@ function ActionButton({ data }: { data: Entity }) {
 }
 
 const columns = [
-  columnHelper.accessor("count", {
-    header: "Amount",
+  columnHelper.accessor("title", {
+    header: "Title",
     cell: (info) => (
       <div className="flex items-center gap-x-2">
         <div>
@@ -90,14 +93,33 @@ const columns = [
             <Icon fontSize={24} icon={Icons.warning} />
           </div>
         ) : null}
-        {info.getValue()}
+        <div className="font-medium">{info.getValue()}</div>
       </div>
     ),
-    maxSize: 100,
   }),
-  columnHelper.accessor("title", {
-    header: "Title",
-    cell: (info) => <span className="font-semibold">{info.getValue()}</span>,
+  columnHelper.accessor("count", {
+    header: "Total amount",
+    cell: (info) => info.getValue(),
+    maxSize: 150,
+    meta: {
+      isCentered: true,
+    },
+  }),
+  columnHelper.accessor("volume", {
+    header: "Total volume",
+    cell: (info) => `${(info.getValue() || 0) * info.row.original.count} ${info.row.original.volumeUnit || ""}`,
+    maxSize: 150,
+    meta: {
+      isCentered: true,
+    },
+  }),
+  columnHelper.accessor("weight", {
+    header: "Total weight",
+    cell: (info) => `${(info.getValue() || 0) * info.row.original.count} ${info.row.original.weightUnit || ""}`,
+    maxSize: 150,
+    meta: {
+      isCentered: true,
+    },
   }),
 
   columnHelper.display({
@@ -121,7 +143,7 @@ export function ProductInventory() {
 
   const { data } = useQuery(ProductCategoriesQuery);
   const { data: products, isPending } = useList<ProductsWithCountType>(
-    { model: "products", fields: ["id", "title", "categoryId"] },
+    { model: "products", fields: ["id", "title", "categoryId", "volume", "volumeUnit"] },
     { enabled: !!active, urlSuffix: `category/${active}/active` }
   );
   const [state, dispatch] = useTable<ProductsWithCountType>();
