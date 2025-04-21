@@ -1,4 +1,4 @@
-import { infer as zodInfer, number, object, string } from "zod";
+import { enum as enum_, infer as zodInfer, number, object, string } from "zod";
 
 export const CountriesSchema = object({
   id: string().uuid(),
@@ -21,4 +21,9 @@ export const CountriesSchema = object({
   subregionId: string().uuid(),
 });
 
+export const WeightUnitsSchema = enum_(["kg", "g", "mg", "oz", "lb"]);
+export const VolumeUnitsSchema = enum_(["l", "ml", "fl oz", "gal"]);
+
 export type CountriesType = zodInfer<typeof CountriesSchema>;
+export type WeightUnitsType = zodInfer<typeof WeightUnitsSchema>;
+export type VolumeUnitsType = zodInfer<typeof VolumeUnitsSchema>;
