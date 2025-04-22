@@ -1,4 +1,4 @@
-import { RolesType } from "../types";
+import { CountriesType, RolesType } from "../types";
 import {
   LocationsAvailableProductsSettingsType,
   LocationsAvailableProductsType,
@@ -45,6 +45,19 @@ export const RolesQuery = {
       userReset: () => {},
       searchParams: getSearchParams<RolesType>(rolesFields),
       model: "roles",
+      urlSuffix: "list",
+    }),
+  staleTime: Infinity,
+};
+
+export const CurrenciesQuery = {
+  queryKey: ["countries", "list", ["currencyName", "currencySymbol"]],
+  queryFn: () =>
+    fetchFunction<Pick<CountriesType, "currencyName" | "currencySymbol" | "id">[]>({
+      method: "GET",
+      userReset: () => {},
+      searchParams: getSearchParams<RolesType>(rolesFields),
+      model: "countries",
       urlSuffix: "list",
     }),
   staleTime: Infinity,
