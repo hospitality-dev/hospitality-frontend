@@ -3,7 +3,7 @@ import { createColumnHelper, Row } from "@tanstack/react-table";
 import { Icons } from "../enums";
 import { useList, useTable } from "../hooks";
 import { LocationsProductsGroupedByExpirationType, PurchaseItemsType, TableExpandableTypes } from "../types";
-import { formatISOToString, getDayCountString, getDayDifferenceFromNow, urlFunction } from "../utils";
+import { formatCurrency, formatISOToString, getDayCountString, getDayDifferenceFromNow, urlFunction } from "../utils";
 import { Button } from "./Button";
 import { Table } from "./Table";
 
@@ -129,12 +129,13 @@ const purchaseItemsColumns = [
   }),
   purchaseItemsColHelper.accessor("pricePerUnit", {
     header: "Price / unit",
-    cell: (info) => info.getValue(),
+    cell: (info) => formatCurrency(info.getValue()),
     size: 100,
   }),
-  purchaseItemsColHelper.accessor("pricePerUnit", {
+  purchaseItemsColHelper.display({
+    id: "total",
     header: "Total",
-    cell: (info) => (info.getValue() * info.row.original.quantity).toFixed(2),
+    cell: (info) => formatCurrency(info.row.original.pricePerUnit * info.row.original.quantity),
     size: 100,
   }),
 
@@ -157,7 +158,7 @@ function PurchaseItems({ parentId }: { parentId?: string }) {
   const [state, dispatch] = useTable<PurchaseItemsType>();
 
   return (
-    <div className="max-h-[36rem] overflow-y-auto">
+    <div className="h-[36rem]">
       <Table columns={purchaseItemsColumns} data={data || []} dispatch={dispatch} meta={state} />
     </div>
   );
