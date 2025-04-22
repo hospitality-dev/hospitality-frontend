@@ -48,7 +48,15 @@ const columns = [
   columnHelper.accessor("businessLocationTitle", {
     header: "Store",
     cell: (info) => (
-      <span className="flex items-center gap-x-1 font-semibold">
+      <span className="flex items-center gap-x-1">
+        <div>
+          <Button
+            hasNoBorder
+            icon={info.row.getIsExpanded() ? Icons.arrowDown : Icons.arrowRight}
+            isOutline
+            onClick={() => info.row.toggleExpanded(!info.row.getIsExpanded())}
+          />
+        </div>
         <span>{(info.getValue() || "").replaceAll(/\d*[-]\d*/g, "")}</span>
       </span>
     ),
@@ -61,6 +69,17 @@ const columns = [
     cell: (info) => (
       <span className="flex items-center gap-x-1">
         <span>{formatFromUTC(info.getValue(), "dd.MM.yyyy HH:MM")}</span>
+      </span>
+    ),
+    meta: {
+      isSortable: true,
+    },
+  }),
+  columnHelper.accessor("total", {
+    header: "Total",
+    cell: (info) => (
+      <span className="font-semibold">
+        {info.getValue()} {info.row.original.currencyTitle}
       </span>
     ),
     meta: {
@@ -86,7 +105,7 @@ export function Purchases() {
   const { data: reports = [], isPending } = useList<PurchasesType>({
     model: "purchases",
     sort: meta.sort,
-    fields: ["id", "createdAt", "purchasedAt", "businessTitle", "businessLocationTitle"],
+    fields: ["id", "createdAt", "purchasedAt", "businessTitle", "businessLocationTitle", "total", "currencyTitle"],
   });
   return (
     <div className="flex flex-col gap-y-2 pt-2">
@@ -111,7 +130,14 @@ export function Purchases() {
           variant="info"
         />
       </div>
-      <Table columns={columns} data={reports || []} dispatch={dispatch} isLoading={isPending} meta={meta} />
+      <Table
+        columns={columns}
+        data={reports || []}
+        dispatch={dispatch}
+        isLoading={isPending}
+        meta={meta}
+        type="purchase_items"
+      />
     </div>
   );
 }
