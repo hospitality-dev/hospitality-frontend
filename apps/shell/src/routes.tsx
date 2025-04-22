@@ -131,6 +131,10 @@ const reportsGeneratedReports = createRoute({
   getParentRoute: () => reportsRootRoute,
   path: "generated-reports",
 }).lazy(() => import("@hospitality/reports").then((d) => d.ReportsGeneratedReportsRoute));
+const reportsPurchases = createRoute({
+  getParentRoute: () => reportsRootRoute,
+  path: "purchases",
+}).lazy(() => import("@hospitality/reports").then((d) => d.ReportsPurchasesRoute));
 // #endregion REPORT_ROUTES
 
 // #region SETTINGS_ROUTES
@@ -173,7 +177,7 @@ const routeTree = rootRoute.addChildren([
     employeeProfileRoute,
     inventoryCategoryRoute.addChildren([productInventoryRoute]),
     settingsRootRoute.addChildren([settingsUsers, settingsLocation, settingsProducts]),
-    reportsRootRoute.addChildren([reportsDashboard, reportsGeneratedReports]),
+    reportsRootRoute.addChildren([reportsDashboard, reportsGeneratedReports, reportsPurchases]),
   ]),
   loginRoute,
   locationSelectRoute,
