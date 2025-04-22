@@ -2,12 +2,13 @@ import { createColumnHelper, Row } from "@tanstack/react-table";
 
 import { Icons } from "../enums";
 import { useList, useTable } from "../hooks";
-import { LocationsProductsGroupedByExpirationType } from "../types";
+import { LocationsProductsGroupedByExpirationType, PurchaseItemsType, TableExpandableTypes } from "../types";
 import { formatISOToString, getDayCountString, getDayDifferenceFromNow, urlFunction } from "../utils";
 import { Button } from "./Button";
 import { Table } from "./Table";
 
-function GroupedByExpiractionActions({
+// #region GroupedByExpiration
+function GroupedByExpirationActions({
   row,
 }: {
   row: Row<{
@@ -94,7 +95,7 @@ const groupedByExpirationDateColumns = [
   groupedByExpirationDateColHelper.display({
     id: "actions",
     header: () => <span className="pl-2">Actions</span>,
-    cell: GroupedByExpiractionActions,
+    cell: GroupedByExpirationActions,
     maxSize: 90,
     meta: {
       isCentered: true,
@@ -102,7 +103,7 @@ const groupedByExpirationDateColumns = [
   }),
 ];
 
-export function ExpandedProductGroupedByExpirationDate({ productId }: { productId?: string }) {
+function ExpandedProductGroupedByExpirationDate({ productId }: { productId?: string }) {
   const { data } = useList<LocationsProductsGroupedByExpirationType>(
     { model: "locations_products", fields: ["expirationDate", "count"] },
     { urlSuffix: `${productId}/grouped/expiration-date`, enabled: !!productId }
@@ -111,8 +112,59 @@ export function ExpandedProductGroupedByExpirationDate({ productId }: { productI
 
   return <Table columns={groupedByExpirationDateColumns} data={data || []} dispatch={dispatch} meta={state} />;
 }
+// #endregion GroupedByExpiration
 
-export function ExpandedRow({ id, type }: { id: string; type: "product_grouped_by_expiration_date" | null | undefined }) {
+// #region PurchaseItems
+const purchaseItemsColHelper = createColumnHelper<PurchaseItemsType>();
+const purchaseItemsColumns = [
+  purchaseItemsColHelper.accessor("title", {
+    header: "Title",
+    cell: (info) => info.getValue(),
+    minSize: 300,
+  }),
+  purchaseItemsColHelper.accessor("quantity", {
+    header: "Amount",
+    cell: (info) => info.getValue(),
+    size: 80,
+  }),
+  purchaseItemsColHelper.accessor("pricePerUnit", {
+    header: "Price / unit",
+    cell: (info) => info.getValue(),
+    size: 100,
+  }),
+  purchaseItemsColHelper.accessor("pricePerUnit", {
+    header: "Total",
+    cell: (info) => (info.getValue() * info.row.original.quantity).toFixed(2),
+    size: 100,
+  }),
+
+  // purchaseItemsColHelper.display({
+  //   id: "actions",
+  //   header: () => <span className="pl-2">Actions</span>,
+  //   cell: GroupedByExpirationActions,
+  //   maxSize: 90,
+  //   meta: {
+  //     isCentered: true,
+  //   },
+  // }),
+];
+
+function PurchaseItems({ parentId }: { parentId?: string }) {
+  const { data } = useList<PurchaseItemsType>(
+    { model: "purchase_items", fields: ["id", "title", "pricePerUnit", "quantity"] },
+    { urlSuffix: `${parentId}`, enabled: !!parentId }
+  );
+  const [state, dispatch] = useTable<PurchaseItemsType>();
+
+  return (
+    <div className="max-h-[36rem] overflow-y-auto">
+      <Table columns={purchaseItemsColumns} data={data || []} dispatch={dispatch} meta={state} />
+    </div>
+  );
+}
+// #endregion PurchaseItems
+export function ExpandedRow({ id, type }: { id: string; type: TableExpandableTypes | null | undefined }) {
   if (type === "product_grouped_by_expiration_date") return <ExpandedProductGroupedByExpirationDate productId={id} />;
+  if (type === "purchase_items") return <PurchaseItems parentId={id} />;
   return null;
 }
