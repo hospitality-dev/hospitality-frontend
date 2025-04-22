@@ -1,6 +1,7 @@
 import {
   Button,
   createColumnHelper,
+  formatCurrency,
   formatFromUTC,
   Icons,
   PurchasesType,
@@ -77,11 +78,7 @@ const columns = [
   }),
   columnHelper.accessor("total", {
     header: "Total",
-    cell: (info) => (
-      <span className="font-semibold">
-        {info.getValue()} {info.row.original.currencyTitle}
-      </span>
-    ),
+    cell: (info) => <span className="font-semibold">{formatCurrency(info.getValue())}</span>,
     meta: {
       isSortable: true,
     },

@@ -95,3 +95,9 @@ export function getDayCountString(days: number) {
   if (days > 0 && days <= 1) return "Tomorrow";
   return `${Math.ceil(days)} days`;
 }
+
+const rsdCurrencyFormatter = new Intl.NumberFormat("rs-RS", { style: "currency", currency: "RSD" });
+// const eurCurrencyFormatter = new Intl.NumberFormat("rs-RS", { style: "currency", currency: "EUR" });
+export function formatCurrency(amount: number): string {
+  return rsdCurrencyFormatter.format(amount);
+}
