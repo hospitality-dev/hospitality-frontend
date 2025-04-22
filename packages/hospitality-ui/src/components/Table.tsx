@@ -4,7 +4,7 @@ import { Dispatch, Fragment, useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
-import { AvailableIcons, Size, TableActionType, Variant } from "../types";
+import { AvailableIcons, Size, TableActionType, TableExpandableTypes, Variant } from "../types";
 import { Alert } from "./Alert";
 import { Button } from "./Button";
 import { ExpandedRow } from "./ExpandedRow";
@@ -32,7 +32,7 @@ type Props<T> = {
     variant?: Variant;
     size?: Size;
   };
-  type?: "product_grouped_by_expiration_date" | null;
+  type?: TableExpandableTypes | null;
 };
 
 const classes = tv({
@@ -40,10 +40,10 @@ const classes = tv({
     container: "overflow-x-auto rounded-md border border-gray-300 bg-gray-100",
     tableContainer: "transition-[height]",
     tableClasses: "min-w-full overflow-auto",
-    thead: "border-b border-gray-300 text-left text-gray-500",
-    th: "flex flex-1 flex-nowrap items-center gap-x-2 p-2 text-sm font-light uppercase select-none",
+    thead: "min-w-fit border-b border-gray-300 text-left text-gray-500",
+    th: "flex min-w-fit flex-1 flex-nowrap items-center gap-x-2 p-2 text-sm font-light uppercase select-none",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300",
-    tr: "flex w-full items-center rounded",
+    tr: "flex w-full min-w-fit items-center rounded",
     td: "flex h-10 flex-1 items-center px-2",
     expandedRowContainer: "bg-gray-300 p-2",
   },
@@ -201,7 +201,11 @@ export function Table<T extends object>({
                         isCentered: header.column.columnDef.meta?.isCentered,
                         isSorted: header.id === meta?.sort?.field,
                       })}
-                      style={{ maxWidth: header.column.columnDef.maxSize }}>
+                      style={{
+                        maxWidth: header.column.columnDef.maxSize,
+                        width: header.column.columnDef.size,
+                        minWidth: header.column.columnDef.minSize,
+                      }}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       {header.column.columnDef.meta?.isSortable && header.id ? (
                         <div>
@@ -248,7 +252,11 @@ export function Table<T extends object>({
                         <div
                           key={cell.id}
                           className={td({ isCentered: cell.column.columnDef.meta?.isCentered })}
-                          style={{ maxWidth: cell.column.columnDef.maxSize }}>
+                          style={{
+                            maxWidth: cell.column.columnDef.maxSize,
+                            width: cell.column.columnDef.size,
+                            minWidth: cell.column.columnDef.minSize,
+                          }}>
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </div>
                       ))}
