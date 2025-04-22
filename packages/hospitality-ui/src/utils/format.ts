@@ -96,7 +96,7 @@ export function getDayCountString(days: number) {
   return `${Math.ceil(days)} days`;
 }
 
-const rsdCurrencyFormatter = new Intl.NumberFormat("rs-RS", { style: "currency", currency: "RSD" });
+const rsdCurrencyFormatter = new Intl.NumberFormat("rs-RS", { style: "currency", currency: "RSD", maximumFractionDigits: 2 });
 // const eurCurrencyFormatter = new Intl.NumberFormat("rs-RS", { style: "currency", currency: "EUR" });
 export function formatCurrency(amount: number): string {
   return rsdCurrencyFormatter.format(amount);
