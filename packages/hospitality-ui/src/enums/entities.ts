@@ -15,7 +15,7 @@ export const AvailableEntitiesEnum = [
   "resources",
   "countries",
   "purchases",
-  "unknown",
+  "purchase_items",
 ] as const;
 
 export const AvailableSearchableEntitiesEnum = [
