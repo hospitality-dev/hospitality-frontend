@@ -14,6 +14,7 @@ export const AvailableEntitiesEnum = [
   "files",
   "resources",
   "countries",
+  "purchases",
   "unknown",
 ] as const;
 
