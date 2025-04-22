@@ -19,6 +19,7 @@ export const PurchasesSchema = object({
   taxId: string().nullish(),
   invoiceCounterExtension: string().nullish(),
   invoiceNumber: string().nonempty(),
+  currencyTitle: string().nonempty(),
 });
 
 export const PurchesItemsSchema = object({
@@ -31,6 +32,8 @@ export const PurchesItemsSchema = object({
   parentId: string().uuid().nonempty(),
   ownerId: string().uuid().nonempty(),
   productId: string().uuid(),
+  pricePerUnit: number().nonnegative().default(0),
+  quantity: number().nonnegative().default(0),
 });
 
 export type PurchasesType = zodInfer<typeof PurchasesSchema>;
