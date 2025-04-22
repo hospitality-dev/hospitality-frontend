@@ -126,7 +126,7 @@ export const LocationsProductsGroupedByExpirationSchema = object({
 export const LocationsProductsSchema = object({
   id: string().uuid().nonempty(),
   createdAt: z.string().datetime().nonempty(),
-  deletedAt: z.string().datetime().nonempty(),
+  deletedAt: z.string().datetime(),
   locationId: string().uuid().nonempty(),
   productId: string().uuid().nonempty(),
 });
