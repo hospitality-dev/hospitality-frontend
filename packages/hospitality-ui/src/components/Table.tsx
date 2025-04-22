@@ -37,11 +37,11 @@ type Props<T> = {
 
 const classes = tv({
   slots: {
-    container: "overflow-x-auto rounded-md border border-gray-300 bg-gray-100",
+    container: "relative h-full overflow-y-auto rounded-md border border-gray-300 bg-gray-100",
     tableContainer: "transition-[height]",
-    tableClasses: "min-w-full overflow-auto",
-    thead: "min-w-fit border-b border-gray-300 text-left text-gray-500",
-    th: "flex min-w-fit flex-1 flex-nowrap items-center gap-x-2 p-2 text-sm font-light uppercase select-none",
+    tableClasses: "min-w-full",
+    thead: "sticky top-0 min-w-fit border-b border-gray-300 text-left text-gray-500",
+    th: "flex min-w-fit flex-1 flex-nowrap items-center gap-x-2 bg-gray-100 p-2 text-sm font-light uppercase shadow-sm select-none",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300",
     tr: "flex w-full min-w-fit items-center rounded",
     td: "flex h-10 flex-1 items-center px-2",
@@ -56,14 +56,7 @@ const classes = tv({
       warning: { tr: "border-warning" },
       error: { tr: "border-error border-2" },
     },
-    isOpen: {
-      true: {
-        tableContainer: "overflow-hidden",
-      },
-      false: {
-        tableContainer: "h-0 overflow-hidden",
-      },
-    },
+    isOpen: { true: "", false: "" },
     isCollapsible: {
       true: {
         container: "p-2",
@@ -92,6 +85,22 @@ const classes = tv({
       },
     },
   },
+  compoundVariants: [
+    {
+      isCollapsible: true,
+      isOpen: true,
+      class: {
+        tableContainer: "overflow-hidden",
+      },
+    },
+    {
+      isCollapsible: true,
+      isOpen: false,
+      class: {
+        tableContainer: "h-0 overflow-hidden",
+      },
+    },
+  ],
 });
 
 function getSortIcon(sort: "asc" | "desc" | null | undefined, isSorted: boolean) {
