@@ -21,17 +21,14 @@ export type DrawerTypes = (
       );
     }
   | {
-      type: "add_new_user";
-      data: null;
-    }
-  | {
-      type: "add_user_from_location";
-      data: null;
-    }
-  | {
       type: "upload";
       data: { id: string; types: AllowedFileTypes[]; isMultiple?: boolean; uploadType: AllowedUploadTypes };
     }
+  | {
+      type: "add_new_user" | "add_user_from_location";
+      data: null;
+    }
+  | { type: "create_purchases"; data: { url: string } }
 ) & { title: string };
 
 type DrawerState = {
