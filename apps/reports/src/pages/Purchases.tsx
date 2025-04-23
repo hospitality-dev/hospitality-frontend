@@ -1,20 +1,22 @@
 import {
   Button,
+  CellContext,
   createColumnHelper,
   formatCurrency,
   formatFromUTC,
   Icons,
   PurchasesType,
   Table,
-  useBarcodeScanner,
   useDrawer,
+  useGenerateFile,
   useList,
   useTable,
 } from "@hospitality/hospitality-ui/src";
 
 const columnHelper = createColumnHelper<PurchasesType>();
 
-function ActionButton() {
+function ActionButton(info: CellContext<PurchasesType, unknown>) {
+  const { mutate } = useGenerateFile({ type: "reports", prefix: "purchases/bill", id: info.row.original.id });
   return (
     <div className="w-8">
       <Button
@@ -25,10 +27,7 @@ function ActionButton() {
         items={[
           {
             id: "view_purchase",
-            onClick: async () => {
-              //   const url = await urlFunction({ id: info.row.original.id, urlPrefix: "reports", userReset: () => {} });
-              //   if (url) window.open(url);
-            },
+            onClick: mutate,
             title: "View",
             icon: Icons.eye,
           },
@@ -51,7 +50,7 @@ const columns = [
   columnHelper.accessor("businessLocationTitle", {
     header: "Store",
     cell: (info) => (
-      <span className="flex items-center gap-x-1">
+      <span className="flex max-w-full items-center gap-x-1 overflow-hidden">
         <div>
           <Button
             hasNoBorder
@@ -60,9 +59,16 @@ const columns = [
             onClick={() => info.row.toggleExpanded(!info.row.getIsExpanded())}
           />
         </div>
-        <span>{(info.getValue() || "").replaceAll(/\d*[-]\d*/g, "")}</span>
+        <div className="truncate">{(info.getValue() || "").replaceAll(/\d*[-]\d*/g, "")}</div>
       </span>
     ),
+    meta: {
+      isSortable: true,
+    },
+  }),
+  columnHelper.accessor("businessTitle", {
+    header: "Company",
+    cell: (info) => <div className="max-w-full truncate">{info.getValue() || ""}</div>,
     meta: {
       isSortable: true,
     },
@@ -85,7 +91,6 @@ const columns = [
       isSortable: true,
     },
   }),
-
   columnHelper.display({
     id: "actions",
     header: "Actions",
@@ -104,10 +109,10 @@ export function Purchases() {
   const { data: reports = [], isPending } = useList<PurchasesType>({
     model: "purchases",
     sort: meta.sort,
-    fields: ["id", "createdAt", "purchasedAt", "businessTitle", "businessLocationTitle", "total", "currencyTitle"],
+    fields: ["id", "createdAt", "purchasedAt", "businessTitle", "businessLocationTitle", "total", "currencyTitle", "address"],
   });
   const { openDrawer } = useDrawer("create_purchases");
-  const { setOnResult } = useBarcodeScanner();
+  // const { setOnResult } = useBarcodeScanner();
 
   return (
     <div className="flex flex-col gap-y-2 pt-2">
