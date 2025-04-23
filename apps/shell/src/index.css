@@ -60,5 +60,5 @@
   --color-warning-highlight: var(--color-orange-400);
   --color-error-highlight: var(--color-red-500);
 
-  --color-disabled: var(--color-gray-300);
+  --color-disabled: var(--color-gray-100);
 }
