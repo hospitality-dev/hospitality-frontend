@@ -54,7 +54,7 @@ const DropdownItemClasses = tv({
       error: "bg-error",
     },
     isDisabled: {
-      true: "bg-disabled cursor-not-allowed text-zinc-200",
+      true: "bg-disabled text-secondary active:bg-disabled active:text-secondary hover:bg-disabled hover:text-secondary cursor-not-allowed",
     },
     hasIcon: {
       true: "justify-between",
