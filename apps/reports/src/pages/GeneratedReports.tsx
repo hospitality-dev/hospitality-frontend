@@ -106,7 +106,17 @@ export function GeneratedReports() {
               title: "Generate",
               icon: Icons.generateReport,
               allowedPlacements: ["left"],
-              subItems: [{ id: "inventory_report", title: "Inventory report", icon: Icons.inventory, onClick: generateReport }],
+              subItems: [
+                { id: "inventory_report", title: "Inventory report", icon: Icons.inventory, onClick: generateReport },
+
+                {
+                  id: "purchases_report",
+                  isDisabled: true,
+                  title: "Purchases report",
+                  icon: Icons.purchases,
+                  onClick: undefined,
+                },
+              ],
             },
           ]}
           label="Manage"
