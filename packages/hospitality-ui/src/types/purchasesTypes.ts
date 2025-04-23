@@ -20,6 +20,7 @@ export const PurchasesSchema = object({
   invoiceCounterExtension: string().nullish(),
   invoiceNumber: string().nonempty(),
   currencyTitle: string().nonempty(),
+  city: string().nullish(),
 });
 
 export const PurchesItemsSchema = object({
