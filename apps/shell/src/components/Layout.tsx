@@ -1,5 +1,6 @@
 import {
   BarcodeScanner,
+  CreatePurchase,
   Drawer,
   Navbar,
   Outlet,
@@ -55,6 +56,7 @@ export function Layout() {
   const { scannerState } = useBarcodeScanner();
   const { isLg } = useScreenSize();
   const drawer = useDrawerValue();
+
   return (
     <main className="bg-layout relative flex h-screen w-screen flex-nowrap overflow-hidden">
       <Drawer>
@@ -70,6 +72,7 @@ export function Layout() {
           {drawer.type === "add_new_user" ? <AddNewUser /> : null}
           {drawer.type === "add_user_from_location" ? <AddUserFromLocation /> : null}
           {drawer.type === "upload" ? <UploadDrawer data={drawer.data} /> : null}
+          {drawer.type === "create_purchases" ? <CreatePurchase data={drawer.data} /> : null}
         </Suspense>
       </Drawer>
       {scannerState.isOpen ? <BarcodeScanner /> : null}
