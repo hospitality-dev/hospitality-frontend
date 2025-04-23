@@ -6,6 +6,8 @@ import {
   Icons,
   PurchasesType,
   Table,
+  useBarcodeScanner,
+  useDrawer,
   useList,
   useTable,
 } from "@hospitality/hospitality-ui/src";
@@ -104,6 +106,9 @@ export function Purchases() {
     sort: meta.sort,
     fields: ["id", "createdAt", "purchasedAt", "businessTitle", "businessLocationTitle", "total", "currencyTitle"],
   });
+  const { openDrawer } = useDrawer("create_purchases");
+  const { setOnResult } = useBarcodeScanner();
+
   return (
     <div className="flex flex-col gap-y-2 pt-2">
       <div className="self-end">
@@ -115,6 +120,7 @@ export function Purchases() {
               id: "add_purchase_qr_code",
               title: "Add (QR Code)",
               icon: Icons.qrCodes,
+              onClick: () => openDrawer("Add purchase"),
             },
             {
               id: "add_purchase_url",
