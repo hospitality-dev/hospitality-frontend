@@ -119,12 +119,19 @@ const purchaseItemsColHelper = createColumnHelper<PurchaseItemsType>();
 const purchaseItemsColumns = [
   purchaseItemsColHelper.accessor("title", {
     header: "Title",
-    cell: (info) => info.getValue(),
+    cell: (info) =>
+      info
+        .getValue()
+        .replaceAll(/\/(KOM|KG|L|G|ML)\b/g, "")
+        .replaceAll(/\s*\((Е|Ђ)\)/g, ""),
     minSize: 300,
   }),
   purchaseItemsColHelper.accessor("quantity", {
     header: "Amount",
-    cell: (info) => info.getValue(),
+    cell: (info) => {
+      const m = info.row.original.title.match(/(\d*)(KG|L|G|ML|OZ|LB)\b/)?.[0];
+      return `${info.getValue()} ${m || ""}`.toLowerCase();
+    },
     size: 80,
   }),
   purchaseItemsColHelper.accessor("pricePerUnit", {
