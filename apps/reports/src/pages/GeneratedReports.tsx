@@ -28,7 +28,7 @@ function ActionButton(info: CellContext<FilesType, unknown>) {
           {
             id: "view_report",
             onClick: async () => {
-              const url = await urlFunction({ id: info.row.original.id, urlPrefix: "reports", userReset: () => {} });
+              const url = await urlFunction({ urlPrefix: "reports", userReset: () => {} });
               if (url) window.open(url);
             },
             title: "View",
@@ -93,7 +93,7 @@ export function GeneratedReports() {
     { model: "files", sort: state.sort, fields: ["id", "title", "type", "createdAt"] },
     { urlSuffix: "reports" }
   );
-  const { mutate: generateReport } = useGenerateFile({ type: "reports" });
+  const { mutate: generateReport } = useGenerateFile({ type: "reports", prefix: "products" });
   return (
     <div className="flex flex-col gap-y-2 pt-2">
       <div className="self-end">
