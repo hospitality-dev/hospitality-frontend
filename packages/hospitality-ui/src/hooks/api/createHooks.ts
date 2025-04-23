@@ -78,7 +78,7 @@ export function useUploadFiles(
 }
 
 export function useGenerateFile(
-  { type, id }: { type: FilesCategories; id?: string },
+  { type, prefix, id }: { type: FilesCategories; prefix?: string; id?: string },
   options?: { invalidateModels?: AvailableEntities[] } & UseMutationOptions<unknown, unknown>
 ) {
   const userReset = useResetAtom(userAtom);
@@ -90,7 +90,7 @@ export function useGenerateFile(
         method: "GET",
         model: "files",
         userReset,
-        urlSuffix: `generate/${kebabCase(type)}${id ? `/${id}` : ""}`,
+        urlSuffix: `generate/${prefix ? `${prefix}/` : ""}${kebabCase(type)}${id ? `/${id}` : ""}`,
       });
       if (url) window.open(url);
       return null;
