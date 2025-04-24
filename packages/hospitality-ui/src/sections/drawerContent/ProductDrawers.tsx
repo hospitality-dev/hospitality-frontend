@@ -29,7 +29,9 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
   const { isLg } = useScreenSize();
   const resetDrawer = useResetAtom(drawerAtom);
   const { setOnResult, closeBarcodeScanner } = useBarcodeScanner();
-  const { mutate: create } = useCreate<ProductsInitalizerType>("products");
+  const { mutate: create } = useCreate<ProductsInitalizerType>("products", {
+    invalidateModels: ["locations_available_products"],
+  });
   const { data: categories } = useList<ProductsCategoriesType>({
     model: "products_categories",
     fields: ["id", "title"],
