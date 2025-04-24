@@ -118,7 +118,7 @@ const classes = tv({
       date: "",
       datetime: "",
     },
-    isDisabled: { true: { inputClasses: "cursor-not-allowed" } },
+    isDisabled: { true: { inputContainer: "bg-secondary cursor-not-allowed", inputClasses: "cursor-not-allowed" } },
     hasRightSelect: {
       true: {
         inputClasses: "pr-0",
