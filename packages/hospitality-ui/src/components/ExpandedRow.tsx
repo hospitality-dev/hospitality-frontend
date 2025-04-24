@@ -3,7 +3,14 @@ import { createColumnHelper, Row } from "@tanstack/react-table";
 import { Icons } from "../enums";
 import { useList, useTable } from "../hooks";
 import { LocationsProductsGroupedByExpirationType, PurchaseItemsType, TableExpandableTypes } from "../types";
-import { formatCurrency, formatISOToString, getDayCountString, getDayDifferenceFromNow, urlFunction } from "../utils";
+import {
+  formatCurrency,
+  formatISOToString,
+  formatProductUnits,
+  getDayCountString,
+  getDayDifferenceFromNow,
+  urlFunction,
+} from "../utils";
 import { Button } from "./Button";
 import { Table } from "./Table";
 
@@ -130,7 +137,7 @@ const purchaseItemsColumns = [
     header: "Amount",
     cell: (info) => {
       const m = info.row.original.title.match(/(\d*)(KG|L|G|ML|OZ|LB)\b/)?.[0];
-      return `${info.getValue()} ${m || ""}`.toLowerCase();
+      return `${info.getValue()} ${m || formatProductUnits(info.row.original)}`.toLowerCase();
     },
     size: 80,
   }),

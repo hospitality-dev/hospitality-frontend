@@ -4,7 +4,7 @@ import camelCase from "lodash.camelcase";
 import { ZodIssue } from "zod";
 
 import { ContactTypeIcons } from "../enums";
-import { AddressesType, ContactTypes, OptionType, UsersType } from "../types";
+import { AddressesType, ContactTypes, OptionType, ProductsType, UsersType } from "../types";
 import { CountriesType } from "../types/worldTypes";
 import { getSentenceCase } from "./transform";
 
@@ -100,4 +100,27 @@ const rsdCurrencyFormatter = new Intl.NumberFormat("rs-RS", { style: "currency",
 // const eurCurrencyFormatter = new Intl.NumberFormat("rs-RS", { style: "currency", currency: "EUR" });
 export function formatCurrency(amount: number): string {
   return rsdCurrencyFormatter.format(amount);
+}
+
+export function formatProductUnits({
+  weight,
+  weightUnit,
+  volume,
+  volumeUnit,
+}: Pick<ProductsType, "weight" | "weightUnit" | "volume" | "volumeUnit">) {
+  let final = "";
+  if (weight) {
+    final += weight;
+    final += weightUnit;
+    if (volume) {
+      final += " | ";
+    }
+  }
+  if (volume) {
+    final += volume;
+    final += volumeUnit;
+  }
+
+  if (final.length > 0) return `(${final})`;
+  return final;
 }

@@ -1,5 +1,7 @@
 import { infer as zodInfer, number, object, string } from "zod";
 
+import { ProductsSchema } from "./productTypes";
+
 export const PurchasesSchema = object({
   id: string().uuid().nonempty(),
   createdAt: string().datetime().nonempty(),
@@ -31,7 +33,7 @@ export const PurchesItemsSchema = object({
   productId: string().uuid(),
   pricePerUnit: number().nonnegative().default(0),
   quantity: number().nonnegative().default(0),
-});
+}).merge(ProductsSchema.pick({ weight: true, weightUnit: true, volume: true, volumeUnit: true }));
 
 export type PurchasesType = zodInfer<typeof PurchasesSchema>;
 export type PurchaseItemsType = zodInfer<typeof PurchesItemsSchema>;
