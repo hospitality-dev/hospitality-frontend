@@ -45,7 +45,7 @@ export const dateTimeMask: MaskitoOptions = {
     timeStep: 5,
   }),
   preprocessors: placeholderOptions.preprocessors,
-  postprocessors: [...placeholderOptions.postprocessors, maskitoPostfixPostprocessorGenerator(".")],
+  postprocessors: placeholderOptions.postprocessors,
   plugins: [
     ...plugins,
     maskitoEventHandler("focus", (element) => {
