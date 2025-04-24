@@ -2,6 +2,7 @@ import {
   BarcodeScanner,
   CreatePurchase,
   Drawer,
+  ModifyPurchase,
   Navbar,
   Outlet,
   Sidebar,
@@ -73,6 +74,7 @@ export function Layout() {
           {drawer.type === "add_user_from_location" ? <AddUserFromLocation /> : null}
           {drawer.type === "upload" ? <UploadDrawer data={drawer.data} /> : null}
           {drawer.type === "create_purchases" ? <CreatePurchase data={drawer.data} /> : null}
+          {drawer.type === "modify_purchase" ? <ModifyPurchase data={drawer.data} /> : null}
         </Suspense>
       </Drawer>
       {scannerState.isOpen ? <BarcodeScanner /> : null}
