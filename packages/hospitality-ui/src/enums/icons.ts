@@ -15,6 +15,8 @@ export const Icons = {
   billingAddress: "fluent:receipt-money-20-regular" as const,
   billingEmail: "icon-park-twotone:mail-review" as const,
   businessEmail: "fluent:mail-briefcase-24-filled" as const,
+  check: "ph:check" as const,
+  checkCircle: "ph:check-circle" as const,
   chicken: "healthicons:animal-chicken-outline" as const,
   close: "ph:x" as const,
   companyWebsite: "hugeicons:job-link" as const,
