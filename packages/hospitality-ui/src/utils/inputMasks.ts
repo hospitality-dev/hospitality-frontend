@@ -5,6 +5,7 @@ import {
   maskitoDateTimeOptionsGenerator,
   maskitoEventHandler,
   maskitoNumberOptionsGenerator,
+  maskitoPostfixPostprocessorGenerator,
   maskitoPrefixPostprocessorGenerator,
   maskitoRemoveOnBlurPlugin,
   maskitoWithPlaceholder,
@@ -44,7 +45,7 @@ export const dateTimeMask: MaskitoOptions = {
     timeStep: 5,
   }),
   preprocessors: placeholderOptions.preprocessors,
-  postprocessors: placeholderOptions.postprocessors,
+  postprocessors: [...placeholderOptions.postprocessors, maskitoPostfixPostprocessorGenerator(".")],
   plugins: [
     ...plugins,
     maskitoEventHandler("focus", (element) => {
@@ -66,7 +67,8 @@ export const dateMask: MaskitoOptions = {
     separator: ".",
   }),
   preprocessors: datePlaceholderOptions.preprocessors,
-  postprocessors: datePlaceholderOptions.postprocessors,
+  postprocessors: [...datePlaceholderOptions.postprocessors, maskitoPostfixPostprocessorGenerator(".")],
+
   plugins: [
     ...datePlugins,
     maskitoEventHandler("focus", (element) => {
