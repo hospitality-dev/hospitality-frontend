@@ -13,9 +13,11 @@ import {
   useTable,
 } from "@hospitality/hospitality-ui/src";
 
-const columnHelper = createColumnHelper<PurchasesType>();
+type Entity = PurchasesType & { businessLocationTitle: string; businessTitle: string };
 
-function ActionButton(info: CellContext<PurchasesType, unknown>) {
+const columnHelper = createColumnHelper<Entity>();
+
+function ActionButton(info: CellContext<Entity, unknown>) {
   const { mutate } = useGenerateFile({ type: "reports", prefix: "purchases/bill", id: info.row.original.id });
   return (
     <div className="w-8">
@@ -105,14 +107,13 @@ const columns = [
 ];
 
 export function Purchases() {
-  const [meta, dispatch] = useTable<PurchasesType>();
-  const { data: reports = [], isPending } = useList<PurchasesType>({
+  const [meta, dispatch] = useTable<Entity>();
+  const { data: reports = [], isPending } = useList<Entity>({
     model: "purchases",
     sort: meta.sort,
-    fields: ["id", "createdAt", "purchasedAt", "businessTitle", "businessLocationTitle", "total", "currencyTitle", "address"],
+    fields: ["id", "createdAt", "purchasedAt", "businessTitle", "businessLocationTitle", "total", "currencyTitle"],
   });
   const { openDrawer } = useDrawer("create_purchases");
-  // const { setOnResult } = useBarcodeScanner();
 
   return (
     <div className="flex flex-col gap-y-2 pt-2">

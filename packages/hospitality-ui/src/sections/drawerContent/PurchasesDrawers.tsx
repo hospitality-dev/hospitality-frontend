@@ -15,7 +15,7 @@ export function CreatePurchase({ data }: Pick<Extract<DrawerTypes, { type: "crea
       <Button
         icon={Icons.add}
         label="Create"
-        onClick={() => mutate({ value: { url: data.url || lidlUrl } })}
+        onClick={() => mutate({ value: { url: data?.url || lidlUrl } })}
         variant="success"
       />
     </div>

@@ -13,14 +13,10 @@ export const PurchasesSchema = object({
   paymentType: number().min(0).max(6).nonnegative(),
   transactionType: number().min(0).max(1).nonnegative(),
   invoiceType: number().min(0).max(4).nonnegative(),
-  address: string().nullish(),
-  businessTitle: string().nonempty(),
-  businessLocationTitle: string().nullish(),
   taxId: string().nullish(),
   invoiceCounterExtension: string().nullish(),
   invoiceNumber: string().nonempty(),
   currencyTitle: string().nonempty(),
-  city: string().nullish(),
 });
 
 export const PurchesItemsSchema = object({
