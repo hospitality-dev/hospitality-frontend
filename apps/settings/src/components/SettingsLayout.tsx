@@ -4,6 +4,7 @@ const tabs = [
   { id: "user", title: "User", link: "/settings/user" },
   { id: "location", title: "Location", link: "/settings/location" },
   { id: "products", title: "Products", link: "/settings/products" },
+  { id: "suppliers", title: "Suppliers", link: "/settings/suppliers" },
 ];
 
 export function SettingsLayout() {
