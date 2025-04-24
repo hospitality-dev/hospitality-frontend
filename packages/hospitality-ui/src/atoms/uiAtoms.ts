@@ -2,7 +2,7 @@ import { Result } from "@zxing/library";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
-import { AllowedFileTypes, AllowedUploadTypes } from "../types";
+import { AllowedFileTypes, AllowedUploadTypes, Size } from "../types";
 
 type SidebarState = {
   isSidebarOpen: boolean;
@@ -29,12 +29,15 @@ export type DrawerTypes = (
       data: null;
     }
   | { type: "create_purchases"; data: { url: string } }
+  // ID is the purchase ID i.e. the purchase_items' parent_id field
+  | { type: "modify_purchase"; data: { id: string } }
 ) & { title: string };
 
 type DrawerState = {
   isOpen: boolean;
   closeOnOutsideClick?: boolean;
   title: string;
+  size?: Size;
 } & DrawerTypes;
 
 type BarcodeScannerState = {

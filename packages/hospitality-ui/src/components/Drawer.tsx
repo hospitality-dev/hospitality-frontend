@@ -6,7 +6,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { drawerAtom } from "../atoms";
-import { useClickOutside, useScreenSize } from "../hooks";
+import { useClickOutside } from "../hooks";
 
 type Props = {
   children: ReactNode;
@@ -37,7 +37,6 @@ const DrawerClasses = tv({
 export function Drawer({ children }: Props) {
   const [drawer, setDrawer] = useAtom(drawerAtom);
   const resetDrawer = useResetAtom(drawerAtom);
-  const { isMd } = useScreenSize();
   const [renderContent, setRenderContent] = useState(false);
   const ref = useClickOutside(() => {
     if (drawer.closeOnOutsideClick) {
@@ -71,7 +70,7 @@ export function Drawer({ children }: Props) {
   });
 
   const merged = useMergeRefs([ref, refs.setFloating]);
-  const { base, title } = DrawerClasses({ size: !isMd ? "full" : "xl", isExpanded: false });
+  const { base, title } = DrawerClasses({ size: drawer.size || "md", isExpanded: false });
 
   // Close drawer if the location changes
   useEffect(() => {
