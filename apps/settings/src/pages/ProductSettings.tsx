@@ -20,7 +20,8 @@ import {
 } from "@hospitality/hospitality-ui";
 import { useState } from "react";
 
-const columnHelper = createColumnHelper<Pick<ProductsCategoriesType, "id" | "title">>();
+const columnHelper =
+  createColumnHelper<Pick<ProductsType, "id" | "title" | "weight" | "weightUnit" | "volume" | "volumeUnit">>();
 
 function columns({
   create,
@@ -43,7 +44,15 @@ function columns({
   locationsAvailableProducts: Record<string, string>;
 }) {
   return [
-    columnHelper.accessor("title", { header: "", cell: (info) => info.getValue() }),
+    columnHelper.accessor("title", { header: "", cell: (info) => info.getValue(), maxSize: 250 }),
+    columnHelper.display({
+      id: "measure",
+      header: "",
+      cell: ({ row: { original } }) =>
+        original.volume || original.weight
+          ? `${original.volume || original.weight || ""}${original.volumeUnit || original.weightUnit || ""}`
+          : null,
+    }),
 
     columnHelper.display({
       id: "isActive",
@@ -79,7 +88,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
   const { data } = useQuery(LocationsAvailableProductsQuery);
 
   const query = useList<ProductsType>(
-    { model: "products", fields: ["id", "title"] },
+    { model: "products", fields: ["id", "title", "weight", "weightUnit", "volume", "volumeUnit"] },
     { enabled: isOpen, urlSuffix: `category/${id}` }
   );
 
