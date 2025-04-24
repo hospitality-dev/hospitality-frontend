@@ -6,14 +6,14 @@ import { userAtom } from "../../atoms";
 import { AllowedUploadTypes, AvailableEntities, FilesCategories } from "../../types";
 import { fetchFunction, formatStringToISO, uploadFunction } from "../../utils";
 
-export function useCreate<F>(
+export function useCreate<F, R = string>(
   model: AvailableEntities,
   options?: { invalidateModels?: AvailableEntities[] } & UseMutationOptions<unknown, unknown, { value: F }>
 ) {
   const userReset = useResetAtom(userAtom);
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<R, Error, { value: F }>({
     mutationFn: (payload: { value: F }) => {
       return fetchFunction({ method: "POST", payload: JSON.stringify(payload.value), model, userReset });
     },
