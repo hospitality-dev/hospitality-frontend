@@ -43,7 +43,7 @@ const classes = tv({
     thead: "sticky top-0 min-w-fit border-b border-gray-300 text-left text-gray-500",
     th: "flex min-w-fit flex-1 flex-nowrap items-center gap-x-2 bg-gray-100 p-2 text-sm font-light uppercase shadow-sm select-none",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300",
-    tr: "flex w-full min-w-fit items-center rounded",
+    tr: "flex w-full min-w-fit items-center hover:bg-blue-100",
     td: "flex h-10 flex-1 items-center px-2",
     expandedRowContainer: "bg-gray-300 p-2",
   },
