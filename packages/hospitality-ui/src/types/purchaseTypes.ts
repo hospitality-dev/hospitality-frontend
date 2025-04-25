@@ -33,7 +33,19 @@ export const PurchesItemsSchema = object({
   productId: string().uuid(),
   pricePerUnit: number().nonnegative().default(0),
   quantity: number().nonnegative().default(0),
+  unitOfMeasurement: string().default("Unknown"),
 }).merge(ProductsSchema.pick({ weight: true, weightUnit: true, volume: true, volumeUnit: true }));
+
+export const PurhcaseItemsModifySchema = object({
+  products: object({
+    productId: string().uuid().nonempty("Only items with a matching product can be modified."),
+    expirationDate: string().optional(),
+    quantity: number().min(1).nonnegative(),
+    unitOfMeasurement: string().default("Unknown"),
+  })
+    .array()
+    .default([]),
+});
 
 export type PurchasesType = zodInfer<typeof PurchasesSchema>;
 export type PurchaseItemsType = zodInfer<typeof PurchesItemsSchema>;
