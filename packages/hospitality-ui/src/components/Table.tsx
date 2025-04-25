@@ -43,8 +43,8 @@ const classes = tv({
     thead: "sticky top-0 min-w-fit border-b border-gray-300 text-left text-gray-500",
     th: "flex min-w-fit flex-1 flex-nowrap items-center gap-x-2 bg-gray-100 p-2 text-sm font-light uppercase shadow-sm select-none",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300",
-    tr: "flex w-full min-w-fit items-center hover:bg-blue-100",
-    td: "flex h-10 flex-1 items-center px-2",
+    tr: "group flex w-full min-w-fit items-center",
+    td: "flex h-10 flex-1 items-center px-2 group-hover:bg-blue-100",
     expandedRowContainer: "bg-gray-300 p-2",
   },
   variants: {
@@ -81,6 +81,8 @@ const classes = tv({
     },
     hasNoData: {
       true: {
+        container: "max-h-fit",
+        tbody: "p-2",
         tr: "pt-1.5",
       },
     },
@@ -147,6 +149,7 @@ export function Table<T extends object>({
     isOpen,
     isLoading,
     isCollapsible,
+    hasNoData: !data.length,
   });
 
   return (
@@ -260,7 +263,7 @@ export function Table<T extends object>({
                       {row.getVisibleCells().map((cell) => (
                         <div
                           key={cell.id}
-                          className={td({ isCentered: cell.column.columnDef.meta?.isCentered })}
+                          className={`${td({ isCentered: cell.column.columnDef.meta?.isCentered })} td`}
                           style={{
                             maxWidth: cell.column.columnDef.maxSize,
                             width: cell.column.columnDef.size,
