@@ -44,7 +44,11 @@ function columns({
   locationsAvailableProducts: Record<string, string>;
 }) {
   return [
-    columnHelper.accessor("title", { header: "", cell: (info) => info.getValue(), maxSize: 250 }),
+    columnHelper.accessor("title", {
+      header: "",
+      cell: (info) => <div className="truncate">{info.getValue()}</div>,
+      maxSize: 250,
+    }),
     columnHelper.display({
       id: "measure",
       header: "",
