@@ -81,12 +81,12 @@ export function camelCaseContactType(type: ContactTypes): keyof ContactTypeIcons
 }
 
 export function formatStringToISO(value: string) {
-  const date = parse(value, "dd.MM.yyyy", new Date());
+  const date = parse(value, "dd.MM.yyyy.", new Date());
   return date.toISOString();
 }
 
 export function formatISOToString(value: string) {
-  return format(parseISO(value), "dd. MMMM yyyy.");
+  return format(parseISO(value), "dd.MM.yyyy.");
 }
 
 // days are a float
