@@ -83,7 +83,7 @@ const classes = tv({
       true: {
         container: "max-h-fit",
         tbody: "p-2",
-        tr: "pt-1.5",
+        tr: "",
       },
     },
   },
