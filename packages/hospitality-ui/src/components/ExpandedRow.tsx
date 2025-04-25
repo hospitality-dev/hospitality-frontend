@@ -139,12 +139,16 @@ const purchaseItemsColumns = [
       const m = info.row.original.title.match(/(\d*)(KG|L|G|ML|OZ|LB)\b/)?.[0];
       return `${info.getValue()} ${m || formatProductUnits(info.row.original)}`.toLowerCase();
     },
-    size: 80,
+    size: 50,
   }),
   purchaseItemsColHelper.accessor("pricePerUnit", {
     header: "Price / unit",
-    cell: (info) => formatCurrency(info.getValue()),
-    size: 100,
+    cell: (info) => (
+      <span className="text-sm">
+        {`${formatCurrency(info.getValue())}${info.row.original.unitOfMeasurement !== "Unknown" ? `/${info.row.original.unitOfMeasurement}` : ""}`.trim()}
+      </span>
+    ),
+    minSize: 100,
   }),
   purchaseItemsColHelper.display({
     id: "total",
@@ -166,7 +170,7 @@ const purchaseItemsColumns = [
 
 function PurchaseItems({ parentId }: { parentId?: string }) {
   const { data } = useList<PurchaseItemsType>(
-    { model: "purchase_items", fields: ["id", "title", "pricePerUnit", "quantity"] },
+    { model: "purchase_items", fields: ["id", "title", "pricePerUnit", "quantity", "unitOfMeasurement"] },
     { urlSuffix: `${parentId}`, enabled: !!parentId }
   );
   const [state, dispatch] = useTable<PurchaseItemsType>();
