@@ -175,6 +175,15 @@ const settingsSuppliers = createRoute({
 
 // #endregion SETTINGS_ROUTES
 
+// #region SUPPLIERS_ROUTES
+const suppliersRootRoute = createRoute({ path: "suppliers", getParentRoute: () => mainLayout }).lazy(() =>
+  import("@hospitality/suppliers").then((d) => d.SuppliersLayoutRoute)
+);
+const suppliersRoute = createRoute({ path: "/", getParentRoute: () => suppliersRootRoute }).lazy(() =>
+  import("@hospitality/suppliers").then((d) => d.SuppliersRoute)
+);
+// #endregion SUPPLIERS_ROUTES
+
 const routeTree = rootRoute.addChildren([
   mainLayout.addChildren([
     employeeManagementRoute,
@@ -182,6 +191,7 @@ const routeTree = rootRoute.addChildren([
     inventoryCategoryRoute.addChildren([productInventoryRoute]),
     reportsRootRoute.addChildren([reportsDashboard, reportsGeneratedReports, reportsPurchases]),
     settingsRootRoute.addChildren([settingsUsers, settingsLocation, settingsProducts, settingsSuppliers]),
+    suppliersRootRoute.addChildren([suppliersRoute]),
   ]),
   loginRoute,
   locationSelectRoute,
