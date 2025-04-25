@@ -2,7 +2,7 @@ import { createColumnHelper, Row } from "@tanstack/react-table";
 
 import { Icons } from "../enums";
 import { useList, useTable } from "../hooks";
-import { LocationsProductsGroupedByExpirationType, PurchaseItemsType, TableExpandableTypes } from "../types";
+import { LocationsProductsGroupedByExpirationType, PurchaseItemsType, StoresType, TableExpandableTypes } from "../types";
 import {
   formatCurrency,
   formatISOToString,
@@ -182,8 +182,39 @@ function PurchaseItems({ parentId }: { parentId?: string }) {
   );
 }
 // #endregion PurchaseItems
+
+// #region Stores
+const storesColHelper = createColumnHelper<StoresType>();
+const storesColumns = [
+  storesColHelper.accessor("title", {
+    header: "Title",
+    cell: (info) => <div className="truncate">{info.getValue()}</div>,
+    minSize: 300,
+  }),
+];
+
+function Stores({ parentId }: { parentId?: string }) {
+  const { data } = useList<StoresType>(
+    { model: "stores", fields: ["id", "title"] },
+    { urlSuffix: `${parentId}`, enabled: !!parentId }
+  );
+  const [state, dispatch] = useTable<StoresType>();
+
+  return (
+    <div className="h-fit">
+      <Table columns={storesColumns} data={data || []} dispatch={dispatch} hasNoHeader meta={state} />
+    </div>
+  );
+}
+
+// #endregion Stores
+
 export function ExpandedRow({ id, type }: { id: string; type: TableExpandableTypes | null | undefined }) {
-  if (type === "product_grouped_by_expiration_date") return <ExpandedProductGroupedByExpirationDate productId={id} />;
-  if (type === "purchase_items") return <PurchaseItems parentId={id} />;
-  return null;
+  return (
+    <div className="h-fit">
+      {type === "product_grouped_by_expiration_date" ? <ExpandedProductGroupedByExpirationDate productId={id} /> : null}
+      {type === "purchases" ? <PurchaseItems parentId={id} /> : null}
+      {type === "suppliers" ? <Stores parentId={id} /> : null}
+    </div>
+  );
 }

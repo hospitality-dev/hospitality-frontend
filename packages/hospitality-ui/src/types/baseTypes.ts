@@ -123,7 +123,7 @@ export type TableActionType<T> =
   | { type: "SET_SORT"; sort: { type: "asc" | "desc"; field: keyof T } | null }
   | { type: "RESET" };
 
-export type TableExpandableTypes = "product_grouped_by_expiration_date" | "purchase_items";
+export type TableExpandableTypes = "product_grouped_by_expiration_date" | "purchases" | "suppliers";
 
 // =========REQUEST=========
 type RequestFilterOperators = "eq" | "neq" | "gt" | "gte" | "is" | "is not" | "in" | "not in" | "ilike";

@@ -139,14 +139,7 @@ export function Purchases() {
           variant="info"
         />
       </div>
-      <Table
-        columns={columns}
-        data={reports || []}
-        dispatch={dispatch}
-        isLoading={isPending}
-        meta={meta}
-        type="purchase_items"
-      />
+      <Table columns={columns} data={reports || []} dispatch={dispatch} isLoading={isPending} meta={meta} type="purchases" />
     </div>
   );
 }

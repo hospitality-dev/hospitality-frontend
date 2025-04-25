@@ -42,7 +42,7 @@ export function Suppliers() {
       <div className="ml-auto w-fit">
         <Button icon={Icons.add} label="Create" onClick={undefined} variant="info" />
       </div>
-      <Table<Entity> columns={columns} data={suppliers} dispatch={dispatch} meta={meta} />
+      <Table<Entity> columns={columns} data={suppliers} dispatch={dispatch} meta={meta} type="suppliers" />
     </div>
   );
 }
