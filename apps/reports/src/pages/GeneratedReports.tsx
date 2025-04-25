@@ -28,7 +28,7 @@ function ActionButton(info: CellContext<FilesType, unknown>) {
           {
             id: "view_report",
             onClick: async () => {
-              const url = await urlFunction({ urlPrefix: "reports", userReset: () => {} });
+              const url = await urlFunction({ id: info.row.original.id, urlPrefix: "reports", userReset: () => {} });
               if (url) window.open(url);
             },
             title: "View",
