@@ -53,24 +53,54 @@ const groupedByExpirationDateColumns = [
       const value = info.getValue();
       const differenceInDays = getDayDifferenceFromNow(value);
       return (
-        <span className={`font-medium ${differenceInDays !== null && differenceInDays <= 7 ? "text-error" : ""}`}>
+        <div className={`line-clamp-1 font-medium ${differenceInDays !== null && differenceInDays <= 7 ? "text-error" : ""}`}>
           {value ? (
-            <span className="flex items-center gap-x-1">
+            <span className="flex items-center gap-x-1 truncate">
               <span>{formatISOToString(value)}</span>
               <span>({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})</span>
             </span>
           ) : null}
-        </span>
+        </div>
       );
     },
+    maxSize: 180,
   }),
   groupedByExpirationDateColHelper.accessor("count", {
     header: "Amount",
     cell: (info) => <span className="font-light">{info.getValue()}</span>,
-    maxSize: 150,
-
+    maxSize: 100,
     meta: {
       isCentered: true,
+    },
+  }),
+  groupedByExpirationDateColHelper.accessor("purchasedAt", {
+    header: "Purchase date",
+    maxSize: 150,
+    cell: (info) => {
+      const value = info.getValue();
+      const differenceInDays = getDayDifferenceFromNow(value);
+
+      return (
+        <span className="flex items-center gap-x-1 truncate text-sm">
+          <span>{formatISOToString(value || "")}</span>
+          <span>({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})</span>
+        </span>
+      );
+    },
+  }),
+  groupedByExpirationDateColHelper.accessor("createdAt", {
+    header: "Added to system",
+    maxSize: 150,
+    cell: (info) => {
+      const value = info.getValue();
+      const differenceInDays = getDayDifferenceFromNow(value);
+
+      return (
+        <span className="flex items-center gap-x-1 truncate text-sm">
+          <span>{formatISOToString(value || "")}</span>
+          <span>({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})</span>
+        </span>
+      );
     },
   }),
   groupedByExpirationDateColHelper.accessor("volume", {
@@ -80,7 +110,7 @@ const groupedByExpirationDateColumns = [
         {(info.getValue() || 0) * info.row.original.count} {info.row.original.volumeUnit || ""}
       </span>
     ),
-    maxSize: 150,
+    maxSize: 80,
 
     meta: {
       isCentered: true,
@@ -93,8 +123,7 @@ const groupedByExpirationDateColumns = [
         {(info.getValue() || 0) * info.row.original.count} {info.row.original.weightUnit || ""}
       </span>
     ),
-    maxSize: 150,
-
+    maxSize: 80,
     meta: {
       isCentered: true,
     },
@@ -103,7 +132,7 @@ const groupedByExpirationDateColumns = [
     id: "actions",
     header: () => <span className="pl-2">Actions</span>,
     cell: GroupedByExpirationActions,
-    maxSize: 90,
+    maxSize: 50,
     meta: {
       isCentered: true,
     },
@@ -126,12 +155,14 @@ const purchaseItemsColHelper = createColumnHelper<PurchaseItemsType>();
 const purchaseItemsColumns = [
   purchaseItemsColHelper.accessor("title", {
     header: "Title",
-    cell: (info) =>
-      info
-        .getValue()
-        .replaceAll(/\/(KOM|KG|L|G|ML)\b/g, "")
-        .replaceAll(/\s*\((Е|Ђ)\)/g, ""),
-    minSize: 300,
+    cell: (info) => (
+      <div className="truncate">
+        {info
+          .getValue()
+          .replaceAll(/\/(KOM|KG|L|G|ML)\b/g, "")
+          .replaceAll(/\s*\((Е|Ђ)\)/g, "")}
+      </div>
+    ),
   }),
   purchaseItemsColHelper.accessor("quantity", {
     header: "Amount",
@@ -139,7 +170,6 @@ const purchaseItemsColumns = [
       const m = info.row.original.title.match(/(\d*)(KG|L|G|ML|OZ|LB)\b/)?.[0];
       return `${info.getValue()} ${m || formatProductUnits(info.row.original)}`.toLowerCase();
     },
-    size: 50,
   }),
   purchaseItemsColHelper.accessor("pricePerUnit", {
     header: "Price / unit",
@@ -148,13 +178,11 @@ const purchaseItemsColumns = [
         {`${formatCurrency(info.getValue())}${info.row.original.unitOfMeasurement !== "Unknown" ? `/${info.row.original.unitOfMeasurement}` : ""}`.trim()}
       </span>
     ),
-    minSize: 100,
   }),
   purchaseItemsColHelper.display({
     id: "total",
     header: "Total",
     cell: (info) => formatCurrency(info.row.original.pricePerUnit * info.row.original.quantity),
-    size: 100,
   }),
 
   // purchaseItemsColHelper.display({
@@ -211,7 +239,7 @@ function Stores({ parentId }: { parentId?: string }) {
 
 export function ExpandedRow({ id, type }: { id: string; type: TableExpandableTypes | null | undefined }) {
   return (
-    <div className="h-fit">
+    <div className="expandedContainer w-full bg-gray-300 p-2">
       {type === "product_grouped_by_expiration_date" ? <ExpandedProductGroupedByExpirationDate productId={id} /> : null}
       {type === "purchases" ? <PurchaseItems parentId={id} /> : null}
       {type === "suppliers" ? <Stores parentId={id} /> : null}

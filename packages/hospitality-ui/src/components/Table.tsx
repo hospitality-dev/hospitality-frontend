@@ -1,6 +1,6 @@
 import { ReactNode } from "@tanstack/react-router";
 import { ColumnDef, flexRender, getCoreRowModel, getExpandedRowModel, useReactTable } from "@tanstack/react-table";
-import { Dispatch, Fragment, useState } from "react";
+import { Dispatch, useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
@@ -43,9 +43,8 @@ const classes = tv({
     thead: "sticky top-0 min-w-fit border-b border-gray-300 text-left text-gray-500",
     th: "flex min-w-fit flex-1 flex-nowrap items-center gap-x-2 bg-gray-100 p-2 text-sm font-light uppercase shadow-sm select-none",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300",
-    tr: "group flex w-full min-w-fit items-center",
-    td: "flex h-10 flex-1 items-center px-2 group-hover:bg-blue-100",
-    expandedRowContainer: "bg-gray-300 p-2",
+    tr: "flex w-full min-w-fit items-center [&>div:not(.expandedContainer)]:hover:bg-blue-100",
+    td: "flex h-10 flex-1 items-center px-2",
   },
   variants: {
     variant: {
@@ -145,7 +144,7 @@ export function Table<T extends object>({
   });
   const [isOpen, setIsOpen] = useState(isInitialOpen);
   const headers = table.getFlatHeaders();
-  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td, expandedRowContainer } = classes({
+  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({
     isOpen,
     isLoading,
     isCollapsible,
@@ -214,9 +213,7 @@ export function Table<T extends object>({
                         isSorted: header.id === meta?.sort?.field,
                       })}
                       style={{
-                        maxWidth: header.column.columnDef.maxSize,
-                        width: header.column.columnDef.size,
-                        minWidth: header.column.columnDef.minSize,
+                        width: header.getSize(),
                       }}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       {header.column.columnDef.meta?.isSortable && header.id ? (
@@ -258,27 +255,25 @@ export function Table<T extends object>({
             {isLoading && isOpen ? <TableSkeleton td={td()} tr={tr()} /> : null}
             {!isLoading && isOpen && data.length
               ? table.getRowModel().rows.map((row) => (
-                  <Fragment key={row.id}>
-                    <div className={tr()}>
-                      {row.getVisibleCells().map((cell) => (
-                        <div
-                          key={cell.id}
-                          className={`${td({ isCentered: cell.column.columnDef.meta?.isCentered })} td`}
-                          style={{
-                            maxWidth: cell.column.columnDef.maxSize,
-                            width: cell.column.columnDef.size,
-                            minWidth: cell.column.columnDef.minSize,
-                          }}>
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </div>
-                      ))}
-                    </div>
-                    {row.getIsExpanded() && "id" in row.original && typeof row.original.id === "string" && row.original.id ? (
-                      <div className={expandedRowContainer()}>
-                        <ExpandedRow id={row.original.id as string} type={type} />
+                  <div key={row.id} className="block w-full">
+                    <div className={`${tr()} flex flex-col`}>
+                      <div className="flex w-full">
+                        {row.getVisibleCells().map((cell) => (
+                          <div
+                            key={cell.id}
+                            className={`${td({ isCentered: cell.column.columnDef.meta?.isCentered })} td`}
+                            style={{
+                              width: cell.column.getSize(),
+                            }}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </div>
+                        ))}
                       </div>
-                    ) : null}
-                  </Fragment>
+                      {row.getIsExpanded() && "id" in row.original && typeof row.original.id === "string" && row.original.id ? (
+                        <ExpandedRow id={row.original.id as string} type={type} />
+                      ) : null}
+                    </div>
+                  </div>
                 ))
               : null}
           </div>
