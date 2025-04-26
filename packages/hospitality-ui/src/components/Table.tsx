@@ -34,11 +34,11 @@ const classes = tv({
     container: "relative h-full overflow-y-auto rounded-md border border-gray-300 bg-white",
     tableContainer: "transition-[height]",
     tableClasses: "min-w-full",
-    thead: "sticky top-0 min-w-fit border-b border-gray-300 text-left text-gray-500",
-    th: "flex min-w-fit flex-1 flex-nowrap items-center gap-x-2 bg-gray-100 p-2 text-sm font-light uppercase shadow-sm select-none",
+    thead: "sticky top-0 max-h-8 min-w-fit border-b border-gray-300 text-left text-gray-500",
+    th: "flex h-8 min-w-fit flex-nowrap items-center gap-x-2 bg-gray-100 p-2 text-sm font-light uppercase shadow-sm select-none",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300",
     tr: "flex w-full min-w-fit items-center [&>div:not(.expandedContainer)]:hover:bg-blue-100",
-    td: "flex h-10 flex-1 items-center px-2",
+    td: "td @container/td flex h-10 items-center px-2",
   },
   variants: {
     variant: {
@@ -48,6 +48,20 @@ const classes = tv({
       success: { tr: "border-success" },
       warning: { tr: "border-warning" },
       error: { tr: "border-error border-2" },
+    },
+    alignment: {
+      left: {
+        th: "justify-start",
+        td: "justify-start",
+      },
+      center: {
+        th: "justify-center",
+        td: "justify-center",
+      },
+      right: {
+        th: "justify-end",
+        td: "justify-end",
+      },
     },
     isOpen: { true: "", false: "" },
     isCollapsible: {
@@ -61,10 +75,11 @@ const classes = tv({
         tr: "min-h-10 animate-pulse rounded bg-gradient-to-r from-gray-200 via-gray-100 to-gray-50 py-1",
       },
     },
-    isCentered: {
+
+    isStretch: {
       true: {
-        th: "flex w-full justify-center",
-        td: "flex w-full justify-center",
+        th: "flex-1",
+        td: "flex-1",
       },
     },
     isSorted: {
@@ -86,6 +101,7 @@ const classes = tv({
       isOpen: true,
       class: {
         tableContainer: "overflow-hidden",
+        td: "px-0.5",
       },
     },
     {
@@ -183,8 +199,9 @@ export function Table<T extends object>({
                     <div
                       key={header.id}
                       className={th({
-                        isCentered: header.column.columnDef.meta?.isCentered,
                         isSorted: header.id === meta?.sort?.field,
+                        alignment: header.column.columnDef.meta?.alignment || "left",
+                        isStretch: header.column.columnDef.meta?.isStretch,
                       })}
                       style={{
                         width: header.getSize(),
@@ -230,12 +247,15 @@ export function Table<T extends object>({
             {!isLoading && isOpen && data.length
               ? table.getRowModel().rows.map((row) => (
                   <div key={row.id} className="block w-full">
-                    <div className={`${tr()} flex flex-col`}>
+                    <div className={`${tr()} flex flex-1 flex-col`}>
                       <div className="flex w-full">
                         {row.getVisibleCells().map((cell) => (
                           <div
                             key={cell.id}
-                            className={`${td({ isCentered: cell.column.columnDef.meta?.isCentered })} td @container/td`}
+                            className={td({
+                              alignment: cell.column.columnDef.meta?.alignment || "left",
+                              isStretch: cell.column.columnDef.meta?.isStretch,
+                            })}
                             style={{
                               width: cell.column.getSize(),
                             }}>
