@@ -53,12 +53,15 @@ const groupedByExpirationDateColumns = [
       const value = info.getValue();
       const differenceInDays = getDayDifferenceFromNow(value);
       return (
-        <div className={`line-clamp-1 font-medium ${differenceInDays !== null && differenceInDays <= 7 ? "text-error" : ""}`}>
+        <div
+          className={`line-clamp-1 font-medium @min-xs/td:max-w-full ${differenceInDays !== null && differenceInDays <= 7 ? "text-error" : ""}`}>
           {value ? (
-            <span className="flex items-center gap-x-1 truncate">
+            <div className="items-center gap-x-1">
               <span>{formatISOToString(value)}</span>
-              <span>({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})</span>
-            </span>
+              <span className="@max-[150px]/td:hidden">
+                ({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})
+              </span>
+            </div>
           ) : null}
         </div>
       );
@@ -83,7 +86,9 @@ const groupedByExpirationDateColumns = [
       return (
         <span className="flex items-center gap-x-1 truncate text-sm">
           <span>{formatISOToString(value || "")}</span>
-          <span>({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})</span>
+          <span className="@max-[150px]/td:hidden">
+            ({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})
+          </span>
         </span>
       );
     },
@@ -98,7 +103,9 @@ const groupedByExpirationDateColumns = [
       return (
         <span className="flex items-center gap-x-1 truncate text-sm">
           <span>{formatISOToString(value || "")}</span>
-          <span>({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})</span>
+          <span className="@max-[150px]/td:hidden">
+            ({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})
+          </span>
         </span>
       );
     },

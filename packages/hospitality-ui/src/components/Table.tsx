@@ -261,7 +261,7 @@ export function Table<T extends object>({
                         {row.getVisibleCells().map((cell) => (
                           <div
                             key={cell.id}
-                            className={`${td({ isCentered: cell.column.columnDef.meta?.isCentered })} td`}
+                            className={`${td({ isCentered: cell.column.columnDef.meta?.isCentered })} td @container/td`}
                             style={{
                               width: cell.column.getSize(),
                             }}>
