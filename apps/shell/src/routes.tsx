@@ -5,17 +5,15 @@ import {
   getLoginRoute,
   locationsAvailableProductsFields,
   LocationsAvailableProductsQuery,
+  LocationsAvailableProductsSettingsType,
   LoginResponseType,
   ProductCategoriesQuery,
   productCategoryFields,
+  ProductsCategoriesType,
   QueryClient,
   RolesQuery,
   RolesType,
 } from "@hospitality/hospitality-ui";
-import {
-  LocationsAvailableProductsSettingsType,
-  ProductsCategoriesType,
-} from "@hospitality/hospitality-ui/src/types/productTypes";
 import { createRootRouteWithContext, createRoute, createRouter, Outlet, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 
