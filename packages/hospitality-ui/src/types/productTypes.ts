@@ -1,6 +1,26 @@
-import { boolean, infer as zodInfer, number, object, record, string, z } from "zod";
+import { boolean, enum as enum_, infer as zodInfer, number, object, record, string, z } from "zod";
 
-import { VolumeUnitsSchema, WeightUnitsSchema } from "./worldTypes";
+import { VolumeUnitsSchema, WeightUnitsSchema, WidthHeightUnitsSchema } from "./worldTypes";
+
+export const ProductShapeSchema = enum_([
+  "can",
+  "cardboard_box",
+  "metal_box",
+  "plastic_box",
+  "crate",
+  "plastic_bottle",
+  "glass_bottle",
+  "vacuum_packaging",
+  "barrel",
+  "plastic_cup",
+  "plastic_bag",
+  "jar",
+  "tube",
+  "pouch",
+  "sack",
+]);
+
+export type ProductShape = z.infer<typeof ProductShapeSchema>;
 
 // #region PRODUCTS
 
@@ -21,6 +41,11 @@ export const ProductsSchema = object({
   brandId: string().uuid().nullable(),
   brandTitle: string().nullish(),
   manufacturerTitle: string().nullish(),
+  shape: ProductShapeSchema.nullable(),
+  width: string().nullable().optional(),
+  height: string().nullable().optional(),
+  widthUnit: WidthHeightUnitsSchema.nullable(),
+  heightUnit: WidthHeightUnitsSchema.nullable(),
 });
 
 export const ProductsInitalizerSchema = object({
@@ -137,6 +162,8 @@ export const LocationsProductsSchema = object({
   deletedAt: z.string().datetime(),
   locationId: string().uuid().nonempty(),
   productId: string().uuid().nonempty(),
+  expirationDate: string().nullish(),
+  packingDate: string().nullish(),
 });
 
 export const LocationsProductsInitalizerSchema = object({

@@ -23,6 +23,7 @@ export const CountriesSchema = object({
 
 export const WeightUnitsSchema = enum_(["kg", "g", "mg", "oz", "lb"]);
 export const VolumeUnitsSchema = enum_(["l", "ml", "fl oz", "gal"]);
+export const WidthHeightUnitsSchema = enum_(["mm", "cm", "dm", "m", "inch", "ft"]);
 
 export type CountriesType = zodInfer<typeof CountriesSchema>;
 export type WeightUnitsType = zodInfer<typeof WeightUnitsSchema>;
