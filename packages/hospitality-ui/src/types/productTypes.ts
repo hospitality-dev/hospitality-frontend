@@ -30,6 +30,7 @@ export const ProductsInitalizerSchema = object({
   categoryId: string().uuid().nonempty("Category must be selected."),
   subCategoryId: string().uuid().nullable(),
   imageId: string().uuid().nullable(),
+  manufacturerId: string().uuid().nullable(),
 });
 
 export const ProductsMutatorSchema = object({
