@@ -66,15 +66,15 @@ const groupedByExpirationDateColumns = [
         </div>
       );
     },
+    meta: {
+      isStretch: true,
+    },
     maxSize: 180,
   }),
   groupedByExpirationDateColHelper.accessor("count", {
     header: "Amount",
     cell: (info) => <span className="font-light">{info.getValue()}</span>,
     maxSize: 100,
-    meta: {
-      isCentered: true,
-    },
   }),
   groupedByExpirationDateColHelper.accessor("purchasedAt", {
     header: "Purchase date",
@@ -118,10 +118,6 @@ const groupedByExpirationDateColumns = [
       </span>
     ),
     maxSize: 80,
-
-    meta: {
-      isCentered: true,
-    },
   }),
   groupedByExpirationDateColHelper.accessor("weight", {
     header: "Weight",
@@ -131,18 +127,12 @@ const groupedByExpirationDateColumns = [
       </span>
     ),
     maxSize: 80,
-    meta: {
-      isCentered: true,
-    },
   }),
   groupedByExpirationDateColHelper.display({
     id: "actions",
     header: () => <span className="pl-2">Actions</span>,
     cell: GroupedByExpirationActions,
     maxSize: 50,
-    meta: {
-      isCentered: true,
-    },
   }),
 ];
 
@@ -170,6 +160,9 @@ const purchaseItemsColumns = [
           .replaceAll(/\s*\((Е|Ђ)\)/g, "")}
       </div>
     ),
+    meta: {
+      isStretch: true,
+    },
   }),
   purchaseItemsColHelper.accessor("quantity", {
     header: "Amount",
