@@ -159,7 +159,10 @@ export function Table<T extends object>({
               items={(actions || []).concat({
                 id: "collapse",
                 icon: isOpen ? Icons.arrowUp : Icons.arrowDown,
-                onClick: () => setIsOpen(!isOpen),
+                onClick: () => {
+                  setIsOpen(!isOpen);
+                  if (onExpand) onExpand();
+                },
               })}
               label={title}
               size="lg"
