@@ -5,6 +5,7 @@ import { VolumeUnitsSchema, WeightUnitsSchema, WidthHeightUnitsSchema } from "./
 export const ProductShapeSchema = enum_([
   "can",
   "cardboard_box",
+  "cardboard_bottle",
   "metal_box",
   "plastic_box",
   "crate",
