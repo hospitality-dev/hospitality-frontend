@@ -100,7 +100,7 @@ const columns = [
   columnHelper.accessor("count", {
     header: "Total amount",
     cell: (info) => info.getValue(),
-    maxSize: 150,
+    maxSize: 115,
     meta: {
       isCentered: true,
     },
@@ -108,7 +108,7 @@ const columns = [
   columnHelper.accessor("volume", {
     header: "Total volume",
     cell: (info) => `${(info.getValue() || 0) * info.row.original.count} ${info.row.original.volumeUnit || ""}`,
-    maxSize: 150,
+    maxSize: 125,
     meta: {
       isCentered: true,
     },
@@ -116,7 +116,7 @@ const columns = [
   columnHelper.accessor("weight", {
     header: "Total weight",
     cell: (info) => `${(info.getValue() || 0) * info.row.original.count} ${info.row.original.weightUnit || ""}`,
-    maxSize: 150,
+    maxSize: 125,
     meta: {
       isCentered: true,
     },

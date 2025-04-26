@@ -38,6 +38,7 @@ export const PurchesItemsSchema = object({
 
 export const PurhcaseItemsModifySchema = object({
   products: object({
+    id: string().uuid().nullable(),
     productId: string().uuid().nonempty("Only items with a matching product can be modified."),
     expirationDate: string().optional(),
     quantity: number().min(1).nonnegative(),

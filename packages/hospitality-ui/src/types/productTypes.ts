@@ -116,8 +116,10 @@ export const LocationsAvailableProductsMutatorSchema = object({
 });
 
 export const LocationsProductsGroupedByExpirationSchema = object({
+  createdAt: string().datetime(),
   productId: string().uuid(),
   expirationDate: string().nullish(),
+  purchasedAt: string().nullish(),
   count: number(),
 }).merge(ProductsSchema.pick({ weight: true, weightUnit: true, volume: true, volumeUnit: true }));
 // #endregion LOCATIONS_AVAILABLE_PRODUCTS

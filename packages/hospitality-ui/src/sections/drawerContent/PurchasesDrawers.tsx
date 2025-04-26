@@ -16,6 +16,7 @@ type FormType = ReactFormExtendedApi<
   {
     products?:
       | {
+          id: string | null;
           productId: string;
           quantity: number;
           unitOfMeasurement?: string | undefined;
@@ -114,6 +115,7 @@ export function ModifyPurchase({ data }: { data: { id: string } }) {
     onSubmit: (p) => {
       const products = (p.value.products || []).map((product) => ({
         ...product,
+        purchaseItemId: product.id,
         expirationDate: product.expirationDate ? formatStringToISO(product.expirationDate) : null,
       }));
       mutate({ value: { products } });
