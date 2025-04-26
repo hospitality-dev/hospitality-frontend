@@ -93,7 +93,7 @@ export function formatISOToString(value: string) {
 export function getDayCountString(days: number) {
   if (days > -1 && days <= 0) return "Today";
   if (days > 0 && days <= 1) return "Tomorrow";
-  return `${Math.ceil(days)} days`;
+  return `${Math.abs(Math.ceil(days))} days${days < 0 ? " ago" : ""}`;
 }
 
 const rsdCurrencyFormatter = new Intl.NumberFormat("rs-RS", { style: "currency", currency: "RSD", maximumFractionDigits: 2 });
