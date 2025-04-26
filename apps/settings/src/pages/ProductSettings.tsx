@@ -108,12 +108,15 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
   return (
     <li className={`flex flex-col ${isDefault ? "rounded-md border border-gray-300" : ""}`}>
       <Table
-        action={{
-          icon: Icons.add,
-          onClick: () => openProductDrawer("Create product", { categoryId: id }),
-          label: "",
-          variant: "info",
-        }}
+        actions={[
+          {
+            id: "add",
+            icon: Icons.add,
+            onClick: () => openProductDrawer("Create product", { categoryId: id }),
+            label: "",
+            variant: "info",
+          },
+        ]}
         columns={columns({ create, locationId: auth.user?.locationId, locationsAvailableProducts: data || {}, deleteMutation })}
         data={query?.data || []}
         dispatch={dispatch}
