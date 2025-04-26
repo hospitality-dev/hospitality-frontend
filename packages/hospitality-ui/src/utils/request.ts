@@ -8,7 +8,7 @@ import { handleUnauthenticated } from "./response";
 export function getSearchParams<F>(fields: (keyof F)[], filters?: RequestFilters<F>, sort?: TableStateType<F>["sort"]) {
   const searchParams = new URLSearchParams();
 
-  searchParams.append("fields", fields.map((f) => (typeof f === "string" ? snakecase(f) : f)).join(","));
+  searchParams.append("fields", (fields || []).map((f) => (typeof f === "string" ? snakecase(f) : f)).join(","));
   if (filters) {
     searchParams.append("filters", JSON.stringify(filters));
   }
