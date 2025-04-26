@@ -17,6 +17,13 @@ export function getDayDifferenceFromNow(date?: string | null): number | null {
   return differenceInMilliseconds(input, now) / msInDay;
 }
 
+export function getDayDifferenceFromAhead(date?: string | null): number | null {
+  if (!date) return null;
+  const now = new Date();
+  const input = parseISO(date);
+  return differenceInMilliseconds(input, now) / msInDay;
+}
+
 export function formatFromUTC(date: string, dateTimeFormat?: string) {
   const parsedDate = parseISO(date);
   return format(parsedDate, dateTimeFormat || "dd.MM.yyyy.");
