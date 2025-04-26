@@ -3,7 +3,7 @@ import { Button, Form, Input, loginParamsSchema, useForm, useLogin } from "@hosp
 export function Login() {
   const { login } = useLogin();
 
-  const { Field, handleSubmit, state } = useForm({
+  const { Field, handleSubmit } = useForm({
     defaultValues: {
       username: "",
       password: "",
@@ -59,7 +59,7 @@ export function Login() {
           </Form>
         </div>
       </div>
-      <div className="h-screen w-1/2 max-md:hidden">
+      <div className="h-screen w-1/2 max-lg:hidden">
         <img
           className="background h-full w-full"
           src="https://images.unsplash.com/photo-1555992336-fb0d29498b13?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
