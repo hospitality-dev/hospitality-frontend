@@ -1,4 +1,4 @@
-import { useForm } from "@tanstack/react-form";
+import { useForm, useStore } from "@tanstack/react-form";
 import { useResetAtom } from "jotai/utils";
 import { useEffect } from "react";
 import { number, object, string } from "zod";
@@ -37,6 +37,8 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
     fields: ["id", "title"],
   });
 
+  const { data: manufacturers } = useList({ model: "manufacturers", fields: ["id", "title"] });
+
   const form = useForm({
     defaultValues: {
       title: "",
@@ -49,6 +51,8 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
       subCategoryId: null,
       imageId: null,
       categoryId: data.categoryId || "",
+      manufacturerId: null,
+      brandId: null,
     },
     onSubmit: (payload) =>
       create(payload, {
@@ -59,6 +63,14 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
       onSubmit: ProductsInitalizerSchema,
     },
   });
+
+  const manufacturerId = useStore(form.store, (state) => state.values.manufacturerId);
+
+  const { data: brands } = useList(
+    { model: "brands", fields: ["id", "title"] },
+    { urlSuffix: manufacturerId || "", enabled: !!manufacturerId }
+  );
+
   return (
     <>
       <Form handleSubmit={form.handleSubmit}>
@@ -78,6 +90,38 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
               </div>
             )}
             name="title"
+          />
+          <form.Field
+            children={(field) => (
+              <div className="md:col-span-2">
+                <Select
+                  label="Manufacturer"
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    if (e) field.handleChange(e.value);
+                  }}
+                  options={formatForOptions(manufacturers)}
+                  value={field.state.value}
+                />
+              </div>
+            )}
+            name="manufacturerId"
+          />
+          <form.Field
+            children={(field) => (
+              <div className="md:col-span-2">
+                <Select
+                  label="Brand"
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    if (e) field.handleChange(e.value);
+                  }}
+                  options={formatForOptions(brands)}
+                  value={field.state.value}
+                />
+              </div>
+            )}
+            name="brandId"
           />
           <form.Field
             children={(field) => (
