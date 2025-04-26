@@ -17,6 +17,10 @@ export const ProductsSchema = object({
   categoryId: string().uuid().nonempty(),
   subCategoryId: string().uuid().nullable(),
   imageId: string().uuid().nullable(),
+  manufacturerId: string().uuid().nullable(),
+  brandId: string().uuid().nullable(),
+  brandTitle: string().nullish(),
+  manufacturerTitle: string().nullish(),
 });
 
 export const ProductsInitalizerSchema = object({
@@ -31,6 +35,7 @@ export const ProductsInitalizerSchema = object({
   subCategoryId: string().uuid().nullable(),
   imageId: string().uuid().nullable(),
   manufacturerId: string().uuid().nullable(),
+  brandId: string().uuid().nullable(),
 });
 
 export const ProductsMutatorSchema = object({

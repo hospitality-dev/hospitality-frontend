@@ -21,7 +21,9 @@ import {
 import { useState } from "react";
 
 const columnHelper =
-  createColumnHelper<Pick<ProductsType, "id" | "title" | "weight" | "weightUnit" | "volume" | "volumeUnit">>();
+  createColumnHelper<
+    Pick<ProductsType, "id" | "title" | "weight" | "weightUnit" | "volume" | "volumeUnit" | "brandTitle" | "manufacturerTitle">
+  >();
 
 function columns({
   create,
@@ -45,38 +47,52 @@ function columns({
 }) {
   return [
     columnHelper.accessor("title", {
-      header: "",
-      cell: (info) => <div className="truncate">{info.getValue()}</div>,
-      maxSize: 250,
+      header: "Title",
+      cell: (info) => <div className="w-full truncate">{info.getValue()}</div>,
+      meta: {
+        alignment: "left",
+      },
+    }),
+    columnHelper.accessor("brandTitle", {
+      header: "Brand",
+      cell: (info) => info.getValue(),
+      maxSize: 125,
+    }),
+    columnHelper.accessor("manufacturerTitle", {
+      header: "Manufacturer",
+      cell: (info) => info.getValue(),
+      maxSize: 85,
     }),
     columnHelper.display({
       id: "measure",
-      header: "",
+      header: "Measure",
       cell: ({ row: { original } }) =>
         original.volume || original.weight
           ? `${original.volume || original.weight || ""}${original.volumeUnit || original.weightUnit || ""}`
           : null,
+      maxSize: 85,
     }),
 
     columnHelper.display({
       id: "isActive",
       header: "",
       cell: ({ row }) => (
-        <div className="flex h-full items-center justify-end">
-          <div className="w-28">
-            <Button
-              label={locationsAvailableProducts?.[row.original.id] ? "Active" : "Inactive"}
-              onClick={() => {
-                if (locationId && !locationsAvailableProducts?.[row.original.id])
-                  create({ value: { productId: row.original.id } });
-                else if (locationId && locationsAvailableProducts?.[row.original.id])
-                  deleteMutation(locationsAvailableProducts?.[row.original.id]);
-              }}
-              variant={locationsAvailableProducts?.[row.original.id] ? "success" : "secondary"}
-            />
-          </div>
+        <div className="flex w-28 justify-end">
+          <Button
+            label={locationsAvailableProducts?.[row.original.id] ? "Active" : "Inactive"}
+            onClick={() => {
+              if (locationId && !locationsAvailableProducts?.[row.original.id])
+                create({ value: { productId: row.original.id } });
+              else if (locationId && locationsAvailableProducts?.[row.original.id])
+                deleteMutation(locationsAvailableProducts?.[row.original.id]);
+            }}
+            variant={locationsAvailableProducts?.[row.original.id] ? "success" : "secondary"}
+          />
         </div>
       ),
+      meta: {
+        alignment: "right",
+      },
       maxSize: 125,
     }),
   ];
@@ -92,7 +108,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
   const { data } = useQuery(LocationsAvailableProductsQuery);
 
   const query = useList<ProductsType>(
-    { model: "products", fields: ["id", "title", "weight", "weightUnit", "volume", "volumeUnit"] },
+    { model: "products", fields: ["id", "title", "weight", "weightUnit", "volume", "volumeUnit", "brandTitle"] },
     { enabled: isOpen, urlSuffix: `category/${id}` }
   );
 
@@ -120,7 +136,6 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
         columns={columns({ create, locationId: auth.user?.locationId, locationsAvailableProducts: data || {}, deleteMutation })}
         data={query?.data || []}
         dispatch={dispatch}
-        hasNoHeader
         isCollapsible
         isInitialOpen={isOpen}
         isLoading={query.isPending}

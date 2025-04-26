@@ -18,7 +18,17 @@ import {
 
 type Entity = Pick<
   ProductsWithCountType,
-  "id" | "title" | "categoryId" | "count" | "hasAboutToExpire" | "volume" | "volumeUnit" | "weight" | "weightUnit"
+  | "id"
+  | "title"
+  | "categoryId"
+  | "count"
+  | "hasAboutToExpire"
+  | "volume"
+  | "volumeUnit"
+  | "weight"
+  | "weightUnit"
+  | "brandTitle"
+  | "manufacturerTitle"
 >;
 const columnHelper = createColumnHelper<Entity>();
 
@@ -79,7 +89,7 @@ const columns = [
   columnHelper.accessor("title", {
     header: "Title",
     cell: (info) => (
-      <div className="flex items-center gap-x-2">
+      <div className="flex max-w-full items-center gap-x-2">
         <div>
           <Button
             hasNoBorder
@@ -93,45 +103,46 @@ const columns = [
             <Icon fontSize={24} icon={Icons.warning} />
           </div>
         ) : null}
-        <div className="font-medium">{info.getValue()}</div>
+        <div className="truncate font-medium">{info.getValue()}</div>
       </div>
     ),
+    meta: {
+      isStretch: true,
+    },
+  }),
+  columnHelper.accessor("brandTitle", {
+    header: "Brand",
+    cell: (info) => info.getValue(),
+    maxSize: 100,
+  }),
+  columnHelper.accessor("manufacturerTitle", {
+    header: "Manufacturer",
+    cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("count", {
-    header: "Total amount",
+    header: "T. amount",
     cell: (info) => info.getValue(),
-    maxSize: 115,
-    meta: {
-      isCentered: true,
-    },
+    maxSize: 100,
   }),
   columnHelper.accessor("volume", {
-    header: "Total volume",
+    header: "T. volume",
     cell: (info) => `${(info.getValue() || 0) * info.row.original.count} ${info.row.original.volumeUnit || ""}`,
-    maxSize: 125,
-    meta: {
-      isCentered: true,
-    },
+    maxSize: 100,
   }),
   columnHelper.accessor("weight", {
-    header: "Total weight",
+    header: "T. weight",
     cell: (info) => `${(info.getValue() || 0) * info.row.original.count} ${info.row.original.weightUnit || ""}`,
-    maxSize: 125,
-    meta: {
-      isCentered: true,
-    },
+    maxSize: 100,
   }),
 
   columnHelper.display({
     id: "actions",
     header: "Actions",
     cell: ({ row }) => <ActionButton data={row?.original} />,
+    maxSize: 80,
     meta: {
-      isCentered: true,
+      alignment: "center",
     },
-    minSize: 100,
-    size: 100,
-    maxSize: 100,
   }),
 ];
 
