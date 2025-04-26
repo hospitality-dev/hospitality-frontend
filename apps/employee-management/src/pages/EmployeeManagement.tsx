@@ -73,17 +73,23 @@ const columns = [
     ),
     maxSize: 50,
     meta: {
-      isCentered: true,
+      alignment: "center",
     },
   }),
   columnHelper.accessor("firstName", {
     header: "First name",
     cell: (info) => <span className="font-semibold">{info.getValue()}</span>,
+    meta: {
+      isStretch: true,
+    },
   }),
   columnHelper.accessor((row) => row.lastName, {
     id: "lastName",
     cell: (info) => <span className="font-semibold">{info.getValue()}</span>,
     header: () => <span>Last name</span>,
+    meta: {
+      isStretch: true,
+    },
   }),
   columnHelper.accessor((row) => row.role, {
     id: "role",
@@ -94,7 +100,7 @@ const columns = [
     id: "isActive",
     header: "Actions",
     meta: {
-      isCentered: true,
+      alignment: "center",
     },
     cell: ActionsButton,
     maxSize: 125,

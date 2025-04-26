@@ -51,6 +51,7 @@ function columns({
       cell: (info) => <div className="w-full truncate">{info.getValue()}</div>,
       meta: {
         alignment: "left",
+        isStretch: true,
       },
     }),
     columnHelper.accessor("brandTitle", {
@@ -61,7 +62,7 @@ function columns({
     columnHelper.accessor("manufacturerTitle", {
       header: "Manufacturer",
       cell: (info) => info.getValue(),
-      maxSize: 85,
+      maxSize: 150,
     }),
     columnHelper.display({
       id: "measure",
@@ -70,7 +71,7 @@ function columns({
         original.volume || original.weight
           ? `${original.volume || original.weight || ""}${original.volumeUnit || original.weightUnit || ""}`
           : null,
-      maxSize: 85,
+      maxSize: 100,
     }),
 
     columnHelper.display({

@@ -66,6 +66,7 @@ const columns = [
     ),
     meta: {
       isSortable: true,
+      isStretch: true,
     },
   }),
   columnHelper.accessor("businessTitle", {
@@ -98,7 +99,7 @@ const columns = [
     header: "Actions",
     cell: ActionButton,
     meta: {
-      isCentered: true,
+      alignment: "center",
     },
     minSize: 100,
     size: 100,

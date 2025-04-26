@@ -19,6 +19,9 @@ const columns = [
         <div className="truncate">{info.getValue()}</div>
       </span>
     ),
+    meta: {
+      isStretch: true,
+    },
   }),
 
   columnHelper.display({
@@ -29,7 +32,7 @@ const columns = [
     maxSize: 120,
     size: 120,
     meta: {
-      isCentered: true,
+      alignment: "center",
     },
   }),
 ];
