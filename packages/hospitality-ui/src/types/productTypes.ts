@@ -40,13 +40,17 @@ export const ProductsSchema = object({
   imageId: string().uuid().nullable(),
   manufacturerId: string().uuid().nullable(),
   brandId: string().uuid().nullable(),
-  brandTitle: string().nullish(),
-  manufacturerTitle: string().nullish(),
   shape: ProductShapeSchema.nullable(),
   width: string().nullable().optional(),
   height: string().nullable().optional(),
   widthUnit: WidthHeightUnitsSchema.nullable(),
   heightUnit: WidthHeightUnitsSchema.nullable(),
+  relation__manufacturerTitle: string(),
+  relation__brandTitle: string().nullish(),
+  relations: object({
+    brands: enum_(["id", "title"]).array().optional(),
+    manufacturers: enum_(["id", "title"]).array().optional(),
+  }),
 });
 
 export const ProductsInitalizerSchema = object({

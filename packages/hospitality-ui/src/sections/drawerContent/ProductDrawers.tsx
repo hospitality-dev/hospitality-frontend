@@ -16,6 +16,8 @@ import {
   useScreenSize,
 } from "../../hooks";
 import { VolumeUnitsType, WeightUnitsType } from "../../types";
+import { BrandsType } from "../../types/brandTypes";
+import { ManufacturersType } from "../../types/manufacturerTypes";
 import {
   ProductsCategoriesType,
   ProductsInitalizerSchema,
@@ -37,7 +39,7 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
     fields: ["id", "title"],
   });
 
-  const { data: manufacturers } = useList({ model: "manufacturers", fields: ["id", "title"] });
+  const { data: manufacturers } = useList<ManufacturersType>({ model: "manufacturers", fields: ["id", "title"] });
 
   const form = useForm({
     defaultValues: {
@@ -66,7 +68,7 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
 
   const manufacturerId = useStore(form.store, (state) => state.values.manufacturerId);
 
-  const { data: brands } = useList(
+  const { data: brands } = useList<BrandsType>(
     { model: "brands", fields: ["id", "title"] },
     { urlSuffix: manufacturerId || "", enabled: !!manufacturerId }
   );
@@ -240,7 +242,7 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
     { enabled: !!(data.barcode || data.id) }
   );
   const { data: products, isLoading } = useList<ProductsType>(
-    { model: "products", fields: ["id", "title"] },
+    { model: "products", fields: ["id", "title", "brandTitle", "manufacturerTitle"] },
     { enabled: !data.barcode && !data.id, urlSuffix: `category/${data.categoryId}/active` }
   );
 

@@ -2,6 +2,7 @@ import {
   Button,
   createColumnHelper,
   fetchFunction,
+  FormattedEntity,
   Icon,
   Icons,
   ProductCategoriesQuery,
@@ -17,7 +18,7 @@ import {
 } from "@hospitality/hospitality-ui";
 
 type Entity = Pick<
-  ProductsWithCountType,
+  FormattedEntity<ProductsWithCountType>,
   | "id"
   | "title"
   | "categoryId"
@@ -29,6 +30,7 @@ type Entity = Pick<
   | "weightUnit"
   | "brandTitle"
   | "manufacturerTitle"
+  | "relations"
 >;
 const columnHelper = createColumnHelper<Entity>();
 
@@ -153,11 +155,15 @@ export function ProductInventory() {
   const { categoryId: active } = useParams({ from: "/inventory-management/$categoryId" });
 
   const { data } = useQuery(ProductCategoriesQuery);
-  const { data: products, isPending } = useList<ProductsWithCountType>(
-    { model: "products", fields: ["id", "title", "categoryId", "volume", "volumeUnit"] },
+  const { data: products, isPending } = useList<Entity>(
+    {
+      model: "products",
+      fields: ["id", "title", "categoryId", "volume", "volumeUnit", "brandTitle", "manufacturerTitle"],
+      relations: { brands: ["title"], manufacturers: ["title"] },
+    },
     { enabled: !!active, urlSuffix: `category/${active}/active` }
   );
-  const [state, dispatch] = useTable<ProductsWithCountType>();
+  const [state, dispatch] = useTable<Entity>();
 
   return (
     <div className="flex flex-col gap-y-2">
