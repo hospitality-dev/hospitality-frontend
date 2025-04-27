@@ -232,6 +232,18 @@ const storesColumns = [
     cell: (info) => <div className="truncate">{info.getValue()}</div>,
     minSize: 300,
   }),
+  storesColHelper.display({
+    id: "actions",
+    cell: () => (
+      <div className="mr-2.5 w-fit">
+        <Button hasNoBorder icon={Icons.location} isOutline onClick={() => {}} size="lg" />
+      </div>
+    ),
+    maxSize: 100,
+    meta: {
+      alignment: "right",
+    },
+  }),
 ];
 
 function Stores({ parentId }: { parentId?: string }) {

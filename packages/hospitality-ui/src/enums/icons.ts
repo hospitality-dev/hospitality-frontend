@@ -55,6 +55,7 @@ export const Icons = {
   link: "ph:link" as const,
   linkedin: "ph:linkedin-logo" as const,
   loading: "ph:circle-notch" as const,
+  location: "gis:poi-map" as const,
   locationChange: "fluent:building-swap-24-regular" as const,
   locationUser: "fluent:building-people-24-regular" as const,
   manage: "fluent:clipboard-text-edit-24-regular" as const,
