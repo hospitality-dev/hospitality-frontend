@@ -1,5 +1,12 @@
 import { ReactNode, useLocation } from "@tanstack/react-router";
-import { ColumnDef, flexRender, getCoreRowModel, getExpandedRowModel, useReactTable } from "@tanstack/react-table";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getExpandedRowModel,
+  useReactTable,
+  VisibilityState,
+} from "@tanstack/react-table";
 import { Dispatch, useLayoutEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 
@@ -27,6 +34,7 @@ type Props<T> = {
   };
   actions?: ActionType[];
   type?: TableExpandableTypes | null;
+  columnVisibility?: VisibilityState;
 };
 
 const classes = tv({
@@ -138,6 +146,7 @@ export function Table<T extends object>({
   type,
   meta,
   dispatch,
+  columnVisibility,
 }: Props<T>) {
   const table = useReactTable({
     columns,
@@ -145,6 +154,9 @@ export function Table<T extends object>({
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     meta,
+    state: {
+      columnVisibility,
+    },
   });
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(isInitialOpen);
