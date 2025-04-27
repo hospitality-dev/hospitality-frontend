@@ -109,30 +109,37 @@ const columns = [
       </div>
     ),
     meta: {},
+    minSize: 200,
   }),
   columnHelper.accessor("brandTitle", {
     header: "Brand",
     cell: (info) => info.getValue(),
-    maxSize: 100,
+    maxSize: 150,
+    minSize: 80,
   }),
   columnHelper.accessor("manufacturerTitle", {
     header: "Manufacturer",
-    cell: (info) => info.getValue(),
+    cell: (info) => <div className="truncate">{info.getValue()}</div>,
+    maxSize: 150,
+    minSize: 120,
   }),
   columnHelper.accessor("count", {
     header: "T. amount",
     cell: (info) => info.getValue(),
     maxSize: 100,
+    minSize: 80,
   }),
   columnHelper.accessor("volume", {
     header: "T. volume",
     cell: (info) => `${(info.getValue() || 0) * info.row.original.count} ${info.row.original.volumeUnit || ""}`,
     maxSize: 100,
+    minSize: 80,
   }),
   columnHelper.accessor("weight", {
     header: "T. weight",
     cell: (info) => `${(info.getValue() || 0) * info.row.original.count} ${info.row.original.weightUnit || ""}`,
     maxSize: 100,
+    minSize: 80,
   }),
 
   columnHelper.display({
@@ -140,6 +147,7 @@ const columns = [
     header: "Actions",
     cell: ({ row }) => <ActionButton data={row?.original} />,
     maxSize: 80,
+    minSize: 80,
     meta: {
       alignment: "center",
     },

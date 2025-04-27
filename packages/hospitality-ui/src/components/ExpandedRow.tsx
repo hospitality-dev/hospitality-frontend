@@ -49,6 +49,7 @@ const groupedByExpirationDateColHelper = createColumnHelper<LocationsProductsGro
 const groupedByExpirationDateColumns = [
   groupedByExpirationDateColHelper.accessor("expirationDate", {
     header: "Expiration date",
+    minSize: 125,
     maxSize: 300,
     cell: (info) => {
       const value = info.getValue();
@@ -72,10 +73,11 @@ const groupedByExpirationDateColumns = [
     header: "Amount",
     cell: (info) => <span className="font-light">{info.getValue()}</span>,
     maxSize: 100,
+    minSize: 80,
   }),
   groupedByExpirationDateColHelper.accessor("purchasedAt", {
     header: "Purchase date",
-
+    minSize: 115,
     meta: {
       alignment: "left",
     },
@@ -98,6 +100,7 @@ const groupedByExpirationDateColumns = [
     meta: {
       alignment: "left",
     },
+    minSize: 130,
     cell: (info) => {
       const value = info.getValue();
       const differenceInDays = getDayDifferenceFromNow(value);
@@ -122,7 +125,7 @@ const groupedByExpirationDateColumns = [
     meta: {
       alignment: "center",
     },
-    maxSize: 80,
+    minSize: 80,
   }),
   groupedByExpirationDateColHelper.accessor("weight", {
     header: "Weight",
@@ -131,7 +134,7 @@ const groupedByExpirationDateColumns = [
         {(info.getValue() || 0) * info.row.original.count} {info.row.original.weightUnit || ""}
       </span>
     ),
-    maxSize: 80,
+    minSize: 80,
     meta: {
       alignment: "center",
     },
@@ -140,6 +143,7 @@ const groupedByExpirationDateColumns = [
     id: "actions",
     header: () => <span className="pl-2">Actions</span>,
     cell: GroupedByExpirationActions,
+    minSize: 80,
     maxSize: 80,
     meta: {
       alignment: "center",
