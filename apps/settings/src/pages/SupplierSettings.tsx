@@ -24,7 +24,7 @@ const columns = [
   columnHelper.display({
     id: "isActive",
     header: "Actions",
-    cell: () => <Button hasNoBorder icon={Icons.menu} isOutline onClick={() => {}} size="xl" />,
+    cell: () => <Button hasNoBorder icon={Icons.menu} isDisabled isOutline onClick={() => {}} size="xl" />,
     minSize: 80,
     maxSize: 80,
     meta: {

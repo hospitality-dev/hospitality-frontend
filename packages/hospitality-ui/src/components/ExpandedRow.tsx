@@ -236,7 +236,7 @@ const storesColumns = [
     id: "actions",
     cell: () => (
       <div className="mr-2.5 w-fit">
-        <Button hasNoBorder icon={Icons.location} isOutline onClick={() => {}} size="lg" />
+        <Button hasNoBorder icon={Icons.location} isDisabled isOutline onClick={() => {}} size="lg" />
       </div>
     ),
     maxSize: 100,
