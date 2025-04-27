@@ -1,6 +1,6 @@
-import { ReactNode } from "@tanstack/react-router";
+import { ReactNode, useLocation } from "@tanstack/react-router";
 import { ColumnDef, flexRender, getCoreRowModel, getExpandedRowModel, useReactTable } from "@tanstack/react-table";
-import { Dispatch, useState } from "react";
+import { Dispatch, useLayoutEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 
 import { Icons } from "../enums";
@@ -34,11 +34,11 @@ const classes = tv({
     container: "relative h-full overflow-y-auto rounded-md border border-gray-300 bg-white",
     tableContainer: "transition-[height]",
     tableClasses: "min-w-full",
-    thead: "sticky top-0 max-h-8 min-w-fit border-b border-gray-300 text-left text-gray-500",
-    th: "flex h-8 min-w-fit flex-nowrap items-center gap-x-2 bg-gray-100 p-2 text-sm font-light uppercase shadow-sm select-none",
+    thead: "sticky top-0 max-h-8 border-b border-gray-300 text-left text-gray-500",
+    th: "@container/table-cell flex h-8 min-w-fit flex-1 flex-nowrap items-center gap-x-2 truncate bg-gray-100 p-2 text-sm font-light uppercase shadow-sm select-none hover:bg-gray-100",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300",
-    tr: "flex w-full min-w-fit items-center [&>div:not(.expandedContainer)]:hover:bg-blue-100",
-    td: "td @container/td flex h-10 items-center px-2",
+    tr: "flex items-center [&>div:has(>.td)]:hover:bg-blue-100",
+    td: "td @container/table-cell flex h-10 flex-1 items-center px-2",
   },
   variants: {
     variant: {
@@ -76,12 +76,6 @@ const classes = tv({
       },
     },
 
-    isStretch: {
-      true: {
-        th: "flex-1",
-        td: "flex-1",
-      },
-    },
     isSorted: {
       true: {
         th: "text-info font-semibold",
@@ -152,6 +146,7 @@ export function Table<T extends object>({
     getExpandedRowModel: getExpandedRowModel(),
     meta,
   });
+  const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(isInitialOpen);
   const headers = table.getFlatHeaders();
   const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({
@@ -160,6 +155,11 @@ export function Table<T extends object>({
     isCollapsible,
     hasNoData: !data.length,
   });
+
+  useLayoutEffect(() => {
+    table.resetExpanded();
+  }, [pathname]);
+
   return (
     <div className={container()}>
       {title ? (
@@ -201,10 +201,10 @@ export function Table<T extends object>({
                       className={th({
                         isSorted: header.id === meta?.sort?.field,
                         alignment: header.column.columnDef.meta?.alignment || "left",
-                        isStretch: header.column.columnDef.meta?.isStretch,
                       })}
                       style={{
-                        width: header.getSize(),
+                        maxWidth: header.column.columnDef.maxSize,
+                        minWidth: header.column.columnDef.minSize,
                       }}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       {header.column.columnDef.meta?.isSortable && header.id ? (
@@ -254,10 +254,10 @@ export function Table<T extends object>({
                             key={cell.id}
                             className={td({
                               alignment: cell.column.columnDef.meta?.alignment || "left",
-                              isStretch: cell.column.columnDef.meta?.isStretch,
                             })}
                             style={{
-                              width: cell.column.getSize(),
+                              maxWidth: cell.column.columnDef.maxSize,
+                              minWidth: cell.column.columnDef.minSize,
                             }}>
                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                           </div>
