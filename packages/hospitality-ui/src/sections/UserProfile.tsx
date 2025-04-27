@@ -33,7 +33,6 @@ import {
   UsersMutatorSchema,
   UsersMutatorType,
   UsersType,
-  useScreenSize,
   useUpdate,
 } from "@hospitality/hospitality-ui";
 import { useStore } from "@tanstack/react-form";
@@ -261,7 +260,6 @@ export function UserProfile() {
   const params = useParams({ from: "/employee-management/$userId", shouldThrow: false });
   const auth = useAuth();
 
-  const { isSmallScreen } = useScreenSize();
   const { openDrawer } = useDrawer("upload");
   const { mutate: update } = useUpdate<UsersMutatorType>("users", { refetchModels: ["contacts"] });
   const { roles } = useRole();
@@ -311,7 +309,7 @@ export function UserProfile() {
           <form.Field
             children={(field) => (
               <div className="flex items-center gap-x-1.5">
-                <div>
+                <div className="">
                   <Avatar
                     imageId={userData?.imageId}
                     label={formattedUser?.title || ""}
@@ -323,7 +321,7 @@ export function UserProfile() {
                         isMultiple: false,
                       })
                     }
-                    size={isSmallScreen ? "lg" : "md"}
+                    size="xl"
                     type="user_avatar"
                   />
                 </div>

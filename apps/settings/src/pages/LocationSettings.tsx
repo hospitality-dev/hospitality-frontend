@@ -27,7 +27,6 @@ import {
   useForm,
   useList,
   useRead,
-  useScreenSize,
   useUpdate,
 } from "@hospitality/hospitality-ui";
 import { useStore } from "@tanstack/react-store";
@@ -260,7 +259,6 @@ function ContactDisplay({
 }
 export function LocationSettings() {
   const auth = useAuth();
-  const { isSmallScreen } = useScreenSize();
   const { openDrawer } = useDrawer("upload");
   const {
     data: locationData,
@@ -304,7 +302,7 @@ export function LocationSettings() {
     <Form handleSubmit={form.handleSubmit}>
       <div className="flex h-full flex-col gap-y-2">
         <div className="border-primary flex min-h-20 items-start gap-2 border-b">
-          <div>
+          <div className="mt-1">
             <Avatar
               imageId={locationData?.imageId}
               label={locationData?.title || ""}
@@ -316,7 +314,7 @@ export function LocationSettings() {
                   isMultiple: false,
                 })
               }
-              size={isSmallScreen ? "lg" : "md"}
+              size="xl"
               type="location_logo"
             />
           </div>
