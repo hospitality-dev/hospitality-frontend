@@ -25,11 +25,10 @@ const columns = [
     id: "isActive",
     header: "Actions",
     cell: () => <Button hasNoBorder icon={Icons.menu} isOutline onClick={() => {}} size="xl" />,
-    minSize: 100,
-    maxSize: 120,
-    size: 120,
+    minSize: 80,
+    maxSize: 80,
     meta: {
-      isCentered: true,
+      alignment: "center",
     },
   }),
 ];
@@ -42,7 +41,7 @@ export function SupplierSettings() {
       <div className="ml-auto w-fit">
         <Button icon={Icons.add} label="Create" onClick={undefined} variant="info" />
       </div>
-      <Table<Entity> columns={columns} data={suppliers} dispatch={dispatch} meta={meta} />
+      <Table<Entity> columns={columns} data={suppliers} dispatch={dispatch} meta={meta} type="suppliers" />
     </div>
   );
 }
