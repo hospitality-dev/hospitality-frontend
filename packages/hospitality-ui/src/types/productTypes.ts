@@ -1,5 +1,6 @@
 import { boolean, enum as enum_, infer as zodInfer, number, object, record, string, z } from "zod";
 
+import { FormattedEntity } from "./utilityTypes";
 import { VolumeUnitsSchema, WeightUnitsSchema, WidthHeightUnitsSchema } from "./worldTypes";
 
 export const ProductShapeSchema = enum_([
@@ -180,7 +181,7 @@ export const LocationsProductsInitalizerSchema = object({
 
 export const LocationsAvailableProductsSettingsSchema = record(string().uuid(), string().uuid());
 
-export type ProductsType = zodInfer<typeof ProductsSchema>;
+export type ProductsType = FormattedEntity<zodInfer<typeof ProductsSchema>>;
 export type ProductsInitalizerType = zodInfer<typeof ProductsInitalizerSchema>;
 export type ProductsMutatorType = zodInfer<typeof ProductsMutatorSchema>;
 
