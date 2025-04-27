@@ -79,17 +79,13 @@ const columns = [
   columnHelper.accessor("firstName", {
     header: "First name",
     cell: (info) => <span className="font-semibold">{info.getValue()}</span>,
-    meta: {
-      isStretch: true,
-    },
+    meta: {},
   }),
   columnHelper.accessor((row) => row.lastName, {
     id: "lastName",
     cell: (info) => <span className="font-semibold">{info.getValue()}</span>,
     header: () => <span>Last name</span>,
-    meta: {
-      isStretch: true,
-    },
+    meta: {},
   }),
   columnHelper.accessor((row) => row.role, {
     id: "role",

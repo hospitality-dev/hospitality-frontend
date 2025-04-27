@@ -22,7 +22,7 @@ import { useState } from "react";
 
 const columnHelper =
   createColumnHelper<
-    Pick<ProductsType, "id" | "title" | "weight" | "weightUnit" | "volume" | "volumeUnit" | "brandTitle" | "manufacturerTitle">
+    Pick<ProductsType, "id" | "title" | "weight" | "weightUnit" | "volume" | "volumeUnit" | "manufacturerTitle" | "brandTitle">
   >();
 
 function columns({
@@ -51,7 +51,6 @@ function columns({
       cell: (info) => <div className="w-full truncate">{info.getValue()}</div>,
       meta: {
         alignment: "left",
-        isStretch: true,
       },
     }),
     columnHelper.accessor("brandTitle", {

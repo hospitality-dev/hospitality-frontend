@@ -49,16 +49,17 @@ const groupedByExpirationDateColHelper = createColumnHelper<LocationsProductsGro
 const groupedByExpirationDateColumns = [
   groupedByExpirationDateColHelper.accessor("expirationDate", {
     header: "Expiration date",
+    maxSize: 300,
     cell: (info) => {
       const value = info.getValue();
       const differenceInDays = getDayDifferenceFromNow(value);
       return (
         <div
-          className={`line-clamp-1 font-medium @min-xs/td:max-w-full ${differenceInDays !== null && differenceInDays <= 7 ? "text-error" : ""}`}>
+          className={`line-clamp-1 font-medium @min-xs/table-cell:max-w-full ${differenceInDays !== null && differenceInDays <= 7 ? "text-error" : ""}`}>
           {value ? (
             <div className="items-center gap-x-1">
               <span>{formatISOToString(value)}</span>
-              <span className="@max-[150px]/td:hidden">
+              <span className="@max-[150px]/table-cell:hidden">
                 ({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})
               </span>
             </div>
@@ -66,10 +67,6 @@ const groupedByExpirationDateColumns = [
         </div>
       );
     },
-    meta: {
-      isStretch: true,
-    },
-    maxSize: 180,
   }),
   groupedByExpirationDateColHelper.accessor("count", {
     header: "Amount",
@@ -78,15 +75,18 @@ const groupedByExpirationDateColumns = [
   }),
   groupedByExpirationDateColHelper.accessor("purchasedAt", {
     header: "Purchase date",
-    maxSize: 150,
+
+    meta: {
+      alignment: "left",
+    },
     cell: (info) => {
       const value = info.getValue();
       const differenceInDays = getDayDifferenceFromNow(value);
 
       return (
-        <span className="flex items-center gap-x-1 truncate text-sm">
+        <span className="flex items-center gap-x-1 truncate @min-[150px]/table-cell:text-sm">
           <span>{formatISOToString(value || "")}</span>
-          <span className="@max-[150px]/td:hidden">
+          <span className="@max-[150px]/table-cell:hidden">
             ({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})
           </span>
         </span>
@@ -95,15 +95,17 @@ const groupedByExpirationDateColumns = [
   }),
   groupedByExpirationDateColHelper.accessor("createdAt", {
     header: "Added to system",
-    maxSize: 150,
+    meta: {
+      alignment: "left",
+    },
     cell: (info) => {
       const value = info.getValue();
       const differenceInDays = getDayDifferenceFromNow(value);
 
       return (
-        <span className="flex items-center gap-x-1 truncate text-sm">
+        <span className="flex items-center gap-x-1 truncate @min-[150px]/table-cell:text-sm">
           <span>{formatISOToString(value || "")}</span>
-          <span className="@max-[150px]/td:hidden">
+          <span className="@max-[150px]/table-cell:hidden">
             ({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})
           </span>
         </span>
@@ -117,6 +119,9 @@ const groupedByExpirationDateColumns = [
         {(info.getValue() || 0) * info.row.original.count} {info.row.original.volumeUnit || ""}
       </span>
     ),
+    meta: {
+      alignment: "center",
+    },
     maxSize: 80,
   }),
   groupedByExpirationDateColHelper.accessor("weight", {
@@ -127,12 +132,18 @@ const groupedByExpirationDateColumns = [
       </span>
     ),
     maxSize: 80,
+    meta: {
+      alignment: "center",
+    },
   }),
   groupedByExpirationDateColHelper.display({
     id: "actions",
     header: () => <span className="pl-2">Actions</span>,
     cell: GroupedByExpirationActions,
-    maxSize: 50,
+    maxSize: 80,
+    meta: {
+      alignment: "center",
+    },
   }),
 ];
 
@@ -160,9 +171,7 @@ const purchaseItemsColumns = [
           .replaceAll(/\s*\((Е|Ђ)\)/g, "")}
       </div>
     ),
-    meta: {
-      isStretch: true,
-    },
+    meta: {},
   }),
   purchaseItemsColHelper.accessor("quantity", {
     header: "Amount",

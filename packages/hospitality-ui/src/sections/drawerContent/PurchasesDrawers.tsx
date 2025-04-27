@@ -6,13 +6,11 @@ import { DrawerTypes } from "../../atoms";
 import { Button, Form, Input, Table, Title } from "../../components";
 import { Icons } from "../../enums";
 import { useCreate, useDrawer, useList, useTable } from "../../hooks";
-import { FormattedEntity, ProductsType, PurchaseItemsType, PurhcaseItemsModifySchema } from "../../types";
+import { ProductsType, PurchaseItemsType, PurhcaseItemsModifySchema } from "../../types";
 import { formatProductUnits, formatStringToISO } from "../../utils";
 
-type ModifyPurchaseItem = FormattedEntity<
-  Pick<PurchaseItemsType, "id" | "title" | "productId" | "quantity"> &
-    Pick<ProductsType, "weight" | "weightUnit" | "volume" | "volumeUnit" | "relation__brandTitle"> & { expirationDate: string }
->;
+type ModifyPurchaseItem = Pick<PurchaseItemsType, "id" | "title" | "productId" | "quantity"> &
+  Pick<ProductsType, "weight" | "weightUnit" | "volume" | "volumeUnit" | "brandTitle"> & { expirationDate: string };
 
 type FormType = ReactFormExtendedApi<
   {
@@ -66,9 +64,7 @@ function columns(form: FormType) {
     modifyPurchaseColHelper.accessor("brandTitle", {
       header: "Brand",
       cell: (info) => <div className="truncate">{info.getValue()}</div>,
-      meta: {
-        isStretch: true,
-      },
+      meta: {},
     }),
     modifyPurchaseColHelper.accessor("quantity", {
       header: "Amount",

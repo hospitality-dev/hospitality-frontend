@@ -19,9 +19,7 @@ const columns = [
         <div className="truncate">{info.getValue()}</div>
       </span>
     ),
-    meta: {
-      isStretch: true,
-    },
+    meta: {},
   }),
 
   columnHelper.display({

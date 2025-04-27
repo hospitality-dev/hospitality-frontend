@@ -108,9 +108,7 @@ const columns = [
         <div className="truncate font-medium">{info.getValue()}</div>
       </div>
     ),
-    meta: {
-      isStretch: true,
-    },
+    meta: {},
   }),
   columnHelper.accessor("brandTitle", {
     header: "Brand",

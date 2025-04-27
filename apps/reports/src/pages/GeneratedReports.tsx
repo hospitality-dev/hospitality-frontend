@@ -60,7 +60,6 @@ const columns = [
     ),
     meta: {
       isSortable: true,
-      isStretch: true,
     },
   }),
   columnHelper.accessor("createdAt", {
@@ -72,7 +71,6 @@ const columns = [
     ),
     meta: {
       isSortable: true,
-      isStretch: true,
     },
   }),
 
