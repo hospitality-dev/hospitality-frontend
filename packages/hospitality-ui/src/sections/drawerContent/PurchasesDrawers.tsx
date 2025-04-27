@@ -6,11 +6,13 @@ import { DrawerTypes } from "../../atoms";
 import { Button, Form, Input, Table, Title } from "../../components";
 import { Icons } from "../../enums";
 import { useCreate, useDrawer, useList, useTable } from "../../hooks";
-import { ProductsType, PurchaseItemsType, PurhcaseItemsModifySchema } from "../../types";
+import { FormattedEntity, ProductsType, PurchaseItemsType, PurhcaseItemsModifySchema } from "../../types";
 import { formatProductUnits, formatStringToISO } from "../../utils";
 
-type ModifyPurchaseItem = Pick<PurchaseItemsType, "id" | "title" | "productId" | "quantity"> &
-  Pick<ProductsType, "weight" | "weightUnit" | "volume" | "volumeUnit"> & { expirationDate: string };
+type ModifyPurchaseItem = FormattedEntity<
+  Pick<PurchaseItemsType, "id" | "title" | "productId" | "quantity"> &
+    Pick<ProductsType, "weight" | "weightUnit" | "volume" | "volumeUnit" | "relation__brandTitle"> & { expirationDate: string }
+>;
 
 type FormType = ReactFormExtendedApi<
   {
@@ -58,7 +60,15 @@ function columns(form: FormType) {
   return [
     modifyPurchaseColHelper.accessor("title", {
       header: "Title",
+      cell: (info) => <div className="truncate font-medium">{info.getValue()}</div>,
+      minSize: 200,
+    }),
+    modifyPurchaseColHelper.accessor("brandTitle", {
+      header: "Brand",
       cell: (info) => <div className="truncate">{info.getValue()}</div>,
+      meta: {
+        isStretch: true,
+      },
     }),
     modifyPurchaseColHelper.accessor("quantity", {
       header: "Amount",
@@ -103,7 +113,7 @@ export function CreatePurchase({ data }: Pick<Extract<DrawerTypes, { type: "crea
 
 export function ModifyPurchase({ data }: { data: { id: string } }) {
   const { data: purchaseItems = [] } = useList<ModifyPurchaseItem>(
-    { model: "purchase_items", fields: ["id", "title", "productId", "quantity"] },
+    { model: "purchase_items", fields: ["id", "title", "productId", "quantity", "brandTitle"] },
     { urlSuffix: `${data.id}/modify`, enabled: !!data.id }
   );
   const { mutate } = useCreate("locations_products", { urlSuffix: "purchase-items" });
