@@ -5,12 +5,20 @@ import snakecase from "lodash.snakecase";
 import { AvailableEntities, AvailableSearchableEntities, RequestFilters, ResponseType, TableStateType } from "../types";
 import { handleUnauthenticated } from "./response";
 
-export function getSearchParams<F>(fields: (keyof F)[], filters?: RequestFilters<F>, sort?: TableStateType<F>["sort"]) {
+export function getSearchParams<F>(
+  fields: (keyof F)[],
+  filters?: RequestFilters<F>,
+  sort?: TableStateType<F>["sort"],
+  relations?: F extends { relations: infer R } ? R : never
+) {
   const searchParams = new URLSearchParams();
 
   searchParams.append("fields", (fields || []).map((f) => (typeof f === "string" ? snakecase(f) : f)).join(","));
   if (filters) {
     searchParams.append("filters", JSON.stringify(filters));
+  }
+  if (relations) {
+    searchParams.append("relations", JSON.stringify(relations));
   }
   if (sort) {
     searchParams.append("sortField", snakecase(String(sort.field)));
