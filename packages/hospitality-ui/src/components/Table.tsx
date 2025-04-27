@@ -246,9 +246,9 @@ export function Table<T extends object>({
             {isLoading && isOpen ? <TableSkeleton td={td()} tr={tr()} /> : null}
             {!isLoading && isOpen && data.length
               ? table.getRowModel().rows.map((row) => (
-                  <div key={row.id} className="block w-full">
-                    <div className={`${tr()} flex flex-1 flex-col`}>
-                      <div className="flex w-full">
+                  <div key={row.id} className="block w-full min-w-max flex-1">
+                    <div className={`${tr()} flex w-full flex-1 flex-col`}>
+                      <div className="flex w-full flex-1">
                         {row.getVisibleCells().map((cell) => (
                           <div
                             key={cell.id}
