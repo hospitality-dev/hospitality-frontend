@@ -16,6 +16,7 @@ import {
   useLoaderData,
   UseMutateFunction,
   useQuery,
+  useScreenSize,
   useTable,
 } from "@hospitality/hospitality-ui";
 import { useState } from "react";
@@ -52,23 +53,24 @@ function columns({
       meta: {
         alignment: "left",
       },
+      minSize: 150,
     }),
     columnHelper.accessor("brandTitle", {
       header: "Brand",
       cell: (info) => info.getValue(),
-      maxSize: 125,
+      minSize: 100,
     }),
     columnHelper.accessor("manufacturerTitle", {
       header: "Manufacturer",
-      cell: (info) => info.getValue(),
-      maxSize: 150,
+      cell: (info) => <div className="truncate">{info.getValue()}</div>,
+      minSize: 150,
     }),
     columnHelper.display({
       id: "measure",
       header: "Measure",
       cell: ({ row: { original } }) =>
         original.volume || original.weight
-          ? `${original.volume || original.weight || ""}${original.volumeUnit || original.weightUnit || ""}`
+          ? `${original.volume ? `${original.volume}${original.volumeUnit}` : `${original.weight}${original.weightUnit}`}`
           : null,
       maxSize: 100,
     }),
@@ -103,7 +105,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
   const [isOpen, setIsOpen] = useState(false);
   const { openDrawer: openProductDrawer } = useDrawer("create_products");
   const [state, dispatch] = useTable<ProductsType>();
-
+  const { isMd } = useScreenSize();
   // #region queries
   const { data } = useQuery(LocationsAvailableProductsQuery);
 
@@ -133,6 +135,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
             variant: "info",
           },
         ]}
+        columnVisibility={{ manufacturerTitle: isMd }}
         columns={columns({ create, locationId: auth.user?.locationId, locationsAvailableProducts: data || {}, deleteMutation })}
         data={query?.data || []}
         dispatch={dispatch}
