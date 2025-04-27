@@ -69,7 +69,7 @@ const columns = [
     },
   }),
   columnHelper.accessor("businessTitle", {
-    header: "Company",
+    header: "Supplier",
     cell: (info) => <div className="max-w-full truncate">{info.getValue() || ""}</div>,
     meta: {
       isSortable: true,
