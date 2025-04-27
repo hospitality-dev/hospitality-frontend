@@ -16,6 +16,7 @@ export default tseslint.config({
   rules: {
     ...baseConfig.rules,
     ...reactHooks.configs.recommended.rules,
+    camelcase: ["error", { allow: ["^relation__"] }],
     "react/jsx-sort-props": ["error", { reservedFirst: true }],
     "react/prop-types": "off", // Not needed with TypeScript
     "react-hooks/rules-of-hooks": "error",
