@@ -3,11 +3,9 @@ import {
   createColumnHelper,
   Icons,
   LocationsAvailableProductsInitalizerType,
-  LocationsAvailableProductsQuery,
   ProductsCategoriesType,
   ProductsType,
   Table,
-  useAuth,
   useBarcodeScanner,
   useCreate,
   useDelete,
@@ -15,22 +13,16 @@ import {
   useList,
   useLoaderData,
   UseMutateFunction,
-  useQuery,
   useScreenSize,
   useTable,
 } from "@hospitality/hospitality-ui";
 import { useState } from "react";
 
-const columnHelper =
-  createColumnHelper<
-    Pick<ProductsType, "id" | "title" | "weight" | "weightUnit" | "volume" | "volumeUnit" | "manufacturerTitle" | "brandTitle">
-  >();
+const columnHelper = createColumnHelper<ProductsType>();
 
 function columns({
   create,
   deleteMutation,
-  locationId,
-  locationsAvailableProducts,
 }: {
   create: UseMutateFunction<
     unknown,
@@ -43,8 +35,6 @@ function columns({
     unknown
   >;
   deleteMutation: UseMutateFunction<unknown, Error, string, unknown>;
-  locationId: string | null | undefined;
-  locationsAvailableProducts: Record<string, string>;
 }) {
   return [
     columnHelper.accessor("title", {
@@ -75,20 +65,17 @@ function columns({
       maxSize: 100,
     }),
 
-    columnHelper.display({
-      id: "isActive",
+    columnHelper.accessor("availabilityId", {
       header: "",
       cell: ({ row }) => (
         <div className="flex w-28 justify-end">
           <Button
-            label={locationsAvailableProducts?.[row.original.id] ? "Active" : "Inactive"}
+            label={row.original.availabilityId ? "Enabled" : "Disabled"}
             onClick={() => {
-              if (locationId && !locationsAvailableProducts?.[row.original.id])
-                create({ value: { productId: row.original.id } });
-              else if (locationId && locationsAvailableProducts?.[row.original.id])
-                deleteMutation(locationsAvailableProducts?.[row.original.id]);
+              if (row.original.availabilityId) deleteMutation(row.original.availabilityId);
+              else create({ value: { productId: row.original.id } });
             }}
-            variant={locationsAvailableProducts?.[row.original.id] ? "success" : "secondary"}
+            variant={row.original.availabilityId ? "success" : "secondary"}
           />
         </div>
       ),
@@ -101,16 +88,16 @@ function columns({
 }
 
 function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategoriesType, "id" | "title" | "isDefault">) {
-  const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const { openDrawer: openProductDrawer } = useDrawer("create_products");
   const [state, dispatch] = useTable<ProductsType>();
   const { isMd } = useScreenSize();
-  // #region queries
-  const { data } = useQuery(LocationsAvailableProductsQuery);
 
-  const query = useList<ProductsType>(
-    { model: "products", fields: ["id", "title", "weight", "weightUnit", "volume", "volumeUnit", "brandTitle"] },
+  const { data, isPending } = useList<ProductsType>(
+    {
+      model: "products",
+      fields: ["id", "title", "weight", "weightUnit", "volume", "volumeUnit", "brandTitle", "availabilityId"],
+    },
     { enabled: isOpen, urlSuffix: `category/${id}` }
   );
 
@@ -136,12 +123,12 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
           },
         ]}
         columnVisibility={{ manufacturerTitle: isMd }}
-        columns={columns({ create, locationId: auth.user?.locationId, locationsAvailableProducts: data || {}, deleteMutation })}
-        data={query?.data || []}
+        columns={columns({ create, deleteMutation })}
+        data={data || []}
         dispatch={dispatch}
         isCollapsible
         isInitialOpen={isOpen}
-        isLoading={query.isPending}
+        isLoading={isPending}
         meta={state}
         onExpand={() => setIsOpen(!isOpen)}
         title={title}

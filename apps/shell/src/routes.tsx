@@ -3,9 +3,6 @@ import {
   AuthContextType,
   authFetchFunction,
   getLoginRoute,
-  locationsAvailableProductsFields,
-  LocationsAvailableProductsQuery,
-  LocationsAvailableProductsSettingsType,
   LoginResponseType,
   ProductCategoriesQuery,
   productCategoryFields,
@@ -160,11 +157,8 @@ const settingsProducts = createRoute({
   path: "products",
   loader: async () => {
     return {
-      locationsAvailableProducts:
-        await queryClient.ensureQueryData<LocationsAvailableProductsSettingsType>(LocationsAvailableProductsQuery),
       categories: await queryClient.ensureQueryData<ProductsCategoriesType[]>(ProductCategoriesQuery),
       productCategoryFields,
-      locationsAvailableProductsFields,
     };
   },
 }).lazy(() => import("@hospitality/settings").then((d) => d.SettingsProductsRoute));

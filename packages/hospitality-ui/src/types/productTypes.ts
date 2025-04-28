@@ -46,6 +46,7 @@ export const ProductsSchema = object({
   height: string().nullable().optional(),
   widthUnit: WidthHeightUnitsSchema.nullable(),
   heightUnit: WidthHeightUnitsSchema.nullable(),
+  availabilityId: string().uuid().nullable(),
   relation__manufacturerTitle: string(),
   relation__brandTitle: string().nullish(),
   relations: object({
