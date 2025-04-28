@@ -1,3 +1,4 @@
+export * from "./BrandDrawers";
 export * from "./ManufacturerDrawers";
 export * from "./ProductDrawers";
 export * from "./ProductsCategories";

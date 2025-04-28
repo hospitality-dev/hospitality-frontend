@@ -13,6 +13,7 @@ import { ManufacturersType } from "@hospitality/hospitality-ui/src/types/manufac
 const columnHelper = createColumnHelper<ManufacturersType>();
 
 function ActionButton(info: CellContext<ManufacturersType, unknown>) {
+  const { openDrawer } = useDrawer("create_brand");
   return (
     <div>
       {info.row.original.companyId ? (
@@ -31,6 +32,7 @@ function ActionButton(info: CellContext<ManufacturersType, unknown>) {
               id: "add_brand",
               title: "Add brand",
               icon: Icons.addBrand,
+              onClick: () => openDrawer("Create brand", { parentId: info.row.original.id }),
             },
           ]}
           onClick={undefined}

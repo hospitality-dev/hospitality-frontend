@@ -1,5 +1,6 @@
 import {
   BarcodeScanner,
+  CreateBrand,
   CreateManufacturer,
   CreatePurchase,
   Drawer,
@@ -77,6 +78,7 @@ export function Layout() {
           {drawer.type === "create_purchases" ? <CreatePurchase data={drawer.data} /> : null}
           {drawer.type === "modify_purchase" ? <ModifyPurchase data={drawer.data} /> : null}
           {drawer.type === "create_manufacturer" ? <CreateManufacturer /> : null}
+          {drawer.type === "create_brand" ? <CreateBrand data={drawer.data} /> : null}
         </Suspense>
       </Drawer>
       {scannerState.isOpen ? <BarcodeScanner /> : null}

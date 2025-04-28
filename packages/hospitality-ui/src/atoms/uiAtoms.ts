@@ -28,6 +28,10 @@ export type DrawerTypes = (
       type: "add_new_user" | "add_user_from_location" | "create_manufacturer";
       data: null;
     }
+  | {
+      type: "create_brand";
+      data: { parentId: string };
+    }
   | { type: "create_purchases"; data: { url: string } }
   // ID is the purchase ID i.e. the purchase_items' parent_id field
   | { type: "modify_purchase"; data: { id: string } }
