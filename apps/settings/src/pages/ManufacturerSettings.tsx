@@ -3,6 +3,33 @@ import { ManufacturersType } from "@hospitality/hospitality-ui/src/types/manufac
 
 const columnHelper = createColumnHelper<ManufacturersType>();
 
+function ActionButton() {
+  return (
+    <div>
+      <Button
+        allowedPlacements={["left", "left-start", "left-end"]}
+        hasNoBorder
+        icon={Icons.menu}
+        isOutline
+        items={[
+          {
+            id: "edit_manufacturer",
+            title: "Edit manufacturer",
+            icon: Icons.edit,
+          },
+          {
+            id: "add_brand",
+            title: "Add brand",
+            icon: Icons.addBrand,
+          },
+        ]}
+        onClick={undefined}
+        size="xl"
+      />
+    </div>
+  );
+}
+
 const columns = [
   columnHelper.accessor("title", {
     header: "Title",
@@ -21,6 +48,15 @@ const columns = [
     ),
     meta: {},
     minSize: 200,
+  }),
+  columnHelper.display({
+    id: "actions",
+    header: "actions",
+    cell: ActionButton,
+    meta: {
+      alignment: "center",
+    },
+    maxSize: 100,
   }),
 ];
 
