@@ -7,6 +7,7 @@ export const BrandsSchema = object({
   title: string().nonempty(),
   isDefault: boolean().default(false),
   companyId: string().uuid().nonempty(),
+  availabilityId: string().uuid().nullable(),
   contacts: ContactSchema.array().default([]),
 });
 
