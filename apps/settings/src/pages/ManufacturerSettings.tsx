@@ -1,4 +1,13 @@
-import { Button, CellContext, createColumnHelper, Icons, Table, useList, useTable } from "@hospitality/hospitality-ui/src";
+import {
+  Button,
+  CellContext,
+  createColumnHelper,
+  Icons,
+  Table,
+  useDrawer,
+  useList,
+  useTable,
+} from "@hospitality/hospitality-ui/src";
 import { ManufacturersType } from "@hospitality/hospitality-ui/src/types/manufacturerTypes";
 
 const columnHelper = createColumnHelper<ManufacturersType>();
@@ -77,10 +86,11 @@ export function ManufacturerSettings() {
     sort: { field: "companyId", type: "desc" },
   });
   const [meta, disptach] = useTable<ManufacturersType>();
+  const { openDrawer } = useDrawer("create_manufacturer");
   return (
     <div className="flex flex-col gap-y-2">
       <div className="ml-auto w-fit">
-        <Button icon={Icons.add} isDisabled label="Create" onClick={undefined} variant="info" />
+        <Button icon={Icons.add} label="Create" onClick={() => openDrawer("Create manufacturer")} variant="info" />
       </div>
       <Table<ManufacturersType> columns={columns} data={data} dispatch={disptach} meta={meta} type="manufacturers" />
     </div>
