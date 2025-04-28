@@ -1,5 +1,6 @@
 export const Icons = {
   add: "ph:plus" as const,
+  addBrand: "fluent:tag-add-24-regular" as const,
   addItem: "mdi:basket-plus-outline" as const,
   addUser: "ph:user-plus" as const,
   arrowDown: "ph:caret-down" as const,
@@ -28,6 +29,7 @@ export const Icons = {
   doc: "bi:filetype-doc" as const,
   docx: "bi:filetype-docx" as const,
   download: "ph:download" as const,
+  edit: "material-symbols-light:edit-document-outline" as const,
   employee: "mdi:user-badge-outline" as const,
   email: "entypo:email" as const,
   expiry: "fluent:clipboard-clock-24-regular" as const,
