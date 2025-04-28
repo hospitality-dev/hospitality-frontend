@@ -247,7 +247,7 @@ export function Contacts({
   return (
     <form.Field
       children={(field) => (
-        <>
+        <div className="flex flex-col gap-y-2">
           <Title hasBorder label="Contacts" size="xl" variant="primary" />
           <Card hasNoShadow isFullWidth variant="secondary">
             <Collapsible
@@ -476,7 +476,7 @@ export function Contacts({
               </div>
             </Collapsible>
           </Card>
-        </>
+        </div>
       )}
       mode="array"
       name="contacts"
