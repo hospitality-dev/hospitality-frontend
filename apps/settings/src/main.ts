@@ -1,8 +1,7 @@
 import { createLazyRoute, UserProfile } from "@hospitality/hospitality-ui";
 
 import { SettingsLayout } from "./components";
-import { LocationSettings, ProductSettings } from "./pages";
-import { SupplierSettings } from "./pages/SupplierSettings";
+import { LocationSettings, ManufacturerSettings, ProductSettings, SupplierSettings } from "./pages";
 
 export const SettingsLayoutRoute = createLazyRoute("/settings")({
   component: SettingsLayout,
@@ -19,6 +18,11 @@ export const SettingsLocationRoute = createLazyRoute("/settings/location")({
 export const SettingsProductsRoute = createLazyRoute("/settings/products")({
   component: ProductSettings,
 });
+
+export const SettingsManufacturersRoute = createLazyRoute("/settings/manufacturers")({
+  component: ManufacturerSettings,
+});
+
 export const SettingsSuppliersRoute = createLazyRoute("/settings/suppliers")({
   component: SupplierSettings,
 });

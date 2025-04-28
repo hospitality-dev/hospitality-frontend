@@ -149,10 +149,12 @@ const settingsUsers = createRoute({
     };
   },
 }).lazy(() => import("@hospitality/settings").then((d) => d.SettingsUsersRoute));
+
 const settingsLocation = createRoute({
   getParentRoute: () => settingsRootRoute,
   path: "location",
 }).lazy(() => import("@hospitality/settings").then((d) => d.SettingsLocationRoute));
+
 const settingsProducts = createRoute({
   getParentRoute: () => settingsRootRoute,
   path: "products",
@@ -166,6 +168,12 @@ const settingsProducts = createRoute({
     };
   },
 }).lazy(() => import("@hospitality/settings").then((d) => d.SettingsProductsRoute));
+
+const settingsManufacturers = createRoute({
+  getParentRoute: () => settingsRootRoute,
+  path: "manufacturers",
+}).lazy(() => import("@hospitality/settings").then((d) => d.SettingsManufacturersRoute));
+
 const settingsSuppliers = createRoute({
   getParentRoute: () => settingsRootRoute,
   path: "suppliers",
@@ -188,7 +196,13 @@ const routeTree = rootRoute.addChildren([
     employeeProfileRoute,
     inventoryCategoryRoute.addChildren([productInventoryRoute]),
     reportsRootRoute.addChildren([reportsDashboard, reportsGeneratedReports, reportsPurchases]),
-    settingsRootRoute.addChildren([settingsUsers, settingsLocation, settingsProducts, settingsSuppliers]),
+    settingsRootRoute.addChildren([
+      settingsUsers,
+      settingsLocation,
+      settingsProducts,
+      settingsManufacturers,
+      settingsSuppliers,
+    ]),
     suppliersRootRoute.addChildren([suppliersRoute]),
   ]),
   loginRoute,

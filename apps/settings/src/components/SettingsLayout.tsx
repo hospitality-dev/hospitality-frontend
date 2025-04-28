@@ -4,6 +4,7 @@ const tabs = [
   { id: "user", title: "User", link: "/settings/user" },
   { id: "location", title: "Location", link: "/settings/location" },
   { id: "products", title: "Products", link: "/settings/products" },
+  { id: "Manufacturers", title: "Manufacturers", link: "/settings/manufacturers" },
   { id: "suppliers", title: "Suppliers", link: "/settings/suppliers" },
 ];
 
