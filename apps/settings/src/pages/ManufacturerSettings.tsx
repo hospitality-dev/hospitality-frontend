@@ -64,16 +64,14 @@ const columns = [
     header: "Title",
     cell: (info) => (
       <div className="flex max-w-full items-center gap-x-2">
-        {info.row.original.availabilityId ? (
-          <div>
-            <Button
-              hasNoBorder
-              icon={info.row.getIsExpanded() ? Icons.arrowDown : Icons.arrowRight}
-              isOutline
-              onClick={() => info.row.toggleExpanded(!info.row.getIsExpanded())}
-            />
-          </div>
-        ) : null}
+        <div>
+          <Button
+            hasNoBorder
+            icon={info.row.getIsExpanded() ? Icons.arrowDown : Icons.arrowRight}
+            isOutline
+            onClick={() => info.row.toggleExpanded(!info.row.getIsExpanded())}
+          />
+        </div>
         <div className="truncate font-medium">{info.getValue()}</div>
       </div>
     ),
