@@ -4,6 +4,8 @@ import {
   createColumnHelper,
   Icons,
   Table,
+  useCreate,
+  useDelete,
   useDrawer,
   useList,
   useTable,
@@ -41,25 +43,50 @@ function ActionButton(info: CellContext<ManufacturersType, unknown>) {
     </div>
   );
 }
+function EnabledButton(info: CellContext<ManufacturersType, unknown>) {
+  const { mutate: create } = useCreate("locations_available_manufacturers", { invalidateModels: ["manufacturers"] });
+  const { mutate: deleteMutation } = useDelete("locations_available_manufacturers", { invalidateModels: ["manufacturers"] });
+  return (
+    <Button
+      label={info.row.original.availabilityId ? "Enabled" : "Disabled"}
+      onClick={() =>
+        info.row.original.availabilityId
+          ? deleteMutation(info.row.original.availabilityId)
+          : create({ value: { manufacturerId: info.row.original.id } })
+      }
+      variant={info.row.original.availabilityId ? "success" : "primary"}
+    />
+  );
+}
 
 const columns = [
   columnHelper.accessor("title", {
     header: "Title",
     cell: (info) => (
       <div className="flex max-w-full items-center gap-x-2">
-        <div>
-          <Button
-            hasNoBorder
-            icon={info.row.getIsExpanded() ? Icons.arrowDown : Icons.arrowRight}
-            isOutline
-            onClick={() => info.row.toggleExpanded(!info.row.getIsExpanded())}
-          />
-        </div>
+        {info.row.original.availabilityId ? (
+          <div>
+            <Button
+              hasNoBorder
+              icon={info.row.getIsExpanded() ? Icons.arrowDown : Icons.arrowRight}
+              isOutline
+              onClick={() => info.row.toggleExpanded(!info.row.getIsExpanded())}
+            />
+          </div>
+        ) : null}
         <div className="truncate font-medium">{info.getValue()}</div>
       </div>
     ),
     meta: {},
     minSize: 200,
+  }),
+  columnHelper.accessor("availabilityId", {
+    header: "Enabled",
+    cell: EnabledButton,
+    meta: {
+      alignment: "center",
+    },
+    maxSize: 125,
   }),
   columnHelper.accessor("companyId", {
     header: "Default",
@@ -84,7 +111,7 @@ export function ManufacturerSettings() {
   const { data = [] } = useList<ManufacturersType>({
     model: "manufacturers",
     fields: ["id", "title", "companyId"],
-    sort: { field: "companyId", type: "desc" },
+    sort: { field: "title", type: "asc" },
   });
   const [meta, disptach] = useTable<ManufacturersType>();
   const { openDrawer } = useDrawer("create_manufacturer");

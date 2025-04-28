@@ -8,6 +8,7 @@ export const ManufacturersSchema = object({
   ownerId: string().uuid().nonempty(),
   companyId: string().uuid().nonempty(),
   isDefault: boolean().default(false),
+  availabilityId: string().uuid().nullable().default(null),
   contacts: ContactSchema.array().default([]),
 });
 

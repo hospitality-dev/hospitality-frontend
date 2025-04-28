@@ -20,6 +20,9 @@ export const AvailableEntitiesEnum = [
   "suppliers",
   "brands",
   "stores",
+  "locations_available_manufacturers",
+  "locations_available_suppliers",
+  "locations_available_brands",
 ] as const;
 
 export const AvailableSearchableEntitiesEnum = [
