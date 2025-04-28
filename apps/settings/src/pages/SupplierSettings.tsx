@@ -1,4 +1,13 @@
-import { Button, createColumnHelper, Icons, SuppliersType, Table, useList, useTable } from "@hospitality/hospitality-ui";
+import {
+  Button,
+  createColumnHelper,
+  Icons,
+  SuppliersType,
+  Table,
+  useDrawer,
+  useList,
+  useTable,
+} from "@hospitality/hospitality-ui";
 
 type Entity = Pick<SuppliersType, "id" | "title">;
 const columnHelper = createColumnHelper<Entity>();
@@ -36,10 +45,12 @@ const columns = [
 export function SupplierSettings() {
   const { data: suppliers = [] } = useList<SuppliersType>({ model: "suppliers", fields: ["id", "title"] });
   const [meta, dispatch] = useTable<Entity>();
+  const { openDrawer } = useDrawer("create_supplier");
+
   return (
     <div className="flex flex-col gap-y-2">
       <div className="ml-auto w-fit">
-        <Button icon={Icons.add} label="Create" onClick={undefined} variant="info" />
+        <Button icon={Icons.add} label="Create" onClick={() => openDrawer("Create supplier")} variant="info" />
       </div>
       <Table<Entity> columns={columns} data={suppliers} dispatch={dispatch} meta={meta} type="suppliers" />
     </div>

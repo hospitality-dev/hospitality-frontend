@@ -25,7 +25,7 @@ export type DrawerTypes = (
       data: { id: string; types: AllowedFileTypes[]; isMultiple?: boolean; uploadType: AllowedUploadTypes };
     }
   | {
-      type: "add_new_user" | "add_user_from_location" | "create_manufacturer";
+      type: "add_new_user" | "add_user_from_location" | "create_manufacturer" | "create_supplier";
       data: null;
     }
   | {

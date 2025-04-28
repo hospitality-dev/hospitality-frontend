@@ -3,6 +3,7 @@ import {
   CreateBrand,
   CreateManufacturer,
   CreatePurchase,
+  CreateSupplier,
   Drawer,
   ModifyPurchase,
   Navbar,
@@ -79,6 +80,7 @@ export function Layout() {
           {drawer.type === "modify_purchase" ? <ModifyPurchase data={drawer.data} /> : null}
           {drawer.type === "create_manufacturer" ? <CreateManufacturer /> : null}
           {drawer.type === "create_brand" ? <CreateBrand data={drawer.data} /> : null}
+          {drawer.type === "create_supplier" ? <CreateSupplier /> : null}
         </Suspense>
       </Drawer>
       {scannerState.isOpen ? <BarcodeScanner /> : null}
