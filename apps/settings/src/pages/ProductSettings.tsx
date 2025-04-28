@@ -167,6 +167,7 @@ export function ProductSettings() {
       <div className="ml-auto w-fit">
         <Button
           icon={Icons.add}
+          isDisabled
           items={[
             {
               id: "1",
