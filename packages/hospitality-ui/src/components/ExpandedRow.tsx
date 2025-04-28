@@ -271,6 +271,14 @@ const brandsColumns = [
     cell: (info) => <div className="truncate">{info.getValue()}</div>,
     minSize: 300,
   }),
+  brandsColHelper.accessor("availabilityId", {
+    header: "Enabled",
+    cell: () => null,
+    meta: {
+      alignment: "center",
+    },
+    maxSize: 125,
+  }),
   // brandsColHelper.display({
   //   id: "actions",
   //   cell: () => (
@@ -286,11 +294,11 @@ const brandsColumns = [
 ];
 
 function Brands({ parentId }: { parentId?: string }) {
-  const { data } = useList<StoresType>(
+  const { data } = useList<BrandsType>(
     { model: "brands", fields: ["id", "title", "companyId"], sort: { field: "title", type: "asc" } },
     { urlSuffix: `${parentId}`, enabled: !!parentId }
   );
-  const [state, dispatch] = useTable<StoresType>();
+  const [state, dispatch] = useTable<BrandsType>();
 
   return (
     <div className="h-fit">
