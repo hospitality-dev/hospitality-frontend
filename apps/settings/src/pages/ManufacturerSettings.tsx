@@ -1,31 +1,33 @@
-import { Button, createColumnHelper, Icons, Table, useList, useTable } from "@hospitality/hospitality-ui/src";
+import { Button, CellContext, createColumnHelper, Icons, Table, useList, useTable } from "@hospitality/hospitality-ui/src";
 import { ManufacturersType } from "@hospitality/hospitality-ui/src/types/manufacturerTypes";
 
 const columnHelper = createColumnHelper<ManufacturersType>();
 
-function ActionButton() {
+function ActionButton(info: CellContext<ManufacturersType, unknown>) {
   return (
     <div>
-      <Button
-        allowedPlacements={["left", "left-start", "left-end"]}
-        hasNoBorder
-        icon={Icons.menu}
-        isOutline
-        items={[
-          {
-            id: "edit_manufacturer",
-            title: "Edit manufacturer",
-            icon: Icons.edit,
-          },
-          {
-            id: "add_brand",
-            title: "Add brand",
-            icon: Icons.addBrand,
-          },
-        ]}
-        onClick={undefined}
-        size="xl"
-      />
+      {info.row.original.companyId ? (
+        <Button
+          allowedPlacements={["left", "left-start", "left-end"]}
+          hasNoBorder
+          icon={Icons.menu}
+          isOutline
+          items={[
+            {
+              id: "edit_manufacturer",
+              title: "Edit manufacturer",
+              icon: Icons.edit,
+            },
+            {
+              id: "add_brand",
+              title: "Add brand",
+              icon: Icons.addBrand,
+            },
+          ]}
+          onClick={undefined}
+          size="xl"
+        />
+      ) : null}
     </div>
   );
 }
@@ -49,9 +51,17 @@ const columns = [
     meta: {},
     minSize: 200,
   }),
+  columnHelper.accessor("companyId", {
+    header: "Default",
+    cell: ({ row: { original } }) => (original.companyId ? "No" : "Yes"),
+    meta: {
+      alignment: "center",
+    },
+    maxSize: 100,
+  }),
   columnHelper.display({
     id: "actions",
-    header: "actions",
+    header: "Actions",
     cell: ActionButton,
     meta: {
       alignment: "center",
@@ -61,7 +71,11 @@ const columns = [
 ];
 
 export function ManufacturerSettings() {
-  const { data = [] } = useList<ManufacturersType>({ model: "manufacturers", fields: ["id", "title", "companyId"] });
+  const { data = [] } = useList<ManufacturersType>({
+    model: "manufacturers",
+    fields: ["id", "title", "companyId"],
+    sort: { field: "companyId", type: "desc" },
+  });
   const [meta, disptach] = useTable<ManufacturersType>();
   return (
     <div className="flex flex-col gap-y-2">
