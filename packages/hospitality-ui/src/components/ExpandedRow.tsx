@@ -1,7 +1,7 @@
-import { createColumnHelper, Row } from "@tanstack/react-table";
+import { CellContext, createColumnHelper, Row } from "@tanstack/react-table";
 
 import { Icons } from "../enums";
-import { useList, useTable } from "../hooks";
+import { useCreate, useDelete, useList, useTable } from "../hooks";
 import { LocationsProductsGroupedByExpirationType, PurchaseItemsType, StoresType, TableExpandableTypes } from "../types";
 import { BrandsType } from "../types/brandTypes";
 import {
@@ -265,6 +265,23 @@ function Stores({ parentId }: { parentId?: string }) {
 
 // #region Brands
 const brandsColHelper = createColumnHelper<BrandsType>();
+
+function EnabledButton(info: CellContext<BrandsType, unknown>) {
+  const { mutate: create } = useCreate("locations_available_brands", { invalidateModels: ["brands"] });
+  const { mutate: deleteMutation } = useDelete("locations_available_brands", { invalidateModels: ["brands"] });
+  return (
+    <Button
+      label={info.row.original.availabilityId ? "Enabled" : "Disabled"}
+      onClick={() =>
+        info.row.original.availabilityId
+          ? deleteMutation(info.row.original.availabilityId)
+          : create({ value: { brandId: info.row.original.id } })
+      }
+      variant={info.row.original.availabilityId ? "success" : "primary"}
+    />
+  );
+}
+
 const brandsColumns = [
   brandsColHelper.accessor("title", {
     header: "Brand title",
@@ -273,7 +290,7 @@ const brandsColumns = [
   }),
   brandsColHelper.accessor("availabilityId", {
     header: "Enabled",
-    cell: () => null,
+    cell: EnabledButton,
     meta: {
       alignment: "center",
     },
