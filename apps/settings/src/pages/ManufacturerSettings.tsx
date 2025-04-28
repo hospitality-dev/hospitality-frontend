@@ -16,29 +16,28 @@ function ActionButton(info: CellContext<ManufacturersType, unknown>) {
   const { openDrawer } = useDrawer("create_brand");
   return (
     <div>
-      {info.row.original.companyId ? (
-        <Button
-          allowedPlacements={["left", "left-start", "left-end"]}
-          hasNoBorder
-          icon={Icons.menu}
-          isOutline
-          items={[
-            {
-              id: "edit_manufacturer",
-              title: "Edit manufacturer",
-              icon: Icons.edit,
-            },
-            {
-              id: "add_brand",
-              title: "Add brand",
-              icon: Icons.addBrand,
-              onClick: () => openDrawer("Create brand", { parentId: info.row.original.id }),
-            },
-          ]}
-          onClick={undefined}
-          size="xl"
-        />
-      ) : null}
+      <Button
+        allowedPlacements={["left", "left-start", "left-end"]}
+        hasNoBorder
+        icon={Icons.menu}
+        isOutline
+        items={[
+          {
+            id: "edit_manufacturer",
+            title: "Edit manufacturer",
+            icon: Icons.edit,
+            isHidden: !info.row.original.companyId,
+          },
+          {
+            id: "add_brand",
+            title: "Add brand",
+            icon: Icons.addBrand,
+            onClick: () => openDrawer("Create brand", { parentId: info.row.original.id }),
+          },
+        ]}
+        onClick={undefined}
+        size="xl"
+      />
     </div>
   );
 }
