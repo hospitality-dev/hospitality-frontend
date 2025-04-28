@@ -32,7 +32,7 @@ export function ManufacturerSettings() {
       <div className="ml-auto w-fit">
         <Button icon={Icons.add} isDisabled label="Create" onClick={undefined} variant="info" />
       </div>
-      <Table<ManufacturersType> columns={columns} data={data} dispatch={disptach} meta={meta} />
+      <Table<ManufacturersType> columns={columns} data={data} dispatch={disptach} meta={meta} type="manufacturers" />
     </div>
   );
 }

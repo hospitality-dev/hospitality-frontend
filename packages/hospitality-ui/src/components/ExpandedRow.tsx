@@ -3,6 +3,7 @@ import { createColumnHelper, Row } from "@tanstack/react-table";
 import { Icons } from "../enums";
 import { useList, useTable } from "../hooks";
 import { LocationsProductsGroupedByExpirationType, PurchaseItemsType, StoresType, TableExpandableTypes } from "../types";
+import { BrandsType } from "../types/brandTypes";
 import {
   formatCurrency,
   formatISOToString,
@@ -262,12 +263,49 @@ function Stores({ parentId }: { parentId?: string }) {
 
 // #endregion Stores
 
+// #region Brands
+const brandsColHelper = createColumnHelper<BrandsType>();
+const brandsColumns = [
+  brandsColHelper.accessor("title", {
+    header: "Brand title",
+    cell: (info) => <div className="truncate">{info.getValue()}</div>,
+    minSize: 300,
+  }),
+  // brandsColHelper.display({
+  //   id: "actions",
+  //   cell: () => (
+  //     <div className="mr-2.5 w-fit">
+  //       <Button hasNoBorder icon={Icons.location} isDisabled isOutline onClick={() => {}} size="lg" />
+  //     </div>
+  //   ),
+  //   maxSize: 100,
+  //   meta: {
+  //     alignment: "right",
+  //   },
+  // }),
+];
+
+function Brands({ parentId }: { parentId?: string }) {
+  const { data } = useList<StoresType>(
+    { model: "brands", fields: ["id", "title", "companyId"], sort: { field: "title", type: "asc" } },
+    { urlSuffix: `${parentId}`, enabled: !!parentId }
+  );
+  const [state, dispatch] = useTable<StoresType>();
+
+  return (
+    <div className="h-fit">
+      <Table columns={brandsColumns} data={data || []} dispatch={dispatch} meta={state} />
+    </div>
+  );
+}
+// #endregion Manufacturers
 export function ExpandedRow({ id, type }: { id: string; type: TableExpandableTypes | null | undefined }) {
   return (
     <div className="expandedContainer w-full bg-gray-300 p-2">
       {type === "product_grouped_by_expiration_date" ? <ExpandedProductGroupedByExpirationDate productId={id} /> : null}
       {type === "purchases" ? <PurchaseItems parentId={id} /> : null}
       {type === "suppliers" ? <Stores parentId={id} /> : null}
+      {type === "manufacturers" ? <Brands parentId={id} /> : null}
     </div>
   );
 }
