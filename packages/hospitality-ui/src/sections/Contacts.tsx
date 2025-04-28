@@ -235,10 +235,12 @@ export function Contacts({
   form,
   contacts,
   isLoading,
+  type,
 }: {
   form: ReactFormExtendedApi<{ contacts: ContactType[] }>;
   contacts: ContactType[];
   isLoading: boolean;
+  type: "personal" | "professional";
 }) {
   const groupedContactsByType = groupByContacts(contacts || []);
 
@@ -259,7 +261,7 @@ export function Contacts({
                   variant: "info",
                   allowedPlacements: ["left-start"] as const,
                   onClick: () => {},
-                  items: AvailableContactTypes.address.personal.map((addr) => ({
+                  items: AvailableContactTypes.address[type].map((addr) => ({
                     icon: Icons[camelCaseContactType(addr)],
                     allowedPlacements: ["left-start"] as const,
                     id: addr,
@@ -303,7 +305,7 @@ export function Contacts({
                   variant: "info",
                   allowedPlacements: ["left-start"] as const,
                   onClick: () => {},
-                  items: AvailableContactTypes.phone.personal.map((phone) => ({
+                  items: AvailableContactTypes.phone[type].map((phone) => ({
                     icon: Icons[camelCaseContactType(phone)],
                     allowedPlacements: ["left-start"],
                     id: phone,
@@ -347,7 +349,7 @@ export function Contacts({
                   variant: "info",
                   allowedPlacements: ["left-start"] as const,
                   onClick: () => {},
-                  items: AvailableContactTypes.email.personal.map((email) => ({
+                  items: AvailableContactTypes.email[type].map((email) => ({
                     icon: Icons[camelCaseContactType(email)],
                     allowedPlacements: ["left-start"],
                     id: email,
@@ -391,7 +393,7 @@ export function Contacts({
                   variant: "info",
                   allowedPlacements: ["left-start"] as const,
                   onClick: () => {},
-                  items: AvailableContactTypes.website.personal.map((other) => ({
+                  items: AvailableContactTypes.website[type].map((other) => ({
                     icon: Icons[camelCaseContactType(other)],
                     allowedPlacements: ["left-start"],
                     id: other,
@@ -435,7 +437,7 @@ export function Contacts({
                   variant: "info",
                   allowedPlacements: ["left-start"] as const,
                   onClick: () => {},
-                  items: AvailableContactTypes.other.personal.map((other) => ({
+                  items: AvailableContactTypes.other[type].map((other) => ({
                     icon: Icons[other],
                     allowedPlacements: ["left-start"],
                     id: other,
