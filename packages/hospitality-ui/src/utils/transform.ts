@@ -39,6 +39,6 @@ export function groupByContacts(data: ContactType[]) {
       }
       return prev;
     },
-    {} as Record<ContactGroupType, ContactType[]>
+    { other: [], address: [], phone: [], email: [], website: [] } as Record<ContactGroupType, ContactType[]>
   );
 }
