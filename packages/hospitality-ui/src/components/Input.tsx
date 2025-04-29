@@ -16,6 +16,7 @@ import {
   formatPhoneForOptions,
   phoneMask,
   websiteMask,
+  whatsAppMask,
 } from "../utils";
 import { Button } from "./Button";
 import { Select } from "./Select";
@@ -56,6 +57,7 @@ const masks: Record<AllowedInputTypes, MaskitoOptions | null> = {
   url: websiteMask,
   datetime: dateTimeMask,
   date: dateMask,
+  whatsapp: whatsAppMask,
 };
 
 const classes = tv({
@@ -117,6 +119,7 @@ const classes = tv({
       url: "",
       date: "",
       datetime: "",
+      whatsapp: "",
     },
     isDisabled: { true: { inputContainer: "bg-secondary cursor-not-allowed", inputClasses: "cursor-not-allowed" } },
     hasRightSelect: {

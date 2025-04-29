@@ -7,6 +7,7 @@ import {
   Icons,
   SuppliersType,
   Table,
+  useDrawer,
   useList,
   useTable,
 } from "@hospitality/hospitality-ui";
@@ -16,6 +17,7 @@ type Entity = Pick<SuppliersType, "id" | "title" | "companyId">;
 const columnHelper = createColumnHelper<Entity>();
 
 function ActionButton(info: CellContext<Entity, unknown>) {
+  const { openDrawer } = useDrawer("update_supplier");
   const [isActive, setIsActive] = useState(false);
   const { data: contacts = [] } = useList<ContactType>(
     { model: "suppliers", fields: ["id", "title", "value", "contactType"] },
@@ -65,7 +67,13 @@ function ActionButton(info: CellContext<Entity, unknown>) {
               },
             ],
           },
-          { id: "edit", title: "Edit supplier", icon: Icons.edit, isHidden: !info.row.original.companyId },
+          {
+            id: "edit",
+            title: "Edit supplier",
+            onClick: () => openDrawer("Edit supplier", { id: info.row.original.id }),
+            icon: Icons.edit,
+            isHidden: !info.row.original.companyId,
+          },
         ]}
         onClick={undefined}
         size="xl"

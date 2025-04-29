@@ -11,6 +11,7 @@ import {
   getSentenceCase,
   groupByContacts,
   urlValidation,
+  whatsAppValidation,
 } from "../utils";
 
 function onSetPrimary(index: number, form: ReactFormExtendedApi<{ contacts: ContactType[] }>) {
@@ -207,13 +208,13 @@ function ContactDisplay({
                         name={subfield.name}
                         onBlur={subfield.handleBlur}
                         onChange={(e) => subfield.handleChange(e.target.value)}
-                        type="url"
+                        type={contact.contactType === "whatsapp" ? "whatsapp" : "url"}
                         value={subfield.state.value}
                       />
                     )}
                     name={`contacts[${index}].value`}
                     validators={{
-                      onBlur: urlValidation,
+                      onBlur: contact.contactType === "whatsapp" ? whatsAppValidation : urlValidation,
                     }}
                   />
                 );

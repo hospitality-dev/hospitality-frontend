@@ -23,3 +23,12 @@ export function urlValidation(f: { value: unknown }): string | undefined {
   }
   return undefined;
 }
+export function whatsAppValidation(f: { value: unknown }): string | undefined {
+  const res = string()
+    .regex(/^https:\/\/(wa.me)\/\d+$/, "Please enter a valid WhatsApp link.")
+    .safeParse(f.value);
+  if (!res.success) {
+    return formatErrorsForHelperText(res.error.errors.map((i) => i.message));
+  }
+  return undefined;
+}

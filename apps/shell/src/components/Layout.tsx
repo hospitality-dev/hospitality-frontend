@@ -11,6 +11,7 @@ import {
   Progress,
   Sidebar,
   Spinner,
+  UpdateSupplier,
   useBarcodeScanner,
   useDrawerValue,
   useScreenSize,
@@ -82,6 +83,7 @@ export function Layout() {
           {drawer.type === "create_manufacturer" ? <CreateManufacturer /> : null}
           {drawer.type === "create_brand" ? <CreateBrand data={drawer.data} /> : null}
           {drawer.type === "create_supplier" ? <CreateSupplier /> : null}
+          {drawer.type === "update_supplier" ? <UpdateSupplier data={drawer.data} /> : null}
         </Suspense>
       </Drawer>
       {scannerState.isOpen ? <BarcodeScanner /> : null}

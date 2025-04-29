@@ -33,8 +33,9 @@ export type DrawerTypes = (
       data: { parentId: string };
     }
   | { type: "create_purchases"; data: { url: string } }
-  // ID is the purchase ID i.e. the purchase_items' parent_id field
+  //* for modify_purchase ID is the purchase ID i.e. the purchase_items' parent_id field
   | { type: "modify_purchase"; data: { id: string } }
+  | { type: "update_supplier"; data: { id: string } }
 ) & { title: string };
 
 type DrawerState = {

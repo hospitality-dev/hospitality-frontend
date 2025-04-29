@@ -36,6 +36,11 @@ export const websiteMask: MaskitoOptions = {
   postprocessors: [maskitoPrefixPostprocessorGenerator("https://")],
   plugins: [maskitoAddOnFocusPlugin("https://"), maskitoRemoveOnBlurPlugin("https://")],
 };
+export const whatsAppMask: MaskitoOptions = {
+  mask: /^https:\/\/(wa.me)\/\d*$/,
+  postprocessors: [maskitoPrefixPostprocessorGenerator("https://wa.me/")],
+  plugins: [maskitoAddOnFocusPlugin("https://wa.me/"), maskitoRemoveOnBlurPlugin("https://wa.me/")],
+};
 export const dateTimeMask: MaskitoOptions = {
   ...maskitoDateTimeOptionsGenerator({
     dateMode: "dd/mm/yyyy",

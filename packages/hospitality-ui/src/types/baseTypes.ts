@@ -93,7 +93,8 @@ export interface IconType {
 }
 export type AllowedInputTypes =
   | Extract<HTMLInputTypeAttribute, "text" | "number" | "tel" | "search" | "password" | "url" | "date">
-  | "datetime";
+  | "datetime"
+  | "whatsapp";
 
 export type AllowedFileTypes = (typeof AvailableFileTypes)[number];
 
