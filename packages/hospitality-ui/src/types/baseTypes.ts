@@ -80,6 +80,7 @@ export type ActionType = {
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
   items?: DropdownItemType[];
   allowedPlacements?: Placement[];
+  tooltip?: string | ReactNode;
 };
 
 export interface IconType {
