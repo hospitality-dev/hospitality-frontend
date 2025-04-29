@@ -231,14 +231,22 @@ function DropdownComponent({
                               id={dropdownItem.id}
                               image={dropdownItem?.image}
                               isDisabled={dropdownItem?.isDisabled}
-                              onClick={() => {
-                                if (dropdownItem?.isDisabled) return;
-                                if (dropdownItem?.onClick) {
-                                  dropdownItem.onClick();
-                                }
-                                tree?.events.emit("click");
-                                setIsOpen(false);
-                              }}
+                              onClick={
+                                //* This is to apply disabled styles for the dropdown item
+                                //* if there is no onclick for the button itself and no subitems
+                                //* See bellow for dropdown item classes
+
+                                dropdownItem?.onClick
+                                  ? () => {
+                                      if (dropdownItem?.isDisabled) return;
+                                      if (dropdownItem?.onClick) {
+                                        dropdownItem.onClick();
+                                      }
+                                      tree?.events.emit("click");
+                                      setIsOpen(false);
+                                    }
+                                  : undefined
+                              }
                               placement={placement}
                               subItems={dropdownItem.subItems.filter((subItem) => !subItem.isHidden)}
                               title={dropdownItem.title}
@@ -257,14 +265,21 @@ function DropdownComponent({
                             id={dropdownItem.id}
                             image={dropdownItem?.image}
                             isDisabled={dropdownItem?.isDisabled}
-                            onClick={() => {
-                              if (dropdownItem?.isDisabled) return;
-                              if (dropdownItem?.onClick) {
-                                dropdownItem.onClick();
-                              }
-                              tree?.events.emit("click");
-                              setIsOpen(false);
-                            }}
+                            onClick={
+                              //* This is to apply disabled styles for the dropdown item
+                              //* if there is no onclick for the button itself and no subitems
+                              //* See bellow for dropdown item classes
+                              dropdownItem?.onClick
+                                ? () => {
+                                    if (dropdownItem?.isDisabled) return;
+                                    if (dropdownItem?.onClick) {
+                                      dropdownItem.onClick();
+                                    }
+                                    tree?.events.emit("click");
+                                    setIsOpen(false);
+                                  }
+                                : undefined
+                            }
                             placement={placement}
                             subItems={dropdownItem.subItems}
                             title={dropdownItem.title}
@@ -297,13 +312,12 @@ function DropdownItem({
   variant = "primary",
 }: DropdownItemType) {
   const dropdownItemClasses = DropdownItemClasses({
-    isDisabled,
+    isDisabled: isDisabled || (!onClick && !subItems?.length),
     hasSubitems: !!subItems?.length,
     hasImage: !!image,
     hasIcon: !!icon,
     variant,
   });
-
   return (
     <div
       className={dropdownItemClasses}
