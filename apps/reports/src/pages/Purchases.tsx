@@ -67,6 +67,7 @@ const columns = [
     meta: {
       isSortable: true,
     },
+    minSize: 200,
   }),
   columnHelper.accessor("businessTitle", {
     header: "Supplier",
@@ -74,6 +75,7 @@ const columns = [
     meta: {
       isSortable: true,
     },
+    minSize: 150,
   }),
   columnHelper.accessor("purchasedAt", {
     header: "Purchase date",
@@ -85,6 +87,7 @@ const columns = [
     meta: {
       isSortable: true,
     },
+    minSize: 150,
   }),
   columnHelper.accessor("total", {
     header: "Total",
@@ -92,6 +95,7 @@ const columns = [
     meta: {
       isSortable: true,
     },
+    minSize: 125,
   }),
   columnHelper.display({
     id: "actions",
