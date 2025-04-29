@@ -63,6 +63,7 @@ export function Title({ label, variant = "primary", size = "md", hasBorder, icon
                 e.stopPropagation();
                 if (item.onClick) item.onClick(e);
               }}
+              tooltip={item.tooltip}
               variant={item.variant || "primary"}
             />
           </div>

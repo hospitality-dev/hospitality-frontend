@@ -76,6 +76,7 @@ function ContactDisplay({
                     iconColor: contactState.isPrimary ? "gold" : undefined,
                     onClick: () => onSetPrimary(index, form),
                     iconThickness: contactState.isPrimary ? "fill" : undefined,
+                    tooltip: "Primary",
                   },
                   {
                     id: "delete",

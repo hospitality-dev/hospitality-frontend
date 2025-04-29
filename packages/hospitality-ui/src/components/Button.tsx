@@ -1,10 +1,11 @@
 import { Placement } from "@floating-ui/react";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
 import { AvailableIcons, DropdownItemType, IconThickness, Size, Variant } from "../types/baseTypes";
 import { Dropdown } from "./Dropdown";
 import { Icon } from "./Icon";
+import { Tooltip } from "./Tooltip";
 
 type Props = {
   label?: string;
@@ -20,6 +21,7 @@ type Props = {
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
   items?: DropdownItemType[];
   allowedPlacements?: Placement[];
+  tooltip?: string | ReactNode;
 };
 
 const classes = tv({
@@ -156,6 +158,7 @@ export function Button({
   className,
   items,
   allowedPlacements,
+  tooltip,
 }: Props) {
   if (!label && !icon) return null;
   const { base, labelClasses, iconClasses } = classes({
@@ -168,10 +171,12 @@ export function Button({
   });
   return (
     <Dropdown allowedPlacements={allowedPlacements} isDisabled={!items?.length} items={items || []}>
-      <button className={base({ className })} disabled={isDisabled} onClick={onClick}>
-        {label ? <div className={labelClasses()}>{label}</div> : null}{" "}
-        {icon ? <Icon className={iconClasses()} color={iconColor} icon={icon} thickness={iconThickness} /> : null}
-      </button>
+      <Tooltip content={tooltip}>
+        <button className={base({ className })} disabled={isDisabled} onClick={onClick}>
+          {label ? <div className={labelClasses()}>{label}</div> : null}{" "}
+          {icon ? <Icon className={iconClasses()} color={iconColor} icon={icon} thickness={iconThickness} /> : null}
+        </button>
+      </Tooltip>
     </Dropdown>
   );
 }
