@@ -13,6 +13,11 @@ export const Modules: { id: string; title: string; icon: AvailableIcons }[] = [
   },
   { id: "inventory-management" as const, title: "Inventory management", icon: Icons.inventory },
   {
+    id: "suppliers" as const,
+    title: "Suppliers",
+    icon: Icons.supplier,
+  },
+  {
     id: "reports/dashboard" as const,
     title: "Reports",
     icon: Icons.reports,
