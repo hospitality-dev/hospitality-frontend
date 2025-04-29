@@ -1,8 +1,15 @@
 import { CellContext, createColumnHelper, Row } from "@tanstack/react-table";
+import { useState } from "react";
 
 import { Icons } from "../enums";
 import { useCreate, useDelete, useList, useTable } from "../hooks";
-import { LocationsProductsGroupedByExpirationType, PurchaseItemsType, StoresType, TableExpandableTypes } from "../types";
+import {
+  ContactType,
+  LocationsProductsGroupedByExpirationType,
+  PurchaseItemsType,
+  StoresType,
+  TableExpandableTypes,
+} from "../types";
 import { BrandsType } from "../types/brandTypes";
 import {
   formatCurrency,
@@ -233,6 +240,55 @@ function PurchaseItems({ parentId }: { parentId?: string }) {
 // #endregion PurchaseItems
 
 // #region Stores
+function StoresActionButton(info: CellContext<StoresType, unknown>) {
+  const [isActive, setIsActive] = useState(false);
+  const { data: contacts = [] } = useList<ContactType>(
+    { model: "contacts", fields: ["id", "title", "value", "contactType"] },
+    { urlSuffix: `store/${info.row.original.id}`, enabled: isActive }
+  );
+  return (
+    <div
+      className="mr-2.5 w-fit"
+      onMouseEnter={() => {
+        if (!isActive) setIsActive(true);
+      }}>
+      <Button
+        allowedPlacements={["left", "left-start", "left-end"]}
+        hasNoBorder
+        icon={Icons.menu}
+        isOutline
+        items={[
+          {
+            id: "address",
+            title: "Address",
+            allowedPlacements: ["left", "left-start", "left-end", "bottom-start", "bottom-end"],
+            icon: Icons.location,
+            subItems: contacts
+              .filter((c) => c.contactType.includes("address"))
+              .map((c) => ({
+                id: c.id,
+                title: c.value,
+                subItems: [
+                  { id: "map", title: "View on map", icon: Icons.map },
+                  {
+                    id: "google_map",
+                    title: "View in Google Maps",
+                    icon: Icons.googleMaps,
+                    onClick: () => {
+                      const address = encodeURIComponent(`${info.row.original.title} ${c.value}`);
+                      window.open(`https://www.google.com/maps?q=${address}`, "_blank");
+                    },
+                  },
+                ],
+              })),
+          },
+        ]}
+        onClick={() => {}}
+        size="lg"
+      />
+    </div>
+  );
+}
 const storesColHelper = createColumnHelper<StoresType>();
 const storesColumns = [
   storesColHelper.accessor("title", {
@@ -242,11 +298,7 @@ const storesColumns = [
   }),
   storesColHelper.display({
     id: "actions",
-    cell: () => (
-      <div className="mr-2.5 w-fit">
-        <Button hasNoBorder icon={Icons.location} isDisabled isOutline onClick={() => {}} size="lg" />
-      </div>
-    ),
+    cell: StoresActionButton,
     maxSize: 100,
     meta: {
       alignment: "right",
