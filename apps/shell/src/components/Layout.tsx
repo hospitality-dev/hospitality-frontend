@@ -8,6 +8,7 @@ import {
   ModifyPurchase,
   Navbar,
   Outlet,
+  Progress,
   Sidebar,
   Spinner,
   useBarcodeScanner,
@@ -87,6 +88,7 @@ export function Layout() {
       {isLg ? <Sidebar sections={sections} /> : null}
       <div className="flex w-full flex-col">
         <Navbar />
+        <Progress />
         <div className="h-full overflow-auto p-4">
           <Outlet />
         </div>
