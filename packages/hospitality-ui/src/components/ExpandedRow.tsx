@@ -177,6 +177,7 @@ const purchaseItemsColumns = [
       </div>
     ),
     meta: {},
+    minSize: 300,
   }),
   purchaseItemsColHelper.accessor("quantity", {
     header: "Amount",
@@ -184,6 +185,8 @@ const purchaseItemsColumns = [
       const m = info.row.original.title.match(/(\d*)(KG|L|G|ML|OZ|LB)\b/)?.[0];
       return `${info.getValue()} ${m || formatProductUnits(info.row.original)}`.toLowerCase();
     },
+    minSize: 120,
+    maxSize: 120,
   }),
   purchaseItemsColHelper.accessor("pricePerUnit", {
     header: "Price / unit",
@@ -192,11 +195,15 @@ const purchaseItemsColumns = [
         {`${formatCurrency(info.getValue())}${info.row.original.unitOfMeasurement !== "Unknown" ? `/${info.row.original.unitOfMeasurement}` : ""}`.trim()}
       </span>
     ),
+    minSize: 150,
+    maxSize: 150,
   }),
   purchaseItemsColHelper.display({
     id: "total",
     header: "Total",
     cell: (info) => formatCurrency(info.row.original.pricePerUnit * info.row.original.quantity),
+    minSize: 150,
+    maxSize: 150,
   }),
 
   // purchaseItemsColHelper.display({
