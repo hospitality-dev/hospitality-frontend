@@ -7,7 +7,7 @@ import { fetchFunction } from "../../utils";
 
 export function useUpdate<F extends { id: string }>(
   model: AvailableEntities,
-  options?: { refetchModels: AvailableEntities[] } & UseMutationOptions<unknown, unknown, { value: F }>
+  options?: { refetchModels?: AvailableEntities[] } & UseMutationOptions<unknown, unknown, { value: F }>
 ) {
   const userReset = useResetAtom(userAtom);
   const queryClient = useQueryClient();
