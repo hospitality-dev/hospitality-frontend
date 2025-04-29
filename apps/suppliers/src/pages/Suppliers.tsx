@@ -20,7 +20,7 @@ function ActionButton(info: CellContext<Entity, unknown>) {
   const { openDrawer } = useDrawer("update_supplier");
   const [isActive, setIsActive] = useState(false);
   const { data: contacts = [] } = useList<ContactType>(
-    { model: "suppliers", fields: ["id", "title", "value", "contactType"] },
+    { model: "contacts", fields: ["id", "title", "value", "contactType"] },
     { urlSuffix: `supplier/${info.row.original.id}`, enabled: isActive }
   );
   const groupedContacts = groupByContacts(contacts);

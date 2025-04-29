@@ -1,6 +1,6 @@
 import { useForm, useStore } from "@tanstack/react-form";
 
-import { Button, Form, Input } from "../../components";
+import { Button, Form, Input, Spinner } from "../../components";
 import { Icons } from "../../enums";
 import { useCloseDrawer, useCreate, useList, useRead, useUpdate } from "../../hooks";
 import {
@@ -63,7 +63,7 @@ export function CreateSupplier() {
 
 export function UpdateSupplier({ data }: { data: { id: string } }) {
   const closeDrawer = useCloseDrawer();
-  const { data: supplier } = useRead<SuppliersType>({ id: data.id, model: "suppliers", fields: ["id", "title"] });
+  const { data: supplier, isSuccess } = useRead<SuppliersType>({ id: data.id, model: "suppliers", fields: ["id", "title"] });
   const { data: contactsList } = useList<ContactType>(
     { model: "contacts", fields: ["id", "title", "value", "prefix", "iso3", "isPrimary", "isPublic", "placeId"] },
     { urlSuffix: `supplier/${supplier?.id || data.id}`, enabled: !!supplier?.id }
@@ -81,6 +81,8 @@ export function UpdateSupplier({ data }: { data: { id: string } }) {
     onSubmit: mutate,
   });
   const contacts = useStore(form.store, (state) => state.values.contacts);
+
+  if (!isSuccess) return <Spinner />;
 
   return (
     <Form handleSubmit={form.handleSubmit}>
