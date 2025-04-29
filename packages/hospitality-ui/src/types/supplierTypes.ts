@@ -13,10 +13,11 @@ export const SuppliersSchema = object({
 
 export const SuppliersInitializerSchema = object({
   title: string().nonempty(),
-  contacts: ContactSchema.array().default([]),
+  contacts: ContactSchema.array().default([]).optional(),
 });
 
 export const SuppliersMutatorSchema = object({
+  id: string().uuid(),
   title: string().optional(),
   contacts: ContactSchema.array().optional(),
 });
