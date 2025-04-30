@@ -21,6 +21,7 @@ import { ZodIssue } from "zod";
 import { Icons } from "../enums";
 import { AvailableIcons, OptionType, Size, Variant } from "../types/baseTypes";
 import { formatErrorsForHelperText } from "../utils";
+import { Button } from "./Button";
 import { Input } from "./Input";
 import { OptionItem } from "./OptionItem";
 
@@ -28,6 +29,7 @@ type Props = {
   label?: string;
   value: string | string[] | undefined | null;
   isMultiple?: boolean;
+  isClearable?: boolean;
   isDisabled?: boolean;
   hasNoBorder?: boolean;
   hasSearch?: boolean;
@@ -92,6 +94,7 @@ export function Select({
   isDisabled = false,
   hasNoBorder,
   hasSearch,
+  isClearable,
   onChange,
   options = [],
   errors,
@@ -205,6 +208,21 @@ export function Select({
               </div>
             ) : null}
           </span>
+          {isClearable && value ? (
+            <div>
+              <Button
+                hasNoBorder
+                icon={Icons.close}
+                isOutline
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onChange(null);
+                }}
+                size="xs"
+              />
+            </div>
+          ) : null}
           <div className={icon()}>
             <Icon icon={Icons.arrowDown} />
           </div>
