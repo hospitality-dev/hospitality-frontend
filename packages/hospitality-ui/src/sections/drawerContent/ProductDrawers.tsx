@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { number, object, string } from "zod";
 
 import { drawerAtom, DrawerTypes } from "../../atoms";
-import { Button, Form, Input, Select, Spinner } from "../../components";
+import { Button, Form, Input, Search, Select, Spinner } from "../../components";
 import { Icons, Units } from "../../enums";
 import {
   useAddInventoryProducts,
@@ -17,7 +17,6 @@ import {
 } from "../../hooks";
 import { VolumeUnitsType, WeightUnitsType } from "../../types";
 import { BrandsType } from "../../types/brandTypes";
-import { ManufacturersType } from "../../types/manufacturerTypes";
 import {
   ProductsCategoriesType,
   ProductsInitalizerSchema,
@@ -37,12 +36,6 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
   const { data: categories } = useList<ProductsCategoriesType>({
     model: "products_categories",
     fields: ["id", "title"],
-  });
-
-  const { data: manufacturers } = useList<ManufacturersType>({
-    model: "manufacturers",
-    fields: ["id", "title"],
-    sort: { field: "title", type: "asc" },
   });
 
   const form = useForm({
@@ -100,14 +93,14 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
           <form.Field
             children={(field) => (
               <div className="md:col-span-2">
-                <Select
+                <Search
                   label="Manufacturer"
+                  model="manufacturers"
                   onBlur={field.handleBlur}
                   onChange={(e) => {
-                    if (e) field.handleChange(e.value);
+                    field.handleChange(e?.value || null);
                   }}
-                  options={formatForOptions(manufacturers)}
-                  value={field.state.value}
+                  value={field.state.value || ""}
                 />
               </div>
             )}
