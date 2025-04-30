@@ -5,6 +5,7 @@ import {
   CreatePurchase,
   CreateSupplier,
   Drawer,
+  Modal,
   ModifyPurchase,
   Navbar,
   Outlet,
@@ -13,6 +14,7 @@ import {
   Spinner,
   UpdateSupplier,
   useBarcodeScanner,
+  useDialog,
   useDrawerValue,
   useScreenSize,
 } from "@hospitality/hospitality-ui";
@@ -60,11 +62,13 @@ const sections = [
 
 export function Layout() {
   const { scannerState } = useBarcodeScanner();
+  const { openDialog } = useDialog();
   const { isLg } = useScreenSize();
   const drawer = useDrawerValue();
-
   return (
     <main className="bg-layout relative flex h-screen w-screen flex-nowrap overflow-hidden">
+      <button onClick={() => openDialog({ title: "Test" })}>click</button>
+      <Modal />
       <Drawer>
         <Suspense
           fallback={

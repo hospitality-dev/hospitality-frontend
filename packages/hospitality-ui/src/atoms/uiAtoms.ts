@@ -2,7 +2,7 @@ import { Result } from "@zxing/library";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
-import { AllowedFileTypes, AllowedUploadTypes, Size } from "../types";
+import { ActionType, AllowedFileTypes, AllowedUploadTypes, Size, Variant } from "../types";
 
 type SidebarState = {
   isSidebarOpen: boolean;
@@ -45,6 +45,12 @@ type DrawerState = {
   size?: Size;
 } & DrawerTypes;
 
+export type DialogState = {
+  isOpen: boolean;
+  title: string;
+  description?: { content: string; variant?: Variant };
+  actions?: ActionType[];
+};
 type BarcodeScannerState = {
   isOpen: boolean;
   onResult: (result: Result) => void;
@@ -54,5 +60,7 @@ type BarcodeScannerState = {
 export const sidebarStateAtom = atom<SidebarState>({ isSidebarOpen: false, isModulesOpen: true });
 // ======================
 export const drawerAtom = atomWithReset<DrawerState>({ isOpen: false, type: null, title: "", data: null });
+// ======================
+export const dialogAtom = atomWithReset<DialogState>({ isOpen: false, actions: [], title: "", description: undefined });
 // ======================
 export const barcodeScannerAtom = atomWithReset<BarcodeScannerState>({ isOpen: false, onResult: () => {} });

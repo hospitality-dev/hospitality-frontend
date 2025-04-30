@@ -15,6 +15,7 @@ export * from "./Form";
 export * from "./Icon";
 export * from "./Input";
 export * from "./Link";
+export * from "./Modal";
 export * from "./Navbar";
 export * from "./Numpad";
 export * from "./Progress";
