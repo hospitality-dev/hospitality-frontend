@@ -109,10 +109,11 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
             children={(field) => (
               <div className="md:col-span-2">
                 <Select
+                  isClearable
                   label="Brand"
                   onBlur={field.handleBlur}
                   onChange={(e) => {
-                    if (e) field.handleChange(e.value);
+                    field.handleChange(e?.value || null);
                   }}
                   options={formatForOptions(brands)}
                   value={field.state.value}
