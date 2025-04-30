@@ -1,4 +1,4 @@
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useResetAtom } from "jotai/utils";
 
 import { dialogAtom, DialogState } from "../../atoms";
@@ -15,4 +15,8 @@ export function useDialog() {
   }
 
   return { dialog, openDialog, closeDialog };
+}
+
+export function useDialogValue() {
+  return useAtomValue(dialogAtom);
 }

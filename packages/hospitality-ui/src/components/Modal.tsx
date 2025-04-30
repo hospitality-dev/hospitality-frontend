@@ -1,15 +1,18 @@
 import { useAtomValue } from "jotai";
 import { useResetAtom } from "jotai/utils";
+import { ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
 import { dialogAtom } from "../atoms";
+import { Icons } from "../enums";
 import { Button } from "./Button";
 
 const classes = tv({
   slots: {
     background: "pointer-events-none absolute z-[99] flex h-screen w-screen bg-black/50 transition-opacity duration-100",
     modal: "bg-layout mx-auto my-auto w-2/3 transform rounded p-4 shadow transition-transform duration-[400ms] ease-out",
-    titleClasses: "mb-4 text-center text-3xl font-medium",
+    titleClasses: "relative mb-4 w-full text-center text-3xl font-medium",
+    closeButtonClasses: "absolute -top-2 right-0 my-auto",
     descriptionClasses: "h-fit min-h-32 text-center",
     actionsClasses: "flex h-full flex-nowrap items-end gap-x-2",
   },
@@ -27,33 +30,39 @@ const classes = tv({
   },
 });
 
-export function Modal() {
+export function Modal({ children }: { children: ReactNode | null }) {
   const dialog = useAtomValue(dialogAtom);
   const resetDialog = useResetAtom(dialogAtom);
-  const { background, modal, titleClasses, descriptionClasses, actionsClasses } = classes({ isOpen: dialog.isOpen });
+  const { background, modal, titleClasses, closeButtonClasses, descriptionClasses, actionsClasses } = classes({
+    isOpen: dialog.isOpen,
+  });
   return (
     <div className={background()}>
       <div className={modal()}>
-        <h2 className={titleClasses()}>{dialog.title}</h2>
+        <h2 className={titleClasses()}>
+          <span>{dialog.title}</span>
+          <span className={closeButtonClasses()}>
+            <Button hasNoBorder icon={Icons.close} isOutline onClick={resetDialog} size="lg" />
+          </span>
+        </h2>
         {dialog?.description ? <p className={descriptionClasses()}>{dialog?.description.content}</p> : null}
+        {children}
         <div className={actionsClasses()}>
-          {dialog?.actions?.length ? (
-            dialog.actions.map((action) => (
-              <div key={action.id} className="flex-1">
-                <Button
-                  icon={action.icon}
-                  isDisabled={action.isDisabled}
-                  label={action.label}
-                  onClick={action.onClick}
-                  size="lg"
-                  tooltip={action.tooltip}
-                  variant={action.variant}
-                />
-              </div>
-            ))
-          ) : (
-            <Button label="Close" onClick={resetDialog} size="lg" />
-          )}
+          {dialog?.actions?.length
+            ? dialog.actions.map((action) => (
+                <div key={action.id} className="flex-1">
+                  <Button
+                    icon={action.icon}
+                    isDisabled={action.isDisabled}
+                    label={action.label}
+                    onClick={action.onClick}
+                    size="lg"
+                    tooltip={action.tooltip}
+                    variant={action.variant}
+                  />
+                </div>
+              ))
+            : null}
         </div>
       </div>
     </div>

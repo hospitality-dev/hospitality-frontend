@@ -45,12 +45,15 @@ type DrawerState = {
   size?: Size;
 } & DrawerTypes;
 
+export type DialogTypes = "create_manufacturer" | null;
 export type DialogState = {
   isOpen: boolean;
   title: string;
   description?: { content: string; variant?: Variant };
   actions?: ActionType[];
+  type?: DialogTypes;
 };
+
 type BarcodeScannerState = {
   isOpen: boolean;
   onResult: (result: Result) => void;
@@ -61,6 +64,12 @@ export const sidebarStateAtom = atom<SidebarState>({ isSidebarOpen: false, isMod
 // ======================
 export const drawerAtom = atomWithReset<DrawerState>({ isOpen: false, type: null, title: "", data: null });
 // ======================
-export const dialogAtom = atomWithReset<DialogState>({ isOpen: false, actions: [], title: "", description: undefined });
+export const dialogAtom = atomWithReset<DialogState>({
+  isOpen: false,
+  actions: [],
+  title: "",
+  description: undefined,
+  type: null,
+});
 // ======================
 export const barcodeScannerAtom = atomWithReset<BarcodeScannerState>({ isOpen: false, onResult: () => {} });
