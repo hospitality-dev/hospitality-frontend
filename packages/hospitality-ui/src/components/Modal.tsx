@@ -1,6 +1,6 @@
-import { useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { tv } from "tailwind-variants";
 
 import { dialogAtom } from "../atoms";
@@ -31,18 +31,34 @@ const classes = tv({
 });
 
 export function Modal({ children }: { children: ReactNode | null }) {
-  const dialog = useAtomValue(dialogAtom);
+  const [dialog, setDialog] = useAtom(dialogAtom);
   const resetDialog = useResetAtom(dialogAtom);
   const { background, modal, titleClasses, closeButtonClasses, descriptionClasses, actionsClasses } = classes({
     isOpen: dialog.isOpen,
   });
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!dialog.isOpen) resetDialog();
+    }, 450);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [dialog.isOpen]);
+
   return (
     <div className={background()}>
       <div className={modal()}>
         <h2 className={titleClasses()}>
           <span>{dialog.title}</span>
           <span className={closeButtonClasses()}>
-            <Button hasNoBorder icon={Icons.close} isOutline onClick={resetDialog} size="lg" />
+            <Button
+              hasNoBorder
+              icon={Icons.close}
+              isOutline
+              onClick={() => setDialog((prev) => ({ ...prev, isOpen: false }))}
+              size="lg"
+            />
           </span>
         </h2>
         {dialog?.description ? <p className={descriptionClasses()}>{dialog?.description.content}</p> : null}
