@@ -49,6 +49,7 @@ export function Autocomplete({
   value,
   isSearch,
   isDisabled,
+  isLoading,
   options = [],
   isAutofocused,
   helperText,
@@ -119,6 +120,7 @@ export function Autocomplete({
           helperText={helperText}
           isAutofocused={isAutofocused}
           isDisabled={isDisabled}
+          isLoading={isLoading}
           label={label}
           onBlur={onBlur}
           onChange={(e) => {

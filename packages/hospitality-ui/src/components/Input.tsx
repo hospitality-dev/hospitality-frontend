@@ -5,6 +5,7 @@ import { ChangeEvent, FocusEventHandler, HTMLAttributes, KeyboardEvent, MouseEve
 import { tv } from "tailwind-variants";
 import { ZodIssue } from "zod";
 
+import { Icons } from "../enums";
 import { useList } from "../hooks";
 import { AllowedInputTypes, AvailableIcons, OptionType, Size, Variant } from "../types/baseTypes";
 import { CountriesType } from "../types/worldTypes";
@@ -19,6 +20,7 @@ import {
   whatsAppMask,
 } from "../utils";
 import { Button } from "./Button";
+import { Icon } from "./Icon";
 import { Select } from "./Select";
 
 type Props = {
@@ -31,6 +33,7 @@ type Props = {
   onSelectChange?: (item: OptionType | null) => void;
   helperText?: string;
   isDisabled?: boolean;
+  isLoading?: boolean;
   isAutofocused?: boolean;
   variant?: Variant;
   size?: Size;
@@ -121,6 +124,9 @@ const classes = tv({
       whatsapp: "",
     },
     isDisabled: { true: { inputContainer: "bg-secondary cursor-not-allowed", inputClasses: "cursor-not-allowed" } },
+    isLoading: {
+      true: { inputContainer: "cursor-not-allowed bg-gray-200", inputClasses: "cursor-not-allowed text-gray-300" },
+    },
     hasRightSelect: {
       true: {
         inputContainer: "pr-0",
@@ -166,6 +172,7 @@ export function Input({
   onSelectChange,
   size = "md",
   isDisabled = false,
+  isLoading,
   isAutofocused,
   placeholder,
   helperText,
@@ -185,6 +192,7 @@ export function Input({
     variant: errors?.length ? "error" : variant,
     size,
     isDisabled,
+    isLoading,
     type,
     hasRightSelect: !!options?.length,
   });
@@ -205,7 +213,7 @@ export function Input({
           autoComplete="new-password"
           autoFocus={isAutofocused}
           className={inputClasses()}
-          disabled={isDisabled}
+          disabled={isDisabled || isLoading}
           inputMode={inputMode}
           onBlur={onBlur}
           onInput={onChange}
@@ -215,15 +223,24 @@ export function Input({
           type={type === "date" ? "text" : type}
           value={value}
         />
-        {action ? (
+        {action && !isLoading ? (
           <span className="top-0.5 right-2 w-fit">
-            <Button hasNoBorder icon={action.icon} isOutline onClick={action.onClick} size="md" />
+            <Button
+              hasNoBorder
+              icon={action.icon}
+              isDisabled={isDisabled || isLoading}
+              isOutline
+              onClick={action.onClick}
+              size="md"
+            />
           </span>
         ) : null}
+        {isLoading ? <Icon className="animate-spin" icon={Icons.loading} /> : null}
         {options?.length ? (
           <div className={selectClasses()}>
             <Select
               hasNoBorder
+              isDisabled={isDisabled || isLoading}
               onChange={(item) => {
                 if (onSelectChange) onSelectChange(item);
               }}

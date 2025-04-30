@@ -1,6 +1,8 @@
 import { FocusEventHandler, useState } from "react";
 
+import { Icons } from "../enums";
 import { useSearch } from "../hooks/api/searchHooks";
+import { useDebounce } from "../hooks/ui/useDebounce";
 import { AvailableSearchableEntities, OptionType } from "../types";
 import { formatForOptions } from "../utils";
 import { Autocomplete } from "./Autocomplete";
@@ -16,16 +18,28 @@ type Props = {
 
 export function Search({ label, model, onChange, value, onBlur }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
+  const createNewOptions: OptionType[] = [
+    { id: "create_new", label: "Create new", value: "ACTION:CREATE_NEW", icon: Icons.add },
+  ];
 
-  const { data = [] } = useSearch<{ id: string; title: string }>({ model, searchQuery }, { enabled: searchQuery.length >= 3 });
+  const debouncedValue = useDebounce(searchQuery, 350);
 
+  const { data = [], isLoading } = useSearch<{ id: string; title: string }, OptionType>(
+    { model, searchQuery: debouncedValue },
+    {
+      enabled: debouncedValue.length >= 3,
+      select: (res) => createNewOptions.concat(formatForOptions(res, false)),
+    }
+  );
   return (
     <Autocomplete
+      isLoading={isLoading}
+      isSearch
       label={label}
       onBlur={onBlur}
       onChange={onChange}
       onQueryChange={setSearchQuery}
-      options={formatForOptions(data, false)}
+      options={data?.length ? data : [{ id: "create_new", label: "Create new", value: "ACTION:CREATE_NEW", icon: Icons.add }]}
       placeholder="Enter at least 3 characters"
       value={value}
     />

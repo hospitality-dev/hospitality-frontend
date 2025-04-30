@@ -8,10 +8,9 @@ import { AddressesType, ContactTypes, OptionType, ProductsType, UsersType } from
 import { CountriesType } from "../types/worldTypes";
 import { getSentenceCase } from "./transform";
 
-export function formatForOptions<T extends { id: string; title: string; isDisabled?: boolean; isHidden?: boolean }>(
-  data?: T[],
-  isSentenceCase?: boolean
-): OptionType[] {
+export function formatForOptions<
+  T extends { id: string; title: string; isDisabled?: boolean; isHidden?: boolean; icon?: string },
+>(data?: T[], isSentenceCase?: boolean): OptionType[] {
   if (!data) return [];
   return data.map((item) => ({
     isDisabled: item.isDisabled,
