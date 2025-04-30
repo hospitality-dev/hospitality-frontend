@@ -39,7 +39,11 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
     fields: ["id", "title"],
   });
 
-  const { data: manufacturers } = useList<ManufacturersType>({ model: "manufacturers", fields: ["id", "title"] });
+  const { data: manufacturers } = useList<ManufacturersType>({
+    model: "manufacturers",
+    fields: ["id", "title"],
+    sort: { field: "title", type: "asc" },
+  });
 
   const form = useForm({
     defaultValues: {
@@ -61,7 +65,7 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
         onSuccess: resetDrawer,
       }),
     validators: {
-      onBlur: ProductsInitalizerSchema,
+      onChange: ProductsInitalizerSchema,
       onSubmit: ProductsInitalizerSchema,
     },
   });
@@ -69,7 +73,7 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
   const manufacturerId = useStore(form.store, (state) => state.values.manufacturerId);
 
   const { data: brands } = useList<BrandsType>(
-    { model: "brands", fields: ["id", "title"] },
+    { model: "brands", fields: ["id", "title"], sort: { field: "title", type: "asc" } },
     { urlSuffix: manufacturerId || "", enabled: !!manufacturerId }
   );
 
