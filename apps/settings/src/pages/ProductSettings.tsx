@@ -109,6 +109,7 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
   });
   const { mutate: deleteMutation } = useDelete("locations_available_products", { invalidateModels: ["products"] });
   // #endregion mutations
+  const { setOnResult } = useBarcodeScanner();
 
   return (
     <li className={`flex flex-col ${isDefault ? "rounded-md border border-gray-300" : ""}`}>
@@ -120,6 +121,19 @@ function ProductSettingsCategory({ id, title, isDefault }: Pick<ProductsCategori
             onClick: () => openProductDrawer("Create product", { categoryId: id }),
             label: "",
             variant: "info",
+            tooltip: "Add product",
+          },
+          {
+            id: "add_barcode",
+            icon: Icons.barcode,
+            onClick: () => {
+              setOnResult((result) => {
+                openProductDrawer("Create product", { barcode: result.getText() });
+              });
+            },
+
+            label: "",
+            tooltip: "Add product (scan barcode)",
           },
         ]}
         columnVisibility={{ manufacturerTitle: isMd }}
@@ -146,31 +160,18 @@ export function ProductSettings() {
     placeholderData,
     fields: productCategoryFields,
   });
-  const { setOnResult } = useBarcodeScanner();
   const { openDrawer: openProductCategoriesDrawer } = useDrawer("products_categories");
-  const { openDrawer: openProductDrawer } = useDrawer("create_products");
   return (
     <div className="flex flex-col gap-y-2">
       <div className="ml-auto w-fit">
         <Button
           icon={Icons.add}
-          isDisabled
           items={[
             {
               id: "1",
               title: "Create product category",
               icon: Icons.add,
               onClick: () => openProductCategoriesDrawer("Create product category"),
-            },
-            {
-              id: "2",
-              title: "Scan barcode",
-              icon: Icons.barcode,
-              onClick: () => {
-                setOnResult((result) => {
-                  openProductDrawer("Create product", { barcode: result.getText() });
-                });
-              },
             },
           ]}
           label="Create"
