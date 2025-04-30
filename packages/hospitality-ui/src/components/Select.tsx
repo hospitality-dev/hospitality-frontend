@@ -59,12 +59,12 @@ const classes = tv({
 
   variants: {
     variant: {
-      primary: "border-primary",
-      secondary: "border-secondary",
-      info: "border-info",
-      success: "border-success",
-      warning: "border-warning",
-      error: "border-error",
+      primary: "border-primary focus:border-info-highlight",
+      secondary: "border-secondary focus:border-info-highlight",
+      info: "border-info focus:border-info-highlight",
+      success: "border-success focus:border-success-highlight",
+      warning: "border-warning focus:border-warning-highlight",
+      error: "border-error focus:border-error-highlight",
     },
     size: {
       xs: { labelClasses: "text-[10px]", base: "h-6" },
