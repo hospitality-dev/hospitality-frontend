@@ -8,7 +8,7 @@ import { fetchFunction, formatStringToISO, uploadFunction } from "../../utils";
 
 export function useCreate<F, R = string>(
   model: AvailableEntities,
-  options?: { invalidateModels?: AvailableEntities[]; urlSuffix?: string } & UseMutationOptions<unknown, unknown, { value: F }>
+  options?: { invalidateModels?: AvailableEntities[]; urlSuffix?: string } & UseMutationOptions<R, unknown, { value: F }>
 ) {
   const userReset = useResetAtom(userAtom);
   const queryClient = useQueryClient();

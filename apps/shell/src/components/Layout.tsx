@@ -14,6 +14,7 @@ import {
   Spinner,
   UpdateSupplier,
   useBarcodeScanner,
+  useCloseDrawer,
   useDialogValue,
   useDrawerValue,
   useScreenSize,
@@ -65,9 +66,13 @@ export function Layout() {
   const { isLg } = useScreenSize();
   const drawer = useDrawerValue();
   const dialog = useDialogValue();
+  const closeDrawer = useCloseDrawer();
+
   return (
     <main className="bg-layout relative flex h-screen w-screen flex-nowrap overflow-hidden">
-      <Dialog>{dialog.type === "create_manufacturer" ? <CreateManufacturer data={dialog.data} /> : null}</Dialog>
+      <Dialog>
+        {dialog.type === "create_manufacturer" ? <CreateManufacturer data={dialog.data} onSuccess={dialog.onSuccess} /> : null}
+      </Dialog>
       <Drawer>
         <Suspense
           fallback={
@@ -83,7 +88,7 @@ export function Layout() {
           {drawer.type === "upload" ? <UploadDrawer data={drawer.data} /> : null}
           {drawer.type === "create_purchases" ? <CreatePurchase data={drawer.data} /> : null}
           {drawer.type === "modify_purchase" ? <ModifyPurchase data={drawer.data} /> : null}
-          {drawer.type === "create_manufacturer" ? <CreateManufacturer /> : null}
+          {drawer.type === "create_manufacturer" ? <CreateManufacturer onSuccess={closeDrawer} /> : null}
           {drawer.type === "create_brand" ? <CreateBrand data={drawer.data} /> : null}
           {drawer.type === "create_supplier" ? <CreateSupplier /> : null}
           {drawer.type === "update_supplier" ? <UpdateSupplier data={drawer.data} /> : null}

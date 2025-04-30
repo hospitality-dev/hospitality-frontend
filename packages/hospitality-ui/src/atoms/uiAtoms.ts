@@ -52,6 +52,8 @@ export type DialogState = {
   title: string;
   description?: { content: string; variant?: Variant };
   actions?: ActionType[];
+  onClose?: () => void;
+  onSuccess?: (data: string) => void;
 } & DialogTypes;
 
 type BarcodeScannerState = {

@@ -10,7 +10,8 @@ import { Button } from "./Button";
 const classes = tv({
   slots: {
     background: "pointer-events-none absolute z-[99] flex h-screen w-screen bg-black/50 transition-opacity duration-100",
-    modal: "bg-layout mx-auto my-auto w-2/3 transform rounded p-4 shadow transition-transform duration-[400ms] ease-out",
+    modal:
+      "bg-layout mx-auto my-auto h-1/2 max-h-2/3 w-2/3 transform overflow-hidden rounded-md p-4 shadow transition-transform duration-[400ms] ease-out",
     titleClasses: "relative mb-4 w-full text-center text-3xl font-medium",
     closeButtonClasses: "absolute -top-2 right-0 my-auto",
     descriptionClasses: "h-fit min-h-32 text-center",
@@ -56,13 +57,16 @@ export function Dialog({ children }: { children: ReactNode | null }) {
               hasNoBorder
               icon={Icons.close}
               isOutline
-              onClick={() => setDialog((prev) => ({ ...prev, isOpen: false }))}
+              onClick={() => {
+                if (dialog.onClose) dialog.onClose();
+                setDialog((prev) => ({ ...prev, isOpen: false }));
+              }}
               size="lg"
             />
           </span>
         </h2>
         {dialog?.description ? <p className={descriptionClasses()}>{dialog?.description.content}</p> : null}
-        {children}
+        <div className="h-fit overflow-y-auto">{children}</div>
         <div className={actionsClasses()}>
           {dialog?.actions?.length
             ? dialog.actions.map((action) => (

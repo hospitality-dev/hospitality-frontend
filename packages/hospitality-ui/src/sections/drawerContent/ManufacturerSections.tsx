@@ -2,7 +2,7 @@ import { useForm, useStore } from "@tanstack/react-form";
 import { object, string } from "zod";
 
 import { Button, Form, Input } from "../../components";
-import { useCloseDrawer, useCreate } from "../../hooks";
+import { useCreate } from "../../hooks";
 import { ContactSchema } from "../../types";
 import { ManufacturersInitalizerType } from "../../types/manufacturerTypes";
 import { Contacts } from "../Contacts";
@@ -12,9 +12,14 @@ const validationSchema = object({
   contacts: ContactSchema.array(),
 });
 
-export function CreateManufacturer({ data }: { data?: ManufacturersInitalizerType }) {
-  const closeDrawer = useCloseDrawer();
-  const { mutate } = useCreate("manufacturers", { onSuccess: closeDrawer });
+export function CreateManufacturer({
+  data,
+  onSuccess,
+}: {
+  data?: ManufacturersInitalizerType;
+  onSuccess?: (data: string) => void;
+}) {
+  const { mutate } = useCreate("manufacturers", { onSuccess });
   const form = useForm({
     defaultValues: {
       title: data?.title || "",

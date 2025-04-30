@@ -10,6 +10,7 @@ import {
   useAddInventoryProducts,
   useBarcodeScanner,
   useCreate,
+  useDialog,
   useList,
   useRead,
   useRemoveProducts,
@@ -29,10 +30,12 @@ import { formatForOptions, getSentenceCase } from "../../utils";
 export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "create_products" }>, "data">) {
   const { isLg } = useScreenSize();
   const resetDrawer = useResetAtom(drawerAtom);
+  const { openDialog, closeDialog } = useDialog();
   const { setOnResult, closeBarcodeScanner } = useBarcodeScanner();
   const { mutate: create } = useCreate<ProductsInitalizerType>("products", {
     invalidateModels: ["locations_available_products"],
   });
+
   const { data: categories } = useList<ProductsCategoriesType>({
     model: "products_categories",
     fields: ["id", "title"],
@@ -98,6 +101,18 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
                   onBlur={field.handleBlur}
                   onChange={(e) => {
                     field.handleChange(e?.value || null);
+                  }}
+                  onCreateNew={({ query }) => {
+                    openDialog({
+                      title: "Create manufacturer",
+                      type: "create_manufacturer",
+                      data: { title: query || "", contacts: [] },
+                      onClose: () => field.handleChange(null),
+                      onSuccess: (data: string) => {
+                        field.handleChange(data);
+                        closeDialog();
+                      },
+                    });
                   }}
                   value={field.state.value || ""}
                 />

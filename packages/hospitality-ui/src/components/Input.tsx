@@ -180,6 +180,8 @@ export function Input({
   onSelectChange,
   size = "md",
   isDisabled = false,
+  // ! Do not set as false by default to avoid unnecessary
+  // ! useEffect run below for focus
   isLoading,
   isAutofocused,
   placeholder,
@@ -207,10 +209,10 @@ export function Input({
   });
 
   useEffect(() => {
-    if (!isLoading && inputRef?.current) {
+    if (!isLoading && isLoading !== undefined && value && inputRef?.current) {
       inputRef.current.focus();
     }
-  }, [isLoading]);
+  }, [isLoading, value]);
 
   return (
     <div className={container()}>

@@ -139,7 +139,12 @@ export function Autocomplete({
             } else if (e.key === "Enter" && !value && activeIndex !== null) {
               e.preventDefault();
               e.stopPropagation();
-              onChange(items[activeIndex]);
+              if (items[activeIndex].onClick) {
+                items[activeIndex].onClick({ item: items[activeIndex], query });
+              } else {
+                onChange(items[activeIndex]);
+              }
+              setOpen(false);
             } else if (e.key !== "Backspace" && e.key !== "Delete" && e.key !== "ArrowUp" && e.key !== "ArrowDown" && value) {
               e.preventDefault();
               e.stopPropagation();
@@ -175,6 +180,7 @@ export function Autocomplete({
                   onChange={(e) => {
                     onChange(e);
                     setOpen(false);
+                    setQuery("");
                   }}
                   query={query}
                 />

@@ -13,13 +13,13 @@ type Props = {
   onChange: (value: OptionType | null) => void;
   value: string | undefined;
   onBlur?: FocusEventHandler<HTMLInputElement>;
-  hasNewOption?: boolean;
+  onCreateNew?: ({ query, item }: { item: OptionType | null; query: string }) => void;
 };
 
-export function Search({ label, model, onChange, value, onBlur, hasNewOption }: Props) {
+export function Search({ label, model, onChange, value, onBlur, onCreateNew }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
-  const createNewOptions: OptionType[] = hasNewOption
-    ? [{ id: "create_new", label: "Create new", value: "ACTION:CREATE_NEW", icon: Icons.add }]
+  const createNewOptions: OptionType[] = onCreateNew
+    ? [{ id: "create_new", label: "Create new", value: "ACTION:CREATE_NEW", onClick: onCreateNew, icon: Icons.add }]
     : [];
 
   const debouncedValue = useDebounce(searchQuery, 350);
