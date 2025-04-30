@@ -65,7 +65,6 @@ export function AddressSearch({
               return 0;
             })
       }
-      query={searchQuery}
       value={value || ""}
       variant={variant}
     />

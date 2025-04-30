@@ -23,13 +23,12 @@ import { OptionItem } from "./OptionItem";
 
 type Props = {
   label: string;
-  query: string;
   value?: string;
   displayTitle?: string | null;
   variant?: Variant;
   size?: Size;
   helperText?: string;
-  onQueryChange: (value: string) => void;
+  onQueryChange?: (value: string) => void;
   onChange: (item: OptionType | null) => void;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   options: OptionType[];
@@ -46,7 +45,6 @@ export function Autocomplete({
   size = "md",
   onQueryChange,
   onChange,
-  query,
   value,
   isSearch,
   isDisabled,
@@ -59,7 +57,7 @@ export function Autocomplete({
 }: Props) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
+  const [query, setQuery] = useState("");
   const listRef = useRef<Array<HTMLElement | null>>([]);
 
   const { refs, floatingStyles, context } = useFloating<HTMLInputElement>({
@@ -120,14 +118,19 @@ export function Autocomplete({
           isAutofocused={isAutofocused}
           isDisabled={isDisabled}
           label={label}
-          name="search"
+          name="auto-complete"
           onBlur={onBlur}
-          onChange={(e) => onQueryChange(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            if (onQueryChange) onQueryChange(e.target.value);
+          }}
           onKeyDown={(e) => {
             if ((e.key === "Backspace" || e.key === "Delete") && value) {
               e.preventDefault();
               e.stopPropagation();
-              onQueryChange("");
+
+              setQuery("");
+              if (onQueryChange) onQueryChange("");
               onChange(null);
             } else if (e.key === "Enter" && !value && activeIndex !== null) {
               onChange(items[activeIndex]);
@@ -142,7 +145,7 @@ export function Autocomplete({
           variant={variant}
         />
       </div>
-      {open && items.length ? (
+      {open && items.length && query.length ? (
         <FloatingFocusManager context={context} initialFocus={-1} visuallyHiddenDismiss>
           <div
             {...getFloatingProps({
