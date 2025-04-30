@@ -23,7 +23,6 @@ import { Select } from "./Select";
 
 type Props = {
   label?: string;
-  name: string;
   value: string | number | undefined;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
@@ -68,7 +67,7 @@ const classes = tv({
     inputClasses: "flex-1 pr-2 focus-within:outline-0 focus:outline-0",
     labelClasses: "font-small text-gray-900",
     helperTextClasses: "h-3.5 text-sm",
-    selectClasses: "",
+    selectClasses: "[&>div>div>div:focus]:rounded-l-none [&>div>div>div:focus]:border-y-0 [&>div>div>div:focus]:border-r-0",
   },
   variants: {
     variant: {
@@ -124,7 +123,7 @@ const classes = tv({
     isDisabled: { true: { inputContainer: "bg-secondary cursor-not-allowed", inputClasses: "cursor-not-allowed" } },
     hasRightSelect: {
       true: {
-        inputClasses: "pr-0",
+        inputContainer: "pr-0",
         selectClasses: "truncate",
       },
     },
@@ -162,7 +161,6 @@ function TelephoneSelect({ selectValue, onSelectChange }: Pick<Props, "onSelectC
 
 export function Input({
   label,
-  name,
   variant = "primary",
   selectValue,
   onSelectChange,
@@ -209,7 +207,6 @@ export function Input({
           className={inputClasses()}
           disabled={isDisabled}
           inputMode={inputMode}
-          name={name}
           onBlur={onBlur}
           onInput={onChange}
           onKeyDown={onKeyDown}
