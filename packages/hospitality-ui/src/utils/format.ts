@@ -10,7 +10,7 @@ import { getSentenceCase } from "./transform";
 
 export function formatForOptions<
   T extends { id: string; title: string; isDisabled?: boolean; isHidden?: boolean; icon?: string },
->(data?: T[], isSentenceCase?: boolean): OptionType[] {
+>(data?: T[], isSentenceCase?: boolean, onClickItem?: (item: OptionType) => void): OptionType[] {
   if (!data) return [];
   return data.map((item) => ({
     isDisabled: item.isDisabled,
@@ -18,6 +18,7 @@ export function formatForOptions<
     id: item.id,
     label: isSentenceCase === true || isSentenceCase === undefined ? getSentenceCase(item.title) : item.title,
     value: item.id,
+    onClick: onClickItem,
   }));
 }
 export function formatAddressesForOptions(data: AddressesType[]): OptionType[] {

@@ -16,11 +16,11 @@ type Props = {
   hasNewOption?: boolean;
 };
 
-export function Search({ label, model, onChange, value, onBlur }: Props) {
+export function Search({ label, model, onChange, value, onBlur, hasNewOption }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
-  const createNewOptions: OptionType[] = [
-    { id: "create_new", label: "Create new", value: "ACTION:CREATE_NEW", icon: Icons.add },
-  ];
+  const createNewOptions: OptionType[] = hasNewOption
+    ? [{ id: "create_new", label: "Create new", value: "ACTION:CREATE_NEW", icon: Icons.add }]
+    : [];
 
   const debouncedValue = useDebounce(searchQuery, 350);
 
@@ -39,7 +39,7 @@ export function Search({ label, model, onChange, value, onBlur }: Props) {
       onBlur={onBlur}
       onChange={onChange}
       onQueryChange={setSearchQuery}
-      options={data?.length ? data : [{ id: "create_new", label: "Create new", value: "ACTION:CREATE_NEW", icon: Icons.add }]}
+      options={data}
       placeholder="Enter at least 3 characters"
       value={value}
     />

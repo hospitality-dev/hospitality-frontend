@@ -40,7 +40,11 @@ export function OptionItem({
       id={item.value}
       onClick={() => {
         if (item.isDisabled) return;
-        onChange(item);
+        if (item.onClick) {
+          item.onClick(item);
+        } else {
+          onChange(item);
+        }
       }}
       role="option">
       <div className={label()}>
