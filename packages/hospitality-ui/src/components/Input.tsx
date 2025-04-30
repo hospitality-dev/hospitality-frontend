@@ -1,7 +1,15 @@
 import { MaskitoOptions } from "@maskito/core";
 import { useMaskito } from "@maskito/react";
 import { ValidationError } from "@tanstack/react-form";
-import { ChangeEvent, FocusEventHandler, HTMLAttributes, KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
+import {
+  ChangeEvent,
+  FocusEventHandler,
+  HTMLAttributes,
+  KeyboardEvent,
+  MouseEvent as ReactMouseEvent,
+  useEffect,
+  useRef,
+} from "react";
 import { tv } from "tailwind-variants";
 import { ZodIssue } from "zod";
 
@@ -187,7 +195,8 @@ export function Input({
   step = "any",
   options,
 }: Props) {
-  const inputRef = useMaskito({ options: masks[type] });
+  const inputRef = useRef<HTMLInputElement | null>();
+  const inputMaskitoRef = useMaskito({ options: masks[type] });
   const { inputClasses, inputContainer, container, labelClasses, helperTextClasses, selectClasses } = classes({
     variant: errors?.length ? "error" : variant,
     size,
@@ -196,6 +205,12 @@ export function Input({
     type,
     hasRightSelect: !!options?.length,
   });
+
+  useEffect(() => {
+    if (!isLoading && inputRef?.current) {
+      inputRef.current.focus();
+    }
+  }, [isLoading]);
 
   return (
     <div className={container()}>
@@ -208,7 +223,10 @@ export function Input({
           </div>
         ) : null}
         <input
-          ref={inputRef}
+          ref={(node) => {
+            inputRef.current = node;
+            return inputMaskitoRef;
+          }}
           aria-autocomplete="none"
           autoComplete="new-password"
           autoFocus={isAutofocused}
