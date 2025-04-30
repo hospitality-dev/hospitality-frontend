@@ -2,13 +2,13 @@ import { useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query
 import { useResetAtom } from "jotai/utils";
 
 import { userAtom } from "../../atoms";
-import { AvailableEntities } from "../../types";
+import { AvailableEntities, FormattedEntity } from "../../types";
 import { fetchFunction, getSearchParams, urlFunction } from "../../utils";
 
 export type useReadProps<F> = {
   id: string;
   model: AvailableEntities;
-  fields: (keyof F)[];
+  fields: (keyof FormattedEntity<F>)[];
 };
 
 export function useRead<F>(

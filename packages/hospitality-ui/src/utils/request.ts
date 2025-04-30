@@ -2,11 +2,18 @@ import ky from "ky";
 import kebabcase from "lodash.kebabcase";
 import snakecase from "lodash.snakecase";
 
-import { AvailableEntities, AvailableSearchableEntities, RequestFilters, ResponseType, TableStateType } from "../types";
+import {
+  AvailableEntities,
+  AvailableSearchableEntities,
+  FormattedEntity,
+  RequestFilters,
+  ResponseType,
+  TableStateType,
+} from "../types";
 import { handleUnauthenticated } from "./response";
 
 export function getSearchParams<F>(
-  fields: (keyof F)[],
+  fields: (keyof FormattedEntity<F>)[],
   filters?: RequestFilters<F>,
   sort?: TableStateType<F>["sort"],
   relations?: F extends { relations: infer R } ? R : never
