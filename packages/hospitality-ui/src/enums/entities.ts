@@ -35,6 +35,9 @@ export const AvailableSearchableEntitiesEnum = [
   "locations_products",
   "locations_users",
   "users",
+  "manufacturers",
+  "brands",
+  "suppliers",
 ] as const;
 
 export const AvailableContactTypes = {

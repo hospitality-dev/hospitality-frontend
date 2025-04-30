@@ -37,6 +37,7 @@ type Props = {
   isDisabled?: boolean;
   isAutofocused?: boolean;
   errors?: ValidationError[] | ZodIssue[];
+  placeholder?: string;
 };
 
 export function Autocomplete({
@@ -54,6 +55,7 @@ export function Autocomplete({
   displayTitle,
   onBlur,
   errors,
+  placeholder,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -129,16 +131,19 @@ export function Autocomplete({
               e.preventDefault();
               e.stopPropagation();
 
+              onChange(null);
               setQuery("");
               if (onQueryChange) onQueryChange("");
-              onChange(null);
             } else if (e.key === "Enter" && !value && activeIndex !== null) {
+              e.preventDefault();
+              e.stopPropagation();
               onChange(items[activeIndex]);
             } else if (e.key !== "Backspace" && e.key !== "Delete" && e.key !== "ArrowUp" && e.key !== "ArrowDown" && value) {
               e.preventDefault();
               e.stopPropagation();
             }
           }}
+          placeholder={placeholder}
           size={size}
           type="search"
           value={displayItem ? formatDisplayItem(displayItem) : query || displayTitle || ""}
@@ -165,7 +170,10 @@ export function Autocomplete({
                   isActive={activeIndex === index}
                   isSelected={item.value === value}
                   item={item}
-                  onChange={onChange}
+                  onChange={(e) => {
+                    onChange(e);
+                    setOpen(false);
+                  }}
                 />
               </div>
             ))}
