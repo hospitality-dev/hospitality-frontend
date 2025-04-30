@@ -4,6 +4,7 @@ import { object, string } from "zod";
 import { Button, Form, Input } from "../../components";
 import { useCloseDrawer, useCreate } from "../../hooks";
 import { ContactSchema } from "../../types";
+import { ManufacturersInitalizerType } from "../../types/manufacturerTypes";
 import { Contacts } from "../Contacts";
 
 const validationSchema = object({
@@ -11,13 +12,13 @@ const validationSchema = object({
   contacts: ContactSchema.array(),
 });
 
-export function CreateManufacturer() {
+export function CreateManufacturer({ data }: { data?: ManufacturersInitalizerType }) {
   const closeDrawer = useCloseDrawer();
   const { mutate } = useCreate("manufacturers", { onSuccess: closeDrawer });
   const form = useForm({
     defaultValues: {
-      title: "",
-      contacts: [],
+      title: data?.title || "",
+      contacts: data?.contacts || [],
     },
     validators: {
       onSubmit: validationSchema,

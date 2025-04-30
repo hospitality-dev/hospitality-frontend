@@ -4,8 +4,8 @@ import {
   CreateManufacturer,
   CreatePurchase,
   CreateSupplier,
+  Dialog,
   Drawer,
-  Modal,
   ModifyPurchase,
   Navbar,
   Outlet,
@@ -67,7 +67,7 @@ export function Layout() {
   const dialog = useDialogValue();
   return (
     <main className="bg-layout relative flex h-screen w-screen flex-nowrap overflow-hidden">
-      <Modal>{dialog.type === "create_manufacturer" ? <CreateManufacturer /> : null}</Modal>
+      <Dialog>{dialog.type === "create_manufacturer" ? <CreateManufacturer data={dialog.data} /> : null}</Dialog>
       <Drawer>
         <Suspense
           fallback={

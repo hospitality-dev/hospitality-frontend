@@ -106,6 +106,7 @@ export function Autocomplete({
       setActiveIndex(0);
     }
   }, [query, items.length]);
+
   return (
     <>
       <div
@@ -175,6 +176,7 @@ export function Autocomplete({
                     onChange(e);
                     setOpen(false);
                   }}
+                  query={query}
                 />
               </div>
             ))}

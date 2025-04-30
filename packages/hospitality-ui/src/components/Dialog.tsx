@@ -30,7 +30,7 @@ const classes = tv({
   },
 });
 
-export function Modal({ children }: { children: ReactNode | null }) {
+export function Dialog({ children }: { children: ReactNode | null }) {
   const [dialog, setDialog] = useAtom(dialogAtom);
   const resetDialog = useResetAtom(dialogAtom);
   const { background, modal, titleClasses, closeButtonClasses, descriptionClasses, actionsClasses } = classes({

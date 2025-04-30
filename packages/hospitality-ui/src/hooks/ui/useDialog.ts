@@ -8,6 +8,7 @@ export function useDialog() {
   const closeDialog = useResetAtom(dialogAtom);
 
   function openDialog(d: Omit<DialogState, "isOpen">) {
+    // @ts-expect-error ts can't predict type
     setDialog(() => ({
       ...d,
       isOpen: true,

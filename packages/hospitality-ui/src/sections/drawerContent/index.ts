@@ -1,5 +1,5 @@
 export * from "./BrandDrawers";
-export * from "./ManufacturerDrawers";
+export * from "./ManufacturerSections";
 export * from "./ProductDrawers";
 export * from "./ProductsCategories";
 export * from "./PurchasesDrawers";

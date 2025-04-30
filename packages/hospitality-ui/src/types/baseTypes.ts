@@ -46,7 +46,7 @@ export type OptionType = {
   isDisabled?: boolean;
   image?: string;
   icon?: string;
-  onClick?: (item: OptionType) => void;
+  onClick?: ({ item, query }: { item: OptionType; query: string }) => void;
   additionalData?: Record<string, string | string[] | number | number[] | null>;
 };
 

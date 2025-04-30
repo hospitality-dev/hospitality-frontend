@@ -3,6 +3,7 @@ import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
 import { ActionType, AllowedFileTypes, AllowedUploadTypes, Size, Variant } from "../types";
+import { ManufacturersInitalizerType } from "../types/manufacturerTypes";
 
 type SidebarState = {
   isSidebarOpen: boolean;
@@ -45,14 +46,13 @@ type DrawerState = {
   size?: Size;
 } & DrawerTypes;
 
-export type DialogTypes = "create_manufacturer" | null;
+export type DialogTypes = { type: null; data: null } | { type: "create_manufacturer"; data: ManufacturersInitalizerType };
 export type DialogState = {
   isOpen: boolean;
   title: string;
   description?: { content: string; variant?: Variant };
   actions?: ActionType[];
-  type?: DialogTypes;
-};
+} & DialogTypes;
 
 type BarcodeScannerState = {
   isOpen: boolean;
@@ -70,6 +70,7 @@ export const dialogAtom = atomWithReset<DialogState>({
   title: "",
   description: undefined,
   type: null,
+  data: null,
 });
 // ======================
 export const barcodeScannerAtom = atomWithReset<BarcodeScannerState>({ isOpen: false, onResult: () => {} });

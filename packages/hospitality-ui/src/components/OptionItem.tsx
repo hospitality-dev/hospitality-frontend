@@ -26,7 +26,9 @@ export function OptionItem({
   isSelected,
   item,
   onChange,
+  query,
 }: {
+  query: string;
   isActive?: boolean;
   isSelected?: boolean;
   item: OptionType;
@@ -41,7 +43,7 @@ export function OptionItem({
       onClick={() => {
         if (item.isDisabled) return;
         if (item.onClick) {
-          item.onClick(item);
+          item.onClick({ item, query });
         } else {
           onChange(item);
         }
