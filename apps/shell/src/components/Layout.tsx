@@ -14,7 +14,6 @@ import {
   Spinner,
   UpdateSupplier,
   useBarcodeScanner,
-  useDialog,
   useDialogValue,
   useDrawerValue,
   useScreenSize,
@@ -63,13 +62,11 @@ const sections = [
 
 export function Layout() {
   const { scannerState } = useBarcodeScanner();
-  const { openDialog } = useDialog();
   const { isLg } = useScreenSize();
   const drawer = useDrawerValue();
   const dialog = useDialogValue();
   return (
     <main className="bg-layout relative flex h-screen w-screen flex-nowrap overflow-hidden">
-      <button onClick={() => openDialog({ title: "Test", type: "create_manufacturer" })}>click</button>
       <Modal>{dialog.type === "create_manufacturer" ? <CreateManufacturer /> : null}</Modal>
       <Drawer>
         <Suspense
