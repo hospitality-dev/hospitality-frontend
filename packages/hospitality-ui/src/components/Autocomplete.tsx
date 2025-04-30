@@ -120,7 +120,6 @@ export function Autocomplete({
           isAutofocused={isAutofocused}
           isDisabled={isDisabled}
           label={label}
-          name="auto-complete"
           onBlur={onBlur}
           onChange={(e) => {
             setQuery(e.target.value);

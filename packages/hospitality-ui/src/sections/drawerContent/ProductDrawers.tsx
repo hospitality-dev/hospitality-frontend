@@ -81,7 +81,6 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
                   errors={field.state.meta.errors}
                   isAutofocused
                   label={getSentenceCase(field.name)}
-                  name={field.name}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   value={field.state.value}
@@ -147,7 +146,6 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
                       errors={field.state.meta.errors}
                       inputMode="decimal"
                       label={getSentenceCase(field.name)}
-                      name={field.name}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(Number(e.target.value))}
                       onSelectChange={(item) => form.setFieldValue("weightUnit", (item?.value as WeightUnitsType) || null)}
@@ -166,7 +164,6 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
                       errors={field.state.meta.errors}
                       inputMode="decimal"
                       label={getSentenceCase(field.name)}
-                      name={field.name}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(Number(e.target.value))}
                       onSelectChange={(item) => form.setFieldValue("volumeUnit", (item?.value as VolumeUnitsType) || null)}
@@ -207,7 +204,6 @@ export function CreateProduct({ data }: Pick<Extract<DrawerTypes, { type: "creat
                   errors={field.state.meta.errors}
                   inputMode="numeric"
                   label={getSentenceCase(field.name)}
-                  name={field.name}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   type="number"
@@ -295,7 +291,6 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
                     errors={field.state.meta.errors}
                     isDisabled
                     label="Product"
-                    name={field.name}
                     onBlur={field.handleBlur}
                     onChange={() => {}}
                     value={product?.title}
@@ -326,7 +321,6 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
                   inputMode="numeric"
                   isDisabled={isLoading || isLoadingProduct}
                   label="Amount"
-                  name={field.name}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(Number(e.target.value))}
                   value={field.state.value}
@@ -340,7 +334,6 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
                   errors={field.state.meta.errors}
                   isDisabled={isLoading || isLoadingProduct}
                   label="Expiration date (optional)"
-                  name={field.name}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   type="date"

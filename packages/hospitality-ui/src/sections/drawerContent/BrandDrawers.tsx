@@ -53,7 +53,6 @@ export function CreateBrand({ data }: { data: { parentId: string } }) {
             <Input
               errors={field.state.meta.errors}
               label="Title"
-              name={field.name}
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
               value={field.state.value}

@@ -110,7 +110,6 @@ export function UserContactDisplay({
                   errors={subfield.state.meta.errors}
                   helperText="Customize the title of the address."
                   label={getSentenceCase(`${type} display title`)}
-                  name={subfield.name}
                   onBlur={subfield.handleBlur}
                   onChange={(e) => subfield.handleChange(e.target.value)}
                   value={subfield.state.value || ""}
@@ -168,7 +167,6 @@ export function UserContactDisplay({
                                 errors={subfield.state.meta.errors}
                                 isDisabled={isDisabled}
                                 label={getSentenceCase(contact.contactType)}
-                                name={subfield.name}
                                 onBlur={subfield.handleBlur}
                                 onChange={(e) => subfield.handleChange(e.target.value)}
                                 onSelectChange={(item) => {
@@ -196,7 +194,6 @@ export function UserContactDisplay({
                           errors={subfield.state.meta.errors}
                           isDisabled={isDisabled}
                           label={getSentenceCase(contact.contactType)}
-                          name={subfield.name}
                           onBlur={subfield.handleBlur}
                           onChange={(e) => subfield.handleChange(e.target.value)}
                           type="text"
@@ -217,7 +214,6 @@ export function UserContactDisplay({
                         errors={subfield.state.meta.errors}
                         isDisabled={isDisabled}
                         label={getSentenceCase(contact.contactType)}
-                        name={subfield.name}
                         onBlur={subfield.handleBlur}
                         onChange={(e) => subfield.handleChange(e.target.value)}
                         type="url"
@@ -277,7 +273,6 @@ export function AddNewUser() {
             <Input
               errors={field.state.meta.errors}
               label="First name"
-              name={field.name}
               onChange={(e) => field.handleChange(e.target.value)}
               value={field.state.value}
             />
@@ -289,7 +284,6 @@ export function AddNewUser() {
             <Input
               errors={field.state.meta.errors}
               label="Last name"
-              name={field.name}
               onChange={(e) => field.handleChange(e.target.value)}
               value={field.state.value}
             />
@@ -303,7 +297,6 @@ export function AddNewUser() {
                 errors={field.state.meta.errors}
                 helperText={"Must be at least 6 characters long"}
                 label="Username"
-                name={field.name}
                 onChange={(e) => field.handleChange(e.target.value)}
                 value={field.state.value}
               />
@@ -319,7 +312,6 @@ export function AddNewUser() {
                 errors={field.state.meta.errors}
                 helperText={"Must be at least 8 characters long."}
                 label="Password"
-                name={field.name}
                 onChange={(e) => field.handleChange(e.target.value)}
                 type="password"
                 value={field.state.value}
@@ -335,7 +327,6 @@ export function AddNewUser() {
                 errors={field.state.meta.errors}
                 helperText={"Must be at least 8 characters long."}
                 label="Password confirm"
-                name={field.name}
                 onChange={(e) => field.handleChange(e.target.value)}
                 type="password"
                 value={field.state.value}

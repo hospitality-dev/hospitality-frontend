@@ -28,7 +28,6 @@ export function Login() {
                   <Input
                     errors={field.state.meta.errors}
                     label="Username"
-                    name={field.name}
                     onChange={(e) => field.handleChange(e.target.value)}
                     placeholder="Username"
                     size="lg"
@@ -42,7 +41,6 @@ export function Login() {
                   <Input
                     errors={field.state.meta.errors}
                     label="Password"
-                    name={field.name}
                     onChange={(e) => field.handleChange(e.target.value)}
                     placeholder="Password"
                     size="lg"

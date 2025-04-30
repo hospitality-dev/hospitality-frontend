@@ -43,7 +43,6 @@ function ModifyPurchaseExpirationDateCol(info: CellContext<ModifyPurchaseItem, s
     <Input
       inputMode="numeric"
       isDisabled={!info.row.original.productId}
-      name="expirationDate"
       onChange={(e) => {
         setValue(e.target.value);
         form.setFieldValue(`products[${info.row.index}].expirationDate`, e.target.value);

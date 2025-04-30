@@ -99,7 +99,6 @@ function ContactDisplay({
                   errors={subfield.state.meta.errors}
                   helperText="Customize the title of the address."
                   label={getSentenceCase(`${type} display title`)}
-                  name={subfield.name}
                   onBlur={subfield.handleBlur}
                   onChange={(e) => subfield.handleChange(e.target.value)}
                   value={subfield.state.value || ""}
@@ -157,7 +156,6 @@ function ContactDisplay({
                                 errors={subfield.state.meta.errors}
                                 isDisabled={isDisabled}
                                 label={getSentenceCase(contact.contactType)}
-                                name={subfield.name}
                                 onBlur={subfield.handleBlur}
                                 onChange={(e) => subfield.handleChange(e.target.value)}
                                 onSelectChange={(item) => {
@@ -185,7 +183,6 @@ function ContactDisplay({
                           errors={subfield.state.meta.errors}
                           isDisabled={isDisabled}
                           label={getSentenceCase(contact.contactType)}
-                          name={subfield.name}
                           onBlur={subfield.handleBlur}
                           onChange={(e) => subfield.handleChange(e.target.value)}
                           type="text"
@@ -206,7 +203,6 @@ function ContactDisplay({
                         errors={subfield.state.meta.errors}
                         isDisabled={isDisabled}
                         label={getSentenceCase(contact.contactType)}
-                        name={subfield.name}
                         onBlur={subfield.handleBlur}
                         onChange={(e) => subfield.handleChange(e.target.value)}
                         type={contact.contactType === "whatsapp" ? "whatsapp" : "url"}

@@ -28,7 +28,6 @@ export function FileDisplay({ label, type, onDelete, onRename }: Props) {
           <Input
             isAutofocused
             label=""
-            name="filename"
             onBlur={() => {
               setIsEditing(false);
               onRename(edited);

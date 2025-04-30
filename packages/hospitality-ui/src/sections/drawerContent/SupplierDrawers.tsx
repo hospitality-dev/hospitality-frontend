@@ -37,7 +37,6 @@ export function CreateSupplier() {
               errors={field.state.meta.errors}
               isAutofocused
               label="Title"
-              name={field.name}
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
               value={field.state.value}
@@ -93,7 +92,6 @@ export function UpdateSupplier({ data }: { data: { id: string } }) {
               errors={field.state.meta.errors}
               isAutofocused
               label="Title"
-              name={field.name}
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
               value={field.state.value}

@@ -34,7 +34,6 @@ export function ProductsCategoriesDrawer() {
                 errors={field.state.meta.errors}
                 isAutofocused
                 label={getSentenceCase(field.name)}
-                name={field.name}
                 onChange={(e) => field.handleChange(e.target.value as string)}
                 value={field.state.value}
                 variant={field.state.meta.errors.length ? "error" : "primary"}

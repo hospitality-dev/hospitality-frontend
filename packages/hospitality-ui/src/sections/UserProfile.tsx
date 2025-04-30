@@ -96,7 +96,6 @@ export function UserProfile() {
                   errors={field.state.meta.errors}
                   isDisabled={isLoading}
                   label="First name"
-                  name={field.name}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   value={field.state.value || ""}
@@ -111,7 +110,6 @@ export function UserProfile() {
                 errors={field.state.meta.errors}
                 isDisabled={isLoading}
                 label="Last name"
-                name={field.name}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
                 value={field.state.value || ""}
