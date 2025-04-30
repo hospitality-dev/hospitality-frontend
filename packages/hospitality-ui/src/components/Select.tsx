@@ -284,6 +284,7 @@ export function Select({
                       setFilter("");
                       setIsOpen(false);
                     }}
+                    query=""
                   />
                 </div>
               ))}

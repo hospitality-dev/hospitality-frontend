@@ -10,7 +10,7 @@ import { getSentenceCase } from "./transform";
 
 export function formatForOptions<
   T extends { id: string; title: string; isDisabled?: boolean; isHidden?: boolean; icon?: string },
->(data?: T[], isSentenceCase?: boolean, onClickItem?: (item: OptionType) => void): OptionType[] {
+>(data?: T[], isSentenceCase?: boolean, onClickItem?: (props: { item: OptionType; query: string }) => void): OptionType[] {
   if (!data) return [];
   return data.map((item) => ({
     isDisabled: item.isDisabled,

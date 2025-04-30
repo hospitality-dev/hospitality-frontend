@@ -139,8 +139,8 @@ export function Autocomplete({
             } else if (e.key === "Enter" && !value && activeIndex !== null) {
               e.preventDefault();
               e.stopPropagation();
-              if (items[activeIndex].onClick) {
-                items[activeIndex].onClick({ item: items[activeIndex], query });
+              if (items?.[activeIndex]?.onClick) {
+                items?.[activeIndex]?.onClick?.({ item: items[activeIndex], query });
               } else {
                 onChange(items[activeIndex]);
               }
