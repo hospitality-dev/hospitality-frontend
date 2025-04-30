@@ -1,6 +1,7 @@
 import { tv } from "tailwind-variants";
 
 import { OptionType } from "../types";
+import { Icon } from "./Icon";
 
 const classes = tv({
   slots: {
@@ -45,6 +46,11 @@ export function OptionItem({
       <div className={label()}>
         <span>{item.image ? <img className="w-5" src={item.image} /> : null}</span>
         <span>{item.label}</span>
+        {item?.icon ? (
+          <span className="ml-auto">
+            <Icon fontSize={20} icon={item.icon} />
+          </span>
+        ) : null}
       </div>
       {item.description ? <span className="text-sm">{item.description}</span> : null}
     </div>
