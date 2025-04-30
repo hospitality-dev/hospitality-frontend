@@ -75,7 +75,7 @@ const classes = tv({
     },
 
     isDisabled: { true: "cursor-not-allowed text-gray-400" },
-    hasNoBorder: { true: "border-0 shadow-none outline-0 outline-none" },
+    hasNoBorder: { true: "border-0 shadow-none outline-0 outline-none focus:border" },
     hasNoHelperText: {
       true: {
         helperTextClasses: "hidden",
@@ -220,7 +220,6 @@ export function Select({
                 <div ref={searchRef} className={searchContainer()}>
                   <Input
                     label=""
-                    name="filter"
                     onChange={(e) => setFilter(e.target.value)}
                     placeholder="Search by country name or prefix"
                     type="search"
