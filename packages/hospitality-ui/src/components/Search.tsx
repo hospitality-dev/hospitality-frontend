@@ -11,6 +11,7 @@ type Props = {
   onChange: (value: OptionType | null) => void;
   value: string | undefined;
   onBlur?: FocusEventHandler<HTMLInputElement>;
+  hasNewOption?: boolean;
 };
 
 export function Search({ label, model, onChange, value, onBlur }: Props) {
