@@ -64,7 +64,7 @@ const groupedByExpirationDateColumns = [
       const differenceInDays = getDayDifferenceFromNow(value);
       return (
         <div
-          className={`line-clamp-1 font-medium @min-xs/table-cell:max-w-full ${differenceInDays !== null && differenceInDays <= 7 ? "text-error" : ""}`}>
+          className={`line-clamp-1 font-medium @min-xs/table-cell:max-w-full ${differenceInDays !== null && differenceInDays <= 7 && differenceInDays > 0 ? "text-warning" : ""} ${differenceInDays !== null && differenceInDays <= 0 ? "text-error" : ""} `}>
           {value ? (
             <div className="items-center gap-x-1">
               <span>{formatISOToString(value)}</span>
@@ -92,13 +92,12 @@ const groupedByExpirationDateColumns = [
     cell: (info) => {
       const value = info.getValue();
       const differenceInDays = getDayDifferenceFromNow(value);
+      if (!value) return "Unknown";
 
       return (
         <span className="flex items-center gap-x-1 truncate @min-[150px]/table-cell:text-sm">
           <span>{formatISOToString(value || "")}</span>
-          <span className="@max-[150px]/table-cell:hidden">
-            ({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})
-          </span>
+          <span className="@max-[150px]/table-cell:hidden">{getDayCountString(differenceInDays || 0)}</span>
         </span>
       );
     },
@@ -112,13 +111,10 @@ const groupedByExpirationDateColumns = [
     cell: (info) => {
       const value = info.getValue();
       const differenceInDays = getDayDifferenceFromNow(value);
-
       return (
         <span className="flex items-center gap-x-1 truncate @min-[150px]/table-cell:text-sm">
           <span>{formatISOToString(value || "")}</span>
-          <span className="@max-[150px]/table-cell:hidden">
-            ({differenceInDays === 0 ? "Today" : getDayCountString(differenceInDays || 0)})
-          </span>
+          <span className="@max-[150px]/table-cell:hidden">({getDayCountString(differenceInDays || 0)})</span>
         </span>
       );
     },
