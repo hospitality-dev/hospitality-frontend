@@ -329,6 +329,13 @@ function DropdownItem({
       onKeyDown={() => {}}
       role="menuitem"
       tabIndex={0}>
+      {image ? (
+        <div className="ml-auto flex gap-x-2">
+          <div>
+            <img src={image} />
+          </div>
+        </div>
+      ) : null}
       {label && !child ? <div className="w-full truncate select-none">{label}</div> : null}
       {child ?? null}
       {icon ? (
