@@ -227,7 +227,7 @@ export function Input({
         <input
           ref={(node) => {
             inputRef.current = node;
-            return inputMaskitoRef;
+            return inputMaskitoRef(node);
           }}
           aria-autocomplete="none"
           autoComplete="new-password"
