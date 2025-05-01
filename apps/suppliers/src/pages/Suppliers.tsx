@@ -7,6 +7,7 @@ import {
   Icons,
   SuppliersType,
   Table,
+  useDeviceType,
   useDrawer,
   useGenerateFile,
   useList,
@@ -25,6 +26,7 @@ function ActionButton(info: CellContext<Entity, unknown>) {
     { urlSuffix: `supplier/${info.row.original.id}`, enabled: isActive }
   );
   const { mutate: generate } = useGenerateFile({ type: "qr_codes", prefix: "contact/suppliers" });
+  const deviceType = useDeviceType();
   const groupedContacts = groupByContacts(contacts);
   return (
     <div
@@ -51,7 +53,16 @@ function ActionButton(info: CellContext<Entity, unknown>) {
                   id: c.id,
                   title: `${c.prefix ? `+${c.prefix}` : ""}${c.value}`,
                   image: c.prefix && c.iso3 ? `/flags/${c.iso3}.svg` : undefined,
-                  onClick: () => generate(c.id),
+                  onClick: () => {
+                    if (deviceType === "phone") {
+                      const el = document.createElement("a");
+                      el.href = `tel:+${c.prefix}${c.value}`;
+                      el.click();
+                      el.remove();
+                    } else {
+                      generate(c.id);
+                    }
+                  },
                 })),
               },
               {
