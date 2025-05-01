@@ -15,7 +15,10 @@ import { Contacts } from "../Contacts";
 
 export function CreateSupplier() {
   const closeDrawer = useCloseDrawer();
-  const { mutate } = useCreate<SuppliersInitalizerType>("suppliers", { onSuccess: closeDrawer });
+  const { mutate } = useCreate<SuppliersInitalizerType>("suppliers", {
+    onSuccess: closeDrawer,
+    invalidateModels: ["contacts"],
+  });
   const form = useForm({
     defaultValues: {
       title: "",

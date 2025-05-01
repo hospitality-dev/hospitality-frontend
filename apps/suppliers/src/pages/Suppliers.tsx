@@ -8,6 +8,7 @@ import {
   SuppliersType,
   Table,
   useDrawer,
+  useGenerateFile,
   useList,
   useTable,
 } from "@hospitality/hospitality-ui";
@@ -20,9 +21,10 @@ function ActionButton(info: CellContext<Entity, unknown>) {
   const { openDrawer } = useDrawer("update_supplier");
   const [isActive, setIsActive] = useState(false);
   const { data: contacts = [] } = useList<ContactType>(
-    { model: "contacts", fields: ["id", "title", "value", "contactType"] },
+    { model: "contacts", fields: ["id", "title", "value", "contactType", "prefix", "iso3"] },
     { urlSuffix: `supplier/${info.row.original.id}`, enabled: isActive }
   );
+  const { mutate: generate } = useGenerateFile({ type: "qr_codes", prefix: "contact/suppliers" });
   const groupedContacts = groupByContacts(contacts);
   return (
     <div
@@ -45,10 +47,15 @@ function ActionButton(info: CellContext<Entity, unknown>) {
                 id: "phone",
                 title: "Phone numbers",
                 icon: Icons.phone,
-                subItems: groupedContacts.phone.map((c) => ({ id: c.id, title: `${c.prefix}${c.value}` })),
+                subItems: groupedContacts.phone.map((c) => ({
+                  id: c.id,
+                  title: `${c.prefix ? `+${c.prefix}` : ""}${c.value}`,
+                  image: c.prefix && c.iso3 ? `/flags/${c.iso3}.svg` : undefined,
+                  onClick: () => generate(c.id),
+                })),
               },
               {
-                id: "phone",
+                id: "email",
                 title: "Email",
                 icon: Icons.email,
                 subItems: groupedContacts.email.map((c) => ({ id: c.id, title: c.value })),
@@ -117,10 +124,11 @@ const columns = [
 export function Suppliers() {
   const { data: suppliers = [] } = useList<SuppliersType>({ model: "suppliers", fields: ["id", "title", "companyId"] });
   const [meta, dispatch] = useTable<Entity>();
+  const { openDrawer } = useDrawer("create_supplier");
   return (
     <div className="flex flex-col gap-y-2">
       <div className="ml-auto w-fit">
-        <Button icon={Icons.add} label="Create" onClick={undefined} variant="info" />
+        <Button icon={Icons.add} label="Create" onClick={() => openDrawer("Create supplier")} variant="info" />
       </div>
       <Table<Entity> columns={columns} data={suppliers} dispatch={dispatch} meta={meta} type="suppliers" />
     </div>
