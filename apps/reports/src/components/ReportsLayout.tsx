@@ -9,7 +9,7 @@ const tabs = [
 export function ReportsLayout() {
   const location = useLocation();
   return (
-    <div>
+    <div className="h-full w-full">
       <Tabs active={location.href.split("/").at(-1) || tabs[0]?.id} tabs={tabs} />
       <Outlet />
     </div>
