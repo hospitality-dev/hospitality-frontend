@@ -85,12 +85,12 @@ export function useUploadFiles(
 
 export function useGenerateFile(
   { type, prefix }: { type: FilesCategories; prefix?: string },
-  options?: { invalidateModels?: AvailableEntities[] } & UseMutationOptions<string | null, Error, string | undefined>
+  options?: { invalidateModels?: AvailableEntities[] } & UseMutationOptions<string | null, Error, Partial<string | undefined>>
 ) {
   const userReset = useResetAtom(userAtom);
   const queryClient = useQueryClient();
 
-  return useMutation<string | null, Error, string | undefined>({
+  return useMutation<string | null, Error, Partial<string | undefined>>({
     mutationFn: async (id?: string) => {
       const url = await fetchFunction<string>({
         method: "GET",

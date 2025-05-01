@@ -18,7 +18,7 @@ type Entity = PurchasesType & { businessLocationTitle: string; businessTitle: st
 const columnHelper = createColumnHelper<Entity>();
 
 function ActionButton(info: CellContext<Entity, unknown>) {
-  const { mutate } = useGenerateFile({ type: "reports", prefix: "purchases/bill", id: info.row.original.id });
+  const { mutate } = useGenerateFile({ type: "reports", prefix: "purchases/bill" });
   return (
     <div className="w-8">
       <Button
@@ -29,7 +29,7 @@ function ActionButton(info: CellContext<Entity, unknown>) {
         items={[
           {
             id: "view_purchase",
-            onClick: mutate,
+            onClick: () => mutate(info.row.original.id),
             title: "View",
             icon: Icons.eye,
           },
