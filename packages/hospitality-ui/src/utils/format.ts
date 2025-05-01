@@ -85,7 +85,8 @@ export function formatStringToISO(value: string) {
   return date.toISOString();
 }
 
-export function formatISOToString(value: string) {
+export function formatISOToString(value: string | null) {
+  if (!value) return "";
   return format(parseISO(value), "dd.MM.yyyy.");
 }
 
