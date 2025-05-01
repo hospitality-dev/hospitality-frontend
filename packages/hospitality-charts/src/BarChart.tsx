@@ -53,7 +53,9 @@ export function BarChart<T>({
   valueScale = { type: "linear" },
   data = [],
   maxValue,
+  layout,
   tooltipLabel,
+  minValue = 0,
 }: ResponsiveBarSvgProps<BarDatum> & { data: T[]; keys: (keyof T)[] }) {
   return (
     <ResponsiveBar
@@ -73,9 +75,12 @@ export function BarChart<T>({
       labelSkipHeight={labelSkipHeight}
       labelSkipWidth={labelSkipWidth}
       labelTextColor={labelTextColor}
+      layout={layout}
       legends={legends}
       margin={margin}
       maxValue={maxValue}
+      minValue={minValue}
+      motionConfig="stiff"
       padding={padding}
       theme={theme}
       tooltipLabel={tooltipLabel}

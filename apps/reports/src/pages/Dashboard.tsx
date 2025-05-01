@@ -3,6 +3,7 @@ import {
   getSentenceCase,
   groupBy,
   LocationsProductsGroupedByExpirationType,
+  Spinner,
   useList,
 } from "@hospitality/hospitality-ui";
 import { lazy, Suspense } from "react";
@@ -173,7 +174,12 @@ function ProductExpiryChart() {
   );
   return (
     <div className="col-span-6 row-span-4 overflow-hidden rounded-md shadow-md">
-      <Suspense>
+      <Suspense
+        fallback={
+          <div className="flex h-full w-full items-center justify-center">
+            <Spinner />
+          </div>
+        }>
         {/* @ts-expect-error generics with lazy */}
         <BarChart<FormattedEntity>
           axisBottom={{ legend: "Product", legendOffset: -20, format: (value) => productNames[value] }}
@@ -184,9 +190,29 @@ function ProductExpiryChart() {
             return "gray";
           }}
           data={data}
+          defs={[
+            {
+              id: "lines",
+              type: "patternLines",
+              background: "inherit",
+              color: "#eed312",
+              rotation: -45,
+              lineWidth: 6,
+              spacing: 10,
+            },
+          ]}
+          fill={[
+            {
+              match: {
+                id: "isAboutToExpireCount",
+              },
+              id: "lines",
+            },
+          ]}
           indexBy="productId"
           indexScale={{ type: "band", round: true }}
           keys={["count", "isAboutToExpireCount", "isExpiredCount"]}
+          layout="vertical"
           legends={[
             {
               dataFrom: "keys",
