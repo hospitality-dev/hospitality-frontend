@@ -348,6 +348,7 @@ export function ManageProductInventory({ data }: Pick<Extract<DrawerTypes, { typ
               children={(field) => (
                 <Input
                   errors={field.state.meta.errors}
+                  inputMode="numeric"
                   isDisabled={isLoading || isLoadingProduct}
                   label="Expiration date (optional)"
                   onBlur={field.handleBlur}
