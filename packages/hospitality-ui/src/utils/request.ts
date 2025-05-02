@@ -5,6 +5,8 @@ import snakecase from "lodash.snakecase";
 import {
   AvailableEntities,
   AvailableSearchableEntities,
+  AvailableStatisticsFrequencies,
+  AvailableStatisticsTypes,
   FormattedEntity,
   RequestFilters,
   ResponseType,
@@ -198,4 +200,36 @@ export async function downloadFunction({ id }: { id: string; userReset: () => vo
   a.click();
   URL.revokeObjectURL(url);
   a.remove();
+}
+
+export async function statisticsFunction<DataType>({
+  type,
+  frequency,
+  searchParams,
+  urlSuffix,
+  userReset,
+}: {
+  type: AvailableStatisticsTypes;
+  frequency: AvailableStatisticsFrequencies;
+  urlSuffix?: string;
+  searchParams?: URLSearchParams;
+  userReset: () => void;
+}): Promise<DataType> {
+  const result = await ky(`statistics/${type}/${frequency}${urlSuffix ? `/${urlSuffix}` : ""}`, {
+    method: "GET",
+    throwHttpErrors: true,
+    searchParams,
+    prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
+    credentials: "include",
+    hooks: {
+      afterResponse: [(_, __, res) => handleUnauthenticated(_, __, res, userReset)],
+    },
+  });
+  const contentType = result.headers.get("content-type");
+  if (contentType === "application/json") {
+    return (await result.json<ResponseType<DataType>>())?.data;
+  } else if (contentType === "text/plain") {
+    return result.text() as DataType;
+  }
+  return {} as DataType;
 }
