@@ -6,6 +6,7 @@ export * from "./fileTypes";
 export * from "./locationTypes";
 export * from "./productTypes";
 export * from "./purchaseTypes";
+export * from "./statisticsTypes";
 export * from "./storeTypes";
 export * from "./supplierTypes";
 export * from "./userTypes";
