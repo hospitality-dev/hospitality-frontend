@@ -47,13 +47,13 @@ export function useImage(id: string, options?: Pick<UseQueryOptions, "enabled"> 
   });
 }
 
-export function useStatistics<F>(
+export function useStatistics<F, R = F>(
   { type, frequency }: { type: AvailableStatisticsTypes; frequency: AvailableStatisticsFrequencies },
-  options?: Pick<UseQueryOptions<F[]>, "enabled" | "staleTime"> & { urlSuffix?: string }
+  options?: Pick<UseQueryOptions<F[], Error, R[]>, "enabled" | "staleTime" | "select"> & { urlSuffix?: string }
 ) {
   const reset = useResetAtom(userAtom);
 
-  return useQuery<F[]>({
+  return useQuery<F[], Error, R[]>({
     queryKey: [type, frequency, "statistics", options?.urlSuffix || ""].filter(Boolean),
     queryFn: () =>
       statisticsFunction<F[]>({
@@ -64,5 +64,6 @@ export function useStatistics<F>(
       }),
     enabled: !!(options?.enabled ?? true),
     staleTime: options?.staleTime,
+    select: options?.select,
   });
 }
