@@ -234,7 +234,12 @@ export function Table<T extends object>({
                             icon={getSortIcon(meta?.sort?.type, header.id === meta?.sort?.field)}
                             isOutline
                             onClick={() => {
-                              if (meta?.sort?.type === "asc") {
+                              if (meta?.sort?.field !== header.id) {
+                                dispatch({
+                                  type: "SET_SORT",
+                                  sort: { field: header.id as keyof T, type: "asc" },
+                                });
+                              } else if (meta?.sort?.type === "desc" && header.id === meta?.sort?.field) {
                                 dispatch({
                                   type: "SET_SORT",
                                   sort: null,
@@ -242,7 +247,10 @@ export function Table<T extends object>({
                               } else {
                                 dispatch({
                                   type: "SET_SORT",
-                                  sort: { field: header.id as keyof T, type: meta?.sort?.type === "desc" ? "asc" : "desc" },
+                                  sort: {
+                                    field: header.id as keyof T,
+                                    type: meta?.sort?.type === "desc" ? "asc" : "desc",
+                                  },
                                 });
                               }
                             }}
