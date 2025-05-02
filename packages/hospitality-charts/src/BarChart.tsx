@@ -1,6 +1,8 @@
+import { Title } from "@hospitality/hospitality-ui";
 import { BarDatum, ResponsiveBar, ResponsiveBarSvgProps } from "@nivo/bar";
 
 export function BarChart<T>({
+  animate,
   axisBottom,
   axisLeft,
   axisRight,
@@ -48,7 +50,7 @@ export function BarChart<T>({
       ],
     },
   ],
-  margin = { top: 50, right: 130, bottom: 50, left: 60 },
+  margin,
   padding = 0.5,
   valueScale = { type: "linear" },
   data = [],
@@ -56,35 +58,44 @@ export function BarChart<T>({
   layout,
   tooltipLabel,
   minValue = 0,
-}: ResponsiveBarSvgProps<BarDatum> & { data: T[]; keys: (keyof T)[] }) {
+  title,
+}: ResponsiveBarSvgProps<BarDatum> & { data: T[]; keys: (keyof T)[]; title?: string }) {
   return (
-    <ResponsiveBar
-      axisBottom={axisBottom}
-      axisLeft={axisLeft}
-      axisRight={axisRight}
-      axisTop={axisTop}
-      borderColor={borderColor}
-      colors={colors}
-      data={data}
-      defs={defs}
-      fill={fill}
-      groupMode={groupMode}
-      indexBy={indexBy}
-      indexScale={indexScale}
-      keys={keys}
-      labelSkipHeight={labelSkipHeight}
-      labelSkipWidth={labelSkipWidth}
-      labelTextColor={labelTextColor}
-      layout={layout}
-      legends={legends}
-      margin={margin}
-      maxValue={maxValue}
-      minValue={minValue}
-      motionConfig="stiff"
-      padding={padding}
-      theme={theme}
-      tooltipLabel={tooltipLabel}
-      valueScale={valueScale}
-    />
+    <div className="flex h-full w-full flex-col gap-y-2">
+      {title ? (
+        <div className="px-4 py-2">
+          <Title hasBorder label={title} size="xl" variant="primary" />
+        </div>
+      ) : null}
+      <ResponsiveBar
+        animate={animate}
+        axisBottom={axisBottom}
+        axisLeft={axisLeft}
+        axisRight={axisRight}
+        axisTop={axisTop}
+        borderColor={borderColor}
+        colors={colors}
+        data={data}
+        defs={defs}
+        fill={fill}
+        groupMode={groupMode}
+        indexBy={indexBy}
+        indexScale={indexScale}
+        keys={keys}
+        labelSkipHeight={labelSkipHeight}
+        labelSkipWidth={labelSkipWidth}
+        labelTextColor={labelTextColor}
+        layout={layout}
+        legends={legends}
+        margin={margin}
+        maxValue={maxValue}
+        minValue={minValue}
+        motionConfig="stiff"
+        padding={padding}
+        theme={theme}
+        tooltipLabel={tooltipLabel}
+        valueScale={valueScale}
+      />
+    </div>
   );
 }
