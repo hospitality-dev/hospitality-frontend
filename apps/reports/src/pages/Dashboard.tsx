@@ -1,3 +1,4 @@
+import { DefaultRawDatum, PieTooltipProps } from "@hospitality/hospitality-charts";
 import {
   formatCurrency,
   formatDateStringToFormat,
@@ -23,6 +24,11 @@ const LineChart = lazy(() =>
     default: c.LineChart,
   }))
 );
+const PieChart = lazy(() =>
+  import("@hospitality/hospitality-charts").then((c) => ({
+    default: c.PieChart,
+  }))
+);
 
 type ProductExpiry = {
   productId: string;
@@ -33,7 +39,6 @@ type ProductExpiry = {
 };
 
 const theme = {
-  animate: true,
   text: {
     fontSize: 24,
     fill: "#333333",
@@ -70,7 +75,6 @@ const theme = {
   },
   grid: {
     line: {
-      animate: true,
       stroke: "#dddddd",
       strokeWidth: 1,
     },
@@ -202,7 +206,7 @@ function ProductExpiryChart() {
     }
   );
   return (
-    <div className="lg:col-span-6 lg:row-span-6">
+    <div className="lg:col-span-12 lg:row-span-6">
       <ChartWrapper>
         {/* @ts-expect-error generics with lazy */}
         <BarChart<ProductExpiry>
@@ -260,6 +264,7 @@ function ProductExpiryChart() {
           margin={{ top: 10, right: 130, bottom: 45, left: 60 }}
           padding={0.2}
           theme={theme}
+          title="Inventory stock"
           tooltip={() => null}
           tooltipLabel={({ id }) => `${getSentenceCase(id.toString())}`}
         />
@@ -268,7 +273,8 @@ function ProductExpiryChart() {
   );
 }
 
-function PurchaseStatisticsChartTooltip({ point }: { point: Point<LineSeries> }) {
+// #region Spending
+function SpendingChartTooltip({ point }: { point: Point<LineSeries> }) {
   return (
     <div className="rounded-md border border-gray-300 bg-white p-2 shadow">
       <strong>Date:</strong> {point.data.xFormatted}
@@ -277,8 +283,7 @@ function PurchaseStatisticsChartTooltip({ point }: { point: Point<LineSeries> })
     </div>
   );
 }
-
-function PurchaseStatisticsChart() {
+function SpendingChart() {
   const { data: stats = [] } = useStatistics<PurchasesPerFrequencyType>({ type: "purchases", frequency: "month" });
   let max = 0;
   const formatted = stats.reduce(
@@ -295,7 +300,7 @@ function PurchaseStatisticsChart() {
   );
 
   return (
-    <div className="row-span-6 lg:col-span-3">
+    <div className="row-span-6 lg:col-span-5">
       <ChartWrapper>
         <LineChart
           axisLeft={{
@@ -321,7 +326,7 @@ function PurchaseStatisticsChart() {
             },
           }}
           title="Spending (last 30 days)"
-          tooltip={PurchaseStatisticsChartTooltip}
+          tooltip={SpendingChartTooltip}
           xScale={{ type: "point" }}
           yFormat=">.2f"
           yScale={{
@@ -336,12 +341,50 @@ function PurchaseStatisticsChart() {
     </div>
   );
 }
+// #endregion Spending
+
+// #region Category_breakdown
+function CategoryTooltip(props: PieTooltipProps<DefaultRawDatum>) {
+  return (
+    <div className="rounded-md border border-gray-300 bg-white p-2 shadow">
+      <strong>{props.datum.label}:</strong> {formatCurrency(Number(props.datum.value))}
+    </div>
+  );
+}
+
+function CategoryBreakdownChart() {
+  const { data: stats = [] } = useStatistics<{ title: string; total: number }, { id: string; label: string; value: number }>(
+    { type: "purchases", frequency: "month" },
+    { urlSuffix: "suppliers", select: (data) => data.map((item) => ({ id: item.title, label: item.title, value: item.total })) }
+  );
+  return (
+    <div className="lg:col-span-7 lg:row-span-6">
+      <ChartWrapper>
+        <PieChart
+          arcLabel={({ id }) => id.toString()}
+          arcLabelsRadiusOffset={0.5}
+          arcLabelsSkipAngle={10}
+          arcLinkLabel={({ data }) => formatCurrency(data.value)}
+          arcLinkLabelsDiagonalLength={0}
+          colors={{ scheme: "nivo" }}
+          data={stats}
+          margin={{ top: 40, bottom: 55 }}
+          theme={{ labels: { text: { fontSize: 14, fontWeight: 600 } } }}
+          title="Spending (per store, last 30 days)"
+          tooltip={CategoryTooltip}
+        />
+      </ChartWrapper>
+    </div>
+  );
+}
+// #endregion Category_breakdown
 
 export function Dashboard() {
   return (
-    <div className="grid h-full w-full grid-cols-1 gap-4 py-2 lg:grid-cols-6 lg:grid-rows-12">
+    <div className="grid h-full w-full grid-cols-1 gap-2 overflow-x-hidden py-2 lg:grid-cols-12 lg:grid-rows-12">
       <ProductExpiryChart />
-      <PurchaseStatisticsChart />
+      <SpendingChart />
+      <CategoryBreakdownChart />
     </div>
   );
 }
