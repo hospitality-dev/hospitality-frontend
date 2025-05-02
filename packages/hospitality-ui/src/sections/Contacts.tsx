@@ -1,7 +1,7 @@
 import { ReactFormExtendedApi } from "@tanstack/react-form";
 
 import { AddressSearch, Alert, Card, Collapsible, Input, Title } from "../components";
-import { AvailableContactTypes, Icons } from "../enums";
+import { AvailableContactTypesEnum, Icons } from "../enums";
 import { ContactType } from "../types";
 import {
   camelCaseContactType,
@@ -259,7 +259,7 @@ export function Contacts({
                   variant: "info",
                   allowedPlacements: ["left-start"] as const,
                   onClick: () => {},
-                  items: AvailableContactTypes.address[type].map((addr) => ({
+                  items: AvailableContactTypesEnum.address[type].map((addr) => ({
                     icon: Icons[camelCaseContactType(addr)],
                     allowedPlacements: ["left-start"] as const,
                     id: addr,
@@ -303,7 +303,7 @@ export function Contacts({
                   variant: "info",
                   allowedPlacements: ["left-start"] as const,
                   onClick: () => {},
-                  items: AvailableContactTypes.phone[type].map((phone) => ({
+                  items: AvailableContactTypesEnum.phone[type].map((phone) => ({
                     icon: Icons[camelCaseContactType(phone)],
                     allowedPlacements: ["left-start"],
                     id: phone,
@@ -347,7 +347,7 @@ export function Contacts({
                   variant: "info",
                   allowedPlacements: ["left-start"] as const,
                   onClick: () => {},
-                  items: AvailableContactTypes.email[type].map((email) => ({
+                  items: AvailableContactTypesEnum.email[type].map((email) => ({
                     icon: Icons[camelCaseContactType(email)],
                     allowedPlacements: ["left-start"],
                     id: email,
@@ -391,7 +391,7 @@ export function Contacts({
                   variant: "info",
                   allowedPlacements: ["left-start"] as const,
                   onClick: () => {},
-                  items: AvailableContactTypes.website[type].map((other) => ({
+                  items: AvailableContactTypesEnum.website[type].map((other) => ({
                     icon: Icons[camelCaseContactType(other)],
                     allowedPlacements: ["left-start"],
                     id: other,
@@ -435,7 +435,7 @@ export function Contacts({
                   variant: "info",
                   allowedPlacements: ["left-start"] as const,
                   onClick: () => {},
-                  items: AvailableContactTypes.other[type].map((other) => ({
+                  items: AvailableContactTypesEnum.other[type].map((other) => ({
                     icon: Icons[other],
                     allowedPlacements: ["left-start"],
                     id: other,

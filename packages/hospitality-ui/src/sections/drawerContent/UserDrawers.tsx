@@ -1,7 +1,7 @@
 import { ReactFormExtendedApi, useForm, useStore } from "@tanstack/react-form";
 
 import { AddressSearch, Alert, Button, Card, Collapsible, Form, Input, Select, Title } from "../../components";
-import { AvailableContactTypes, Icons } from "../../enums";
+import { AvailableContactTypesEnum, Icons } from "../../enums";
 import { useAuth, useCloseDrawer, useCreate, useList, useRole } from "../../hooks";
 import {
   ContactType,
@@ -369,7 +369,7 @@ export function AddNewUser() {
                           variant: "info",
                           allowedPlacements: ["left-start"] as const,
                           onClick: () => {},
-                          items: AvailableContactTypes.address.personal.map((addr) => ({
+                          items: AvailableContactTypesEnum.address.personal.map((addr) => ({
                             icon: Icons[camelCaseContactType(addr)],
                             allowedPlacements: ["left-start"] as const,
                             id: addr,
@@ -412,7 +412,7 @@ export function AddNewUser() {
                           variant: "info",
                           allowedPlacements: ["left-start"] as const,
                           onClick: () => {},
-                          items: AvailableContactTypes.phone.personal.map((phone) => ({
+                          items: AvailableContactTypesEnum.phone.personal.map((phone) => ({
                             icon: Icons[camelCaseContactType(phone)],
                             allowedPlacements: ["left-start"],
                             id: phone,
@@ -455,7 +455,7 @@ export function AddNewUser() {
                           variant: "info",
                           allowedPlacements: ["left-start"] as const,
                           onClick: () => {},
-                          items: AvailableContactTypes.email.personal.map((email) => ({
+                          items: AvailableContactTypesEnum.email.personal.map((email) => ({
                             icon: Icons[camelCaseContactType(email)],
                             allowedPlacements: ["left-start"],
                             id: email,
@@ -498,7 +498,7 @@ export function AddNewUser() {
                           variant: "info",
                           allowedPlacements: ["left-start"] as const,
                           onClick: () => {},
-                          items: AvailableContactTypes.website.personal.map((other) => ({
+                          items: AvailableContactTypesEnum.website.personal.map((other) => ({
                             icon: Icons[camelCaseContactType(other)],
                             allowedPlacements: ["left-start"],
                             id: other,
@@ -541,7 +541,7 @@ export function AddNewUser() {
                           variant: "info",
                           allowedPlacements: ["left-start"] as const,
                           onClick: () => {},
-                          items: AvailableContactTypes.other.personal.map((other) => ({
+                          items: AvailableContactTypesEnum.other.personal.map((other) => ({
                             icon: Icons[other],
                             allowedPlacements: ["left-start"],
                             id: other,

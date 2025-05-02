@@ -1,6 +1,6 @@
 import { string } from "zod";
 
-import { AvailableDomains } from "../enums";
+import { AvailableDomainsEnum } from "../enums";
 import { formatErrorsForHelperText } from "./format";
 
 export function emailValidation(f: { value: unknown }): string | undefined {
@@ -14,7 +14,7 @@ export function emailValidation(f: { value: unknown }): string | undefined {
 export function urlValidation(f: { value: unknown }): string | undefined {
   const res = string()
     .regex(/^https:\/\/((\w*\.)(\w*)((\.|\/)*)([\w]+)((\.|\/)*)([\w]+))+$/, "Please enter a valid URL.")
-    .refine((str) => AvailableDomains.some((domain) => str.includes(`.${domain}`)), {
+    .refine((str) => AvailableDomainsEnum.some((domain) => str.includes(`.${domain}`)), {
       message: "Must include a valid domain extension.",
     })
     .safeParse(f.value);
