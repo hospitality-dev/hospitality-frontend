@@ -97,7 +97,11 @@ export function Sidebar({ sections = [] }: Props) {
             : sections.flatMap((section) =>
                 section.links.map((link) => <SidebarLink key={link.to} icon={link.icon} title={link.title} to={link.to} />)
               )}
+          <li>
+            <SidebarLink icon={Icons.officeAddress} title="Company details" to="/settings/user" />
+          </li>
         </ul>
+
         <li className={settingsButton()}>
           <SidebarLink icon={Icons.settings} title="Settings" to="/settings/user" />
         </li>
