@@ -123,9 +123,8 @@ const columns = [
     id: "isActive",
     header: "Actions",
     cell: ActionButton,
-    minSize: 100,
-    maxSize: 120,
-    size: 120,
+    minSize: 75,
+    maxSize: 75,
     meta: {
       alignment: "center",
     },
