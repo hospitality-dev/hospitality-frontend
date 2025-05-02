@@ -23,13 +23,13 @@ export function groupByContacts(data: ContactType[]) {
   return data.reduce<Record<ContactGroupType, ContactType[]>>(
     (prev, curr) => {
       let key: ContactGroupType = "other";
-      if (curr.contactType.includes("address")) {
+      if (curr.contactType?.includes("address")) {
         key = "address";
-      } else if (curr.contactType.includes("phone")) {
+      } else if (curr.contactType?.includes("phone")) {
         key = "phone";
-      } else if (curr.contactType.includes("email")) {
+      } else if (curr.contactType?.includes("email")) {
         key = "email";
-      } else if (curr.contactType.includes("website")) {
+      } else if (curr.contactType?.includes("website")) {
         key = "website";
       }
       if (!prev?.[key]) {
