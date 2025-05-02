@@ -45,7 +45,9 @@ const classes = tv({
     thead: "sticky top-0 max-h-8 border-b border-gray-300 text-left text-gray-500",
     th: "@container/table-cell flex h-8 min-w-fit flex-1 flex-nowrap items-center gap-x-2 truncate bg-gray-100 p-2 text-sm font-light uppercase shadow-sm select-none hover:bg-gray-100",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300",
-    tr: "flex items-center [&>div:has(>.td)]:hover:bg-blue-100",
+    rowContainer: "block w-full min-w-max flex-1",
+    tr: "flex items-center divide-x divide-gray-300 [&>div:has(>.td)]:hover:bg-blue-100",
+    tdContainer: "flex w-full flex-1 divide-x divide-gray-300",
     td: "td @container/table-cell flex h-10 flex-1 items-center px-2",
   },
   variants: {
@@ -87,6 +89,11 @@ const classes = tv({
     isSorted: {
       true: {
         th: "text-info font-semibold",
+      },
+    },
+    isBodyRow: {
+      true: {
+        tr: "flex w-full flex-1 flex-col",
       },
     },
     hasNoData: {
@@ -161,7 +168,7 @@ export function Table<T extends object>({
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(isInitialOpen);
   const headers = table.getFlatHeaders();
-  const { container, tableContainer, tableClasses, thead, th, tbody, tr, td } = classes({
+  const { container, tableContainer, tableClasses, thead, th, tbody, rowContainer, tr, tdContainer, td } = classes({
     isOpen,
     isLoading,
     isCollapsible,
@@ -258,9 +265,9 @@ export function Table<T extends object>({
             {isLoading && isOpen ? <TableSkeleton td={td()} tr={tr()} /> : null}
             {!isLoading && isOpen && data.length
               ? table.getRowModel().rows.map((row) => (
-                  <div key={row.id} className="block w-full min-w-max flex-1">
-                    <div className={`${tr()} flex w-full flex-1 flex-col`}>
-                      <div className="flex w-full flex-1">
+                  <div key={row.id} className={rowContainer()}>
+                    <div className={tr({ isBodyRow: true })}>
+                      <div className={tdContainer()}>
                         {row.getVisibleCells().map((cell) => (
                           <div
                             key={cell.id}
