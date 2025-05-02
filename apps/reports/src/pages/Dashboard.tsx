@@ -280,8 +280,10 @@ function PurchaseStatisticsChartTooltip({ point }: { point: Point<LineSeries> })
 
 function PurchaseStatisticsChart() {
   const { data: stats = [] } = useStatistics<PurchasesPerFrequencyType>({ type: "purchases", frequency: "month" });
+  let max = 0;
   const formatted = stats.reduce(
     (prev, curr) => {
+      if (curr.total > max) max = curr.total;
       prev.data.push({
         x: formatDateStringToFormat(curr.purchasedAt),
         y: curr.total,
@@ -304,7 +306,6 @@ function PurchaseStatisticsChart() {
               legend: {
                 text: {
                   fontWeight: 600,
-                  fontFamily: "Lato",
                   fontSize: 18,
                 },
               },
@@ -326,7 +327,7 @@ function PurchaseStatisticsChart() {
           yScale={{
             type: "linear",
             min: 0,
-            max: "auto",
+            max: max + 4000,
             stacked: false,
             reverse: false,
           }}

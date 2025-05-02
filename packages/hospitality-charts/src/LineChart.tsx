@@ -31,6 +31,7 @@ export function LineChart<T>({
         </div>
       ) : null}
       <ResponsiveLine
+        animate
         axisBottom={axisBottom}
         axisLeft={axisLeft}
         axisRight={axisRight}
@@ -40,6 +41,7 @@ export function LineChart<T>({
         enableTouchCrosshair
         legends={legends}
         margin={margin}
+        motionConfig="gentle"
         pointBorderColor={pointBorderColor}
         pointBorderWidth={pointBorderWidth}
         pointColor={pointColor}
