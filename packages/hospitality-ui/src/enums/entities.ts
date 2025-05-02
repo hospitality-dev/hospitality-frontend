@@ -40,7 +40,7 @@ export const AvailableSearchableEntitiesEnum = [
   "suppliers",
 ] as const;
 
-export const AvailableContactTypes = {
+export const AvailableContactTypesEnum = {
   email: {
     professional: [
       "work_email",
@@ -83,7 +83,7 @@ export const AvailableContactTypes = {
   },
 };
 
-export const AvailableDomains = [
+export const AvailableDomainsEnum = [
   "com",
   "net",
   "app",
@@ -98,7 +98,7 @@ export const AvailableDomains = [
   "срб",
 ] as const;
 
-export const AvailableFileTypes = [
+export const AvailableFileTypesEnum = [
   "png",
   "jpg",
   "jpeg",
@@ -123,3 +123,6 @@ export const AvailableFileTypes = [
   "json",
   "csv",
 ] as const;
+
+export const AvailableStatisticsTypesEnum = ["purchases"] as const;
+export const AvailableStatisticsFrequenciesEnum = ["month"] as const;

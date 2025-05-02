@@ -2,8 +2,10 @@ import { Placement } from "@floating-ui/react";
 import {
   AvailableActionsEnum,
   AvailableEntitiesEnum,
-  AvailableFileTypes,
+  AvailableFileTypesEnum,
   AvailableSearchableEntitiesEnum,
+  AvailableStatisticsFrequenciesEnum,
+  AvailableStatisticsTypesEnum,
   valueof,
 } from "@hospitality/hospitality-ui/src";
 import { AnyRoute, ReactNode } from "@tanstack/react-router";
@@ -15,6 +17,8 @@ import { Icons } from "../enums/icons";
 export type AvailableEntities = (typeof AvailableEntitiesEnum)[number];
 export type AvailableActions = (typeof AvailableActionsEnum)[number];
 export type AvailableSearchableEntities = (typeof AvailableSearchableEntitiesEnum)[number];
+export type AvailableStatisticsTypes = (typeof AvailableStatisticsTypesEnum)[number];
+export type AvailableStatisticsFrequencies = (typeof AvailableStatisticsFrequenciesEnum)[number];
 // =========COMPONENTS=========
 export type Variant = "primary" | "secondary" | "info" | "success" | "warning" | "error";
 
@@ -98,7 +102,7 @@ export type AllowedInputTypes =
   | "datetime"
   | "whatsapp";
 
-export type AllowedFileTypes = (typeof AvailableFileTypes)[number];
+export type AllowedFileTypes = (typeof AvailableFileTypesEnum)[number];
 
 export type AllowedUploadTypes =
   | "company_logo"
