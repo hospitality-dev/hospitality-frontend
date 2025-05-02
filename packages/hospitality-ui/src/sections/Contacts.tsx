@@ -27,7 +27,7 @@ function onSetPrimary(index: number, form: ReactFormExtendedApi<{ contacts: Cont
   } else if (currentContact.contactType.includes("website")) {
     key = "website";
   }
-  const primaryIdx = contacts.findIndex((contact) => contact.contactType.includes(key) && contact.isPrimary);
+  const primaryIdx = contacts.findIndex((contact) => contact.contactType?.includes(key) && contact.isPrimary);
 
   if (primaryIdx !== undefined && primaryIdx > -1) {
     if (index === primaryIdx) {
@@ -92,7 +92,7 @@ function ContactDisplay({
             )}
             name={`contacts[${index}].title`}
           />
-          <div className="mt-2 flex w-full flex-col gap-2 lg:flex-row">
+          <div className="mt-2 flex w-full flex-col gap-2 lg:flex-row @max-[450px]/contacts:flex-col">
             <form.Field
               children={(subfield) => (
                 <Input
@@ -245,7 +245,7 @@ export function Contacts({
   return (
     <form.Field
       children={(field) => (
-        <div className="flex flex-col gap-y-2">
+        <div className="@container/contacts flex flex-col gap-y-2">
           <Title hasBorder label="Contacts" size="xl" variant="primary" />
           <Card hasNoShadow isFullWidth variant="secondary">
             <Collapsible
@@ -271,7 +271,7 @@ export function Contacts({
               label="Addresses">
               <div className="flex flex-col gap-y-2 pb-1">
                 {(field.state.value || []).map((contact, i) => {
-                  if (contact.contactType.includes("address"))
+                  if (contact.contactType?.includes("address"))
                     return (
                       <ContactDisplay
                         key={i}
@@ -315,7 +315,7 @@ export function Contacts({
               label="Phones">
               <div className="flex flex-col gap-y-2 pb-1">
                 {(field.state.value || []).map((contact, i) => {
-                  if (contact.contactType.includes("phone") || contact.contactType === "fax")
+                  if (contact.contactType?.includes("phone") || contact.contactType === "fax")
                     return (
                       <ContactDisplay
                         key={i}
@@ -359,7 +359,7 @@ export function Contacts({
               label="Emails">
               <div className="flex flex-col gap-y-2 pb-1">
                 {(field.state.value || []).map((contact, i) => {
-                  if (contact.contactType.includes("email"))
+                  if (contact.contactType?.includes("email"))
                     return (
                       <ContactDisplay
                         key={i}
@@ -403,7 +403,7 @@ export function Contacts({
               label="Websites">
               <div className="flex flex-col gap-y-2 pb-1">
                 {(field.state.value || []).map((contact, i) => {
-                  if (contact.contactType.includes("website"))
+                  if (contact.contactType?.includes("website"))
                     return (
                       <ContactDisplay
                         key={i}
