@@ -1,20 +1,30 @@
 import {
+  formatCurrency,
+  formatDateStringToFormat,
   getDayDifferenceFromNow,
   getSentenceCase,
   groupBy,
   LocationsProductsGroupedByExpirationType,
+  PurchasesPerFrequencyType,
   Spinner,
   useList,
+  useStatistics,
 } from "@hospitality/hospitality-ui";
-import { lazy, Suspense } from "react";
+import { LineSeries, Point } from "@nivo/line";
+import { lazy, ReactNode, Suspense } from "react";
 
 const BarChart = lazy(() =>
   import("@hospitality/hospitality-charts").then((c) => ({
     default: c.BarChart,
   }))
 );
+const LineChart = lazy(() =>
+  import("@hospitality/hospitality-charts").then((c) => ({
+    default: c.LineChart,
+  }))
+);
 
-type FormattedEntity = {
+type ProductExpiry = {
   productId: string;
   title: string;
   count: number;
@@ -23,7 +33,7 @@ type FormattedEntity = {
 };
 
 const theme = {
-  background: "#ffffff",
+  animate: true,
   text: {
     fontSize: 24,
     fill: "#333333",
@@ -60,6 +70,7 @@ const theme = {
   },
   grid: {
     line: {
+      animate: true,
       stroke: "#dddddd",
       strokeWidth: 1,
     },
@@ -119,8 +130,11 @@ const theme = {
     },
   },
   tooltip: {
-    wrapper: {},
+    wrapper: {
+      display: "none",
+    },
     container: {
+      display: "none",
       background: "#ffffff",
       color: "#333333",
       fontSize: 12,
@@ -133,9 +147,24 @@ const theme = {
   },
 };
 
+function ChartWrapper({ children }: { children: ReactNode }) {
+  return (
+    <div className="h-full w-full rounded-md bg-white shadow">
+      <Suspense
+        fallback={
+          <div className="flex h-full w-full items-center justify-center">
+            <Spinner />
+          </div>
+        }>
+        {children}
+      </Suspense>
+    </div>
+  );
+}
+
 function ProductExpiryChart() {
   const productNames: Record<string, string> = {};
-  const { data = [] } = useList<LocationsProductsGroupedByExpirationType & { title: string }, FormattedEntity>(
+  const { data = [] } = useList<LocationsProductsGroupedByExpirationType & { title: string }, ProductExpiry>(
     { model: "locations_products", fields: ["expirationDate", "count"] },
     {
       urlSuffix: "grouped/expiration-date",
@@ -168,21 +197,18 @@ function ProductExpiryChart() {
             prev.push(newProduct);
           }
           return prev;
-        }, [] as FormattedEntity[]);
+        }, [] as ProductExpiry[]);
       },
     }
   );
   return (
-    <div className="col-span-6 row-span-4 overflow-hidden rounded-md shadow-md">
-      <Suspense
-        fallback={
-          <div className="flex h-full w-full items-center justify-center">
-            <Spinner />
-          </div>
-        }>
+    <div className="lg:col-span-6 lg:row-span-6">
+      <ChartWrapper>
         {/* @ts-expect-error generics with lazy */}
-        <BarChart<FormattedEntity>
+        <BarChart<ProductExpiry>
+          animate
           axisBottom={{ legend: "Product", legendOffset: -20, format: (value) => productNames[value] }}
+          colorBy="index"
           colors={({ id }) => {
             if (id === "isExpiredCount") return "#ef5350";
             if (id === "isAboutToExpireCount") return "#ffca28";
@@ -231,19 +257,90 @@ function ProductExpiryChart() {
               ],
             },
           ]}
+          margin={{ top: 10, right: 130, bottom: 45, left: 60 }}
           padding={0.2}
           theme={theme}
+          tooltip={() => null}
           tooltipLabel={({ id }) => `${getSentenceCase(id.toString())}`}
         />
-      </Suspense>
+      </ChartWrapper>
+    </div>
+  );
+}
+
+function PurchaseStatisticsChartTooltip({ point }: { point: Point<LineSeries> }) {
+  return (
+    <div className="rounded-md border border-gray-300 bg-white p-2 shadow">
+      <strong>Date:</strong> {point.data.xFormatted}
+      <br />
+      <strong>Total:</strong> {formatCurrency(Number(point.data.yFormatted))}
+    </div>
+  );
+}
+
+function PurchaseStatisticsChart() {
+  const { data: stats = [] } = useStatistics<PurchasesPerFrequencyType>({ type: "purchases", frequency: "month" });
+  const formatted = stats.reduce(
+    (prev, curr) => {
+      prev.data.push({
+        x: formatDateStringToFormat(curr.purchasedAt),
+        y: curr.total,
+      });
+
+      return prev;
+    },
+    { id: "spending", data: [] } as { id: string; data: { x: string; y: number }[] }
+  );
+
+  return (
+    <div className="row-span-6 lg:col-span-3">
+      <ChartWrapper>
+        <LineChart
+          axisLeft={{
+            legend: "RSD",
+            legendOffset: -60,
+            legendPosition: "middle",
+            style: {
+              legend: {
+                text: {
+                  fontWeight: 600,
+                  fontFamily: "Lato",
+                  fontSize: 18,
+                },
+              },
+            },
+          }}
+          data={[formatted]}
+          margin={{ right: 30, left: 80, bottom: 40, top: 5 }}
+          pointSize={10}
+          theme={{
+            tooltip: {
+              container: { borderRadius: "6px", border: "gray solid 1px" },
+              basic: { fontSize: 10, maxWidth: 150, textWrap: "wrap" },
+            },
+          }}
+          title="Spending (last 30 days)"
+          tooltip={PurchaseStatisticsChartTooltip}
+          xScale={{ type: "point" }}
+          yFormat=">.2f"
+          yScale={{
+            type: "linear",
+            min: 0,
+            max: "auto",
+            stacked: false,
+            reverse: false,
+          }}
+        />
+      </ChartWrapper>
     </div>
   );
 }
 
 export function Dashboard() {
   return (
-    <div className="grid h-full w-full grid-cols-6 grid-rows-12 py-2">
+    <div className="grid h-full w-full grid-cols-1 gap-4 py-2 lg:grid-cols-6 lg:grid-rows-12">
       <ProductExpiryChart />
+      <PurchaseStatisticsChart />
     </div>
   );
 }
