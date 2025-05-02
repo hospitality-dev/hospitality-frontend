@@ -67,7 +67,10 @@ export function UpdateSupplier({ data }: { data: { id: string } }) {
   const closeDrawer = useCloseDrawer();
   const { data: supplier, isSuccess } = useRead<SuppliersType>({ id: data.id, model: "suppliers", fields: ["id", "title"] });
   const { data: contactsList } = useList<ContactType>(
-    { model: "contacts", fields: ["id", "title", "value", "prefix", "iso3", "isPrimary", "isPublic", "placeId"] },
+    {
+      model: "contacts",
+      fields: ["id", "title", "value", "prefix", "iso3", "isPrimary", "isPublic", "placeId", "contactType"],
+    },
     { urlSuffix: `supplier/${supplier?.id || data.id}`, enabled: !!supplier?.id }
   );
   const { mutate } = useUpdate<SuppliersMutatorType>("suppliers", { onSuccess: closeDrawer });
