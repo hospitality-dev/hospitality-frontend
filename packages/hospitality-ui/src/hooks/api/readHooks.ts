@@ -2,8 +2,8 @@ import { useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query
 import { useResetAtom } from "jotai/utils";
 
 import { userAtom } from "../../atoms";
-import { AvailableEntities, FormattedEntity } from "../../types";
-import { fetchFunction, getSearchParams, urlFunction } from "../../utils";
+import { AvailableEntities, AvailableStatisticsFrequencies, AvailableStatisticsTypes, FormattedEntity } from "../../types";
+import { fetchFunction, getSearchParams, statisticsFunction, urlFunction } from "../../utils";
 
 export type useReadProps<F> = {
   id: string;
@@ -44,5 +44,25 @@ export function useImage(id: string, options?: Pick<UseQueryOptions, "enabled"> 
       }),
     enabled: !!(options?.enabled ?? true),
     staleTime: 60 * 60 * 8 * 1000,
+  });
+}
+
+export function useStatistics<F>(
+  { type, frequency }: { type: AvailableStatisticsTypes; frequency: AvailableStatisticsFrequencies },
+  options?: Pick<UseQueryOptions<F>, "enabled" | "staleTime"> & { urlSuffix?: string }
+) {
+  const reset = useResetAtom(userAtom);
+
+  return useQuery<F>({
+    queryKey: [type, frequency, "statistics", options?.urlSuffix || ""].filter(Boolean),
+    queryFn: () =>
+      statisticsFunction<F>({
+        type,
+        frequency,
+        userReset: reset,
+        urlSuffix: options?.urlSuffix || "",
+      }),
+    enabled: !!(options?.enabled ?? true),
+    staleTime: options?.staleTime,
   });
 }
