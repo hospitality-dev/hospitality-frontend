@@ -77,8 +77,8 @@ const columns = [
     },
     minSize: 150,
   }),
-  columnHelper.accessor("purchasedAt", {
-    header: "Purchase date",
+  columnHelper.accessor("createdAt", {
+    header: "Entered into system",
     cell: (info) => (
       <span className="flex items-center gap-x-1">
         <span>{formatFromUTC(info.getValue(), "dd.MM.yyyy HH:MM")}</span>
@@ -88,6 +88,21 @@ const columns = [
       isSortable: true,
     },
     minSize: 150,
+    maxSize: 200,
+  }),
+  columnHelper.accessor("purchasedAt", {
+    header: "Purchase date",
+    cell: (info) => (
+      <span className="flex items-center gap-x-1">
+        <span>{formatFromUTC(info.getValue(), "dd.MM.yyyy HH:MM")}</span>
+      </span>
+    ),
+    meta: {
+      isSortable: true,
+      alignment: "center",
+    },
+    minSize: 150,
+    maxSize: 200,
   }),
   columnHelper.accessor("total", {
     header: "Total",
@@ -110,7 +125,7 @@ const columns = [
 ];
 
 export function Purchases() {
-  const [meta, dispatch] = useTable<Entity>();
+  const [meta, dispatch] = useTable<Entity>({ sort: { field: "createdAt", type: "desc" } });
   const { data: reports = [], isPending } = useList<Entity>({
     model: "purchases",
     sort: meta.sort,
