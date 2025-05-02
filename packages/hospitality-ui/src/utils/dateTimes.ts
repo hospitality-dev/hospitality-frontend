@@ -28,3 +28,7 @@ export function formatFromUTC(date: string, dateTimeFormat?: string) {
   const parsedDate = parseISO(date);
   return format(parsedDate, dateTimeFormat || "dd.MM.yyyy.");
 }
+
+export function formatDateStringToFormat(value: string, returnFormat: string = "dd.MM.yyyy") {
+  return format(new Date(value), returnFormat);
+}
