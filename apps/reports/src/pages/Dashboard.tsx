@@ -166,6 +166,8 @@ function ChartWrapper({ children }: { children: ReactNode }) {
   );
 }
 
+// #region ProductExpiryChart
+
 function ProductExpiryChart() {
   const productNames: Record<string, string> = {};
   const { data = [] } = useList<LocationsProductsGroupedByExpirationType & { title: string }, ProductExpiry>(
@@ -272,6 +274,7 @@ function ProductExpiryChart() {
     </div>
   );
 }
+// #endregion ProductExpiryChart
 
 // #region Spending
 function SpendingChartTooltip({ point }: { point: Point<LineSeries> }) {
