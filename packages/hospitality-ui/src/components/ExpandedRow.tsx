@@ -228,7 +228,7 @@ function PurchaseItems({ parentId }: { parentId?: string }) {
   const [state, dispatch] = useTable<PurchaseItemsType>();
 
   return (
-    <div className="h-[36rem]">
+    <div className="h-fit">
       <Table columns={purchaseItemsColumns} data={data || []} dispatch={dispatch} meta={state} />
     </div>
   );
