@@ -42,6 +42,7 @@ const classes = tv({
     container: "relative h-full overflow-y-auto rounded-md border border-gray-300 bg-white",
     tableContainer: "transition-[height]",
     tableClasses: "min-w-full",
+    titleClasses: "sticky top-0 left-0 w-full [&>h3]:font-medium [&>h3]:normal-case",
     thead: "sticky top-0 max-h-8 border-b border-gray-300 text-left text-gray-500",
     th: "@container/table-cell flex h-8 min-w-fit flex-1 flex-nowrap items-center gap-x-2 truncate bg-gray-100 p-2 text-sm font-light uppercase shadow-sm select-none hover:bg-gray-100",
     tbody: "flex min-h-10 flex-col divide-y divide-gray-300",
@@ -76,7 +77,7 @@ const classes = tv({
     isOpen: { true: "", false: "" },
     isCollapsible: {
       true: {
-        container: "p-2",
+        container: "px-2",
       },
     },
     isLoading: {
@@ -111,12 +112,14 @@ const classes = tv({
       class: {
         tableContainer: "overflow-hidden",
         td: "px-0.5",
+        titleClasses: "pt-2",
       },
     },
     {
       isCollapsible: true,
       isOpen: false,
       class: {
+        container: "py-2",
         tableContainer: "h-0 overflow-hidden",
       },
     },
@@ -168,12 +171,13 @@ export function Table<T extends object>({
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(isInitialOpen);
   const headers = table.getFlatHeaders();
-  const { container, tableContainer, tableClasses, thead, th, tbody, rowContainer, tr, tdContainer, td } = classes({
-    isOpen,
-    isLoading,
-    isCollapsible,
-    hasNoData: !data.length,
-  });
+  const { container, tableContainer, tableClasses, titleClasses, thead, th, tbody, rowContainer, tr, tdContainer, td } =
+    classes({
+      isOpen,
+      isLoading,
+      isCollapsible,
+      hasNoData: !data.length,
+    });
 
   useLayoutEffect(() => {
     table.resetExpanded();
@@ -188,7 +192,7 @@ export function Table<T extends object>({
             if (onExpand && !isOpen) onExpand();
             setIsOpen(!isOpen);
           }}>
-          <div className="sticky top-0 left-0 w-full [&>h3]:font-medium [&>h3]:normal-case">
+          <div className={titleClasses()}>
             <Title
               hasBorder={isOpen}
               items={(actions || []).concat({
