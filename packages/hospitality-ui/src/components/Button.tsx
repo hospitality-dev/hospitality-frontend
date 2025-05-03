@@ -27,7 +27,7 @@ type Props = {
 const classes = tv({
   slots: {
     base: "flex w-full cursor-pointer items-center justify-center gap-2 rounded-sm px-4 py-2 font-medium text-white shadow transition-all select-none active:scale-95 active:shadow-none",
-    labelClasses: "max-w-5/6 truncate",
+    labelClasses: "",
     iconClasses: "text-lg",
   },
   variants: {

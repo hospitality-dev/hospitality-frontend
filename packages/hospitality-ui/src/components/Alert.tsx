@@ -32,74 +32,34 @@ const classes = tv({
 });
 
 export function Alert({ title, variant = "primary", size = "md", content, hasDismiss, action }: Props) {
-  if (hasDismiss) {
-    if (title && !action) {
-      return (
-        <div className={classes({ variant, size, className: "w-full flex-col justify-center gap-4" })}>
-          <div className="flex w-full items-center justify-between">
-            <div className="flex gap-4">
-              <span className="flex items-center">
-                <Icon fontSize={24} icon={Icons.info} />
-              </span>
-              <h4 className="text-lg font-medium">{title}</h4>
-            </div>
-            <div>
-              <Button hasNoBorder icon={Icons.close} isOutline onClick={undefined} variant={variant} />
-            </div>
-          </div>
-          <div>
-            <p>{content}</p>
-          </div>
+  return (
+    <div className={classes({ variant, size, className: "w-full flex-col justify-center gap-4" })}>
+      <div className="flex w-full items-center justify-between">
+        <div className="flex gap-4">
+          <span className="flex items-center">
+            <Icon fontSize={24} icon={Icons.info} />
+          </span>
+          {title ? <h4 className="text-lg font-medium">{title}</h4> : null}
         </div>
-      );
-    } else if (!title && !action) {
-      return (
-        <div className={classes({ variant, size, className: "flex w-full items-center justify-between" })}>
-          <div className="flex gap-4 text-lg">
-            <span className="flex items-center">
-              <Icon icon={Icons.info} />
-            </span>
-            <p>{content}</p>
-          </div>
+        {hasDismiss && !action ? (
           <div>
             <Button hasNoBorder icon={Icons.close} isOutline onClick={undefined} variant={variant} />
           </div>
-        </div>
-      );
-    } else if (action && title) {
-      return (
-        <div className={classes({ variant, size, className: "w-full flex-col justify-center gap-4" })}>
-          <div className="flex w-full items-center justify-between">
-            <div className="flex gap-4">
-              <span className="flex items-center">
-                <Icon fontSize={24} icon={Icons.info} />
-              </span>
-              <h4 className="text-lg font-medium">{title}</h4>
-            </div>
-          </div>
-          <div>
-            <p>{content}</p>
-          </div>
-          <div className="flex gap-4">
-            <div>
-              <Button icon={action.icon} label={action.label} onClick={undefined} variant={variant} />
-            </div>
-            <div className="w-28">
-              <Button isOutline label="Dismiss" onClick={undefined} variant={variant} />
-            </div>
-          </div>
-        </div>
-      );
-    }
-  }
-  return (
-    <div className={classes({ variant, size, className: "flex w-full items-center justify-between" })}>
-      <div className="flex gap-4 text-lg">
-        <span className="flex items-center">
-          <Icon fontSize={24} icon={Icons.info} />
-        </span>
+        ) : null}
+      </div>
+      <div>
         <p>{content}</p>
       </div>
+      {action ? (
+        <div className="flex w-full gap-4">
+          <div className="w-fit">
+            <Button icon={action.icon} label={action.label} onClick={undefined} variant={variant} />
+          </div>
+          <div className="w-28">
+            <Button isOutline label="Dismiss" onClick={undefined} variant={variant} />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
