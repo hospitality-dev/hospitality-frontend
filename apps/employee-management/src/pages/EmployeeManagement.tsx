@@ -71,7 +71,7 @@ const columns = [
         <Avatar imageId={info.getValue()} label={getUserInfo(info.row.original).title} size="sm" type="user_avatar" />
       </div>
     ),
-    maxSize: 50,
+    maxSize: 85,
     meta: {
       alignment: "center",
     },
@@ -91,6 +91,10 @@ const columns = [
     id: "role",
     cell: (info) => <Badge label={getSentenceCase(info.getValue().title)} variant="info" />,
     header: () => <span>Role</span>,
+    maxSize: 125,
+    meta: {
+      alignment: "center",
+    },
   }),
   columnHelper.display({
     id: "isActive",
@@ -99,7 +103,7 @@ const columns = [
       alignment: "center",
     },
     cell: ActionsButton,
-    maxSize: 125,
+    maxSize: 75,
   }),
 ];
 export function EmployeeManagement() {
