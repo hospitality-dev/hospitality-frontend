@@ -244,7 +244,7 @@ function StoresActionButton(info: CellContext<StoresType, unknown>) {
   );
   return (
     <div
-      className="mr-2.5 w-fit"
+      className="w-fit"
       onMouseEnter={() => {
         if (!isActive) setIsActive(true);
       }}>
@@ -271,7 +271,9 @@ function StoresActionButton(info: CellContext<StoresType, unknown>) {
                     title: "View in Google Maps",
                     icon: Icons.googleMaps,
                     onClick: () => {
-                      const address = encodeURIComponent(`${info.row.original.title} ${c.value}`);
+                      const address = encodeURIComponent(
+                        `${info.row.original.title} ${c.value}`.replaceAll(/^\d+(-\d+)?\s?-?/g, "").trim()
+                      );
                       window.open(`https://www.google.com/maps?q=${address}`, "_blank");
                     },
                   },
@@ -295,9 +297,10 @@ const storesColumns = [
   storesColHelper.display({
     id: "actions",
     cell: StoresActionButton,
-    maxSize: 100,
+    maxSize: 55,
+
     meta: {
-      alignment: "right",
+      alignment: "center",
     },
   }),
 ];
