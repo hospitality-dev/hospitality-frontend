@@ -63,6 +63,9 @@ function columns({
           ? `${original.volume ? `${original.volume}${original.volumeUnit}` : `${original.weight}${original.weightUnit}`}`
           : null,
       maxSize: 100,
+      meta: {
+        alignment: "center",
+      },
     }),
 
     columnHelper.accessor("availabilityId", {
