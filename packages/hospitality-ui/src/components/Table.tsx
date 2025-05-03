@@ -110,6 +110,7 @@ const classes = tv({
       isCollapsible: true,
       isOpen: true,
       class: {
+        container: "overflow-hidden",
         tableContainer: "overflow-hidden",
         td: "px-0.5",
         titleClasses: "pt-2",
