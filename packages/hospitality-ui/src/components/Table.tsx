@@ -182,7 +182,7 @@ export function Table<T extends object>({
 
   useLayoutEffect(() => {
     table.resetExpanded();
-  }, [pathname]);
+  }, [pathname, meta?.sort, meta?.page]);
 
   return (
     <div className={container()}>
