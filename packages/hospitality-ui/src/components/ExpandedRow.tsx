@@ -384,7 +384,7 @@ function Brands({ parentId }: { parentId?: string }) {
 // #endregion Manufacturers
 export function ExpandedRow({ id, type }: { id: string; type: TableExpandableTypes | null | undefined }) {
   return (
-    <div className="expandedContainer w-full bg-gray-300 p-2">
+    <div className="expandedContainer max-h-[36rem] w-full overflow-y-auto bg-gray-300 p-2">
       {type === "product_grouped_by_expiration_date" ? <ExpandedProductGroupedByExpirationDate productId={id} /> : null}
       {type === "purchases" ? <PurchaseItems parentId={id} /> : null}
       {type === "suppliers" ? <Stores parentId={id} /> : null}
