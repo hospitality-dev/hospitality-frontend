@@ -112,7 +112,7 @@ const classes = tv({
       class: {
         container: "overflow-hidden",
         tableContainer: "overflow-hidden",
-        td: "px-0.5",
+        td: "px-2",
         titleClasses: "pt-2",
       },
     },
