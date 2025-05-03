@@ -92,14 +92,14 @@ export function Sidebar({ sections = [] }: Props) {
           {isLg ? <h2 className="text-2xl font-bold">{locationData?.title || ""}</h2> : null}
         </li>
         <ul className={moduleItemsList()}>
+          <li>
+            <SidebarLink icon={Icons.officeAddress} title="Company details" to="/settings/user" />
+          </li>
           {isLg
             ? sections.map((section) => <SidebarSection key={section.title} links={section.links} title={section.title} />)
             : sections.flatMap((section) =>
                 section.links.map((link) => <SidebarLink key={link.to} icon={link.icon} title={link.title} to={link.to} />)
               )}
-          <li>
-            <SidebarLink icon={Icons.officeAddress} title="Company details" to="/settings/user" />
-          </li>
         </ul>
 
         <li className={settingsButton()}>
