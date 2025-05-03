@@ -1,7 +1,7 @@
-import { enum as enum_, infer as zodInfer, number, object, string } from "zod";
+import { enum as enum_, infer as zodInfer, number, object, string, uuidv4 } from "@zod/mini";
 
 export const CountriesSchema = object({
-  id: string().uuid(),
+  id: uuidv4(),
   title: string(),
   iso2: string(),
   iso3: string(),
@@ -17,8 +17,8 @@ export const CountriesSchema = object({
   latitude: number(),
   longitude: number(),
   wikiDataId: number(),
-  regionId: string().uuid(),
-  subregionId: string().uuid(),
+  regionId: uuidv4(),
+  subregionId: uuidv4(),
 });
 
 export const WeightUnitsSchema = enum_(["kg", "g", "mg", "oz", "lb"]);

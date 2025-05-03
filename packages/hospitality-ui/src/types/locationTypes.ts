@@ -1,35 +1,35 @@
-import { infer as zodInfer, object, string } from "zod";
+import { array, infer as zodInfer, nullable, object, optional, string, uuidv4 } from "@zod/mini";
 
 import { ContactSchema } from "./contactTypes";
 
 export const LocationsSchema = object({
-  id: string().uuid().nonempty(),
-  title: string().nonempty(),
-  ownerId: string().uuid().nonempty(),
-  imageId: string().uuid().nullish(),
-  companyId: string().uuid().nonempty(),
-  contacts: ContactSchema.array().default([]),
+  id: uuidv4(),
+  title: string(),
+  ownerId: uuidv4(),
+  imageId: nullable(optional(uuidv4())),
+  companyId: uuidv4(),
+  contacts: array(ContactSchema),
 });
 
 export const LocationsInitializerSchema = object({
-  title: string().nonempty("Title cannot be empty."),
-  contacts: ContactSchema.array(),
+  title: string("Title cannot be empty."),
+  contacts: array(ContactSchema),
 });
 export const LocationsMutatorSchema = object({
-  id: string().uuid().nonempty("Must have id"),
-  title: string().nonempty("Location title cannot be empty.").optional(),
-  contacts: ContactSchema.array(),
+  id: uuidv4("Must have id"),
+  title: optional(string()),
+  contacts: array(ContactSchema),
 });
 export const LocationsUsersSchema = object({
-  id: string().uuid().nonempty(),
-  locationId: string().uuid(),
-  userId: string().uuid(),
-  roleId: string().uuid(),
+  id: uuidv4(),
+  locationId: uuidv4(),
+  userId: uuidv4(),
+  roleId: uuidv4(),
 });
 
 export const LocationsUsersInitializerSchema = object({
-  userId: string().uuid().nonempty("User must be selected."),
-  roleId: string().uuid().nonempty("Role must be selected."),
+  userId: uuidv4("User must be selected."),
+  roleId: uuidv4("Role must be selected."),
 });
 
 export type LocationsType = zodInfer<typeof LocationsSchema>;

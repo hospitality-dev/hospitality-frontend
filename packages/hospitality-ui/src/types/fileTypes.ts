@@ -1,4 +1,4 @@
-import { enum as enum_, infer as zodInfer, object, string } from "zod";
+import { date, enum as enum_, infer as zodInfer, nullable, object, optional, string, uuidv4 } from "@zod/mini";
 
 export const FileTypesEnum = enum_([
   "png",
@@ -30,12 +30,12 @@ export const FileTypesEnum = enum_([
 export const FilesCategoriesEnum = enum_(["reports", "images", "qr_codes", "unknown"]);
 
 export const FilesSchema = object({
-  id: string().uuid().nonempty(),
-  createdAt: string().datetime().nonempty(),
-  title: string().nonempty(),
-  ownerId: string().uuid().nonempty(),
-  locationId: string().uuid().nullish(),
-  companyId: string().uuid().nonempty(),
+  id: uuidv4(),
+  createdAt: date(),
+  title: string(),
+  ownerId: uuidv4(),
+  locationId: nullable(optional(uuidv4())),
+  companyId: uuidv4(),
   type: FileTypesEnum,
   category: FilesCategoriesEnum,
 });

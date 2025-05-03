@@ -1,10 +1,10 @@
-import { infer as zodInfer, number, object, string } from "zod";
+import { date, infer as zodInfer, number, object, string } from "@zod/mini";
 
 export const PurchasesPerFrequencySchema = object({
-  purchasedAt: string().datetime().nonempty(),
-  supplierTitle: string().nonempty(),
-  storeTitle: string().nonempty(),
-  total: number().nonnegative(),
+  purchasedAt: date(),
+  supplierTitle: string(),
+  storeTitle: string(),
+  total: number(),
 });
 
 export type PurchasesPerFrequencyType = zodInfer<typeof PurchasesPerFrequencySchema>;

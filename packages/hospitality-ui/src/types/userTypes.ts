@@ -1,56 +1,56 @@
-import { boolean, date, infer as zodInfer, object, string } from "zod";
+import { array, boolean, date, infer as zodInfer, minLength, nullable, object, optional, string, uuidv4 } from "@zod/mini";
 
 import { ContactSchema } from "./contactTypes";
 
 export const RolesSchema = object({
-  id: string().uuid().nonempty(),
-  title: string().nonempty(),
+  id: uuidv4(),
+  title: string(),
   isDefault: boolean(),
-  companyId: string().uuid().nullable(),
-  imageId: string().uuid().nullish(),
+  companyId: nullable(uuidv4()),
+  imageId: optional(nullable(uuidv4())),
 });
 
 export const UsersSchema = object({
-  id: string().uuid().nonempty(),
-  firstName: string().nonempty(),
-  lastName: string().nonempty(),
-  username: string().nonempty().min(6),
-  email: string().nullish(),
-  phone: string().nullish(),
-  dateOfBirth: date().nullish(),
-  dateOfEmployment: date().nullish(),
-  dateOfTermination: date().nullish(),
-  isVerified: boolean().nullish(),
-  imageId: string().uuid().nullish(),
-  roleId: string().uuid(),
+  id: uuidv4(),
+  firstName: string(),
+  lastName: string(),
+  username: string().check(minLength(6)),
+  email: optional(nullable(string())),
+  phone: optional(nullable(string())),
+  dateOfBirth: optional(nullable(date())),
+  dateOfEmployment: optional(nullable(date())),
+  dateOfTermination: optional(nullable(date())),
+  isVerified: optional(nullable(boolean())),
+  imageId: optional(nullable(uuidv4())),
+  roleId: uuidv4(),
 });
 export const UsersInitializerSchema = object({
-  firstName: string().nonempty("First name cannot be empty."),
-  lastName: string().nonempty("Last name cannot be empty."),
-  username: string().nonempty("Username cannot be empty").min(6, "Username must have at least 6 characters"),
-  password1: string().min(8, "Must be at least 8 characters long.").nonempty("Password cannot be empty."),
-  password2: string()
-    .min(8, "Must be at least 8 characters long and match the password.")
-    .nonempty("Password confirm cannot be empty."),
-  dateOfBirth: date().nullish(),
-  dateOfEmployment: date().nullish(),
-  roleId: string().uuid("User must have a role selected"),
-  imageId: string().uuid().nullish(),
-  contacts: ContactSchema.array(),
+  firstName: string("First name cannot be empty."),
+  lastName: string("Last name cannot be empty."),
+  username: string("Username cannot be empty").check(minLength(6, "Username must have at least 6 characters")),
+  password1: string("Password cannot be empty.").check(minLength(8, "Must be at least 8 characters long.")),
+  password2: string("Password confirm cannot be empty.").check(
+    minLength(8, "Must be at least 8 characters long and match the password.")
+  ),
+  dateOfBirth: optional(nullable(date())),
+  dateOfEmployment: optional(nullable(date())),
+  roleId: uuidv4("User must have a role selected"),
+  imageId: optional(nullable(uuidv4())),
+  contacts: array(ContactSchema),
 });
 
 export const UsersMutatorSchema = object({
-  id: string().uuid(),
-  firstName: string().nonempty("First name cannot be empty.").optional(),
-  lastName: string().nonempty("Last name cannot be empty.").optional(),
-  username: string().nonempty("Username cannot be empty").min(6, "Username must have at least 6 characters").optional(),
-  password1: string().min(8, "Must be at least 8 characters long.").optional(),
-  password2: string().min(8, "Must be at least 8 characters long and match the password.").optional(),
-  roleId: string().uuid().optional(),
-  dateOfBirth: date().nullish(),
-  dateOfEmployment: date().nullish(),
-  imageId: string().uuid().nullish(),
-  contacts: ContactSchema.array(),
+  id: uuidv4(),
+  firstName: optional(string("First name cannot be empty.")),
+  lastName: optional(string("Last name cannot be empty.")),
+  username: optional(string("Username cannot be empty").check(minLength(6, "Username must have at least 6 characters"))),
+  password1: optional(string().check(minLength(8, "Must be at least 8 characters long."))),
+  password2: optional(string().check(minLength(8, "Must be at least 8 characters long and match the password."))),
+  roleId: optional(uuidv4()),
+  dateOfBirth: optional(nullable(date())),
+  dateOfEmployment: optional(nullable(date())),
+  imageId: optional(nullable(uuidv4())),
+  contacts: array(ContactSchema),
 });
 
 export type RolesType = zodInfer<typeof RolesSchema>;

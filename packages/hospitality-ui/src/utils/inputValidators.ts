@@ -1,12 +1,12 @@
-import { string } from "zod";
+import { email, string } from "zod";
 
 import { AvailableDomainsEnum } from "../enums";
 import { formatErrorsForHelperText } from "./format";
 
 export function emailValidation(f: { value: unknown }): string | undefined {
-  const res = string().email("Please enter a valid email.").safeParse(f.value);
+  const res = email("Please enter a valid email.").safeParse(f.value);
   if (!res.success) {
-    return formatErrorsForHelperText(res.error.errors.map((i) => i.message));
+    return formatErrorsForHelperText(res.error.issues.map((i) => i.message));
   }
   return undefined;
 }
@@ -19,7 +19,7 @@ export function urlValidation(f: { value: unknown }): string | undefined {
     })
     .safeParse(f.value);
   if (!res.success) {
-    return formatErrorsForHelperText(res.error.errors.map((i) => i.message));
+    return formatErrorsForHelperText(res.error.issues.map((i) => i.message));
   }
   return undefined;
 }
@@ -28,7 +28,7 @@ export function whatsAppValidation(f: { value: unknown }): string | undefined {
     .regex(/^https:\/\/(wa.me)\/\d+$/, "Please enter a valid WhatsApp link.")
     .safeParse(f.value);
   if (!res.success) {
-    return formatErrorsForHelperText(res.error.errors.map((i) => i.message));
+    return formatErrorsForHelperText(res.error.issues.map((i) => i.message));
   }
   return undefined;
 }

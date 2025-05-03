@@ -9,5 +9,6 @@ export function getBaseContact(contactType: ContactTypes): ContactType {
     value: "",
     contactType,
     isPublic: false,
+    placeId: null,
   };
 }

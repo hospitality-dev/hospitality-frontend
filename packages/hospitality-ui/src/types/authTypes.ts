@@ -1,6 +1,4 @@
-import { z } from "zod";
-
-import { userPermissionsSchema } from "../schemas";
+import { AvailableActions, AvailableEntities } from "./baseTypes";
 import { LocationsType } from "./locationTypes";
 import { UsersType } from "./userTypes";
 
@@ -8,8 +6,7 @@ export type LoginParamsType = {
   username: string;
   password: string;
 };
-
-export type UserPermissionsType = z.infer<typeof userPermissionsSchema>;
+export type UserPermissionsType = Record<AvailableEntities, Record<AvailableActions, boolean>>;
 
 export type LoginResponseType = {
   user: Pick<UsersType, "id" | "firstName" | "lastName" | "username" | "phone" | "email"> & {

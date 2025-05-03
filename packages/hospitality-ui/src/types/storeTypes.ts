@@ -1,25 +1,25 @@
-import { boolean, infer as zodInfer, object, string } from "zod";
+import { array, boolean, infer as zodInfer, object, optional, string, uuidv4 } from "@zod/mini";
 
 import { ContactSchema } from "./contactTypes";
 
 export const StoresSchema = object({
-  id: string().uuid().nonempty(),
-  title: string().nonempty(),
-  parentId: string().uuid().nonempty(),
-  ownerId: string().uuid().nonempty(),
-  companyId: string().uuid().nonempty(),
-  isDefault: boolean().default(false),
-  contacts: ContactSchema.array().default([]),
+  id: uuidv4(),
+  title: string(),
+  parentId: uuidv4(),
+  ownerId: uuidv4(),
+  companyId: uuidv4(),
+  isDefault: boolean(),
+  contacts: array(ContactSchema),
 });
 
 export const StoresInitializerSchema = object({
-  title: string().nonempty(),
-  contacts: ContactSchema.array().default([]),
+  title: string(),
+  contacts: array(ContactSchema),
 });
 
 export const StoresMutatorSchema = object({
-  title: string().optional(),
-  contacts: ContactSchema.array().optional(),
+  title: optional(string()),
+  contacts: optional(array(ContactSchema)),
 });
 
 export type StoresType = zodInfer<typeof StoresSchema>;

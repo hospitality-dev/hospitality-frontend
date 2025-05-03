@@ -7,12 +7,11 @@ import {
   AvailableStatisticsFrequenciesEnum,
   AvailableStatisticsTypesEnum,
   valueof,
-} from "@hospitality/hospitality-ui/src";
+} from "@hospitality/hospitality-ui";
 import { AnyRoute, ReactNode } from "@tanstack/react-router";
 import { HTMLInputTypeAttribute, MouseEventHandler } from "react";
 
 import { Icons } from "../enums/icons";
-
 // =========ENTITIES=========
 export type AvailableEntities = (typeof AvailableEntitiesEnum)[number];
 export type AvailableActions = (typeof AvailableActionsEnum)[number];

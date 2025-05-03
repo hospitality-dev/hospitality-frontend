@@ -4,6 +4,7 @@ export * from "./baseTypes";
 export * from "./contactTypes";
 export * from "./fileTypes";
 export * from "./locationTypes";
+export * from "./login";
 export * from "./productTypes";
 export * from "./purchaseTypes";
 export * from "./statisticsTypes";

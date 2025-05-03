@@ -1,4 +1,23 @@
-import { boolean, enum as enum_, infer as zodInfer, number, object, record, string, z } from "zod";
+import {
+  array,
+  boolean,
+  date,
+  enum as enum_,
+  extend,
+  gte,
+  infer as zodInfer,
+  maxLength,
+  nonnegative,
+  nullable,
+  number,
+  object,
+  optional,
+  overwrite,
+  pick,
+  record,
+  string,
+  uuidv4,
+} from "@zod/mini";
 
 import { FormattedEntity } from "./utilityTypes";
 import { VolumeUnitsSchema, WeightUnitsSchema, WidthHeightUnitsSchema } from "./worldTypes";
@@ -22,122 +41,124 @@ export const ProductShapeSchema = enum_([
   "sack",
 ]);
 
-export type ProductShape = z.infer<typeof ProductShapeSchema>;
+export type ProductShape = zodInfer<typeof ProductShapeSchema>;
 
 // #region PRODUCTS
 
 export const ProductsSchema = object({
-  id: string().uuid().nonempty(),
-  title: string().nonempty(),
-  companyId: string().uuid().nullable(),
-  description: string().nullable(),
-  weight: number().min(0).nullable(),
-  volume: number().min(0).nullable(),
-  weightUnit: WeightUnitsSchema.nullable(),
-  volumeUnit: VolumeUnitsSchema.nullable(),
-  barcode: string().max(13).nullable(),
-  categoryId: string().uuid().nonempty(),
-  subCategoryId: string().uuid().nullable(),
-  imageId: string().uuid().nullable(),
-  manufacturerId: string().uuid().nullable(),
-  brandId: string().uuid().nullable(),
-  shape: ProductShapeSchema.nullable(),
-  width: string().nullable().optional(),
-  height: string().nullable().optional(),
-  widthUnit: WidthHeightUnitsSchema.nullable(),
-  heightUnit: WidthHeightUnitsSchema.nullable(),
-  availabilityId: string().uuid().nullable(),
+  id: uuidv4(),
+  title: string(),
+  companyId: nullable(uuidv4()),
+  description: nullable(string()),
+  weight: nullable(number().check(nonnegative())),
+  volume: nullable(number().check(nonnegative())),
+  weightUnit: nullable(WeightUnitsSchema),
+  volumeUnit: nullable(VolumeUnitsSchema),
+  barcode: nullable(string().check(maxLength(13))),
+  categoryId: uuidv4("Category must be selected."),
+  subCategoryId: nullable(uuidv4()),
+  imageId: nullable(uuidv4()),
+  manufacturerId: nullable(uuidv4()),
+  brandId: nullable(uuidv4()),
+  shape: nullable(ProductShapeSchema),
+  width: optional(nullable(string())),
+  height: optional(nullable(string())),
+  widthUnit: nullable(WidthHeightUnitsSchema),
+  heightUnit: nullable(WidthHeightUnitsSchema),
+  availabilityId: nullable(uuidv4()),
   relation__manufacturerTitle: string(),
-  relation__brandTitle: string().nullish(),
+  relation__brandTitle: nullable(optional(string())),
   relations: object({
-    brands: enum_(["id", "title"]).array().optional(),
-    manufacturers: enum_(["id", "title"]).array().optional(),
+    brands: optional(array(enum_(["id", "title"]))),
+    manufacturers: optional(array(enum_(["id", "title"]))),
   }),
 });
 
 export const ProductsInitalizerSchema = object({
-  title: string().nonempty("Title cannot be empty."),
-  description: string().nullable(),
-  weight: number().min(0).nullable(),
-  weightUnit: WeightUnitsSchema.nullable(),
-  volumeUnit: VolumeUnitsSchema.nullable(),
-  volume: number().min(0).nullable(),
-  barcode: string().max(13).nullable(),
-  categoryId: string().uuid().nonempty("Category must be selected."),
-  subCategoryId: string().uuid().nullable(),
-  imageId: string().uuid().nullable(),
-  manufacturerId: string().uuid().nullable(),
-  brandId: string().uuid().nullable(),
+  title: string("Title cannot be empty."),
+  description: nullable(string()),
+  weight: nullable(number().check(gte(1))),
+  weightUnit: nullable(WeightUnitsSchema),
+  volumeUnit: nullable(VolumeUnitsSchema),
+  volume: nullable(number().check(gte(1))),
+  barcode: nullable(string().check(maxLength(13))),
+  categoryId: uuidv4("Category must be selected."),
+  subCategoryId: nullable(uuidv4()),
+  imageId: nullable(uuidv4()),
+  manufacturerId: nullable(uuidv4()),
+  brandId: nullable(uuidv4()),
 });
 
 export const ProductsMutatorSchema = object({
-  title: string().nonempty("Title cannot be empty."),
-  description: string().nullable(),
-  weight: number().min(0).nullable(),
-  volume: number().min(0).nullable(),
-  weightUnit: WeightUnitsSchema.nullable(),
-  volumeUnit: VolumeUnitsSchema.nullable(),
-  barcode: string().max(13).nullable(),
-  categoryId: string().uuid().nonempty("Category must be selected."),
-  subCategoryId: string().uuid().nullable(),
-  imageId: string().uuid().nullable(),
+  title: string("Title cannot be empty."),
+  description: nullable(string()),
+  weight: nullable(number().check(gte(1))),
+  weightUnit: nullable(WeightUnitsSchema),
+  volumeUnit: nullable(VolumeUnitsSchema),
+  volume: nullable(number().check(gte(1))),
+  barcode: nullable(string().check(maxLength(13))),
+  categoryId: uuidv4("Category must be selected."),
+  subCategoryId: nullable(uuidv4()),
+  imageId: nullable(uuidv4()),
+  manufacturerId: nullable(uuidv4()),
+  brandId: nullable(uuidv4()),
 });
 
-export const ProductsWithCountSchema = ProductsSchema.extend({ count: number(), hasAboutToExpire: boolean() });
+export const ProductsWithCountSchema = extend(ProductsSchema, {});
 // #endregion PRODUCTS
 
 // #region PRODUCTS_CATEGORIES
 export const ProductsCategoriesSchema = object({
-  id: string().uuid().nonempty(),
-  title: string().nonempty(),
-  companyId: string().uuid().nullable(),
-  parentId: string().uuid().nonempty(),
+  id: uuidv4(),
+  title: string(),
+  companyId: nullable(uuidv4()),
+  parentId: uuidv4(),
   isDefault: boolean(),
 });
 
 export const ProductsCategoriesInitalizerSchema = object({
-  title: string().nonempty("Title cannot be empty."),
-  parentId: string().uuid().nullish(),
+  title: string("Title cannot be empty."),
+  parentId: nullable(optional(uuidv4())),
 });
 
 export const ProductsCategoriesMutatorSchema = object({
-  title: string().optional(),
-  parentId: string().uuid().optional(),
+  title: optional(string()),
+  parentId: optional(uuidv4()),
 });
 // #endregion PRODUCTS_CATEGORIES
 
 // #region LOCATIONS_AVAILABLE_PRODUCTS
 export const LocationsAvailableProductsSchema = object({
-  id: string().uuid().nonempty(),
-  locationId: string().uuid().nonempty(),
-  productId: string().uuid().nonempty(),
+  id: uuidv4(),
+  locationId: uuidv4(),
+  productId: uuidv4(),
   expirationDate: string(),
 });
 
 export const LocationsAvailableProductsInitalizerSchema = object({
-  productId: string().uuid().nonempty("Product must be selected."),
+  productId: uuidv4("Product must be selected."),
 });
 
 export const LocationsAvailableProductsMutatorSchema = object({
-  id: string().uuid().nonempty("Product must be selected."),
-  amount: number().min(1, "Cannot be 0"),
-  expirationDate: string()
-    .nullish()
-    .superRefine((arg, ctx) => {
-      if (!arg) return arg;
-      const [d, m] = arg.split(".");
-      const day = Number(d);
-      if (day > 31 || day < 1) {
-        ctx.addIssue({ code: "custom", message: "Day is invalid." });
+  id: uuidv4("Product must be selected."),
+  amount: number().check(gte(1, "Cannot be 0")),
+  expirationDate: nullable(optional(string())).check(
+    (arg) => {
+      if (arg.value) {
+        const [d, m] = arg.value.split(".");
+        const day = Number(d);
+        if (day > 31 || day < 1) {
+          arg.issues.push({ code: "custom", input: arg.value, message: "Day is invalid." });
+        }
+        // JS date months are 0-11 (0 is January, etc.)
+        const month = Number(m) - 1;
+        if (month > 11 || month < 0) {
+          arg.issues.push({ code: "custom", input: arg.value, message: "Month is invalid." });
+        }
       }
-      // JS date months are 0-11 (0 is January, etc.)
-      const month = Number(m) - 1;
-      if (month > 11 || month < 0) {
-        ctx.addIssue({ code: "custom", message: "Month is invalid." });
-      }
-    })
-    .transform((arg) => {
-      if (!arg) return arg;
+    },
+    overwrite<string | null>((arg) => {
+      if (!arg) return null;
       const date = new Date();
 
       const [d, m, y] = arg.split(".");
@@ -150,37 +171,41 @@ export const LocationsAvailableProductsMutatorSchema = object({
       date.setUTCFullYear(year);
       date.setHours(0, 0, 0, 0);
       return date.toISOString();
-    }),
+    })
+  ),
 });
 
-export const LocationsProductsGroupedByExpirationSchema = object({
-  createdAt: string().datetime(),
-  productId: string().uuid(),
-  expirationDate: string().nullish(),
-  purchasedAt: string().nullish(),
-  count: number(),
-}).merge(ProductsSchema.pick({ weight: true, weightUnit: true, volume: true, volumeUnit: true }));
+export const LocationsProductsGroupedByExpirationSchema = extend(
+  object({
+    createdAt: date(),
+    productId: uuidv4(),
+    expirationDate: nullable(optional(string())),
+    purchasedAt: nullable(date()),
+    count: number(),
+  }),
+  pick(ProductsSchema, { weight: true, weightUnit: true, volume: true, volumeUnit: true })
+);
 // #endregion LOCATIONS_AVAILABLE_PRODUCTS
 
 // #region LOCATIONS_PRODUCTS
 export const LocationsProductsSchema = object({
-  id: string().uuid().nonempty(),
-  createdAt: z.string().datetime().nonempty(),
-  deletedAt: z.string().datetime(),
-  locationId: string().uuid().nonempty(),
-  productId: string().uuid().nonempty(),
-  expirationDate: string().nullish(),
-  packingDate: string().nullish(),
+  id: uuidv4(),
+  createdAt: date(),
+  deletedAt: date(),
+  locationId: uuidv4(),
+  productId: uuidv4(),
+  expirationDate: nullable(optional(string())),
+  packingDate: nullable(optional(string())),
 });
 
 export const LocationsProductsInitalizerSchema = object({
-  productId: string().uuid().nonempty("Product must be selected."),
-  amount: number().min(1, "Must add at least 1 product."),
+  productId: uuidv4("Product must be selected."),
+  amount: number().check(gte(1, "Must add at least 1 product.")),
 });
 
 // #endregion LOCATIONS_PRODUCTS
 
-export const LocationsAvailableProductsSettingsSchema = record(string().uuid(), string().uuid());
+export const LocationsAvailableProductsSettingsSchema = record(uuidv4(), uuidv4());
 
 export type ProductsType = FormattedEntity<zodInfer<typeof ProductsSchema>>;
 export type ProductsInitalizerType = zodInfer<typeof ProductsInitalizerSchema>;

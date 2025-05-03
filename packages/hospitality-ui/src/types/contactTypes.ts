@@ -1,4 +1,17 @@
-import { boolean, enum as enum_, infer as zodInfer, number, object, string, ZodIssueCode } from "zod";
+import {
+  array,
+  boolean,
+  enum as enum_,
+  infer as zodInfer,
+  minLength,
+  nullable,
+  number,
+  object,
+  optional,
+  overwrite,
+  string,
+  uuidv4,
+} from "@zod/mini";
 
 export const ContactTypesSchema = enum_(
   [
@@ -44,30 +57,26 @@ export const ContactTypesSchema = enum_(
 export const ContactGroupTypeSchema = enum_(["address", "phone", "email", "website", "other"]);
 
 export const ContactSchema = object({
-  id: string().uuid().nonempty(),
-  title: string().nullable(),
-  placeId: number()
-    .nullish()
-    .transform((arg) => {
+  id: uuidv4(),
+  title: nullable(string()),
+  placeId: nullable(optional(number())).check(
+    overwrite((arg) => {
       if (arg === null || arg === undefined) return arg;
       return Number(arg);
-    }),
-  prefix: string().nullish(),
-  value: string().nonempty("Contact value cannot be empty."),
-  latitude: number().nullish(),
-  longitude: number().nullish(),
-  boundingBox: number().array().nullish(),
-  isPublic: boolean().default(false).nullish(),
-  isPrimary: boolean().default(false).nullish(),
-  iso3: string().nullish(),
+    })
+  ),
+  prefix: nullable(optional(string())),
+  value: string().check(minLength(1, "Contact value cannot be empty.")),
+  latitude: nullable(optional(number())),
+  longitude: nullable(optional(number())),
+  boundingBox: nullable(optional(array(number()))),
+  isPublic: nullable(optional(boolean())),
+  isPrimary: nullable(optional(boolean())),
+  iso3: nullable(optional(string())),
   contactType: ContactTypesSchema,
-}).superRefine((arg, ctx) => {
-  if ((arg.contactType.includes("phone") || arg.contactType === "fax") && (!arg.prefix || !arg.iso3)) {
-    ctx.addIssue({
-      path: ["value"],
-      code: ZodIssueCode.custom,
-      message: "Prefix must be selected.",
-    });
+}).check((arg) => {
+  if ((arg.value.contactType.includes("phone") || arg.value.contactType === "fax") && (!arg.value.prefix || !arg.value.iso3)) {
+    arg.issues.push({ code: "custom", input: arg.value, message: "Prefix must be selected." });
   }
 });
 

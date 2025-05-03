@@ -1,4 +1,4 @@
-import { infer as zodInfer, number, object, record, string } from "zod";
+import { array, infer as zodInfer, minLength, nullable, number, object, record, string } from "@zod/mini";
 
 export const AddressesSchema = object({
   osmType: string(),
@@ -8,9 +8,9 @@ export const AddressesSchema = object({
   type: string(),
   displayName: string(),
   name: string(),
-  extratags: record(string(), string()).nullable(),
-  namedetails: record(string(), string()).nullable(),
-  boundingbox: number().array(),
+  extratags: nullable(record(string(), string())),
+  namedetails: nullable(record(string(), string())),
+  boundingbox: array(number()),
   address: object({
     houseNumber: string(),
     road: string(),
@@ -25,7 +25,7 @@ export const AddressesSchema = object({
   }),
   geometry: object({
     type: string(),
-    coordinates: number().array().length(2),
+    coordinates: array(number()).check(minLength(2)),
   }),
 });
 
