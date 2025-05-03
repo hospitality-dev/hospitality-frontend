@@ -101,7 +101,8 @@ const columns = [
     meta: {
       alignment: "center",
     },
-    maxSize: 100,
+    maxSize: 75,
+    minSize: 75,
   }),
 ];
 
