@@ -13,7 +13,7 @@ type Props = {
 };
 
 const classes = tv({
-  base: "cursor-pointer appearance-none rounded-md border-2",
+  base: "aspect-square cursor-pointer appearance-none rounded-md border",
   variants: {
     variant: {
       primary: "border-gray-900",
@@ -23,8 +23,8 @@ const classes = tv({
       warning: "border-orange-600",
       error: "border-red-800",
     },
-    size: { xs: "h-6 w-6 text-xs", sm: "h-7 w-7 text-sm", md: "h-8 w-8", lg: "h-9 w-9 text-lg", xl: "h-10 w-10 text-xl" },
-    isDisabled: { true: "cursor-not-allowed" },
+    size: { xs: "h-4 text-xs", sm: "h-5 text-sm", md: "h-6", lg: "h-7 text-lg", xl: "h-8 text-xl" },
+    isDisabled: { true: "bg-primary cursor-not-allowed border-black" },
   },
 });
 
